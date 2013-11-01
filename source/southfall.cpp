@@ -18,8 +18,8 @@ Southfall::Southfall()
 // Destructor
 //=============================================================================
 Southfall::~Southfall()
-{
-    releaseAll();           // call onLostDevice() for every graphics item
+{ // Call onLostDevice() for every graphics item
+    releaseAll();
 }
 
 //=============================================================================
@@ -30,31 +30,11 @@ void Southfall::initialize(HWND hwnd)
 {
     Game::initialize(hwnd); 
 
-	/*if (!puckTM.initialize(graphics,PUCK_IMAGE))
-        throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing puck texture"));
-	
-    if (!paddleTM.initialize(graphics,PADDLE_IMAGE))
-        throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing paddle texture"));
-
-	if (!puck.initialize(this, 80, 80, 1, &puckTM))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing puck"));
-
-	if (!paddle.initialize(this, 60, 80, 1, &paddleTM))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing paddle"));
-    
-	puck.setCollisionType(entityNS::BOX);
-	puck.setEdge(COLLISION_BOX_PUCK);
-	paddle.setCollisionType(entityNS::BOX);
-	paddle.setEdge(COLLISION_BOX_PADDLE);*/
-
-	//ADD Font initialization code here
+	//Font
 	gameFont = new TextDX();
 	gameFont->initialize(graphics, 20, false, false, "Calibri");
 	gameFont->setFontColor(SETCOLOR_ARGB(255,255,0,0));
-	
-	
-	score = 0;
-	return;
+
 }
 
 //=============================================================================

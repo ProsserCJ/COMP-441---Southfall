@@ -18,9 +18,6 @@
     <ClInclude Include="source\audio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\bricks.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -54,9 +51,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\audio.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\bricks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\entity.cpp">

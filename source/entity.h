@@ -17,7 +17,6 @@ class Entity;
 namespace entityNS
 {
     enum COLLISION_TYPE {NONE, CIRCLE, BOX, ROTATED_BOX, PIXEL_PERFECT};
-    const float GRAVITY = 6.67428e-11f;         // gravitational constant
 }
 
 class Entity : public Image
