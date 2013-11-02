@@ -14,6 +14,7 @@
     <ClInclude Include="source\audio.h" />
     <ClInclude Include="source\constants.h" />
     <ClInclude Include="source\entity.h" />
+    <ClInclude Include="source\Entity_2.h" />
     <ClInclude Include="source\game.h" />
     <ClInclude Include="source\gameError.h" />
     <ClInclude Include="source\graphics.h" />
