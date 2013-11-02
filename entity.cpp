@@ -27,7 +27,6 @@ Entity::Entity() : Image()
     rotatedBoxReady = false;
     collisionType = entityNS::CIRCLE;
     health = 100;
-    gravity = entityNS::GRAVITY;
     pixelsColliding = 0;
 	position = VECTOR2(0,0);
 }
