@@ -38,8 +38,8 @@ public:
     void resetAll();
 
 private:
-    TextDX gameFont;
-
+    TextDX* gameFont;
+	stringstream ss;
 
 };
 

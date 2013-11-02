@@ -67,7 +67,7 @@ void Southfall::render()
 	graphics->spriteBegin();                // begin drawing sprites
 	
 	ss.str(std::string());
-	ss << "Hits: " << score;
+
 	gameFont->print(ss.str(), GAME_WIDTH/2, GAME_HEIGHT/2);
 
     graphics->spriteEnd();                  // end drawing sprites
@@ -79,8 +79,6 @@ void Southfall::render()
 //=============================================================================
 void Southfall::releaseAll()
 {
-	paddleTM.onLostDevice();
-	puckTM.onLostDevice();
     Game::releaseAll();
     return;
 }
@@ -91,8 +89,7 @@ void Southfall::releaseAll()
 //=============================================================================
 void Southfall::resetAll()
 {
-	paddleTM.onResetDevice();
-	puckTM.onResetDevice();
+
     Game::resetAll();
     return;
 }
