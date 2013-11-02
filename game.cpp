@@ -115,16 +115,17 @@ void Game::initialize(HWND hw)
     if(QueryPerformanceFrequency(&timerFreq) == false)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing high resolution timer"));
 	audio = new Audio();
-    if (*WAVE_BANK != '\0' && *SOUND_BANK != '\0')  // if sound files defined
-    {
-        if( FAILED( hr = audio->initialize() ) )
-        {
-            if( hr == HRESULT_FROM_WIN32( ERROR_FILE_NOT_FOUND ) )
-                throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize sound system because media file not found."));
-            else
-                throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize sound system."));
-        }
-    }
+	// So the program works for now
+    //if (*WAVE_BANK != '\0' && *SOUND_BANK != '\0')  // if sound files defined
+    //{
+    //    if( FAILED( hr = audio->initialize() ) )
+    //    {
+    //        if( hr == HRESULT_FROM_WIN32( ERROR_FILE_NOT_FOUND ) )
+    //            throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize sound system because media file not found."));
+    //        else
+    //            throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize sound system."));
+    //    }
+    //}
     QueryPerformanceCounter(&timeStart);        // get starting time
 
     initialized = true;
@@ -138,7 +139,9 @@ void Game::renderGame()
     //start rendering
     if (SUCCEEDED(graphics->beginScene()))
     {
+		graphics->spriteBegin();                // begin drawing sprites
         render();           // call render() in derived object
+		graphics->spriteEnd();                  // end drawing sprites
 
         //stop rendering
         graphics->endScene();

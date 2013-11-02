@@ -1,9 +1,3 @@
-// Programming 2D Games
-// Copyright (c) 2011, 2012 by: 
-// Charles Kelly
-// Collision types demo
-
-
 #include "southfall.h"
 
 //=============================================================================
@@ -30,7 +24,7 @@ void Southfall::initialize(HWND hwnd)
 {
     Game::initialize(hwnd); 
 
-	//Font
+	// Font
 	gameFont = new TextDX();
 	gameFont->initialize(graphics, 20, false, false, "Calibri");
 	gameFont->setFontColor(SETCOLOR_ARGB(255,255,0,0));
@@ -63,14 +57,8 @@ void Southfall::collisions()
 // Render game items
 //=============================================================================
 void Southfall::render()
-{
-	graphics->spriteBegin();                // begin drawing sprites
+{// sprite begin and end in game now
 	
-	ss.str(std::string());
-
-	gameFont->print(ss.str(), GAME_WIDTH/2, GAME_HEIGHT/2);
-
-    graphics->spriteEnd();                  // end drawing sprites
 }
 
 //=============================================================================
@@ -89,7 +77,6 @@ void Southfall::releaseAll()
 //=============================================================================
 void Southfall::resetAll()
 {
-
     Game::resetAll();
     return;
 }
