@@ -67,9 +67,9 @@ public:
 	void attack(DIR);
 	void move(DIR);
 
-	virtual void draw();	
-	virtual void update();	
-	virtual void act();
+	virtual void draw(const VECTOR2& center){}
+	virtual void act(World* W){}				
+	virtual void update(float frameTime){}
 
 	DIR getDirectionFacing(){return facing;}
 

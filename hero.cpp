@@ -39,11 +39,8 @@ void Hero::attack(DIR d)
 	/*NOTE TO CONSIDER:
 		Do we have mechanics issues with being able to attack diagonally on a rectangular grid?
 		If diagonal attacks can hit two squares, regular attacks are obsolete.
-		How can diagonal attacks work?
+		How should diagonal attacks work?
 	*/
-
-	if (HandleCollision(this, world->getTile(attackLocation)->getEntity())); //handle collision
-
 }
 
 
@@ -53,19 +50,19 @@ void Hero::move(DIR d)
 	switch(d)
 	{
 	case UP:
-		image->setCurrentFrame(HERO_FACING_UP);
+		image->setFrames(HERO_WALKING_UP_START, HERO_WALKING_UP_END);
 		newLocation.y -= TILE_SIZE;
 		break;
 	case DOWN:
-		image->setCurrentFrame(HERO_FACING_DOWN);
+		image->setFrames(HERO_WALKING_DOWN_START, HERO_WALKING_DOWN_END);
 		newLocation.y += TILE_SIZE;
 		break;
 	case LEFT:
-		image->setCurrentFrame(HERO_FACING_LEFT);
+		image->setFrames(HERO_WALKING_LEFT_START, HERO_WALKING_LEFT_END);
 		newLocation.x -= TILE_SIZE;
 		break;
 	case RIGHT:
-		image->setCurrentFrame(HERO_FACING_RIGHT);
+		image->setFrames(HERO_WALKING_RIGHT_START, HERO_WALKING_RIGHT_END);
 		newLocation.x += TILE_SIZE;
 		break;
 

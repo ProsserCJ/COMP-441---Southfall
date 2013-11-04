@@ -38,9 +38,9 @@ public:
 	~Entity() {};
 
 	// Basic functions
-	virtual void draw(const VECTOR2& center);		// Draw itself (possibly needs second parameter, zoomlevel or something)
+	virtual void draw(const VECTOR2& center){};		// Draw itself (possibly needs second parameter, zoomlevel or something)
 	virtual void act(World* W) = 0;					// AI and decisions
-	virtual void update(float frameTime);	// Update
+	virtual void update(float frameTime){};	// Update
 
 	// Collision Handler
 	friend bool HandleCollision(Entity* A, Entity* B) {return true; }; // True if the entities collided

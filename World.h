@@ -39,11 +39,12 @@ class World
 {
 public:
 
-	Tile* getTile(VECTOR2 pos){return 0;};
+	Tile* getTile(VECTOR2 pos);
 
 private:
 	int width, height;	// Dimensions of this world
 	Tile** tiles;		// The tiles that make up the world
+						//Is this a double array of type Tile or a single array of type Tile* ?
 };
 
 #endif
