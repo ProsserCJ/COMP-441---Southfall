@@ -16,7 +16,7 @@ class Structure;	// Forward reference to Structure
 class Tile
 {
 public:
-	Tile(int x, int y, Image* image) : x(x), y(y), image(image), S(0) {};
+	Tile(VECTOR2 position, Image* image) : position(position), image(image), S(0) {};
 	~Tile() {};
 
 	// Accessors
