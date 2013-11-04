@@ -177,6 +177,8 @@ class Image
 
     // Update the animation. frameTime is used to regulate the speed.
     virtual void update(float frameTime);
+
+	friend class Entity;
 };
 
 #endif
