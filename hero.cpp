@@ -34,4 +34,8 @@ void Hero::move(DIR d){
 	case DOWN_LEFT:
 	}
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 07328af4fd115455267e363b62ad0a2d5ed7d751

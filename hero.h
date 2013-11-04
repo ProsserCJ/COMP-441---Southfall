@@ -29,4 +29,8 @@ private:
 
 };
 
+<<<<<<< HEAD
 #endif
+=======
+#endif
+>>>>>>> 07328af4fd115455267e363b62ad0a2d5ed7d751
