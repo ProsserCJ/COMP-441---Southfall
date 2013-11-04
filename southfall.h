@@ -18,6 +18,7 @@ Last modified: 11/1/2013
 #include "graphics.h"
 #include <sstream>
 #include "hero.h"
+#include "WorldInterface.h"
 using std::stringstream;
 
 class Southfall : public Game
@@ -40,7 +41,8 @@ public:
 private:
     TextDX* gameFont;
 	stringstream ss;
-	Hero hero;
+	
+	Hero* player;	// Maybe make this a more specific pointer later
 
 };
 

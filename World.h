@@ -22,7 +22,11 @@ public:
 	// Accessors
 	bool isTraversable() {return _traversable;}
 	bool hasStructure() {return S != 0;}
+	
 	Entity* getEntity(){return 0;}; //returns a pointer to an entity is there is one on the tile (else 0)
+		// I'm not sure we should sectorize on this level, since the positions are 
+		// continuous, we could concevably have multiple entities on a single tile.
+		// Things could get tricky.
 
 	// Mutators
 	void giveStructure(Structure* S) {this->S = S;}
@@ -39,12 +43,12 @@ class World
 {
 public:
 
-	Tile* getTile(VECTOR2 pos);
+	Tile* getTile(int x, int y); // This is better
 
 private:
 	int width, height;	// Dimensions of this world
-	Tile** tiles;		// The tiles that make up the world
-						//Is this a double array of type Tile or a single array of type Tile* ?
+	Tile*** tiles;		// The tiles that make up the world
+						// Good catch
 };
 
 #endif
