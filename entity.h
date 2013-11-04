@@ -13,8 +13,9 @@ Last Modified 11/2/2013
 #include "image.h"
 #include "input.h"
 #include "game.h"
+#include "World.h"
 
-class World; // Foreward reference to world
+//class World; // Foreward reference to world
 
 const VECTOR2 ZERO = VECTOR2(0,0);
 
@@ -38,21 +39,11 @@ public:
 
 	// Basic functions
 	virtual void draw(const VECTOR2& center);		// Draw itself (possibly needs second parameter, zoomlevel or something)
-	
-
-	// Isn't the center already stored?
-
-
 	virtual void act(World* W) = 0;					// AI and decisions
-	virtual void update(World* W, float frameTime);	// Update
-
-
-	//Would it work to have a World* stored at initizliation?
-
-
+	virtual void update(float frameTime);	// Update
 
 	// Collision Handler
-	friend bool HandleCollision(Entity* A, Entity* B) {}; // True if the entities collided
+	friend bool HandleCollision(Entity* A, Entity* B) {return true; }; // True if the entities collided
 
 	// Accessors
 	VECTOR2 getPosition()	const {return position;}
@@ -68,7 +59,7 @@ public:
 	void setKnockback(const VECTOR2& kb)	{knockback = kb;}
 	void setActive(bool act)				{active = act;}
 	void setHP(int HP)						{this->HP = HP;}
-	void kill()								{HP = 0;}
+	void kill()								{HP = 0;}	
 
 protected:
 	VECTOR2 position;	// Position in the world (center)
@@ -78,7 +69,7 @@ protected:
 	int HP;
 	int maxHP;
 	bool active;
-
+	World* world;
 	Image* image;		//Is this better than deriving from Image?
 						
 	COLLISIONTYPE collisionType;

@@ -22,6 +22,7 @@ public:
 	// Accessors
 	bool isTraversable() {return _traversable;}
 	bool hasStructure() {return S != 0;}
+	Entity* getEntity(){return 0;}; //returns a pointer to an entity is there is one on the tile (else 0)
 
 	// Mutators
 	void giveStructure(Structure* S) {this->S = S;}
@@ -37,6 +38,8 @@ private:
 class World
 {
 public:
+
+	Tile* getTile(VECTOR2 pos){return 0;};
 
 private:
 	int width, height;	// Dimensions of this world

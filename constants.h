@@ -79,6 +79,7 @@ const char GAME_TITLE[] = "Southfall";
 const bool FULLSCREEN = false;              // windowed or fullscreen
 const UINT GAME_WIDTH =  1200;               // width of game in pixels
 const UINT GAME_HEIGHT = 680;               // height of game in pixels
+const UINT TILE_SIZE = 40;				//side length of a square tile in pixels. 40?
 
 // Game
 const double PI = 3.14159265;
