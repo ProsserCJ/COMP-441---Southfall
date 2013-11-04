@@ -18,8 +18,11 @@ class World; // Foreward reference to world
 
 const VECTOR2 ZERO = VECTOR2(0,0);
 
-namespace EntityCollision {enum COLLISIONTYPE{CIRCLE, POINTCOLLISION};}; 
-using namespace EntityCollision;
+namespace entityNS{
+	enum DIR {UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT};
+	enum COLLISIONTYPE{CIRCLE, POINTCOLLISION};	
+}
+using namespace entityNS;
 
 // Base for in game characters, monsters, and animals
 class Entity
@@ -35,8 +38,18 @@ public:
 
 	// Basic functions
 	virtual void draw(const VECTOR2& center);		// Draw itself (possibly needs second parameter, zoomlevel or something)
+	
+
+	// Isn't the center already stored?
+
+
 	virtual void act(World* W) = 0;					// AI and decisions
 	virtual void update(World* W, float frameTime);	// Update
+
+
+	//Would it work to have a World* stored at initizliation?
+
+
 
 	// Collision Handler
 	friend bool HandleCollision(Entity* A, Entity* B) {}; // True if the entities collided
@@ -66,11 +79,9 @@ protected:
 	int maxHP;
 	bool active;
 
-	Image* image;
+	Image* image;		//Is this better than deriving from Image?
+						
 	COLLISIONTYPE collisionType;
 };
 
-
 #endif
-
-

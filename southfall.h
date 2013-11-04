@@ -12,12 +12,12 @@ Last modified: 11/1/2013
 
 #include "game.h"
 #include "textureManager.h"
-#include "entity.h"
 #include <cmath>
 #include "constants.h"
 #include "textDX.h"
 #include "graphics.h"
 #include <sstream>
+#include "hero.h"
 using std::stringstream;
 
 class Southfall : public Game
@@ -40,6 +40,7 @@ public:
 private:
     TextDX* gameFont;
 	stringstream ss;
+	Hero hero;
 
 };
 
