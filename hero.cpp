@@ -18,10 +18,10 @@ void Hero::attack(DIR d)
 	case UP_RIGHT:
 	case UP_LEFT:
 	case DOWN_RIGHT:
-	case DOWN_LEFT:
+	case DOWN_LEFT: break;
 	}
 
-}	
+}
 
 
 void Hero::move(DIR d)
@@ -35,7 +35,7 @@ void Hero::move(DIR d)
 	case UP_RIGHT:
 	case UP_LEFT:
 	case DOWN_RIGHT:
-	case DOWN_LEFT:
+	case DOWN_LEFT: break;
 	}
 
 }

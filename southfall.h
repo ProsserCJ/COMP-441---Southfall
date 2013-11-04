@@ -40,7 +40,7 @@ public:
 private:
     TextDX* gameFont;
 	stringstream ss;
-	Hero hero;
+	//Hero hero;
 
 };
 
