@@ -7,8 +7,10 @@ Last modified: 11/3/2013
 
 #include "hero.h"
 
-void Hero::attack(DIR d){
-	switch(d){
+void Hero::attack(DIR d)
+{
+	switch(d)
+	{
 	case UP:
 	case DOWN:
 	case LEFT:
@@ -22,8 +24,10 @@ void Hero::attack(DIR d){
 }	
 
 
-void Hero::move(DIR d){
-	switch(d){
+void Hero::move(DIR d)
+{
+	switch(d)
+	{
 	case UP:
 	case DOWN:
 	case LEFT:

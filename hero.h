@@ -12,7 +12,8 @@ Last modified: 11/3/2013
 #include "entity.h"
 
 
-class Hero: public Entity{
+class Hero: public Entity
+{
 public:
 	void attack(DIR);
 	void move(DIR);
@@ -21,7 +22,6 @@ public:
 	virtual void update();	
 	virtual void act();
 
-	
 	DIR getDirectionFacing(){return facing;}
 
 private:
