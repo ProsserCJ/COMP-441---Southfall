@@ -36,7 +36,7 @@ void Southfall::initialize(HWND hwnd)
 	Interface.initialize(graphics);
 
 	// Initialized Player here, have center point at player's position
-	player = new Hero(&Character1IM);
+	player = new Hero(&Character1IM, input);
 }
 
 //=============================================================================
@@ -59,7 +59,7 @@ void Southfall::initializeGraphics()
 //=============================================================================
 void Southfall::update()
 {
-	if (input->isKeyDown(WKEY))
+	/*if (input->isKeyDown(WKEY))
 	{
 		if (input->isKeyDown(DKEY)) player->go(UP_RIGHT);
 		else if (input->isKeyDown(AKEY)) player->go(UP_LEFT);	
@@ -73,7 +73,7 @@ void Southfall::update()
 	}
 	else if (input->isKeyDown(AKEY)) player->go(LEFT);
 	else if (input->isKeyDown(DKEY)) player->go(RIGHT);
-	else player->standing();
+	else player->standing();*/
 
 	//// Move camera
 	//float TESTVELOCITY = 640;
@@ -143,8 +143,6 @@ void Southfall::render()
 	Interface.draw(TILE_SIZE*player->getPosition());
 	player->draw(TILE_SIZE*player->getPosition());	// For now
 
-
-	gameFont->print("Words!", SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
 }
 
 //=============================================================================
@@ -154,7 +152,7 @@ void Southfall::render()
 void Southfall::releaseAll()
 {
     Game::releaseAll();
-	heroTexture.onLostDevice();
+	Character1TX.onLostDevice();
 	return;
 }
 
@@ -165,6 +163,6 @@ void Southfall::releaseAll()
 void Southfall::resetAll()
 {
     Game::resetAll();
-	heroTexture.onResetDevice();
+	Character1TX.onResetDevice();
     return;
 }

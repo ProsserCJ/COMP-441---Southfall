@@ -25,7 +25,7 @@ void Entity::draw(const VECTOR2& Center)
 	int X = diff.x + HSCREEN_WIDTH - HTILE_SIZE;
 	int Y = diff.y + HSCREEN_HEIGHT - HTILE_SIZE;
 	image->setScale(DEFAULT_SCALE);
-	//image->setCurrentFrame(frame);
+	image->setCurrentFrame(frame);
 	image->setX(X); image->setY(Y);
 	image->draw();
 }

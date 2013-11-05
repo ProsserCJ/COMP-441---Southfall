@@ -66,6 +66,7 @@ public:
 	
 	// Image updating
 	void setFrame(int frame)				{this->frame=frame;}	// Directly set the frame
+	void setStationaryFrame(int frame)		{startFrame=endFrame=this->frame=frame;}
 	void updateImage(float frameTime)		{_imageTime+=frameTime;}
 	void setFrames(int start, int end)		{startFrame=start;endFrame=end;frame=start;}
 	void setFrameDelay(float delay)			{_imageDelay=delay;}

@@ -20,25 +20,24 @@ void Hero::update(float frameTime)
 {
 	updateImage(frameTime);
 
-	velocity = ZERO; //reset velocity to start each frame;
+	//velocity = ZERO; //reset velocity to start each frame;
+	//DIR dir = NONE;
 	
-	DIR dir = NONE;
-	
-	/*if (input->isKeyDown('W'))
+	if (input->isKeyDown(WKEY))
 	{
-		if (input->isKeyDown('D')) dir = UP_RIGHT;
-		else if (input->isKeyDown('A')) dir = UP_LEFT;	
-		else dir = UP;
+		if (input->isKeyDown(DKEY))			go(UP_RIGHT);
+		else if (input->isKeyDown(AKEY))	go(UP_LEFT);	
+		else								go(UP);
 	}	
-	else if (input->isKeyDown('S'))
+	else if (input->isKeyDown(SKEY))
 	{
-		if (input->isKeyDown('D')) dir = DOWN_RIGHT;
-		else if (input->isKeyDown('A')) dir = DOWN_LEFT;	
-		else dir = DOWN;
+		if (input->isKeyDown(DKEY))			go(DOWN_RIGHT);
+		else if (input->isKeyDown(AKEY))	go(DOWN_LEFT);	
+		else								go(DOWN);
 	}
-	else if (input->isKeyDown('A')) dir = LEFT;
-	else if (input->isKeyDown('D')) dir = RIGHT;
-	else setStandingImage();*/
+	else if (input->isKeyDown(AKEY))		go(LEFT);
+	else if (input->isKeyDown(DKEY))		go(RIGHT);
+	else									standing();
 
 	if(startMoving) move(frameTime);
 
@@ -53,38 +52,30 @@ void Hero::move(float frameTime)
 	{
 	case UP:
 		if(facing != lastDir || !moving) setFrames(HERO_WALKING_UP_START, HERO_WALKING_UP_END);	
-		velocity.y = HERO_SPEED * -1;	
+		velocity.y = -HERO_SPEED;	
 		break;
-
 	case DOWN:
 		if(facing != lastDir || !moving) setFrames(HERO_WALKING_DOWN_START, HERO_WALKING_DOWN_END);
 		velocity.y = HERO_SPEED;
 		break;
-
 	case LEFT:
 		if(facing != lastDir || !moving) setFrames(HERO_WALKING_LEFT_START, HERO_WALKING_LEFT_END);
-		velocity.x = HERO_SPEED * -1;
+		velocity.x = -HERO_SPEED;
 		break;
-
 	case RIGHT:
 		if(facing != lastDir || !moving) setFrames(HERO_WALKING_RIGHT_START, HERO_WALKING_RIGHT_END);
 		velocity.x = HERO_SPEED;
 		break;
-
-	//Diagonal movement is twice as fast
-	// Now it's not. 1/sqrt(2) = 0.707 or so
 	case UP_RIGHT:
 		if(facing != lastDir || !moving) setFrames(HERO_WALKING_UP_RIGHT_START, HERO_WALKING_UP_RIGHT_END);
-		velocity.y = HERO_SPEED * -1 * 0.707f;
-		velocity.x = HERO_SPEED * 0.707f;
+		velocity.y = -0.707f*HERO_SPEED;
+		velocity.x = 0.707f*HERO_SPEED;
 		break;
-
 	case UP_LEFT:
 		if(facing != lastDir || !moving) setFrames(HERO_WALKING_UP_LEFT_START, HERO_WALKING_UP_LEFT_END);	
 		velocity.y = HERO_SPEED * -1 * 0.707f;	
 		velocity.x = HERO_SPEED * -1 * 0.707f;
 		break;
-
 	case DOWN_RIGHT:
 		if(facing != lastDir || !moving) setFrames(HERO_WALKING_DOWN_RIGHT_START, HERO_WALKING_DOWN_RIGHT_END);
 		velocity.y = HERO_SPEED * 0.707f;
@@ -164,17 +155,25 @@ void Hero::draw(const VECTOR2& Center)
 	// Draw weapon here?
 }
 
+void Hero::standing()
+{
+	startMoving = false;
+	moving = false;
+	setStandingImage();
+}
+
 void Hero::setStandingImage()
 {
 	switch(facing)
 	{
-		case UP: image->setCurrentFrame(HERO_FACING_UP); break;
-		case DOWN: image->setCurrentFrame(HERO_FACING_DOWN); break;
-		case LEFT: image->setCurrentFrame(HERO_FACING_LEFT); break;
-		case RIGHT: image->setCurrentFrame(HERO_FACING_RIGHT); break;
-		case UP_RIGHT: image->setCurrentFrame(HERO_FACING_UP_RIGHT); break;
-		case UP_LEFT: image->setCurrentFrame(HERO_FACING_UP_LEFT); break;
-		case DOWN_RIGHT: image->setCurrentFrame(HERO_FACING_DOWN_RIGHT); break;
-		case DOWN_LEFT: image->setCurrentFrame(HERO_FACING_DOWN_LEFT); break;
+		case UP:		setStationaryFrame(HERO_FACING_UP); break;
+		case DOWN:		setStationaryFrame(HERO_FACING_DOWN); break;
+		case LEFT:		setStationaryFrame(HERO_FACING_LEFT); break;
+		case RIGHT:		setStationaryFrame(HERO_FACING_RIGHT); break;
+		case UP_RIGHT:	setStationaryFrame(HERO_FACING_UP_RIGHT); break;
+		case UP_LEFT:	setStationaryFrame(HERO_FACING_UP_LEFT); break;
+		case DOWN_RIGHT:setStationaryFrame(HERO_FACING_DOWN_RIGHT); break;
+		case DOWN_LEFT: setStationaryFrame(HERO_FACING_DOWN_LEFT); break;
 	}
+	
 }

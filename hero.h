@@ -71,7 +71,8 @@ class Hero: public Entity
 {
 public:
 	Hero() : Entity() {};
-	Hero(Image* image) : Entity() {initialize(image);}
+	Hero(Image* image, Input* input) 
+		: Entity(), input(input) {initialize(image);}
 	void attack(DIR);
 	void move(DIR);
 	void attack();
@@ -90,7 +91,7 @@ public:
 	void setDir(DIR face)		{facing=face;}
 	void go(DIR face)			{startMoving=true;facing=face;}
 	void setStandingImage();
-	void standing()				{startMoving=moving=false;setStandingImage();}
+	void standing();
 
 private:
 	DIR facing;
