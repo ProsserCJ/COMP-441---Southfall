@@ -13,6 +13,8 @@ void Hero::initialize(Image* image)
 {
 	this->image = image;
 	armor = 0;
+	image->setFrameDelay(.25);
+	image->setLoop(true);
 };
 
 
@@ -20,24 +22,25 @@ void Hero::update(float frameTime)
 {
 	updateImage(frameTime);
 
-	//velocity = ZERO; //reset velocity to start each frame;
-	//DIR dir = NONE;
+	velocity = ZERO; //reset velocity to start each frame;
+	
+	DIR dir = NONE;
 	
 	if (input->isKeyDown(WKEY))
-	{
-		if (input->isKeyDown(DKEY))			go(UP_RIGHT);
-		else if (input->isKeyDown(AKEY))	go(UP_LEFT);	
-		else								go(UP);
-	}	
-	else if (input->isKeyDown(SKEY))
-	{
-		if (input->isKeyDown(DKEY))			go(DOWN_RIGHT);
-		else if (input->isKeyDown(AKEY))	go(DOWN_LEFT);	
-		else								go(DOWN);
-	}
-	else if (input->isKeyDown(AKEY))		go(LEFT);
-	else if (input->isKeyDown(DKEY))		go(RIGHT);
-	else									standing();
+        {
+                if (input->isKeyDown(DKEY))                        go(UP_RIGHT);
+                else if (input->isKeyDown(AKEY))        go(UP_LEFT);        
+                else                                                                go(UP);
+        }        
+        else if (input->isKeyDown(SKEY))
+        {
+                if (input->isKeyDown(DKEY))                        go(DOWN_RIGHT);
+                else if (input->isKeyDown(AKEY))        go(DOWN_LEFT);        
+                else                                                                go(DOWN);
+        }
+        else if (input->isKeyDown(AKEY))                go(LEFT);
+        else if (input->isKeyDown(DKEY))                go(RIGHT);
+        else                                                                        standing();
 
 	if(startMoving) move(frameTime);
 
@@ -46,36 +49,50 @@ void Hero::update(float frameTime)
 	//if (input->isKeyDown(SPACE_KEY)) attack();
 }
 
+
+void Hero::go(DIR face)
+{
+	startMoving=true;
+	facing=face;
+}
+
+
 void Hero::move(float frameTime)
 {
 	switch(facing)
 	{
 	case UP:
-		if(facing != lastDir || !moving) setFrames(HERO_WALKING_UP_START, HERO_WALKING_UP_END);	
-		velocity.y = -HERO_SPEED;	
+		if(facing != lastDir || !moving) setFrames(HERO_WALKING_UP_START, HERO_WALKING_UP_END);
+		velocity.y = -HERO_SPEED;
 		break;
+
 	case DOWN:
 		if(facing != lastDir || !moving) setFrames(HERO_WALKING_DOWN_START, HERO_WALKING_DOWN_END);
 		velocity.y = HERO_SPEED;
 		break;
+
 	case LEFT:
 		if(facing != lastDir || !moving) setFrames(HERO_WALKING_LEFT_START, HERO_WALKING_LEFT_END);
 		velocity.x = -HERO_SPEED;
 		break;
+
 	case RIGHT:
 		if(facing != lastDir || !moving) setFrames(HERO_WALKING_RIGHT_START, HERO_WALKING_RIGHT_END);
 		velocity.x = HERO_SPEED;
 		break;
+	
 	case UP_RIGHT:
 		if(facing != lastDir || !moving) setFrames(HERO_WALKING_UP_RIGHT_START, HERO_WALKING_UP_RIGHT_END);
-		velocity.y = -0.707f*HERO_SPEED;
-		velocity.x = 0.707f*HERO_SPEED;
+		velocity.y = -0.707f * HERO_SPEED;
+		velocity.x = 0.707f * HERO_SPEED;
 		break;
+
 	case UP_LEFT:
 		if(facing != lastDir || !moving) setFrames(HERO_WALKING_UP_LEFT_START, HERO_WALKING_UP_LEFT_END);	
 		velocity.y = HERO_SPEED * -1 * 0.707f;	
 		velocity.x = HERO_SPEED * -1 * 0.707f;
 		break;
+
 	case DOWN_RIGHT:
 		if(facing != lastDir || !moving) setFrames(HERO_WALKING_DOWN_RIGHT_START, HERO_WALKING_DOWN_RIGHT_END);
 		velocity.y = HERO_SPEED * 0.707f;
@@ -87,6 +104,9 @@ void Hero::move(float frameTime)
 		velocity.y = HERO_SPEED * 0.707f;
 		velocity.x = HERO_SPEED * -1 * 0.707f;
 		break;
+	case NONE:
+		standing();
+		break;
 	}
 
 	lastDir = facing;
@@ -97,6 +117,7 @@ void Hero::move(float frameTime)
 void Hero::attack()
 {
 	// This function will need tweaking
+	//Indeed
 	VECTOR2 attackLocation(position);
 	switch(facing)
 	{
@@ -155,10 +176,9 @@ void Hero::draw(const VECTOR2& Center)
 	// Draw weapon here?
 }
 
-void Hero::standing()
-{
+void Hero::standing(){
 	startMoving = false;
-	moving = false;
+	moving=false;
 	setStandingImage();
 }
 
@@ -166,14 +186,13 @@ void Hero::setStandingImage()
 {
 	switch(facing)
 	{
-		case UP:		setStationaryFrame(HERO_FACING_UP); break;
-		case DOWN:		setStationaryFrame(HERO_FACING_DOWN); break;
-		case LEFT:		setStationaryFrame(HERO_FACING_LEFT); break;
-		case RIGHT:		setStationaryFrame(HERO_FACING_RIGHT); break;
-		case UP_RIGHT:	setStationaryFrame(HERO_FACING_UP_RIGHT); break;
-		case UP_LEFT:	setStationaryFrame(HERO_FACING_UP_LEFT); break;
-		case DOWN_RIGHT:setStationaryFrame(HERO_FACING_DOWN_RIGHT); break;
+		case UP: setStationaryFrame(HERO_FACING_UP); break;
+		case DOWN: setStationaryFrame(HERO_FACING_DOWN); break;
+		case LEFT: setStationaryFrame(HERO_FACING_LEFT); break;
+		case RIGHT: setStationaryFrame(HERO_FACING_RIGHT); break;
+		case UP_RIGHT: setStationaryFrame(HERO_FACING_UP_RIGHT); break;
+		case UP_LEFT: setStationaryFrame(HERO_FACING_UP_LEFT); break;
+		case DOWN_RIGHT: setStationaryFrame(HERO_FACING_DOWN_RIGHT); break;
 		case DOWN_LEFT: setStationaryFrame(HERO_FACING_DOWN_LEFT); break;
 	}
-	
 }
