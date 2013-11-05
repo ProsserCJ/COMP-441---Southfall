@@ -91,6 +91,7 @@ const float MIN_FRAME_TIME = 1.0f/FRAME_RATE;   // minimum desired time for 1 fr
 const float MAX_FRAME_TIME = 1.0f/MIN_FRAME_RATE; // maximum time used in calculations
 
 // Image Files
+const char HERO_SPRITE_SHEET[] = "";
 
 // Sound Files
 
@@ -117,6 +118,5 @@ const char SOUND_BANK[] = "audio\\Win\\Sound Bank.xsb";
 
 // ADD CUE name here
 const char FX[]   = "fx";
-
 
 #endif

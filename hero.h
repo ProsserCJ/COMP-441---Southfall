@@ -12,6 +12,12 @@ Last modified: 11/3/2013
 #include "entity.h"
 
 namespace heroNS{
+	//store hero constants here
+	const float HERO_SPEED = 90.f;
+	const float HEIGHT = TILE_SIZE;
+	const float WIDTH = TILE_SIZE;
+	const int COLS = 4;	
+		
 	//assign frame numbers here
 	enum {
 		HERO_FACING_UP, 
@@ -59,22 +65,29 @@ namespace heroNS{
 		HERO_SWINGING_DOWN_LEFT_START,
 		HERO_SWINGING_DOWN_LEFT_END
 	};
+
 }
 
 class Hero: public Entity
 {
 public:
-	void attack(DIR);
-	void move(DIR);
+	void attack();
+	void move(DIR, float);
 
-	virtual void draw(const VECTOR2& center){}
+	virtual void draw(const VECTOR2& center){image->draw();}
 	virtual void act(World* W){}				
-	virtual void update(float frameTime){}
+	virtual void update(float frameTime);
+
+	bool initialize(Game* g, int width, int height, int ncols, TextureManager *textureM);
+	
 
 	DIR getDirectionFacing(){return facing;}
 
 private:
 	DIR facing;
+	Input* input;
+
+	void setDirectionFacing();
 
 };
 
