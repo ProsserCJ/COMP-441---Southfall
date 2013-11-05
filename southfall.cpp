@@ -3,7 +3,7 @@
 //=============================================================================
 // Constructor
 //=============================================================================
-Southfall::Southfall()
+Southfall::Southfall() : Center(new VECTOR2(ZERO))
 {
 	
 }
@@ -36,6 +36,28 @@ void Southfall::initialize(HWND hwnd)
 	gameFont->initialize(graphics, 20, false, false, "Calibri");
 	gameFont->setFontColor(SETCOLOR_ARGB(255,255,0,0));
 
+	// Graphics
+	initializeGraphics();
+
+	// WorldInterface
+	Interface.initialize(graphics);
+
+	// Initialized Player here, have center point at player's position
+
+}
+
+//=============================================================================
+// Initialize images and textures
+//=============================================================================
+void Southfall::initializeGraphics()
+{
+	graphics = new Graphics();
+    graphics->initialize(hwnd, SCREEN_WIDTH, SCREEN_HEIGHT, FULLSCREEN);
+	// Character 1
+	if(!Character1TX.initialize(graphics, CHARACTER1_SHEET))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character1 texture"));
+	if(!Character1IM.initialize(graphics, 32, 32, 4, &Character1TX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character1 image"));
 }
 
 //=============================================================================
@@ -43,7 +65,7 @@ void Southfall::initialize(HWND hwnd)
 //=============================================================================
 void Southfall::update()
 {
-	player->update(frameTime);
+	//player->update(frameTime);
 }
 
 //=============================================================================
@@ -63,11 +85,10 @@ void Southfall::collisions()
 //=============================================================================
 // Render game items
 //=============================================================================
-void Southfall::render() // sprite begin and end in game now
-						//...where they should have been all along. brilliant
-
-{
-	gameFont->print("Words!", GAME_WIDTH/2, GAME_HEIGHT/2);
+void Southfall::render()
+{// sprite begin and end in game now
+	Interface.draw(*Center);
+	gameFont->print("Words!", SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
 }
 
 //=============================================================================

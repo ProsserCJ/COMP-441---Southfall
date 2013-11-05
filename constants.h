@@ -76,10 +76,9 @@ inline void safeOnResetDevice(T& ptr)
 // Window
 const char CLASS_NAME[] = "Southfall";
 const char GAME_TITLE[] = "Southfall";
-const bool FULLSCREEN = false;              // windowed or fullscreen
-const UINT GAME_WIDTH =  1200;               // width of game in pixels
-const UINT GAME_HEIGHT = 680;               // height of game in pixels
-const UINT TILE_SIZE = 40;				//side length of a square tile in pixels. 40?
+const bool FULLSCREEN = false;              // Windowed or fullscreen
+const UINT SCREEN_WIDTH =  1200;            // Width of screen in pixels
+const UINT SCREEN_HEIGHT = 680;				// Height of screen in pixels
 
 // Game
 const double PI = 3.14159265;
@@ -90,7 +89,14 @@ const float MIN_FRAME_RATE = 10.0f;             // the minimum frame rate
 const float MIN_FRAME_TIME = 1.0f/FRAME_RATE;   // minimum desired time for 1 frame
 const float MAX_FRAME_TIME = 1.0f/MIN_FRAME_RATE; // maximum time used in calculations
 
+const UINT TILE_SIZE = 64;					// Width of a tile in pixels
+const UINT HTILE_SIZE = 0.5*TILE_SIZE;
+const UINT HSCREEN_WIDTH = 0.5*SCREEN_WIDTH;
+const UINT HSCREEN_HEIGHT = 0.5*SCREEN_HEIGHT;
+
 // Image Files
+const char CHARACTER1_SHEET[] = "Images\\Character1Sheet.png";
+const char GRASS1[] = "Images\\Grass1.png";
 const char HERO_SPRITE_SHEET[] = "";
 
 // Sound Files

@@ -9,7 +9,7 @@ Last modified: 11/4/2013
 #ifndef _HERO_H
 #define _HERO_H
 
-#include "entity.h"
+#include "Entity.h"
 
 namespace heroNS{
 	//store hero constants here
@@ -69,6 +69,9 @@ namespace heroNS{
 class Hero: public Entity
 {
 public:
+	Hero() : Entity() {};
+	void attack(DIR);
+	void move(DIR);
 	void attack();
 	void move(DIR, float);
 

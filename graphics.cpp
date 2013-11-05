@@ -16,8 +16,8 @@ Graphics::Graphics()
     sprite = NULL;
     fullscreen = false;
     stencilSupport = false;
-    width = GAME_WIDTH;    // width & height are replaced in initialize()
-    height = GAME_HEIGHT;
+    width = SCREEN_WIDTH;    // width & height are replaced in initialize()
+    height = SCREEN_HEIGHT;
     backColor = graphicsNS::BACK_COLOR;
     //pOcclusionQuery = NULL;
     //numberOfPixelsColliding = 0;
@@ -314,7 +314,7 @@ void Graphics::changeDisplayMode(graphicsNS::DISPLAY_MODE mode)
         else            // windowed
         {
             SetWindowLong(hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW);
-            SetWindowPos(hwnd, HWND_TOP, 0,0,GAME_WIDTH,GAME_HEIGHT,
+            SetWindowPos(hwnd, HWND_TOP, 0,0,SCREEN_WIDTH,SCREEN_HEIGHT,
                 SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
 
             // Adjust window size so client area is GAME_WIDTH x GAME_HEIGHT
@@ -323,8 +323,8 @@ void Graphics::changeDisplayMode(graphicsNS::DISPLAY_MODE mode)
             MoveWindow(hwnd,
                        0,                                           // Left
                        0,                                           // Top
-                       GAME_WIDTH+(GAME_WIDTH-clientRect.right),    // Right
-                       GAME_HEIGHT+(GAME_HEIGHT-clientRect.bottom), // Bottom
+                       SCREEN_WIDTH+(SCREEN_WIDTH-clientRect.right),    // Right
+                       SCREEN_HEIGHT+(SCREEN_HEIGHT-clientRect.bottom), // Bottom
                        TRUE);                                       // Repaint the window
         }
 
@@ -332,7 +332,7 @@ void Graphics::changeDisplayMode(graphicsNS::DISPLAY_MODE mode)
     {
         // An error occured, try windowed mode 
         SetWindowLong(hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW);
-        SetWindowPos(hwnd, HWND_TOP, 0,0,GAME_WIDTH,GAME_HEIGHT,
+        SetWindowPos(hwnd, HWND_TOP, 0,0,SCREEN_WIDTH,SCREEN_HEIGHT,
             SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
 
         // Adjust window size so client area is GAME_WIDTH x GAME_HEIGHT
@@ -341,8 +341,8 @@ void Graphics::changeDisplayMode(graphicsNS::DISPLAY_MODE mode)
         MoveWindow(hwnd,
                     0,                                           // Left
                     0,                                           // Top
-                    GAME_WIDTH+(GAME_WIDTH-clientRect.right),    // Right
-                    GAME_HEIGHT+(GAME_HEIGHT-clientRect.bottom), // Bottom
+                    SCREEN_WIDTH+(SCREEN_WIDTH-clientRect.right),    // Right
+                    SCREEN_HEIGHT+(SCREEN_HEIGHT-clientRect.bottom), // Bottom
                     TRUE);                                       // Repaint the window
     }
 }

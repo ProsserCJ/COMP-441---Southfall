@@ -41,10 +41,20 @@ public:
 private:
     TextDX* gameFont;
 	stringstream ss;
+
+	// Images and Textures
+	TextureManager Character1TX;
+	Image Character1IM;
 	TextureManager heroTexture;
 	WorldInterface worldInterface;
 
+	void initializeGraphics();
+	
+	VECTOR2* Center;
+	
+
 	Hero* player;	// Maybe make this a more specific pointer later
+	WorldInterface Interface; 
 
 };
 

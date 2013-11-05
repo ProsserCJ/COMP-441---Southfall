@@ -13,11 +13,15 @@ Last modified: 11/4/2013
 
 class Structure;	// Forward reference to Structure
 
+const float TILE_SCALE = TILE_SIZE/32;
+
 class Tile
 {
 public:
 	Tile(VECTOR2 position, Image* image) : position(position), image(image), S(0) {};
 	~Tile() {};
+
+	void draw(VECTOR2& Center);
 
 	// Accessors
 	bool isTraversable() {return _traversable;}
@@ -45,14 +49,32 @@ private:
 class World
 {
 public:
+	// Constructors and destructors
+	World() : _initialized(false) {};
+	World(int width, int height) 
+		: width(width), height(height), _initialized(false) {};
+	~World() {};
 
-	Tile* getTile(int x, int y); // This is better
-								//We're going to have to do that math somewhere
+	void draw(VECTOR2& Center);
+	void update(float frameTime) {};
+
+	// Accessors
+	Tile* &		getTile(int x, int y)	{return tiles[x][y];}
+	Tile** &	getTile(int x)			{return tiles[x];}
+	Tile*** &	getTile()				{return tiles;}
+
+	int getWidth()	{return width;}
+	int getHeight()	{return height;}
+	bool isInitialized()	{return _initialized;}
+	
+	// Mutators
+	void setInitialized(bool init)	{_initialized = init;}
 
 private:
 	int width, height;	// Dimensions of this world
 	Tile*** tiles;		// The tiles that make up the world
-						// Good catch
+						
+	bool _initialized;
 };
 
 #endif
