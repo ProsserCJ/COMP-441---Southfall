@@ -2,7 +2,7 @@
 Hero header file, containts the definition
 of a hero class
 
-Last modified: 11/3/2013
+Last modified: 11/4/2013
 
 ******************************************************/
 
@@ -13,7 +13,7 @@ Last modified: 11/3/2013
 
 namespace heroNS{
 	//store hero constants here
-	const float HERO_SPEED = 90.f;
+	const float HERO_SPEED = 90.f; //arbitrarily chosen for now
 	const float HEIGHT = TILE_SIZE;
 	const float WIDTH = TILE_SIZE;
 	const int COLS = 4;	
@@ -37,7 +37,6 @@ namespace heroNS{
 		HERO_WALKING_LEFT_END,
 		HERO_WALKING_RIGHT_START,
 		HERO_WALKING_RIGHT_END,
-
 		HERO_WALKING_UP_RIGHT_START,
 		HERO_WALKING_UP_RIGHT_END,
 		HERO_WALKING_UP_LEFT_START,
@@ -55,7 +54,6 @@ namespace heroNS{
 		HERO_SWINGING_LEFT_END,
 		HERO_SWINGING_RIGHT_START,
 		HERO_SWINGING_RIGHT_END,
-
 		HERO_SWINGING_UP_RIGHT_START,
 		HERO_SWINGING_UP_RIGHT_END,
 		HERO_SWINGING_UP_LEFT_START,
@@ -74,20 +72,20 @@ public:
 	void attack();
 	void move(DIR, float);
 
-	virtual void draw(const VECTOR2& center){image->draw();}
+	virtual void draw(const VECTOR2& center){image->draw(); armor->draw();}
 	virtual void act(World* W){}				
 	virtual void update(float frameTime);
 
 	bool initialize(Game* g, int width, int height, int ncols, TextureManager *textureM);
-	
 
 	DIR getDirectionFacing(){return facing;}
 
 private:
 	DIR facing;
 	Input* input;
+	Image* armor;
 
-	void setDirectionFacing();
+	void setStandingImage();
 
 };
 

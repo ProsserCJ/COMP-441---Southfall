@@ -34,7 +34,7 @@ void Hero::update(float frameTime){
 	}
 	else if (input->isKeyDown('A')) dir = LEFT;
 	else if (input->isKeyDown('D')) dir = RIGHT;
-	else setDirectionFacing();
+	else setStandingImage();
 
 	move(dir, frameTime);
 
@@ -51,23 +51,46 @@ void Hero::move(DIR d, float frameTime)
 		image->setFrames(HERO_WALKING_UP_START, HERO_WALKING_UP_END);	
 		velocity.y = frameTime * HERO_SPEED * -1;	
 		break;
+
 	case DOWN:
 		image->setFrames(HERO_WALKING_DOWN_START, HERO_WALKING_DOWN_END);
 		velocity.y = frameTime * HERO_SPEED;
 		break;
+
 	case LEFT:
 		image->setFrames(HERO_WALKING_LEFT_START, HERO_WALKING_LEFT_END);
 		velocity.x = frameTime * HERO_SPEED * -1;
 		break;
+
 	case RIGHT:
 		image->setFrames(HERO_WALKING_RIGHT_START, HERO_WALKING_RIGHT_END);
 		velocity.x = frameTime * HERO_SPEED;
 		break;
 
+	//Diagonal movement is twice as fast
 	case UP_RIGHT:
+		image->setFrames(HERO_WALKING_UP_RIGHT_START, HERO_WALKING_UP_RIGHT_END);
+		velocity.y = frameTime * HERO_SPEED * -1;
+		velocity.x = frameTime * HERO_SPEED;
+		break;
+
 	case UP_LEFT:
+		image->setFrames(HERO_WALKING_UP_LEFT_START, HERO_WALKING_UP_LEFT_END);	
+		velocity.y = frameTime * HERO_SPEED * -1;	
+		velocity.x = frameTime * HERO_SPEED * -1;
+		break;
+
 	case DOWN_RIGHT:
-	case DOWN_LEFT: break;
+		image->setFrames(HERO_WALKING_DOWN_RIGHT_START, HERO_WALKING_DOWN_RIGHT_END);
+		velocity.y = frameTime * HERO_SPEED;
+		velocity.x = frameTime * HERO_SPEED;
+		break;
+
+	case DOWN_LEFT:
+		image->setFrames(HERO_WALKING_DOWN_LEFT_START, HERO_WALKING_DOWN_LEFT_END);	
+		velocity.y = frameTime * HERO_SPEED;
+		velocity.x = frameTime * HERO_SPEED * -1;
+		break;
 	}
 
 	setPosition(position + velocity);
@@ -82,14 +105,17 @@ void Hero::attack()
 		image->setFrames(HERO_SWINGING_UP_START, HERO_SWINGING_UP_END);
 		attackLocation.y -= TILE_SIZE;
 		break;
+
 	case DOWN:
 		image->setFrames(HERO_SWINGING_DOWN_START, HERO_SWINGING_DOWN_END);
 		attackLocation.y += TILE_SIZE;
 		break;
+
 	case LEFT:
 		image->setFrames(HERO_SWINGING_LEFT_START, HERO_SWINGING_LEFT_END);
 		attackLocation.x -= TILE_SIZE;
 		break;
+
 	case RIGHT:
 		image->setFrames(HERO_SWINGING_RIGHT_START, HERO_SWINGING_RIGHT_END);
 		attackLocation.x += TILE_SIZE;
@@ -102,13 +128,13 @@ void Hero::attack()
 	}
 
 	/*NOTE TO CONSIDER:
-		Do we have mechanics issues with being able to attack diagonally on a rectangular grid?
-		If diagonal attacks can hit two squares, regular attacks are obsolete.
-		How should diagonal attacks work?
+		Do we have mechanics issues with being able to move and attack diagonally on a rectangular grid?
+		Is diagonal movement twice as fast as along the axes?
+		Do diagonal attacks miss the squares to the sides?
 	*/
 }
 
-void Hero::setDirectionFacing(){
+void Hero::setStandingImage(){
 	switch(facing){
 	case UP: image->setCurrentFrame(HERO_FACING_UP); break;
 	case DOWN: image->setCurrentFrame(HERO_FACING_DOWN); break;

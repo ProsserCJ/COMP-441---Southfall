@@ -2,7 +2,7 @@
 Southfall game header file, containts the definition
 for our game class.
 
-Last modified: 11/1/2013
+Last modified: 11/4/2013
 
 ******************************************************/
 
@@ -43,7 +43,7 @@ private:
 	stringstream ss;
 	TextureManager heroTexture;
 	WorldInterface worldInterface;
-	
+
 	Hero* player;	// Maybe make this a more specific pointer later
 
 };

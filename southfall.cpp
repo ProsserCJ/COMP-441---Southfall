@@ -43,7 +43,7 @@ void Southfall::initialize(HWND hwnd)
 //=============================================================================
 void Southfall::update()
 {
-	
+	player->update(frameTime);
 }
 
 //=============================================================================
@@ -64,10 +64,8 @@ void Southfall::collisions()
 // Render game items
 //=============================================================================
 void Southfall::render() // sprite begin and end in game now
-<<<<<<< HEAD
 						//...where they should have been all along. brilliant
-=======
->>>>>>> 4e54a378917c5318c4dd659bba85985a5ce93e7d
+
 {
 	gameFont->print("Words!", GAME_WIDTH/2, GAME_HEIGHT/2);
 }
@@ -79,7 +77,8 @@ void Southfall::render() // sprite begin and end in game now
 void Southfall::releaseAll()
 {
     Game::releaseAll();
-    return;
+	heroTexture.onLostDevice();
+	return;
 }
 
 //=============================================================================
@@ -89,5 +88,6 @@ void Southfall::releaseAll()
 void Southfall::resetAll()
 {
     Game::resetAll();
+	heroTexture.onResetDevice();
     return;
 }
