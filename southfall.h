@@ -41,6 +41,8 @@ public:
 private:
     TextDX* gameFont;
 	stringstream ss;
+	TextureManager heroTexture;
+	WorldInterface worldInterface;
 	
 	Hero* player;	// Maybe make this a more specific pointer later
 

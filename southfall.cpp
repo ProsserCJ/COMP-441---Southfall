@@ -22,7 +22,14 @@ Southfall::~Southfall()
 //=============================================================================
 void Southfall::initialize(HWND hwnd)
 {
-    Game::initialize(hwnd); 
+    Game::initialize(hwnd);
+
+	// Hero	
+	/*if(!heroTexture.initialize(graphics, HERO_SPRITE_SHEET))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize hero texture."));
+
+	if (!player->initialize(this, heroNS::WIDTH, heroNS::HEIGHT, heroNS::COLS, &heroTexture)) 
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize hero."));*/
 
 	// Font
 	gameFont = new TextDX();
@@ -56,9 +63,10 @@ void Southfall::collisions()
 //=============================================================================
 // Render game items
 //=============================================================================
-void Southfall::render()
-{// sprite begin and end in game now
-	
+void Southfall::render() // sprite begin and end in game now
+						//...where they should have been all along. brilliant
+{
+	gameFont->print("Words!", GAME_WIDTH/2, GAME_HEIGHT/2);
 }
 
 //=============================================================================

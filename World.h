@@ -23,10 +23,13 @@ public:
 	bool isTraversable() {return _traversable;}
 	bool hasStructure() {return S != 0;}
 	
-	Entity* getEntity(){return 0;}; //returns a pointer to an entity is there is one on the tile (else 0)
+	//Entity* getEntity(){return 0;}; //returns a pointer to an entity is there is one on the tile (else 0)
 		// I'm not sure we should sectorize on this level, since the positions are 
 		// continuous, we could concevably have multiple entities on a single tile.
 		// Things could get tricky.
+
+		// You're right -- I was trying to make collisions more efficient, but collisions will never be efficient.
+		// We'll have to just check every active entity.
 
 	// Mutators
 	void giveStructure(Structure* S) {this->S = S;}
@@ -44,6 +47,7 @@ class World
 public:
 
 	Tile* getTile(int x, int y); // This is better
+								//We're going to have to do that math somewhere
 
 private:
 	int width, height;	// Dimensions of this world

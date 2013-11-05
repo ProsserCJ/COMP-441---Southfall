@@ -20,7 +20,7 @@ Last Modified 11/2/2013
 const VECTOR2 ZERO = VECTOR2(0,0);
 
 namespace entityNS{
-	enum DIR {UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT};
+	enum DIR {UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT, NONE};
 	enum COLLISIONTYPE{CIRCLE, POINTCOLLISION};	
 }
 using namespace entityNS;
@@ -54,7 +54,7 @@ public:
 	virtual bool isActive() {return active;}
 
 	// Mutators
-	void setPosition(const VECTOR2& pos)	{position = pos;}
+	void setPosition(const VECTOR2& pos)	{position = pos; image->setX(pos.x); image->setY(pos.y);}
 	void setVelocity(const VECTOR2& vel)	{velocity = vel;}
 	void setKnockback(const VECTOR2& kb)	{knockback = kb;}
 	void setActive(bool act)				{active = act;}
@@ -65,12 +65,13 @@ protected:
 	VECTOR2 position;	// Position in the world (center)
 	VECTOR2 velocity;	// Velocity of the entity
 	VECTOR2 knockback;	// For knock back effects
+	RECT collisionRectangle;
 	float radius;
 	int HP;
 	int maxHP;
 	bool active;
 	World* world;
-	Image* image;		//Is this better than deriving from Image?
+	Image* image;
 						
 	COLLISIONTYPE collisionType;
 };
