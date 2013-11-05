@@ -52,8 +52,7 @@ private:
 	
 	VECTOR2* Center;
 	
-
-	Hero* player;	// Maybe make this a more specific pointer later
+	Hero* player;
 	WorldInterface Interface; 
 
 };

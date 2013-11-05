@@ -5,7 +5,7 @@ void Tile::draw(VECTOR2& Center)
 	VECTOR2 diff = position*TILE_SIZE - Center;
 	int X = diff.x + HSCREEN_WIDTH - HTILE_SIZE;
 	int Y = diff.y + HSCREEN_HEIGHT - HTILE_SIZE;
-	image->setScale(TILE_SCALE);
+	image->setScale(DEFAULT_SCALE);
 	image->setX(X); image->setY(Y);
 	image->draw();
 }

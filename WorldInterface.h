@@ -32,6 +32,8 @@ private:
 	// Images and Textures
 	TextureManager GrassTX;
 	Image GrassIM;
+	TextureManager TreeTX;
+	Image TreeIM;
 
 	Graphics* graphics;
 

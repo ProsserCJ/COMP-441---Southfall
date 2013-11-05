@@ -90,6 +90,7 @@ const float MIN_FRAME_TIME = 1.0f/FRAME_RATE;   // minimum desired time for 1 fr
 const float MAX_FRAME_TIME = 1.0f/MIN_FRAME_RATE; // maximum time used in calculations
 
 const UINT TILE_SIZE = 64;					// Width of a tile in pixels
+const float DEFAULT_SCALE = TILE_SIZE/32;	// Default scale of images
 const UINT HTILE_SIZE = 0.5*TILE_SIZE;
 const UINT HSCREEN_WIDTH = 0.5*SCREEN_WIDTH;
 const UINT HSCREEN_HEIGHT = 0.5*SCREEN_HEIGHT;
@@ -97,6 +98,7 @@ const UINT HSCREEN_HEIGHT = 0.5*SCREEN_HEIGHT;
 // Image Files
 const char CHARACTER1_SHEET[] = "Images\\Character1Sheet.png";
 const char GRASS1[] = "Images\\Grass1.png";
+const char TREE1[] = "Images\\Tree1.png";
 const char HERO_SPRITE_SHEET[] = "";
 
 // Sound Files

@@ -13,7 +13,7 @@ Last modified: 11/4/2013
 
 namespace heroNS{
 	//store hero constants here
-	const float HERO_SPEED = 90.f; //arbitrarily chosen for now
+	const float HERO_SPEED = 1.f; //arbitrarily chosen for now
 	const float HEIGHT = TILE_SIZE;
 	const float WIDTH = TILE_SIZE;
 	const int COLS = 4;	
@@ -66,30 +66,40 @@ namespace heroNS{
 
 }
 
+// The player's character
 class Hero: public Entity
 {
 public:
 	Hero() : Entity() {};
+	Hero(Image* image) : Entity() {initialize(image);}
 	void attack(DIR);
 	void move(DIR);
 	void attack();
-	void move(DIR, float);
+	void move(float);
 
-	virtual void draw(const VECTOR2& center){image->draw(); armor->draw();}
-	virtual void act(World* W){}				
+	virtual void draw(const VECTOR2& Center);
+	virtual void act(World* W)					{}
 	virtual void update(float frameTime);
 
-	bool initialize(Game* g, int width, int height, int ncols, TextureManager *textureM);
+	void initialize(Image* image);
 
-	DIR getDirectionFacing(){return facing;}
+	// Accessors
+	DIR getDirectionFacing()	{return facing;}
+
+	// Mutators
+	void setDir(DIR face)		{facing=face;}
+	void go(DIR face)			{startMoving=true;facing=face;}
+	void setStandingImage();
+	void standing()				{startMoving=moving=false;setStandingImage();}
 
 private:
 	DIR facing;
+	DIR lastDir;
+	bool moving;	// True if the hero should move in the direction it is facing
+	bool startMoving;
 	Input* input;
+	
 	Image* armor;
-
-	void setStandingImage();
-
 };
 
 #endif

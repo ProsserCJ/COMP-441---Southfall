@@ -3,12 +3,19 @@
 void WorldInterface::initialize(Graphics* graphics)
 {
 	this->graphics = graphics;
-
+	
+	// Grass
 	if(!GrassTX.initialize(graphics, GRASS1))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Grass texture"));
 	if(!GrassIM.initialize(graphics, 0, 0, 0, &GrassTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Grass image"));
+	// Tree
+	if(!TreeTX.initialize(graphics, TREE1))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Tree texture"));
+	if(!TreeIM.initialize(graphics, 0, 0, 0, &TreeTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Tree image"));
 
+	// Temporary world constants
 	int WORLD_WIDTH = 100;
 	int WORLD_HEIGHT = 100;
 	Current = new World(WORLD_WIDTH, WORLD_HEIGHT);

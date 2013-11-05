@@ -18,8 +18,10 @@ Last Modified 11/2/2013
 //class World; // Foreward reference to world
 
 const VECTOR2 ZERO = VECTOR2(0,0);
+const float DEFAULT_FRAME_DELAY = 0.2;
 
-namespace entityNS{
+namespace entityNS
+{
 	enum DIR {UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT, NONE};
 	enum COLLISIONTYPE{CIRCLE, POINTCOLLISION};	
 }
@@ -31,14 +33,15 @@ class Entity
 public:
 	// Constructors and destructors
 	Entity() : position(ZERO), velocity(ZERO), knockback(ZERO), image(0), maxHP(0), HP(0), 
-		radius(0), active(false), collisionType(POINTCOLLISION) {};
+		radius(0), active(false), collisionType(POINTCOLLISION) {initialize();}
 	Entity(VECTOR2 pos, float radius, int HP, Image* image) 
 		: position(pos), radius(radius), collisionType(CIRCLE), image(image), HP(HP), 
-		maxHP(HP), velocity(ZERO), knockback(ZERO), active(true) {};
+		maxHP(HP), velocity(ZERO), knockback(ZERO), active(true) {initialize();}
 	~Entity() {};
 
 	// Basic functions
-	virtual void draw(const VECTOR2& center){};		// Draw itself (possibly needs second parameter, zoomlevel or something)
+	void initialize();
+	virtual void draw(const VECTOR2& center);		// Draw itself (possibly needs second parameter, zoomlevel or something)
 	virtual void act(World* W) = 0;					// AI and decisions
 	virtual void update(float frameTime){};	// Update
 
@@ -60,6 +63,13 @@ public:
 	void setActive(bool act)				{active = act;}
 	void setHP(int HP)						{this->HP = HP;}
 	void kill()								{HP = 0;}	
+	
+	// Image updating
+	void setFrame(int frame)				{this->frame=frame;}	// Directly set the frame
+	void updateImage(float frameTime)		{_imageTime+=frameTime;}
+	void setFrames(int start, int end)		{startFrame=start;endFrame=end;frame=start;}
+	void setFrameDelay(float delay)			{_imageDelay=delay;}
+	void startImage()						{frame=startFrame;}
 
 protected:
 	VECTOR2 position;	// Position in the world (center)
@@ -71,7 +81,14 @@ protected:
 	int maxHP;
 	bool active;
 	World* world;
-	Image* image;
+
+	// Image and animation control
+	int frame;			// What frame to display
+	float _imageTime;	// How long the current frame has displayed
+	float _imageDelay;	// How long each frame should display
+	int startFrame;		// Start of the animation loop
+	int endFrame;		// End of the animation loop
+	Image* image;		// The sprite sheet to display from
 						
 	COLLISIONTYPE collisionType;
 };
