@@ -1,4 +1,4 @@
-#include "southfall.h"
+#include "Southfall.h"
 
 //=============================================================================
 // Constructor
@@ -24,13 +24,6 @@ void Southfall::initialize(HWND hwnd)
 {
     Game::initialize(hwnd);
 
-	// Hero	
-	/*if(!heroTexture.initialize(graphics, HERO_SPRITE_SHEET))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize hero texture."));
-
-	if (!player->initialize(this, heroNS::WIDTH, heroNS::HEIGHT, heroNS::COLS, &heroTexture)) 
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize hero."));*/
-
 	// Font
 	gameFont = new TextDX();
 	gameFont->initialize(graphics, 20, false, false, "Calibri");
@@ -43,7 +36,7 @@ void Southfall::initialize(HWND hwnd)
 	Interface.initialize(graphics);
 
 	// Initialized Player here, have center point at player's position
-
+	player = new Hero(&Character1IM);
 }
 
 //=============================================================================
@@ -53,6 +46,7 @@ void Southfall::initializeGraphics()
 {
 	graphics = new Graphics();
     graphics->initialize(hwnd, SCREEN_WIDTH, SCREEN_HEIGHT, FULLSCREEN);
+
 	// Character 1
 	if(!Character1TX.initialize(graphics, CHARACTER1_SHEET))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character1 texture"));
@@ -65,6 +59,47 @@ void Southfall::initializeGraphics()
 //=============================================================================
 void Southfall::update()
 {
+	float TESTVELOCITY = 640;
+	// The code here just moves the camera untill we get a working player hero
+	if(input->isKeyDown(WKEY) && input->isKeyDown(DKEY))
+	{// UP-RIGHT
+		Center->y -= frameTime*TESTVELOCITY*0.707f;
+		Center->x += frameTime*TESTVELOCITY*0.707f;
+	}
+	else if(input->isKeyDown(WKEY) && input->isKeyDown(AKEY))
+	{// UP-LEFT
+		Center->y -= frameTime*TESTVELOCITY*0.707f;
+		Center->x -= frameTime*TESTVELOCITY*0.707f;
+	}
+	else if(input->isKeyDown(SKEY) && input->isKeyDown(DKEY))
+	{// DOWN-RIGHT
+		Center->y += frameTime*TESTVELOCITY*0.707f;
+		Center->x += frameTime*TESTVELOCITY*0.707f;
+	}
+	else if(input->isKeyDown(SKEY) && input->isKeyDown(AKEY))
+	{// DOWN-LEFT
+		Center->y += frameTime*TESTVELOCITY*0.707f;
+		Center->x -= frameTime*TESTVELOCITY*0.707f;
+	}
+	else
+	{// Single or opposite Key/s Down
+		if(input->isKeyDown(WKEY))
+		{
+			Center->y -= frameTime*TESTVELOCITY;
+		}
+		if(input->isKeyDown(AKEY))
+		{
+			Center->x -= frameTime*TESTVELOCITY;
+		}
+		if(input->isKeyDown(SKEY))
+		{
+			Center->y += frameTime*TESTVELOCITY;
+		}
+		if(input->isKeyDown(DKEY))
+		{
+			Center->x += frameTime*TESTVELOCITY;
+		}
+	}
 	//player->update(frameTime);
 }
 
@@ -88,6 +123,10 @@ void Southfall::collisions()
 void Southfall::render()
 {// sprite begin and end in game now
 	Interface.draw(*Center);
+
+	player->draw(*Center);	// For now
+
+
 	gameFont->print("Words!", SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
 }
 
