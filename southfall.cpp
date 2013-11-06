@@ -124,14 +124,16 @@ void Southfall::update()
 	//}
 
 	player->update(frameTime, Interface.getCurrent());
-	npc1->update(frameTime);
+	npc1->update(frameTime, Interface.getCurrent());
 }
 
 //=============================================================================
 // Artificial Intelligence
 //=============================================================================
 void Southfall::ai()
-{}
+{
+	npc1->act(Interface.getCurrent());
+}
 
 //=============================================================================
 // Handle collisions

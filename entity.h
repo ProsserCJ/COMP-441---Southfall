@@ -25,13 +25,41 @@ namespace entityNS
 }
 using namespace entityNS;
 
+// Generic Frame Definitions
+const int WALKING_UP_START = 12;
+const int WALKING_UP_END = 15;
+const int WALKING_DOWN_START = 0;
+const int WALKING_DOWN_END = 3;
+const int WALKING_RIGHT_START = 8;
+const int WALKING_RIGHT_END = 11;
+const int WALKING_LEFT_START = 4;
+const int WALKING_LEFT_END = 7;
+// Facing 
+const int FACING_UP = 12;
+const int FACING_DOWN = 0;
+const int FACING_LEFT = 4;
+const int FACING_RIGHT = 8;
+const int FACING_UP_RIGHT = 12;
+const int FACING_UP_LEFT = 12;
+const int FACING_DOWN_RIGHT = 0;
+const int FACING_DOWN_LEFT = 0;
+// Diagonal Frame Definitions
+const int WALKING_UP_RIGHT_START = 12;
+const int WALKING_UP_RIGHT_END = 15;
+const int WALKING_UP_LEFT_START = 12;
+const int WALKING_UP_LEFT_END = 15;
+const int WALKING_DOWN_RIGHT_START = 0;
+const int WALKING_DOWN_RIGHT_END = 3;
+const int WALKING_DOWN_LEFT_START = 0;
+const int WALKING_DOWN_LEFT_END = 3;
+
 // Base for in game characters, monsters, and animals
 class Entity
 {
 public:
 	// Constructors and destructors
 	Entity() : position(ZERO), velocity(ZERO), knockback(ZERO), image(0), maxHP(0), HP(0), 
-		radius(0), active(false), collisionType(POINTCOLLISION) {initialize();}
+		radius(16), active(false), collisionType(POINTCOLLISION) {initialize();}
 	Entity(VECTOR2 pos, float radius, int HP, Image* image) 
 		: position(pos), radius(radius), collisionType(CIRCLE), image(image), HP(HP), 
 		maxHP(HP), velocity(ZERO), knockback(ZERO), active(true) {initialize();}
@@ -41,7 +69,8 @@ public:
 	void initialize();
 	virtual void draw(const VECTOR2& center);		// Draw itself (possibly needs second parameter, zoomlevel or something)
 	virtual void act(World* W) = 0;					// AI and decisions
-	virtual void update(float frameTime){}			// Update
+	virtual void update(float frameTime, World* W);
+	void move(float frameTime);
 
 	// Collision Handler
 	friend bool HandleCollision(Entity* A, Entity* B) {return true; }; // True if the entities collided
@@ -73,7 +102,7 @@ public:
 	void setDir(DIR face)					{facing=face;}
 	void go(DIR face);			
 	void standing();
-	virtual void setStandingImage()=0;
+	virtual void setStandingImage();
 
 protected:
 	VECTOR2 position;	// Position in the world (center)
@@ -81,6 +110,7 @@ protected:
 	VECTOR2 knockback;	// For knock back effects
 	RECT collisionRectangle;
 	float radius;
+	float speed;
 	int HP;
 	int maxHP;
 	bool active;

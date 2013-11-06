@@ -37,7 +37,7 @@ namespace npcNS{
 class NPC: public Entity
 {
 public:
-	NPC() : Entity(){}
+	NPC() : Entity() {}
 	NPC(Image* image, VECTOR2 pos)
 		: Entity(pos, npcNS::RADIUS, npcNS::HP, image)
 	{
@@ -48,12 +48,12 @@ public:
 	~NPC() {}
 
 	//inherited functions
-	virtual void act(World* w){};
-	virtual void update(float frameTime);
-	virtual void setStandingImage();
+	virtual void act(World* w);
+	virtual void update(float frameTime, World* W);
+	//virtual void setStandingImage();
 
 	void initialize(Image* image);
-	void move(float frameTime);
+	//void move(float frameTime);
 	
 
 private:

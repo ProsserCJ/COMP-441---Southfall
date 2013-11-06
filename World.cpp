@@ -19,3 +19,21 @@ void World::draw(VECTOR2& Center)
 		for(int y = y0; y < y1; y++)
 			tiles[x][y]->draw(Center);
 }
+
+bool World::canMoveHere(VECTOR2 position, float radius)
+{
+	VECTOR2 topLeft, topRight, bottomLeft, bottomRight;
+	topLeft = position + VECTOR2(-radius,-radius);
+	topRight = position + VECTOR2(radius,-radius);
+	bottomLeft = position + VECTOR2(-radius,radius);
+	bottomRight = position + VECTOR2(radius,radius);
+	if(isTraversible(topLeft) && isTraversible(topRight) &&
+		isTraversible(bottomLeft) && isTraversible(bottomRight))
+		return true;
+	return false;
+}
+
+bool World::isTraversible(VECTOR2 T)
+{
+	return getTile(tileX(T.x), tileY(T.y))->isTraversable();
+}

@@ -74,14 +74,14 @@ public:
 	Hero(Image* image, Input* input) 
     : Entity(), input(input) {initialize(image);}
 	void attack(DIR);
-	void move(DIR);
+	//void move(DIR);
 	void attack();
-	void move(float);
+	//void move(float);
 
 	virtual void draw(const VECTOR2& Center);
 	virtual void act(World* W)					{}
 	virtual void update(float frameTime, World* W);
-	virtual void setStandingImage();
+	//virtual void setStandingImage();
 
 	void initialize(Image* image);
 

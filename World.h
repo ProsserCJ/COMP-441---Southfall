@@ -13,6 +13,21 @@ Last modified: 11/4/2013
 
 class Structure;	// Forward reference to Structure
 
+inline int tileX(float x)
+{
+	return x/TILE_SIZE;
+}
+
+inline int tileY(float y)
+{
+	return y/TILE_SIZE;
+}
+
+inline VECTOR2 tileV(VECTOR2 V)
+{
+	return VECTOR2(V.x/TILE_SIZE, V.y/TILE_SIZE);
+}
+
 class Tile
 {
 public:
@@ -53,6 +68,8 @@ public:
 	Tile* &		getTile(int x, int y)	{return tiles[x][y];}
 	Tile** &	getTile(int x)			{return tiles[x];}
 	Tile*** &	getTile()				{return tiles;}
+	bool canMoveHere(VECTOR2 position, float radius);
+	bool isTraversible(VECTOR2 T);	// Pass in the world coords, not tile coords
 
 	int getWidth()	{return width;}
 	int getHeight()	{return height;}
