@@ -20,7 +20,7 @@ void Entity::draw(const VECTOR2& Center)
 		++frame;
 		if(frame > endFrame) frame = startFrame;
 	}
-
+	
 	VECTOR2 diff = position*TILE_SIZE - Center;
 	int X = diff.x + HSCREEN_WIDTH - HTILE_SIZE;
 	int Y = diff.y + HSCREEN_HEIGHT - HTILE_SIZE;
@@ -29,3 +29,16 @@ void Entity::draw(const VECTOR2& Center)
 	image->setX(X); image->setY(Y);
 	image->draw();
 }
+
+void Entity::go(DIR face)
+{
+	startMoving=true;
+	facing=face;
+}
+
+void Entity::standing(){
+	startMoving = false;
+	moving=false;
+	setStandingImage();
+}
+

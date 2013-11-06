@@ -8,15 +8,13 @@ Last modified: 11/5/2013
 #include "hero.h"
 using namespace heroNS;
 
-
 void Hero::initialize(Image* image)
 {
 	this->image = image;
 	armor = 0;
-	image->setFrameDelay(.25);
+	image->setFrameDelay(DEFAULT_FRAME_DELAY);
 	image->setLoop(true);
 };
-
 
 void Hero::update(float frameTime, World* W)
 {
@@ -44,12 +42,6 @@ void Hero::update(float frameTime, World* W)
 	// attack is space key is pressed
 	// We should change this to the mouse at some point
 	//if (input->isKeyDown(SPACE_KEY)) attack();
-}
-
-void Hero::go(DIR face)
-{
-	startMoving=true;
-	facing=face;
 }
 
 void Hero::move(float frameTime)
@@ -169,12 +161,6 @@ void Hero::draw(const VECTOR2& Center)
 	}
 
 	// Draw weapon here?
-}
-
-void Hero::standing(){
-	startMoving = false;
-	moving=false;
-	setStandingImage();
 }
 
 void Hero::setStandingImage()

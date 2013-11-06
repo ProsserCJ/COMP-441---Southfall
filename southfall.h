@@ -19,6 +19,7 @@ Last modified: 11/4/2013
 #include <sstream>
 #include "hero.h"
 #include "WorldInterface.h"
+#include "npc.h"
 using std::stringstream;
 
 class Southfall : public Game
@@ -43,9 +44,8 @@ private:
 	stringstream ss;
 
 	// Images and Textures
-	TextureManager Character1TX;
-	Image Character1IM;
-	TextureManager heroTexture;
+	TextureManager Character1TX, NPC1TX;
+	Image Character1IM, NPC1IM;
 	WorldInterface worldInterface;
 
 	void initializeGraphics();
@@ -53,6 +53,7 @@ private:
 	VECTOR2* Center;
 	
 	Hero* player;
+	NPC* npc1;
 	WorldInterface Interface; 
 
 };

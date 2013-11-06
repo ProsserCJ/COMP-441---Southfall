@@ -15,8 +15,6 @@ Last Modified 11/2/2013
 #include "game.h"
 #include "World.h"
 
-//class World; // Foreward reference to world
-
 const VECTOR2 ZERO = VECTOR2(0,0);
 const float DEFAULT_FRAME_DELAY = 0.2;
 
@@ -43,18 +41,19 @@ public:
 	void initialize();
 	virtual void draw(const VECTOR2& center);		// Draw itself (possibly needs second parameter, zoomlevel or something)
 	virtual void act(World* W) = 0;					// AI and decisions
-	virtual void update(float frameTime){};	// Update
+	virtual void update(float frameTime){}			// Update
 
 	// Collision Handler
 	friend bool HandleCollision(Entity* A, Entity* B) {return true; }; // True if the entities collided
 
 	// Accessors
-	VECTOR2 getPosition()	const {return position;}
-	VECTOR2 getVelocity()	const {return velocity;}
-	float getRadius()		const {return radius;}
-	int getHP()				const {return HP;}
-	virtual bool alive()	{return HP > 0;}
-	virtual bool isActive() {return active;}
+	VECTOR2 getPosition()		const {return position;}
+	VECTOR2 getVelocity()		const {return velocity;}
+	float getRadius()			const {return radius;}
+	int getHP()					const {return HP;}
+	virtual bool alive()		{return HP > 0;}
+	virtual bool isActive()		{return active;}
+	DIR getDirectionFacing()	{return facing;}
 
 	// Mutators
 	void setPosition(const VECTOR2& pos)	{position = pos; image->setX(pos.x); image->setY(pos.y);}
@@ -71,6 +70,10 @@ public:
 	void setFrames(int start, int end)		{startFrame=start;endFrame=end;frame=start;}
 	void setFrameDelay(float delay)			{_imageDelay=delay;}
 	void startImage()						{frame=startFrame;}
+	void setDir(DIR face)					{facing=face;}
+	void go(DIR face);			
+	void standing();
+	virtual void setStandingImage()=0;
 
 protected:
 	VECTOR2 position;	// Position in the world (center)
@@ -90,6 +93,12 @@ protected:
 	int startFrame;		// Start of the animation loop
 	int endFrame;		// End of the animation loop
 	Image* image;		// The sprite sheet to display from
+
+	//Movement control
+	DIR facing;	
+	DIR lastDir;
+	bool moving;		// True if the entity should move in the direction it is facing
+	bool startMoving;
 						
 	COLLISIONTYPE collisionType;
 };

@@ -71,7 +71,7 @@ class Hero: public Entity
 {
 public:
 	Hero() : Entity() {};
-	 Hero(Image* image, Input* input) 
+	Hero(Image* image, Input* input) 
     : Entity(), input(input) {initialize(image);}
 	void attack(DIR);
 	void move(DIR);
@@ -81,26 +81,21 @@ public:
 	virtual void draw(const VECTOR2& Center);
 	virtual void act(World* W)					{}
 	virtual void update(float frameTime, World* W);
+	virtual void setStandingImage();
 
 	void initialize(Image* image);
 
 	// Accessors
-	DIR getDirectionFacing()	{return facing;}
+	
 
 	// Mutators
-	void setDir(DIR face)		{facing=face;}
-	void go(DIR face);			
-	void setStandingImage();
-	void standing();				
+			
+	//^ What was here has been moved to Entity.h for use in all derived classes
 
-private:
-	DIR facing;
-	DIR lastDir;
-	bool moving;	// True if the hero should move in the direction it is facing
-	bool startMoving;
-	Input* input;
-	
+private:	
+	Input* input;	
 	Image* armor;
+	//Data members moved back into Entity
 };
 
 #endif

@@ -36,7 +36,8 @@ void Southfall::initialize(HWND hwnd)
 	Interface.initialize(graphics);
 
 	// Initialized Player here, have center point at player's position
-	player = new Hero(&Character1IM, input);
+	player = new Hero(&Character1IM, input);	
+	npc1 = new NPC(&NPC1IM, VECTOR2(4,4));
 }
 
 //=============================================================================
@@ -52,6 +53,10 @@ void Southfall::initializeGraphics()
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character1 texture"));
 	if(!Character1IM.initialize(graphics, 32, 32, 4, &Character1TX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character1 image"));
+	if(!NPC1TX.initialize(graphics, CHARACTER1_SHEET))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing NPC1 texture"));
+	if(!NPC1IM.initialize(graphics, 32, 32, 4, &NPC1TX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing NPC1 image"));
 }
 
 //=============================================================================
@@ -119,6 +124,7 @@ void Southfall::update()
 	//}
 
 	player->update(frameTime, Interface.getCurrent());
+	npc1->update(frameTime);
 }
 
 //=============================================================================
@@ -142,6 +148,7 @@ void Southfall::render()
 {// sprite begin and end in game now
 	Interface.draw(TILE_SIZE*player->getPosition());
 	player->draw(TILE_SIZE*player->getPosition());	// For now
+	npc1->draw(TILE_SIZE*player->getPosition());
 
 }
 
