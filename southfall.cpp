@@ -118,7 +118,7 @@ void Southfall::update()
 	//	}
 	//}
 
-	player->update(frameTime);
+	player->update(frameTime, Interface.getCurrent());
 }
 
 //=============================================================================

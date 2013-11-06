@@ -16,7 +16,8 @@ class Structure;	// Forward reference to Structure
 class Tile
 {
 public:
-	Tile(VECTOR2 position, Image* image) : position(position), image(image), S(0) {};
+	Tile(VECTOR2 position, Image* image, bool trav=true) 
+		: position(position), image(image), _traversable(trav), S(0) {};
 	~Tile() {};
 
 	void draw(VECTOR2& Center);

@@ -1,7 +1,7 @@
 /****************************************************
 Hero implementation file
 
-Last modified: 11/4/2013
+Last modified: 11/5/2013
 
 ******************************************************/
 
@@ -18,29 +18,26 @@ void Hero::initialize(Image* image)
 };
 
 
-void Hero::update(float frameTime)
+void Hero::update(float frameTime, World* W)
 {
 	updateImage(frameTime);
-
-	velocity = ZERO; //reset velocity to start each frame;
-	
+	velocity = ZERO;
 	DIR dir = NONE;
-	
 	if (input->isKeyDown(WKEY))
-        {
-                if (input->isKeyDown(DKEY))                        go(UP_RIGHT);
-                else if (input->isKeyDown(AKEY))        go(UP_LEFT);        
-                else                                                                go(UP);
-        }        
-        else if (input->isKeyDown(SKEY))
-        {
-                if (input->isKeyDown(DKEY))                        go(DOWN_RIGHT);
-                else if (input->isKeyDown(AKEY))        go(DOWN_LEFT);        
-                else                                                                go(DOWN);
-        }
-        else if (input->isKeyDown(AKEY))                go(LEFT);
-        else if (input->isKeyDown(DKEY))                go(RIGHT);
-        else                                                                        standing();
+    {
+            if (input->isKeyDown(DKEY))			go(UP_RIGHT);
+            else if (input->isKeyDown(AKEY))	go(UP_LEFT);        
+            else								go(UP);
+    }        
+    else if (input->isKeyDown(SKEY))
+    {
+            if (input->isKeyDown(DKEY))			go(DOWN_RIGHT);
+            else if (input->isKeyDown(AKEY))	go(DOWN_LEFT);        
+            else								go(DOWN);
+    }
+    else if (input->isKeyDown(AKEY))			go(LEFT);
+    else if (input->isKeyDown(DKEY))			go(RIGHT);
+    else										standing();
 
 	if(startMoving) move(frameTime);
 
@@ -49,13 +46,11 @@ void Hero::update(float frameTime)
 	//if (input->isKeyDown(SPACE_KEY)) attack();
 }
 
-
 void Hero::go(DIR face)
 {
 	startMoving=true;
 	facing=face;
 }
-
 
 void Hero::move(float frameTime)
 {
@@ -83,26 +78,26 @@ void Hero::move(float frameTime)
 	
 	case UP_RIGHT:
 		if(facing != lastDir || !moving) setFrames(HERO_WALKING_UP_RIGHT_START, HERO_WALKING_UP_RIGHT_END);
-		velocity.y = -0.707f * HERO_SPEED;
-		velocity.x = 0.707f * HERO_SPEED;
+		velocity.y = -DIAG_MULT * HERO_SPEED;
+		velocity.x = DIAG_MULT * HERO_SPEED;
 		break;
 
 	case UP_LEFT:
 		if(facing != lastDir || !moving) setFrames(HERO_WALKING_UP_LEFT_START, HERO_WALKING_UP_LEFT_END);	
-		velocity.y = HERO_SPEED * -1 * 0.707f;	
-		velocity.x = HERO_SPEED * -1 * 0.707f;
+		velocity.y = HERO_SPEED * -1 * DIAG_MULT;	
+		velocity.x = HERO_SPEED * -1 * DIAG_MULT;
 		break;
 
 	case DOWN_RIGHT:
 		if(facing != lastDir || !moving) setFrames(HERO_WALKING_DOWN_RIGHT_START, HERO_WALKING_DOWN_RIGHT_END);
-		velocity.y = HERO_SPEED * 0.707f;
-		velocity.x = HERO_SPEED * 0.707f;
+		velocity.y = HERO_SPEED * DIAG_MULT;
+		velocity.x = HERO_SPEED * DIAG_MULT;
 		break;
 
 	case DOWN_LEFT:
 		if(facing != lastDir || !moving) setFrames(HERO_WALKING_DOWN_LEFT_START, HERO_WALKING_DOWN_LEFT_END);	
-		velocity.y = HERO_SPEED * 0.707f;
-		velocity.x = HERO_SPEED * -1 * 0.707f;
+		velocity.y = HERO_SPEED * DIAG_MULT;
+		velocity.x = HERO_SPEED * -1 * DIAG_MULT;
 		break;
 	case NONE:
 		standing();

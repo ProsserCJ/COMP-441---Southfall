@@ -2,7 +2,7 @@
 Hero header file, containts the definition
 of a hero class
 
-Last modified: 11/4/2013
+Last modified: 11/5/2013
 
 ******************************************************/
 
@@ -80,7 +80,7 @@ public:
 
 	virtual void draw(const VECTOR2& Center);
 	virtual void act(World* W)					{}
-	virtual void update(float frameTime);
+	virtual void update(float frameTime, World* W);
 
 	void initialize(Image* image);
 
