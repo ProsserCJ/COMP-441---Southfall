@@ -13,17 +13,12 @@ Last modified: 11/4/2013
 
 class Structure;	// Forward reference to Structure
 
-inline int tileX(float x)
+inline int tileFromCoord(float x)
 {
 	return x/TILE_SIZE;
 }
 
-inline int tileY(float y)
-{
-	return y/TILE_SIZE;
-}
-
-inline VECTOR2 tileV(VECTOR2 V)
+inline VECTOR2 tileFromCoord(VECTOR2 V)
 {
 	return VECTOR2(V.x/TILE_SIZE, V.y/TILE_SIZE);
 }

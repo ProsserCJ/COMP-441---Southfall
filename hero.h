@@ -74,23 +74,13 @@ public:
 	Hero(Image* image, Input* input) 
     : Entity(), input(input) {initialize(image);}
 	void attack(DIR);
-	//void move(DIR);
 	void attack();
-	//void move(float);
 
 	virtual void draw(const VECTOR2& Center);
-	virtual void act(World* W)					{}
+	virtual void act(World* W) {}
 	virtual void update(float frameTime, World* W);
-	//virtual void setStandingImage();
 
 	void initialize(Image* image);
-
-	// Accessors
-	
-
-	// Mutators
-			
-	//^ What was here has been moved to Entity.h for use in all derived classes
 
 private:	
 	Input* input;	

@@ -59,7 +59,7 @@ class Entity
 public:
 	// Constructors and destructors
 	Entity() : position(ZERO), velocity(ZERO), knockback(ZERO), image(0), maxHP(0), HP(0), 
-		radius(16), active(false), collisionType(POINTCOLLISION) {initialize();}
+		radius(0.25), active(false), collisionType(POINTCOLLISION) {initialize();}
 	Entity(VECTOR2 pos, float radius, int HP, Image* image) 
 		: position(pos), radius(radius), collisionType(CIRCLE), image(image), HP(HP), 
 		maxHP(HP), velocity(ZERO), knockback(ZERO), active(true) {initialize();}

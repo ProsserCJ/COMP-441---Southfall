@@ -10,13 +10,18 @@ void Entity::initialize()
 	_imageDelay = DEFAULT_FRAME_DELAY;
 	startFrame = 0;
 	endFrame = 0;
+	speed = 0;
 }
 
 void Entity::update(float frameTime, World* W)
 {
 	updateImage(frameTime);
-	if(W->canMoveHere(position + velocity*frameTime, radius) && startMoving)
-		move(frameTime);
+	move(frameTime);
+	if(startMoving && W->canMoveHere(position + velocity*frameTime, radius))
+	{
+		setPosition(position + velocity*frameTime);
+	}
+	else standing();
 }
 
 void Entity::draw(const VECTOR2& Center)
@@ -90,7 +95,6 @@ void Entity::move(float frameTime)
 
 	lastDir = facing;
 	moving = true;
-	setPosition(position + velocity*frameTime);
 }
 
 void Entity::go(DIR face)

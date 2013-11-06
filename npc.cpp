@@ -17,7 +17,7 @@ void NPC::initialize(Image* image)
 void NPC::act(World* W)
 {
 	velocity = ZERO;
-	DIR dir = NONE;	
+	DIR dir = NONE;
 	if (distanceTraveled >= 1)
 	{
 		standing();
@@ -29,13 +29,15 @@ void NPC::act(World* W)
 			go(DIR(rGen.next()));	//returns an integer from 0-3
 		}							//Corresponds to UP, DOWN, LEFT, RIGHT, in enum
 	}
+	else
+	{
+		go(facing);
+	}
 }
 
 void NPC::update(float frameTime, World* W)
 {
-	if(distanceTraveled < 1) 
-		move(frameTime);
-	distanceTraveled += NPC_SPEED*frameTime;
+	if(startMoving) distanceTraveled += NPC_SPEED*frameTime;
 	timeSinceLastMove += frameTime;
 	Entity::update(frameTime, W);
 }

@@ -12,12 +12,12 @@ Last Modified 11/2/2013
 namespace npcNS{
 	//assign constants here
 	const float NPC_SPEED = 2.f; //arbitrarily chosen to be slower than Hero
-	const int RADIUS = 16;
+	const int RADIUS = 0.25;
 	const int HP = 100;
 	const int PIXELS_PER_MOVE = TILE_SIZE;
 
 	//assign frame numbers here
-	enum {
+	/*enum {
 		NPC_FACING_UP = 12, 
 		NPC_FACING_DOWN = 0,  
 		NPC_FACING_LEFT = 4,  
@@ -31,7 +31,7 @@ namespace npcNS{
 		NPC_WALKING_LEFT_END = 7,
 		NPC_WALKING_RIGHT_START = 8,
 		NPC_WALKING_RIGHT_END = 11,
-	};
+	};*/
 }
 
 class NPC: public Entity
@@ -50,11 +50,8 @@ public:
 	//inherited functions
 	virtual void act(World* w);
 	virtual void update(float frameTime, World* W);
-	//virtual void setStandingImage();
 
 	void initialize(Image* image);
-	//void move(float frameTime);
-	
 
 private:
 	double distanceTraveled;

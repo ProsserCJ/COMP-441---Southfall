@@ -37,6 +37,7 @@ void Southfall::initialize(HWND hwnd)
 
 	// Initialized Player here, have center point at player's position
 	player = new Hero(&Character1IM, input);	
+	player->setPosition(VECTOR2(5,3));
 	npc1 = new NPC(&NPC1IM, VECTOR2(4,4));
 }
 
