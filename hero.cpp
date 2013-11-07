@@ -15,7 +15,7 @@ void Hero::initialize()
 	speed = HERO_SPEED;
 };
 
-void Hero::update(float frameTime, World* W, Audio* audio)
+void Hero::update(float frameTime, World* W)
 {
 	velocity = ZERO;
 	DIR dir = NONE;

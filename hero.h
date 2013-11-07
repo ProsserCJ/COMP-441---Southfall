@@ -26,19 +26,20 @@ class Hero: public Entity
 {
 public:
 	Hero() : Entity() {};
-	Hero(VECTOR2 position, float radius, Image* image, Input* input, int HP=heroNS::HERO_HP) 
-		: Entity(position, radius, HP, image), input(input) {initialize();}
+	Hero(VECTOR2 position, float radius, Image* image, Input* input, Audio* audio, int HP=heroNS::HERO_HP) 
+		: Entity(position, radius, HP, image), input(input), audio(audio) {initialize();}
 	void attack(DIR);
 	void attack();
 
 	virtual void draw(const VECTOR2& Center);
 	virtual void act(World* W) {}
-	virtual void update(float frameTime, World* W, Audio* audio);
+	virtual void update(float frameTime, World* W);
 
 	void initialize();
 
 private:	
 	Input* input;	
+	Audio* audio;
 	Image* armor;
 };
 

@@ -31,7 +31,7 @@ public:
     // Destructor
     ~Southfall();
 
-    // Initialize the game
+    // Game functions
     void initialize(HWND hwnd);
     void update(); 
     void ai();         
@@ -39,6 +39,11 @@ public:
     void render();    
     void releaseAll();
     void resetAll();
+
+	// Accessors
+	VECTOR2 heroPosition()	{return player->getPosition();}
+	World* getWorld()		{return Interface.getCurrent();}
+	VECTOR2 Center()		{return TILE_SIZE*player->getPosition();}
 
 private:
     TextDX* gameFont;
@@ -51,10 +56,9 @@ private:
 
 	void initializeGraphics();
 	
-	VECTOR2* Center;
-	
 	Hero* player;
 	NPC* npc1;
+
 	TextBox* textbox;
 	WorldInterface Interface; 
 

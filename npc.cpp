@@ -16,9 +16,6 @@ void NPC::act(World* W)
 {
 	velocity = ZERO;
 	DIR dir = NONE;
-
-	go(DOWN); return;
-
 	if (distanceTraveled >= 1)
 	{
 		standing();
@@ -36,7 +33,7 @@ void NPC::act(World* W)
 
 void NPC::update(float frameTime, World* W)
 {
-	/*if(startMoving) distanceTraveled += NPC_SPEED*frameTime;
-	timeSinceLastMove += frameTime;*/
+	if(startMoving) distanceTraveled += NPC_SPEED*frameTime;
+	timeSinceLastMove += frameTime;
 	Entity::update(frameTime, W);
 }
