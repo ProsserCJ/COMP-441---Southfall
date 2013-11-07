@@ -6,6 +6,7 @@ Last modified: 11/5/2013
 ******************************************************/
 
 #include "hero.h"
+
 using namespace heroNS;
 
 void Hero::initialize(Image* image)
@@ -17,7 +18,7 @@ void Hero::initialize(Image* image)
 	speed = HERO_SPEED;
 };
 
-void Hero::update(float frameTime, World* W)
+void Hero::update(float frameTime, World* W, Audio* audio)
 {
 	velocity = ZERO;
 	DIR dir = NONE;
@@ -38,6 +39,10 @@ void Hero::update(float frameTime, World* W)
     else										standing();
 
 	Entity::update(frameTime, W);
+	if(startMoving && !W->canMoveHere(position + velocity*frameTime, radius))
+	{
+		audio->playCue(COLLIDE);
+	}
 }
 
 void Hero::attack()

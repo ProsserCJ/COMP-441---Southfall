@@ -70,9 +70,7 @@ void Entity::move(float frameTime, World* W)
 		velocity.y = -DIAG_MULT * speed;
 		if (!W->canMoveHere(position+velocity*frameTime, radius)) velocity.y=0;
 		velocity.x = DIAG_MULT * speed;
-		if (!W->canMoveHere(position+velocity*frameTime, radius)) velocity.x=0;
-		 
-		
+		if (!W->canMoveHere(position+velocity*frameTime, radius)) velocity.x=0;		
 		break;
 
 	case UP_LEFT:

@@ -43,7 +43,8 @@ void Southfall::initialize(HWND hwnd)
 	npc1 = new NPC(&NPC1IM, VECTOR2(4,4));
 
 	//Initialize global TextBox
-	textbox = new TextBox(gameFont, &TextBoxIM, &TextBoxArrowIM, "A perilous adventure awaits...");
+	textbox = new TextBox(gameFont, audio, input, &TextBoxIM, &TextBoxArrowIM, "A perilous adventure awaits...");
+	
 }
 
 //=============================================================================
@@ -81,7 +82,7 @@ void Southfall::initializeGraphics()
 // Update all game items
 //=============================================================================
 void Southfall::update()
-{
+{	
 	/*if (input->isKeyDown(WKEY))
 	{
 		if (input->isKeyDown(DKEY)) player->go(UP_RIGHT);
@@ -141,9 +142,9 @@ void Southfall::update()
 	//	}
 	//}
 
-	player->update(frameTime, Interface.getCurrent());
+	player->update(frameTime, Interface.getCurrent(), audio);
 	npc1->update(frameTime, Interface.getCurrent());
-	textbox->update(frameTime);
+	textbox->update(frameTime);	
 }
 
 //=============================================================================
@@ -181,6 +182,9 @@ void Southfall::releaseAll()
 {
     Game::releaseAll();
 	Character1TX.onLostDevice();
+	NPC1TX.onLostDevice();
+	TextBoxTX.onLostDevice();
+	TextBoxArrowTX.onLostDevice();
 	return;
 }
 
@@ -192,5 +196,8 @@ void Southfall::resetAll()
 {
     Game::resetAll();
 	Character1TX.onResetDevice();
+	NPC1TX.onResetDevice();
+	TextBoxTX.onResetDevice();
+	TextBoxArrowTX.onResetDevice();
     return;
 }

@@ -128,6 +128,8 @@ const char WAVE_BANK[]  = "audio\\Win\\Wave Bank.xwb";
 const char SOUND_BANK[] = "audio\\Win\\Sound Bank.xsb";
 
 // ADD CUE name here
-const char FX[]   = "fx";
+const char COLLIDE[] = "Collision";
+const char SELECT[] = "Blip_Select";
+
 
 #endif

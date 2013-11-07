@@ -22,3 +22,20 @@ void TextBox::draw()
 	arrow->draw();
 	gameFont->print(text, position.x + OFFSET_X, position.y + OFFSET_Y);
 }
+
+void TextBox::update(float frameTime)	
+{
+	if (!active) return;	
+	arrow->update(frameTime);
+	if (input->wasKeyPressed('E'))
+	{
+		audio->playCue(SELECT);
+		next();
+	}
+}
+
+//iterate to the next sequence of text to display
+//for now just deactivates
+void TextBox::next(){
+	setActive(false);
+}

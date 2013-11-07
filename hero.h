@@ -78,7 +78,7 @@ public:
 
 	virtual void draw(const VECTOR2& Center);
 	virtual void act(World* W) {}
-	virtual void update(float frameTime, World* W);
+	virtual void update(float frameTime, World* W, Audio* audio);
 
 	void initialize(Image* image);
 
