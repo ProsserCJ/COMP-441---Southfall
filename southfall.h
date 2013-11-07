@@ -20,6 +20,7 @@ Last modified: 11/4/2013
 #include "hero.h"
 #include "WorldInterface.h"
 #include "npc.h"
+#include "textBox.h"
 using std::stringstream;
 
 class Southfall : public Game
@@ -44,8 +45,8 @@ private:
 	stringstream ss;
 
 	// Images and Textures
-	TextureManager Character1TX, NPC1TX;
-	Image Character1IM, NPC1IM;
+	TextureManager Character1TX, NPC1TX, TextBoxTX, TextBoxArrowTX;
+	Image Character1IM, NPC1IM, TextBoxIM, TextBoxArrowIM;
 	WorldInterface worldInterface;
 
 	void initializeGraphics();
@@ -54,6 +55,7 @@ private:
 	
 	Hero* player;
 	NPC* npc1;
+	TextBox* textbox;
 	WorldInterface Interface; 
 
 };

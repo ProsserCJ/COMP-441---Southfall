@@ -24,13 +24,13 @@ void Southfall::initialize(HWND hwnd)
 {
     Game::initialize(hwnd);
 
-	// Font
-	gameFont = new TextDX();
-	gameFont->initialize(graphics, 20, false, false, "Calibri");
-	gameFont->setFontColor(SETCOLOR_ARGB(255,255,0,0));
-
 	// Graphics
 	initializeGraphics();
+
+	// Font
+	gameFont = new TextDX();
+	gameFont->initialize(graphics, 40, false, false, "Andalus");
+	gameFont->setFontColor(SETCOLOR_ARGB(255,255,255,255));	
 
 	// WorldInterface
 	Interface.initialize(graphics);
@@ -38,7 +38,12 @@ void Southfall::initialize(HWND hwnd)
 	// Initialized Player here, have center point at player's position
 	player = new Hero(&Character1IM, input);	
 	player->setPosition(VECTOR2(5,3));
+
+	//Initizlize NPC
 	npc1 = new NPC(&NPC1IM, VECTOR2(4,4));
+
+	//Initialize global TextBox
+	textbox = new TextBox(gameFont, &TextBoxIM, &TextBoxArrowIM, "A perilous adventure awaits...");
 }
 
 //=============================================================================
@@ -54,10 +59,22 @@ void Southfall::initializeGraphics()
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character1 texture"));
 	if(!Character1IM.initialize(graphics, 32, 32, 4, &Character1TX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character1 image"));
+	
+	//NPC 1
 	if(!NPC1TX.initialize(graphics, CHARACTER1_SHEET))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing NPC1 texture"));
 	if(!NPC1IM.initialize(graphics, 32, 32, 4, &NPC1TX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing NPC1 image"));
+
+	//Textbox
+	if(!TextBoxTX.initialize(graphics, TEXTBOX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox texture"));
+	if(!TextBoxIM.initialize(graphics, 1000, 200, 1, &TextBoxTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox image"));
+	if(!TextBoxArrowTX.initialize(graphics, TEXTBOX_ARROW))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox arrow texture"));
+	if(!TextBoxArrowIM.initialize(graphics, 35, 20, 4, &TextBoxArrowTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox arrow image"));
 }
 
 //=============================================================================
@@ -126,6 +143,7 @@ void Southfall::update()
 
 	player->update(frameTime, Interface.getCurrent());
 	npc1->update(frameTime, Interface.getCurrent());
+	textbox->update(frameTime);
 }
 
 //=============================================================================
@@ -152,7 +170,7 @@ void Southfall::render()
 	Interface.draw(TILE_SIZE*player->getPosition());
 	player->draw(TILE_SIZE*player->getPosition());	// For now
 	npc1->draw(TILE_SIZE*player->getPosition());
-
+	textbox->draw();
 }
 
 //=============================================================================

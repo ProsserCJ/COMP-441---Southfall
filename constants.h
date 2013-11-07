@@ -101,6 +101,8 @@ const char CHARACTER1_SHEET[] = "Images\\Character1Sheet.png";
 const char GRASS1[] = "Images\\Grass1.png";
 const char TREE1[] = "Images\\Tree1.png";
 const char BOULDER1[] = "Images\\Boulder1.png";
+const char TEXTBOX[] = "Images\\textBox.png";
+const char TEXTBOX_ARROW[] = "Images\\textBoxArrow.png";
 
 // Sound Files
 
