@@ -15,23 +15,6 @@ namespace npcNS{
 	const int RADIUS = 0.25;
 	const int HP = 100;
 	const int PIXELS_PER_MOVE = TILE_SIZE;
-
-	//assign frame numbers here
-	/*enum {
-		NPC_FACING_UP = 12, 
-		NPC_FACING_DOWN = 0,  
-		NPC_FACING_LEFT = 4,  
-		NPC_FACING_RIGHT = 8,
-
-		NPC_WALKING_UP_START = 12,
-		NPC_WALKING_UP_END = 15,
-		NPC_WALKING_DOWN_START = 0,
-		NPC_WALKING_DOWN_END = 3,
-		NPC_WALKING_LEFT_START = 4,
-		NPC_WALKING_LEFT_END = 7,
-		NPC_WALKING_RIGHT_START = 8,
-		NPC_WALKING_RIGHT_END = 11,
-	};*/
 }
 
 class NPC: public Entity

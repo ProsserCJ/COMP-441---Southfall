@@ -70,7 +70,7 @@ public:
 	virtual void draw(const VECTOR2& center);		// Draw itself (possibly needs second parameter, zoomlevel or something)
 	virtual void act(World* W) = 0;					// AI and decisions
 	virtual void update(float frameTime, World* W);
-	void move(float frameTime);
+	void move(float frameTime, World* W);
 
 	// Collision Handler
 	friend bool HandleCollision(Entity* A, Entity* B) {return true; }; // True if the entities collided

@@ -16,7 +16,7 @@ void Entity::initialize()
 void Entity::update(float frameTime, World* W)
 {
 	updateImage(frameTime);
-	move(frameTime);
+	move(frameTime, W);
 	if(startMoving && W->canMoveHere(position + velocity*frameTime, radius))
 	{
 		setPosition(position + velocity*frameTime);
@@ -41,7 +41,7 @@ void Entity::draw(const VECTOR2& Center)
 	image->draw();
 }
 
-void Entity::move(float frameTime)
+void Entity::move(float frameTime, World* W)
 {
 	switch(facing)
 	{
@@ -68,26 +68,36 @@ void Entity::move(float frameTime)
 	case UP_RIGHT:
 		if(facing != lastDir || !moving) setFrames(WALKING_UP_RIGHT_START, WALKING_UP_RIGHT_END);
 		velocity.y = -DIAG_MULT * speed;
+		if (!W->canMoveHere(position+velocity*frameTime, radius)) velocity.y=0;
 		velocity.x = DIAG_MULT * speed;
+		if (!W->canMoveHere(position+velocity*frameTime, radius)) velocity.x=0;
+		
 		break;
 
 	case UP_LEFT:
 		if(facing != lastDir || !moving) setFrames(WALKING_UP_LEFT_START, WALKING_UP_LEFT_END);	
-		velocity.y = DIAG_MULT * -1 * speed;	
+		velocity.y = DIAG_MULT * -1 * speed;
+		if (!W->canMoveHere(position+velocity*frameTime, radius)) velocity.y=0;
 		velocity.x = -DIAG_MULT * speed;
+		if (!W->canMoveHere(position+velocity*frameTime, radius)) velocity.x=0;
 		break;
 
 	case DOWN_RIGHT:
 		if(facing != lastDir || !moving) setFrames(WALKING_DOWN_RIGHT_START, WALKING_DOWN_RIGHT_END);
 		velocity.y = DIAG_MULT * speed;
+		if (!W->canMoveHere(position+velocity*frameTime, radius)) velocity.y=0;
 		velocity.x = DIAG_MULT * speed;
+		if (!W->canMoveHere(position+velocity*frameTime, radius)) velocity.x=0;
 		break;
 
 	case DOWN_LEFT:
 		if(facing != lastDir || !moving) setFrames(WALKING_DOWN_LEFT_START, WALKING_DOWN_LEFT_END);	
 		velocity.y = DIAG_MULT * speed;
+		if (!W->canMoveHere(position+velocity*frameTime, radius)) velocity.y=0;
 		velocity.x = -DIAG_MULT * speed;
+		if (!W->canMoveHere(position+velocity*frameTime, radius)) velocity.x=0;
 		break;
+
 	case NONE:
 		standing();
 		break;
