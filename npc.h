@@ -24,7 +24,7 @@ public:
 	NPC(Image* image, VECTOR2 pos)
 		: Entity(pos, npcNS::RADIUS, npcNS::HP, image)
 	{
-		initialize(image); 
+		initialize(); 
 		distanceTraveled = npcNS::PIXELS_PER_MOVE + 1;
 		timeSinceLastMove = 0;	
 	}
@@ -34,7 +34,7 @@ public:
 	virtual void act(World* w);
 	virtual void update(float frameTime, World* W);
 
-	void initialize(Image* image);
+	void initialize();
 
 private:
 	double distanceTraveled;

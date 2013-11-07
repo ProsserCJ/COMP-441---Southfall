@@ -6,15 +6,12 @@ Last modified: 11/5/2013
 ******************************************************/
 
 #include "hero.h"
-
 using namespace heroNS;
 
-void Hero::initialize(Image* image)
+void Hero::initialize()
 {
-	this->image = image;
 	armor = 0;
-	image->setFrameDelay(DEFAULT_FRAME_DELAY);
-	image->setLoop(true);
+	setFrameDelay(DEFAULT_FRAME_DELAY);
 	speed = HERO_SPEED;
 };
 
@@ -39,6 +36,7 @@ void Hero::update(float frameTime, World* W, Audio* audio)
     else										standing();
 
 	Entity::update(frameTime, W);
+
 	if(startMoving && !W->canMoveHere(position + velocity*frameTime, radius))
 	{
 		audio->playCue(COLLIDE);
@@ -53,28 +51,24 @@ void Hero::attack()
 	switch(facing)
 	{
 	case UP:
-		image->setFrames(HERO_SWINGING_UP_START, HERO_SWINGING_UP_END);
+		setFrames(ATTACK_UP_START, ATTACK_UP_END);
 		attackLocation.y -= TILE_SIZE;
 		break;
-
 	case DOWN:
-		image->setFrames(HERO_SWINGING_DOWN_START, HERO_SWINGING_DOWN_END);
+		setFrames(ATTACK_DOWN_START, ATTACK_DOWN_END);
 		attackLocation.y += TILE_SIZE;
 		break;
-
 	case LEFT:
-		image->setFrames(HERO_SWINGING_LEFT_START, HERO_SWINGING_LEFT_END);
+		setFrames(ATTACK_LEFT_START, ATTACK_LEFT_END);
 		attackLocation.x -= TILE_SIZE;
 		break;
-
 	case RIGHT:
-		image->setFrames(HERO_SWINGING_RIGHT_START, HERO_SWINGING_RIGHT_END);
+		setFrames(ATTACK_RIGHT_START, ATTACK_RIGHT_END);
 		attackLocation.x += TILE_SIZE;
 		break;
-
-	case UP_RIGHT:
-	case UP_LEFT:
-	case DOWN_RIGHT:
+	case UP_RIGHT: break;
+	case UP_LEFT: break;
+	case DOWN_RIGHT: break;
 	case DOWN_LEFT: break;
 	}
 
@@ -98,8 +92,8 @@ void Hero::draw(const VECTOR2& Center)
 	if(armor != 0)
 	{
 		VECTOR2 disp = Center - position;
-		armor->setX(disp.x); image->setY(disp.y);
-		armor->setCurrentFrame(frame);
+		armor->setX(disp.x);
+		armor->setCurrentFrame(getFrame());
 		armor->setScale(DEFAULT_SCALE); // Probably unneccesary 
 		armor->draw();
 	}

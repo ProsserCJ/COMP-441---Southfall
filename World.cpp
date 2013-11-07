@@ -2,6 +2,7 @@
 
 void Tile::draw(VECTOR2& Center)
 {
+	if(!image) return; // if the image is null
 	VECTOR2 diff = position*TILE_SIZE - Center;
 	int X = diff.x + HSCREEN_WIDTH - HTILE_SIZE;
 	int Y = diff.y + HSCREEN_HEIGHT - HTILE_SIZE;
@@ -23,8 +24,8 @@ void World::draw(VECTOR2& Center)
 bool World::canMoveHere(VECTOR2 position, float radius)
 {
 	VECTOR2 topLeft, topRight, bottomLeft, bottomRight;
-	topLeft = position + VECTOR2(0.5-radius,0.5-radius);
-	topRight = position + VECTOR2(0.5+radius,0.5-radius);
+	topLeft = position + VECTOR2(0.5-radius,0.9-radius);
+	topRight = position + VECTOR2(0.5+radius,0.9-radius);
 	bottomLeft = position + VECTOR2(0.5-radius,0.7+radius);
 	bottomRight = position + VECTOR2(0.5+radius,0.7+radius);
 	if(isTraversible(topLeft) && isTraversible(topRight) &&

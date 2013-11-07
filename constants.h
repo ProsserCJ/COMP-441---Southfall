@@ -98,9 +98,13 @@ const UINT HSCREEN_HEIGHT = 0.5*SCREEN_HEIGHT;
 
 // Image Files
 const char CHARACTER1_SHEET[] = "Images\\Character1Sheet.png";
+const char CHARACTER2_SHEET[] = "Images\\Character2Sheet.png";
 const char GRASS1[] = "Images\\Grass1.png";
 const char TREE1[] = "Images\\Tree1.png";
 const char BOULDER1[] = "Images\\Boulder1.png";
+const char BOULDER2[] = "Images\\Boulder2.png";
+const char HOUSE1[] = "Images\\House1.png";
+const char RIVER1[] = "Images\\River1.png";
 const char TEXTBOX[] = "Images\\textBox.png";
 const char TEXTBOX_ARROW[] = "Images\\textBoxArrow.png";
 

@@ -43,9 +43,15 @@ private:
 	Image GrassIM;
 	TextureManager WaterTX;
 	Image WaterIM;
-	TextureManager BoulderTX;
-	Image BoulderIM;
+	TextureManager Boulder1TX;
+	Image Boulder1IM;
+	TextureManager Boulder2TX;
+	Image Boulder2IM;
+	TextureManager RiverTX;
+	Image RiverIM;
 
+	TextureManager HouseTX;
+	Image HouseIM;
 	TextureManager TreeTX;
 	Image TreeIM;
 

@@ -36,7 +36,7 @@ void Southfall::initialize(HWND hwnd)
 	Interface.initialize(graphics);
 
 	// Initialized Player here, have center point at player's position
-	player = new Hero(&Character1IM, input);	
+	player = new Hero(ZERO, heroNS::HERO_RADIUS, &Character1IM, input);	
 	player->setPosition(VECTOR2(5,3));
 
 	//Initizlize NPC
@@ -56,15 +56,15 @@ void Southfall::initializeGraphics()
     graphics->initialize(hwnd, SCREEN_WIDTH, SCREEN_HEIGHT, FULLSCREEN);
 
 	// Character 1
-	if(!Character1TX.initialize(graphics, CHARACTER1_SHEET))
+	if(!Character1TX.initialize(graphics, CHARACTER2_SHEET))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character1 texture"));
-	if(!Character1IM.initialize(graphics, 32, 32, 4, &Character1TX))
+	if(!Character1IM.initialize(graphics, 32, 32, 8, &Character1TX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character1 image"));
 	
 	//NPC 1
-	if(!NPC1TX.initialize(graphics, CHARACTER1_SHEET))
+	if(!NPC1TX.initialize(graphics, CHARACTER2_SHEET))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing NPC1 texture"));
-	if(!NPC1IM.initialize(graphics, 32, 32, 4, &NPC1TX))
+	if(!NPC1IM.initialize(graphics, 32, 32, 8, &NPC1TX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing NPC1 image"));
 
 	//Textbox

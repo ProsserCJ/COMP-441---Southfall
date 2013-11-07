@@ -11,59 +11,14 @@ Last modified: 11/5/2013
 
 #include "Entity.h"
 
-namespace heroNS{
-	//store hero constants here
-	const float HERO_SPEED = 3.f; //arbitrarily chosen for now
+namespace heroNS
+{ //Store hero constants here
+	const float HERO_SPEED = 3.0f;
 	const float HEIGHT = TILE_SIZE;
 	const float WIDTH = TILE_SIZE;
 	const int COLS = 4;	
-		
-	//assign frame numbers here
-	enum {
-		HERO_FACING_UP = 12, 
-		HERO_FACING_DOWN = 0,  
-		HERO_FACING_LEFT = 4,  
-		HERO_FACING_RIGHT = 8,
-		HERO_FACING_UP_RIGHT = HERO_FACING_UP, 
-		HERO_FACING_UP_LEFT = HERO_FACING_UP,
-		HERO_FACING_DOWN_RIGHT = HERO_FACING_DOWN,
-		HERO_FACING_DOWN_LEFT = HERO_FACING_DOWN,
-
-		HERO_WALKING_UP_START = 12,
-		HERO_WALKING_UP_END = 15,
-		HERO_WALKING_DOWN_START = 0,
-		HERO_WALKING_DOWN_END = 3,
-		HERO_WALKING_LEFT_START = 4,
-		HERO_WALKING_LEFT_END = 7,
-		HERO_WALKING_RIGHT_START = 8,
-		HERO_WALKING_RIGHT_END = 11,
-		HERO_WALKING_UP_RIGHT_START = HERO_WALKING_UP_START,
-		HERO_WALKING_UP_RIGHT_END = HERO_WALKING_UP_END,
-		HERO_WALKING_UP_LEFT_START = HERO_WALKING_UP_START,
-		HERO_WALKING_UP_LEFT_END = HERO_WALKING_UP_END,
-		HERO_WALKING_DOWN_RIGHT_START = HERO_WALKING_DOWN_START,
-		HERO_WALKING_DOWN_RIGHT_END = HERO_WALKING_DOWN_END,
-		HERO_WALKING_DOWN_LEFT_START = HERO_WALKING_DOWN_START,
-		HERO_WALKING_DOWN_LEFT_END = HERO_WALKING_DOWN_END,
-
-		HERO_SWINGING_UP_START,
-		HERO_SWINGING_UP_END,
-		HERO_SWINGING_DOWN_START,
-		HERO_SWINGING_DOWN_END,
-		HERO_SWINGING_LEFT_START,
-		HERO_SWINGING_LEFT_END,
-		HERO_SWINGING_RIGHT_START,
-		HERO_SWINGING_RIGHT_END,
-		HERO_SWINGING_UP_RIGHT_START,
-		HERO_SWINGING_UP_RIGHT_END,
-		HERO_SWINGING_UP_LEFT_START,
-		HERO_SWINGING_UP_LEFT_END,
-		HERO_SWINGING_DOWN_RIGHT_START,
-		HERO_SWINGING_DOWN_RIGHT_END,
-		HERO_SWINGING_DOWN_LEFT_START,
-		HERO_SWINGING_DOWN_LEFT_END
-	};
-
+	const int HERO_HP = 100;
+	const float HERO_RADIUS = 0.25;
 }
 
 // The player's character
@@ -71,8 +26,8 @@ class Hero: public Entity
 {
 public:
 	Hero() : Entity() {};
-	Hero(Image* image, Input* input) 
-    : Entity(), input(input) {initialize(image);}
+	Hero(VECTOR2 position, float radius, Image* image, Input* input, int HP=heroNS::HERO_HP) 
+		: Entity(position, radius, HP, image), input(input) {initialize();}
 	void attack(DIR);
 	void attack();
 
@@ -80,12 +35,11 @@ public:
 	virtual void act(World* W) {}
 	virtual void update(float frameTime, World* W, Audio* audio);
 
-	void initialize(Image* image);
+	void initialize();
 
 private:	
 	Input* input;	
 	Image* armor;
-	//Data members moved back into Entity
 };
 
 #endif
