@@ -134,6 +134,7 @@ const char SOUND_BANK[] = "audio\\Win\\Sound Bank.xsb";
 // ADD CUE name here
 const char COLLIDE[] = "Collision";
 const char SELECT[] = "Blip_Select";
+const char BACKGROUND[] = "Background";
 
 
 #endif
