@@ -40,7 +40,10 @@ void Southfall::initialize(HWND hwnd)
 	npc1 = new NPC(&NPC1IM, VECTOR2(4,4));
 
 	//Initialize global TextBox
-	textbox = new TextBox(gameFont, audio, input, &TextBoxIM, &TextBoxArrowIM, "A perilous adventure awaits...");
+	textbox = new TextBox(gameFont, audio, input, &TextBoxIM, &TextBoxArrowIM);
+	textbox->addText("A perilous world awaits...");
+	textbox->addText("...you have no idea what is coming...");
+	textbox->addText("...and neither do we.");
 	
 }
 

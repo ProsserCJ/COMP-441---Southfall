@@ -13,14 +13,14 @@ void TextBox::initialize(){
 	arrow->setFrames(0,3); 
 	arrow->setFrameDelay(.1);
 	arrow->setLoop(true);
-	active = true;
+	active = true;		
 }
 void TextBox::draw()
 {
 	if (!active) return;
 	background->draw();
 	arrow->draw();
-	gameFont->print(text, position.x + OFFSET_X, position.y + OFFSET_Y);
+	gameFont->print(*it, position.x + OFFSET_X, position.y + OFFSET_Y);
 }
 
 void TextBox::update(float frameTime)	
@@ -30,12 +30,15 @@ void TextBox::update(float frameTime)
 	if (input->wasKeyPressed('E'))
 	{
 		audio->playCue(SELECT);
-		next();
+		next();		
 	}
 }
 
 //iterate to the next sequence of text to display
-//for now just deactivates
 void TextBox::next(){
-	setActive(false);
+	if (++it == text.end()){
+		setActive(false);
+		text.clear();
+		it = text.begin();
+	}
 }
