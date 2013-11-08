@@ -135,6 +135,8 @@ const char SOUND_BANK[] = "audio\\Win\\Sound Bank.xsb";
 const char COLLIDE[] = "Collision";
 const char SELECT[] = "Blip_Select";
 const char BACKGROUND[] = "Background";
+const char BATTLE[] = "Battle";
+const char BATTLE_INTRO[] = "Battle Intro";
 
 
 #endif
