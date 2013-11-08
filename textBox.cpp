@@ -15,6 +15,7 @@ void TextBox::initialize(){
 	arrow->setLoop(true);
 	active = true;		
 }
+
 void TextBox::draw()
 {
 	if (!active) return;

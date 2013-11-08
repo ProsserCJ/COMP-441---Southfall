@@ -27,8 +27,7 @@ private:
 	Input* input;
 	Image* background;
 	Image* arrow;
-	TextDX* gameFont;	
-	//string text; //maybe a vector of strings?
+	TextDX* gameFont;
 	vector<string> text;
 	vector<string>::iterator it;
 	bool active;
