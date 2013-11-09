@@ -9,6 +9,7 @@ Last Modified: 11/8/2013
 #define _STRUCTURE_H
 
 #include "image.h"
+#include "Entity.h"
 
 class World;	// Forward reference to World
 
@@ -22,7 +23,7 @@ public:
 	~Structure() {};
 
 	virtual void draw(VECTOR2 Center);
-	virtual void interact()=0;
+	virtual void interact(Entity* E)=0;
 	virtual bool isPassable()=0;
 
 protected:
@@ -35,23 +36,29 @@ protected:
 
 class Portal : public Structure
 {
-	Portal(VECTOR2 TL, int width, int height, Image* image, World* out) 
-		: Structure(TL,width,height,image,out), open(true) {};
+public:
+	Portal() {};
+	Portal(VECTOR2 TL, int width, int height, Image* image, World* out, VECTOR2 vout) 
+		: Structure(TL,width,height,image,out), open(true), vOut(vout) {};
+
+	virtual void interact(Entity* E);
+	virtual bool isPassable() {return false;}
 
 	void closePortal()	{open = false;}
 	void openPortal()	{open = true;}
 private:
 	bool open;
+	VECTOR2 vOut;
 };
 
 // An open and closeable door for use in buildings
 class Door : public Structure
 {
 public:
-	Door(VECTOR2 TL, int width, int height, Image* image, World* out) 
-		: Structure(TL,width,height,image,out), open(0) {};
+	Door(VECTOR2 TL, int width, int height, Image* image) 
+		: Structure(TL,width,height,image,0), open(0) {};
 	~Door() {};
-	virtual void interact();
+	virtual void interact(Entity*);
 	virtual void draw(VECTOR2 Center);
 	virtual bool isPassable() {return open == 1;}
 private:
@@ -61,10 +68,10 @@ private:
 class House : public Structure
 {
 public:
-	House(VECTOR2 TL, int width, int height, Image* image, World* out) 
-		: Structure(TL,width,height,image,out) {};
+	House(VECTOR2 TL, int width, int height, Image* image) 
+		: Structure(TL,width,height,image,0) {};
 	~House();
-	virtual void interact() {};
+	virtual void interact(Entity*) {};
 	virtual bool isPassable() {return false;}
 private:
 
@@ -73,10 +80,10 @@ private:
 class Bar : public Structure
 {
 public:
-	Bar(VECTOR2 TL, int width, int height, Image* image, World* out) 
-		: Structure(TL,width,height,image,out) {};
+	Bar(VECTOR2 TL, int width, int height, Image* image) 
+		: Structure(TL,width,height,image,0) {};
 	~Bar();
-	virtual void interact() {};
+	virtual void interact(Entity*) {};
 	virtual bool isPassable() {return false;}
 private:
 

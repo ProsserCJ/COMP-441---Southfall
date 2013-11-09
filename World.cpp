@@ -18,10 +18,10 @@ void Tile::draw(VECTOR2& Center)
 	if(_drawStruct) S->draw(Center);
 }
 
-void Tile::interact()
+void Tile::interact(Entity* E)
 {
 	if(S != 0)
-		S->interact();
+		S->interact(E);
 }
 
 void World::draw(VECTOR2& Center)

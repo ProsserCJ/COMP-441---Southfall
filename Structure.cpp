@@ -11,6 +11,11 @@ void Structure::draw(VECTOR2 Center)
 	image->draw();
 }
 
+void Portal::interact(Entity* E)
+{
+	
+}
+
 void Door::draw(VECTOR2 Center)
 {
 	if(!image) return;
@@ -18,7 +23,7 @@ void Door::draw(VECTOR2 Center)
 	Structure::draw(Center);
 }
 
-void Door::interact()
+void Door::interact(Entity*)
 {
 	open++;
 	open %= 2;

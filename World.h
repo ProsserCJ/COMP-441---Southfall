@@ -35,7 +35,7 @@ public:
 
 	// Mutators
 	void giveStructure(Structure* S, bool draw=false)	{this->S = S;_drawStruct=draw;}
-	void interact();	// Open a door on the tile or things like that
+	void interact(Entity* E);	// Open a door on the tile or things like that
 
 private:
 	VECTOR2 position;	// Position of the tile in the world

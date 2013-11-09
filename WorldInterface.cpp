@@ -2,6 +2,8 @@
 
 void WorldInterface::initialize(Graphics* graphics)
 {
+	StructInt = new StructureInterface;
+	StructInt->initialize(graphics);
 	this->graphics = graphics;
 	
 	// Grass
@@ -34,46 +36,13 @@ void WorldInterface::initialize(Graphics* graphics)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing River texture"));
 	if(!RiverIM.initialize(graphics, 0, 0, 0, &RiverTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing River image"));
-	// Wood Floor 1
-	if(!WoodTileTX.initialize(graphics, WOODTILE1))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wood Tile texture"));
-	if(!WoodTileIM.initialize(graphics, 0, 0, 0, &WoodTileTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wood Tile image"));
-	// House Wall 1
-	if(!HouseWallTX.initialize(graphics, HOUSEWALL1))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing House Wall texture"));
-	if(!HouseWallIM.initialize(graphics, 0, 0, 0, &HouseWallTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing House Wall image"));
-	// House Door 1
-	if(!HouseDoorTX.initialize(graphics, HOUSEDOOR1))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing House Door texture"));
-	if(!HouseDoorIM.initialize(graphics, 0, 0, 0, &HouseDoorTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing House Door image"));
-	
-	// Horizontal in-house Door 1
-	if(!HorizInHouseDoorTX.initialize(graphics, HORIZINHOUSEDOOR1))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Horizontal in House Door texture"));
-	if(!HorizInHouseDoorIM.initialize(graphics, 32, 32, 2, &HorizInHouseDoorTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing House Door image"));
-	// Vertical in-house 1
-	if(!VertInHouseDoorTX.initialize(graphics, VERTINHOUSEDOOR1))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Vertical in House Door texture"));
-	if(!VertInHouseDoorIM.initialize(graphics, 32, 32, 2, &VertInHouseDoorTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Vertical in House Door image"));
-	
-	// Bar Counter
-	if(!BarCounterTX.initialize(graphics, BARCOUNTER))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Bar Counter texture"));
-	if(!BarCounterIM.initialize(graphics, 0, 0, 0, &BarCounterTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Bar Counter image"));
-	
 
 	// Temporary world constants
 	int WORLD_WIDTH = 100;
 	int WORLD_HEIGHT = 100;
 	Current = new World(WORLD_WIDTH, WORLD_HEIGHT);
 	//initializeWorld();
-	Current = loadWorld("Worlds\\House1.txt");
+	Current = loadWorld("Worlds\\TestWorld.txt");
 }
 
 World* WorldInterface::loadWorld(const string& fileName)
@@ -172,48 +141,29 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 			W->getTile(x,y) = T;
 			break;
 		}
+		case 'D': // Door into a structure
+		{
+			T = new Tile(VECTOR2(x,y), 0, false);
+			if(0<x-1 && W->getTile(x-1,y)->hasStructure()) 
+			{
+				T->giveStructure(W->getTile(x-1,y)->getStructure());
+			}
+			else if(0<y-1 && W->getTile(x,y-1)->hasStructure()) 
+			{
+				T->giveStructure(W->getTile(x,y-1)->getStructure());
+			}
+			if(y+1<W->getHeight()) 
+				T->giveStructure(StructInt->createHouse(&W, VECTOR2(x,y+1))); // Create the inside of the house that the door leads to
+			W->getTile(x,y) = T;
+			break;
+		}
 		case 'H': // House corner
 		{
 			T = new Tile(VECTOR2(x,y), 0, false);
-			House* H = new House(VECTOR2(x,y), HOUSE1WIDTH, HOUSE1HEIGHT, &HouseIM, W);
+			House* H = new House(VECTOR2(x,y), HOUSE1WIDTH, HOUSE1HEIGHT, &HouseIM);
 			T->giveStructure(H);	// Point the tile to the house
 			W->addStructure(H);		// Give the house to the world
 			W->getTile(x,y) = T;	// Give the tile to the world
-			break;
-		}
-		case 't': // Wood floor tile
-		{
-			W->getTile(x,y) = new Tile(VECTOR2(x,y), &WoodTileIM);
-			break;
-		}
-		case '-':
-		{
-			W->getTile(x,y) = new Tile(VECTOR2(x,y), &HouseWallIM, false);
-			break;
-		}
-		case 'D': // Door to the outside - for now
-		{
-			W->getTile(x,y) = new Tile(VECTOR2(x,y), &HouseDoorIM, false);
-			//W->addStructure();
-			break;
-		}
-		case 'd': // Inside Horizontal door
-		{
-			T = new Tile(VECTOR2(x,y), &WoodTileIM, false);
-			T->giveStructure(new Door(VECTOR2(x,y),1,1,&HorizInHouseDoorIM, W), true); 
-			W->getTile(x,y) = T;
-			break;
-		}
-		case '|': // Inside Vertical door
-		{
-			T = new Tile(VECTOR2(x,y), &WoodTileIM, false);
-			T->giveStructure(new Door(VECTOR2(x,y),1,1,&VertInHouseDoorIM, W), true); 
-			W->getTile(x,y) = T;
-			break;
-		}
-		case 'c': // Counter - for now
-		{
-			W->getTile(x,y) = new Tile(VECTOR2(x,y), &BarCounterIM, false);
 			break;
 		}
 		case 'x':

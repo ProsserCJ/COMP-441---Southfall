@@ -13,6 +13,7 @@ Last Modified: 11/4/2013
 #ifndef _WORLD_INTERFACE_H
 #define _WORLD_INTERFACE_H
 
+#include "StructureInterface.h"
 #include "World.h"
 #include <string>
 #include <fstream>
@@ -52,18 +53,6 @@ private:
 	Image Boulder2IM;
 	TextureManager RiverTX;
 	Image RiverIM;
-	TextureManager WoodTileTX;
-	Image WoodTileIM;
-	TextureManager HouseWallTX;
-	Image HouseWallIM;
-	TextureManager HouseDoorTX;
-	Image HouseDoorIM;
-	TextureManager BarCounterTX;
-	Image BarCounterIM;
-	TextureManager HorizInHouseDoorTX;
-	Image HorizInHouseDoorIM;
-	TextureManager VertInHouseDoorTX;
-	Image VertInHouseDoorIM;
 
 	TextureManager HouseTX;
 	Image HouseIM;
@@ -71,7 +60,7 @@ private:
 	Image TreeIM;
 
 	Graphics* graphics;
-
+	StructureInterface* StructInt;
 };
 
 #endif

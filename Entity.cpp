@@ -109,25 +109,25 @@ void Entity::interact(World* W)
 	case UP:
 		if(0<y)
 		{
-			W->getTile(x,y-range)->interact();
+			W->getTile(x,y-range)->interact(this);
 		}
 		break;
 	case DOWN:
 		if(y+range<W->getHeight())
 		{
-			W->getTile(x,y+range)->interact();
+			W->getTile(x,y+range)->interact(this);
 		}
 		break;
 	case RIGHT:
 		if(x+range<W->getWidth())
 		{
-			W->getTile(x+range,y)->interact();
+			W->getTile(x+range,y)->interact(this);
 		}
 		break;
 	case LEFT:
 		if(0<x)
 		{
-			W->getTile(x-range,y)->interact();
+			W->getTile(x-range,y)->interact(this);
 		}
 		break;
 	}
