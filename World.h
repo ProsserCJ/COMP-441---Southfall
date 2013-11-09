@@ -14,6 +14,7 @@ using std::list;
 
 #include "image.h"
 #include "Structure.h"
+#include "npc.h"
 
 class Structure;	// Forward reference to Structure
 
@@ -53,7 +54,8 @@ public:
 	~World() {};
 
 	void draw(VECTOR2& Center);
-	void update(float frameTime) {};
+	void update(float frameTime);
+	void act();
 
 	// Accessors
 	Tile* &		getTile(int x, int y)	{return tiles[x][y];}
@@ -69,6 +71,7 @@ public:
 	// Mutators
 	void setInitialized(bool init)	{_initialized = init;}
 	void addStructure(Structure* S)	{structures.push_back(S);}
+	void addNPC(NPC* n)				{npcs.push_back(n);}
 
 private:
 	int width, height;				// Dimensions of this world
@@ -76,6 +79,8 @@ private:
 	list<Structure*> structures;	// List of structures in the world
 						
 	bool _initialized;				// Has the world been initialized
+
+	list<NPC*> npcs;				// List of NPCs in this world
 };
 
 #endif

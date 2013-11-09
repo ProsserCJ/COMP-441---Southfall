@@ -103,6 +103,17 @@ World* WorldInterface::loadWorld(const string& fileName)
 		}
 		fin.get(c);
 	}
+	
+	int npcCount;
+	fin >> npcCount;
+	for (int i=0; i<npcCount; i++)
+	{
+		int ID, x, y;
+		fin >> ID >> x >> y;
+		W->addNPC(new NPC(ID, VECTOR2(x,y)));
+	}
+
+
 	W->setInitialized(true);
 	return W;
 }

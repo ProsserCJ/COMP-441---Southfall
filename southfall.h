@@ -57,7 +57,7 @@ private:
 	void initializeGraphics();
 	
 	Hero* player;
-	NPC* npc1;
+	//NPC* npc1;
 
 	TextBox* textbox;
 	WorldInterface Interface; 

@@ -27,14 +27,14 @@ class WorldInterface
 public:
 	void update(float frameTime) {Current->update(frameTime);}
 	void draw(VECTOR2& Center);
+	void act(){Current->act();}
 	void initialize(Graphics* graphics);
 	World* getCurrent() {return Current;}
 
 	World* loadWorld(const string& fileName);
 
 private:
-	World* Current;	// What world is currently in focus
-
+	World* Current;	// What world is currently in focus	
 	void initializeWorld(); // Initialize a main world
 
 	inline void assignTile(World* & W, char c, int x, int y);

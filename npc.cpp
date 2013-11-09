@@ -2,9 +2,13 @@
 #include "random.h"
 using namespace npcNS;
 
-Random rGen(0,999); //Homebrew Random number object
+Random rGen; //Homebrew Random number object
 					//rgen.next() returns a random number from 0-99 inclusive
 					//rgen.range(low, high) sets the range
+
+//initialize static NPC images and textures;
+TextureManager* NPC::NPC_TX1 = new TextureManager();
+Image* NPC::NPC_IM1 = new Image();
 
 void NPC::initialize()
 {	
@@ -36,4 +40,20 @@ void NPC::update(float frameTime, World* W)
 	if(startMoving) distanceTraveled += NPC_SPEED*frameTime;
 	timeSinceLastMove += frameTime;
 	Entity::update(frameTime, W);
+}
+
+void NPC::initGraphics(Graphics* graphics)
+{
+	if(!NPC_TX1->initialize(graphics, CHARACTER2_SHEET))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing NPC1 texture"));
+	if(!NPC_IM1->initialize(graphics, 32, 32, 8, NPC_TX1))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing NPC1 image"));
+}
+
+Image* NPC::getImage(int ID){
+
+	switch(ID){
+	case 1: return NPC_IM1; break;
+	}
+	return 0;
 }
