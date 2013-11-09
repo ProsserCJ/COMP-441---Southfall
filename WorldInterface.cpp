@@ -49,6 +49,17 @@ void WorldInterface::initialize(Graphics* graphics)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing House Door texture"));
 	if(!HouseDoorIM.initialize(graphics, 0, 0, 0, &HouseDoorTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing House Door image"));
+	// Horizontal in-house Door 1
+	if(!HorizInHouseDoorTX.initialize(graphics, HORIZINHOUSEDOOR1))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Horizontal in House Door texture"));
+	if(!HorizInHouseDoorIM.initialize(graphics, 0, 0, 0, &HorizInHouseDoorTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing House Door image"));
+	// Horizontal in-house 1
+	if(!VertInHouseDoorTX.initialize(graphics, VERTINHOUSEDOOR1))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Vertical in House Door texture"));
+	if(!VertInHouseDoorIM.initialize(graphics, 0, 0, 0, &VertInHouseDoorTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Vertical in House Door image"));
+	
 	// Bar Counter
 	if(!BarCounterTX.initialize(graphics, BARCOUNTER))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Bar Counter texture"));
@@ -168,10 +179,15 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 			W->getTile(x,y) = new Tile(VECTOR2(x,y), &HouseWallIM, false);
 			break;
 		}
-		case 'd': // Door - for now
+		case 'D': // Door to the outside - for now
 		{
 			W->getTile(x,y) = new Tile(VECTOR2(x,y), &HouseDoorIM, false);
 			//W->addStructure();
+			break;
+		}
+		case 'd': // Inside door
+		{
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &HorizInHouseDoorIM, false);
 			break;
 		}
 		case 'c': // Counter - for now

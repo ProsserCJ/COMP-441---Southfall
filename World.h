@@ -27,12 +27,13 @@ public:
 	void draw(VECTOR2& Center);
 
 	// Accessors
-	bool isTraversable()	{return _traversable;}
-	bool hasStructure()		{return S != 0;}
+	bool isTraversable();
+	bool hasStructure()			{return S != 0;}
 	Structure* getStructure()	{return S;}
 
 	// Mutators
 	void giveStructure(Structure* S)	{this->S = S;}
+	void interact() {}; // Open a door on the tile or things like that
 
 private:
 	VECTOR2 position;	// Position of the tile in the world

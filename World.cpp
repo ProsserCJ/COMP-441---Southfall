@@ -1,5 +1,11 @@
 #include "World.h"
 
+bool Tile::isTraversable()
+{
+	if(S == 0) return _traversable;
+	return S->isPassable();
+}
+
 void Tile::draw(VECTOR2& Center)
 {
 	if(!image) return; // if the image is null

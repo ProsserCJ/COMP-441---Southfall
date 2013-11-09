@@ -10,3 +10,10 @@ void Structure::draw(VECTOR2 Center)
 	image->setX(X); image->setY(Y);
 	image->draw();
 }
+
+void Door::interact()
+{
+	open++;
+	open %= 2;
+	image->setCurrentFrame(open);
+}

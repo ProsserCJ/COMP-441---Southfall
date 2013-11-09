@@ -60,6 +60,10 @@ private:
 	Image HouseDoorIM;
 	TextureManager BarCounterTX;
 	Image BarCounterIM;
+	TextureManager HorizInHouseDoorTX;
+	Image HorizInHouseDoorIM;
+	TextureManager VertInHouseDoorTX;
+	Image VertInHouseDoorIM;
 
 	TextureManager HouseTX;
 	Image HouseIM;
