@@ -27,6 +27,8 @@ void World::draw(VECTOR2& Center)
 			tiles[x][y]->draw(Center);
 	for(auto p = structures.begin(); p != structures.end(); p++)
 		(*p)->draw(Center);
+	for(auto p = npcs.begin(); p != npcs.end(); p++)
+		(*p)->draw(Center);
 }
 
 bool World::canMoveHere(VECTOR2 position, float radius)
@@ -48,3 +50,14 @@ bool World::isTraversible(VECTOR2 T)
 		return false;
 	return getTile((int)(T.x), (int)(T.y))->isTraversable();
 }
+
+void World::act(){
+	for(auto p = npcs.begin(); p != npcs.end(); p++)
+		(*p)->act(this);
+}
+
+void World::update(float frameTime){
+	for(auto p = npcs.begin(); p != npcs.end(); p++)
+		(*p)->update(frameTime, this);
+}
+	

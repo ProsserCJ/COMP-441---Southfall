@@ -13,7 +13,9 @@ Last Modified 11/2/2013
 #include "image.h"
 #include "input.h"
 #include "game.h"
-#include "World.h"
+//#include "World.h"
+
+class World;
 
 const VECTOR2 ZERO = VECTOR2(0,0);
 const float DEFAULT_FRAME_DELAY = 0.2;

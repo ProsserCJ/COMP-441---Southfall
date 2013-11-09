@@ -21,8 +21,8 @@ class NPC: public Entity
 {
 public:
 	NPC() : Entity() {}
-	NPC(Image* image, VECTOR2 pos)
-		: Entity(pos, npcNS::RADIUS, npcNS::HP, image)
+	NPC(int ID, VECTOR2 pos)
+		: Entity(pos, npcNS::RADIUS, npcNS::HP, getImage(ID))
 	{
 		initialize(); 
 		distanceTraveled = npcNS::PIXELS_PER_MOVE + 1;
@@ -35,10 +35,15 @@ public:
 	virtual void update(float frameTime, World* W);
 
 	void initialize();
+	static void initGraphics(Graphics* graphics);
+	Image* getImage(int ID);
 
 private:
 	double distanceTraveled;
-	double timeSinceLastMove;
+	double timeSinceLastMove;	
+
+	static TextureManager* NPC_TX1;
+	static Image* NPC_IM1;
 };
 
 #endif

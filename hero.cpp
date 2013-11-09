@@ -6,6 +6,8 @@ Last modified: 11/5/2013
 ******************************************************/
 
 #include "hero.h"
+#include "World.h"
+
 using namespace heroNS;
 
 void Hero::initialize()
@@ -19,6 +21,7 @@ void Hero::update(float frameTime, World* W)
 {
 	velocity = ZERO;
 	DIR dir = NONE;
+	//NPC* NPCFacing = 0;
 	if (input->isKeyDown(WKEY))
     {
             if (input->isKeyDown(DKEY))			go(UP_RIGHT);
@@ -34,6 +37,8 @@ void Hero::update(float frameTime, World* W)
     else if (input->isKeyDown(AKEY))			go(LEFT);
     else if (input->isKeyDown(DKEY))			go(RIGHT);
     else										standing();
+
+	//if (input->wasKeyPressed('E')) NPCFacing = getNPCFacing(W);
 
 	Entity::update(frameTime, W);
 

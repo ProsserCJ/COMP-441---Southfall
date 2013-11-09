@@ -37,7 +37,8 @@ void Southfall::initialize(HWND hwnd)
 	player->setPosition(VECTOR2(5,3));
 
 	//Initizlize NPC
-	npc1 = new NPC(&NPC1IM, VECTOR2(4,4));
+	//npc1 = new NPC(&NPC1IM, VECTOR2(4,4));
+	//now handled by World
 
 	//Initialize global TextBox
 	textbox = new TextBox(gameFont, audio, input, &TextBoxIM, &TextBoxArrowIM);
@@ -62,11 +63,6 @@ void Southfall::initializeGraphics()
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character1 texture"));
 	if(!Character1IM.initialize(graphics, 32, 32, 8, &Character1TX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character1 image"));
-	// NPC 1
-	if(!NPC1TX.initialize(graphics, CHARACTER2_SHEET))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing NPC1 texture"));
-	if(!NPC1IM.initialize(graphics, 32, 32, 8, &NPC1TX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing NPC1 image"));
 	// Textbox
 	if(!TextBoxTX.initialize(graphics, TEXTBOX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox texture"));
@@ -77,6 +73,8 @@ void Southfall::initializeGraphics()
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox arrow texture"));
 	if(!TextBoxArrowIM.initialize(graphics, 35, 20, 4, &TextBoxArrowTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox arrow image"));
+
+	NPC::initGraphics(graphics);
 }
 
 //=============================================================================
@@ -85,9 +83,7 @@ void Southfall::initializeGraphics()
 void Southfall::update()
 {	
 	Interface.update(frameTime);
-
-	player->update(frameTime, getWorld());
-	npc1->update(frameTime, getWorld());
+	player->update(frameTime, getWorld());	
 	
 	//textbox->update(frameTime);	
 }
@@ -97,7 +93,7 @@ void Southfall::update()
 //=============================================================================
 void Southfall::ai()
 {
-	npc1->act(Interface.getCurrent());
+	Interface.act();
 }
 
 //=============================================================================
@@ -115,7 +111,7 @@ void Southfall::render()
 {// sprite begin and end in game now
 	Interface.draw(Center());
 	player->draw(Center());	// For now
-	npc1->draw(Center());
+	//npc1->draw(Center());
 	//textbox->draw();
 }
 
