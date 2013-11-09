@@ -42,6 +42,7 @@ void TextBox::next(){
 		text.clear();
 		it = text.begin();
 		audio->stopCue(BACKGROUND);
+		audio->stopCue(HOUSE);
 		audio->playCue(BATTLE_INTRO);
 		Sleep(3400);
 		audio->playCue(BATTLE);

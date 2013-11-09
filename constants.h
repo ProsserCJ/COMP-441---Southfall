@@ -137,6 +137,7 @@ const char SELECT[] = "Blip_Select";
 const char BACKGROUND[] = "Background";
 const char BATTLE[] = "Battle";
 const char BATTLE_INTRO[] = "Battle Intro";
+const char HOUSE[] = "Background2";
 
 
 #endif

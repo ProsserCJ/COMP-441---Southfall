@@ -45,6 +45,7 @@ void Southfall::initialize(HWND hwnd)
 	textbox->addText("...you have no idea what is coming...");
 	textbox->addText("...and neither do we.");
 	audio->playCue(BACKGROUND);
+
 	
 }
 
