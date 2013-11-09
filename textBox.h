@@ -1,9 +1,13 @@
+#ifndef __TEXTBOX_H
+#define __TEXTBOX_H
+
 #include "image.h"
 #include "textDX.h"
 #include "string"
 #include "audio.h"
 #include "input.h"
 #include <vector>
+#include "npc.h"
 using std::string;
 using std::vector;
 
@@ -17,9 +21,11 @@ public:
 	void initialize();
 	virtual void draw();
 	virtual void update(float frameTime);
-	void addText(string newText)			{text.push_back(newText); it=text.begin();}
+	//void addText(string newText)			{text.push_back(newText); it=text.begin();}
+	void setText(NPC* n)					{speaker = n; text = n->getText(); it=text.begin();}
 	void setActive(bool b)					{active = b;}
 	void next();
+	bool isActive()							{return active;}
 
 private:
 	VECTOR2 position;
@@ -27,8 +33,11 @@ private:
 	Input* input;
 	Image* background;
 	Image* arrow;
+	NPC* speaker;
 	TextDX* gameFont;
 	vector<string> text;
 	vector<string>::iterator it;
 	bool active;
 };
+
+#endif

@@ -32,10 +32,6 @@ void Southfall::initialize(HWND hwnd)
 	// WorldInterface
 	Interface.initialize(graphics);
 
-	// Initialized Player here, have center point at player's position
-	player = new Hero(ZERO, heroNS::HERO_RADIUS, &Character1IM, input, audio);	
-	player->setPosition(VECTOR2(5,3));
-
 	//Initizlize NPC
 	//npc1 = new NPC(&NPC1IM, VECTOR2(4,4));
 	//now handled by World
@@ -45,9 +41,13 @@ void Southfall::initialize(HWND hwnd)
 	/*textbox->addText("A perilous world awaits...");
 	textbox->addText("...you have no idea what is coming...");
 	textbox->addText("...and neither do we.");*/
-	audio->playCue(BACKGROUND);
-
+	textbox->setActive(false);
 	
+	// Initialized Player here, have center point at player's position
+	player = new Hero(ZERO, heroNS::HERO_RADIUS, &Character1IM, input, audio, textbox);	
+	player->setPosition(VECTOR2(5,3));
+	
+	audio->playCue(BACKGROUND);	
 }
 
 //=============================================================================
@@ -83,9 +83,8 @@ void Southfall::initializeGraphics()
 void Southfall::update()
 {	
 	Interface.update(frameTime);
-	player->update(frameTime, getWorld());	
-	
-	//textbox->update(frameTime);	
+	player->update(frameTime, getWorld());		
+	textbox->update(frameTime);	
 }
 
 //=============================================================================
@@ -111,8 +110,7 @@ void Southfall::render()
 {// sprite begin and end in game now
 	Interface.draw(Center());
 	player->draw(Center());	// For now
-	//npc1->draw(Center());
-	//textbox->draw();
+	textbox->draw();
 }
 
 //=============================================================================

@@ -67,4 +67,28 @@ void World::update(float frameTime){
 	for(auto p = npcs.begin(); p != npcs.end(); p++)
 		(*p)->update(frameTime, this);
 }
+
+NPC* World::getNPCFacing(VECTOR2 pos, DIR dir)
+{
+	switch(dir)
+	{
+	case UP: pos.y -= 1; break;
+	case DOWN: pos.y += 1; break;
+	case LEFT: pos.x -= 1; break;
+	case RIGHT: pos.x += 1; break;
+	};
+
+	for(auto p = npcs.begin(); p != npcs.end(); p++){
+		VECTOR2 NPCposition = (*p)->getPosition();
+		
+		//if the position is within .2, it's close enough
+		if (NPCposition.x > pos.x - .5 && 
+			NPCposition.x < pos.x + .5 &&
+			NPCposition.y > pos.y - .2 &&
+			NPCposition.y < pos.y + .2)
+			return (*p);
+	}
+
+	return 0;
+}
 	

@@ -21,7 +21,7 @@ void Hero::update(float frameTime, World* W)
 {
 	velocity = ZERO;
 	DIR dir = NONE;
-	//NPC* NPCFacing = 0;
+	NPC* NPCFacing = 0;
 	if (input->isKeyDown(WKEY))
     {
             if (input->isKeyDown(DKEY))			go(UP_RIGHT);
@@ -39,7 +39,26 @@ void Hero::update(float frameTime, World* W)
     else										standing();
 	if(input->isKeyDown(ENTER_KEY)) interact(W);
 
-	//if (input->wasKeyPressed('E')) NPCFacing = getNPCFacing(W);
+	if (input->wasKeyPressed('E'))
+	{
+		if (textbox->isActive())
+		{
+			audio->playCue(SELECT);
+			textbox->next();
+		}
+		else
+		{
+			NPCFacing = W->getNPCFacing(position, facing);
+			if (NPCFacing){
+				audio->playCue(SELECT);
+				turnToPlayer(NPCFacing);
+				string temp[] = {"Hi."};
+				NPCFacing->setText(temp, 1);
+				textbox->setText(NPCFacing);
+				textbox->setActive(true);
+			}
+		}
+	}
 
 	Entity::update(frameTime, W);
 
@@ -48,6 +67,23 @@ void Hero::update(float frameTime, World* W)
 		audio->playCue(COLLIDE);
 	}
 }
+
+void Hero::turnToPlayer(NPC* npc)
+{
+	switch(facing){
+	case UP_RIGHT:
+	case UP_LEFT:
+	case UP: npc->setDir(DOWN); break;
+	case DOWN_RIGHT:
+	case DOWN_LEFT:
+	case DOWN: npc->setDir(UP); break;
+	case LEFT: npc->setDir(RIGHT); break;
+	case RIGHT: npc->setDir(LEFT); break;
+	};
+	npc->standing();
+	npc->setPaused(true);	
+}
+
 
 void Hero::attack()
 {
