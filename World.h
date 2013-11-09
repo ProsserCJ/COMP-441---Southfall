@@ -69,6 +69,7 @@ public:
 	int getWidth()	{return width;}
 	int getHeight()	{return height;}
 	bool isInitialized()	{return _initialized;}
+	NPC* getNPCFacing(VECTOR2 pos, DIR dir);
 	
 	// Mutators
 	void setInitialized(bool init)	{_initialized = init;}

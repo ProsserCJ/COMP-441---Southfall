@@ -8,6 +8,10 @@ Last Modified 11/2/2013
 #define _NPC_H
 
 #include "entity.h"
+#include <vector>
+#include "random.h"
+using std::string;
+using std::vector;
 
 namespace npcNS{
 	//assign constants here
@@ -26,7 +30,8 @@ public:
 	{
 		initialize(); 
 		distanceTraveled = npcNS::PIXELS_PER_MOVE + 1;
-		timeSinceLastMove = 0;	
+		timeSinceLastMove = 0;
+		paused = false;
 	}
 	~NPC() {}
 
@@ -37,10 +42,18 @@ public:
 	void initialize();
 	static void initGraphics(Graphics* graphics);
 	Image* getImage(int ID);
+	void setPaused(bool b)					{paused = b;}
+
+	
+	vector<string> getText()				{return text;}
+	void setText(string t[], int count)		{text = vector<string>(t, t + count);}
 
 private:
 	double distanceTraveled;
-	double timeSinceLastMove;	
+	double timeSinceLastMove;
+	vector<string> text;		//text to be returned for dialogue
+	bool paused;
+	Random rGen;
 
 	static TextureManager* NPC_TX1;
 	static Image* NPC_IM1;

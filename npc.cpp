@@ -1,14 +1,18 @@
 #include "npc.h"
-#include "random.h"
 using namespace npcNS;
-
-Random rGen; //Homebrew Random number object
-					//rgen.next() returns a random number from 0-99 inclusive
-					//rgen.range(low, high) sets the range
 
 //initialize static NPC images and textures;
 TextureManager* NPC::NPC_TX1 = new TextureManager();
 Image* NPC::NPC_IM1 = new Image();
+
+//called once to initialize all graphics
+void NPC::initGraphics(Graphics* graphics)
+{
+	if(!NPC_TX1->initialize(graphics, CHARACTER2_SHEET))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing NPC1 texture"));
+	if(!NPC_IM1->initialize(graphics, 32, 32, 8, NPC_TX1))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing NPC1 image"));
+}
 
 void NPC::initialize()
 {	
@@ -23,9 +27,9 @@ void NPC::act(World* W)
 	if (distanceTraveled >= 1)
 	{
 		standing();
-		rGen.range(0,100);
-		if (!moving && timeSinceLastMove > 2 && rGen.next() < 50)
-		{ //50% chance of initiating movement after 2 seconds
+		rGen.range(0,1000);
+		if (!moving && timeSinceLastMove > 2 && rGen.next() == 1)
+		{ //0.1% chance per frame of initiating movement after 2 seconds
 			timeSinceLastMove = 0;
 			distanceTraveled = 0;
 			rGen.range(0,3);		
@@ -37,17 +41,10 @@ void NPC::act(World* W)
 
 void NPC::update(float frameTime, World* W)
 {
+	if (paused) return;
 	if(startMoving) distanceTraveled += NPC_SPEED*frameTime;
 	timeSinceLastMove += frameTime;
 	Entity::update(frameTime, W);
-}
-
-void NPC::initGraphics(Graphics* graphics)
-{
-	if(!NPC_TX1->initialize(graphics, CHARACTER2_SHEET))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing NPC1 texture"));
-	if(!NPC_IM1->initialize(graphics, 32, 32, 8, NPC_TX1))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing NPC1 image"));
 }
 
 Image* NPC::getImage(int ID){

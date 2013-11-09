@@ -10,6 +10,7 @@ Last modified: 11/5/2013
 #define _HERO_H
 
 #include "Entity.h"
+#include "textBox.h"
 
 namespace heroNS
 { //Store hero constants here
@@ -26,14 +27,15 @@ class Hero: public Entity
 {
 public:
 	Hero() : Entity() {};
-	Hero(VECTOR2 position, float radius, Image* image, Input* input, Audio* audio, int HP=heroNS::HERO_HP) 
-		: Entity(position, radius, HP, image), input(input), audio(audio) {initialize();}
+	Hero(VECTOR2 position, float radius, Image* image, Input* input, Audio* audio, TextBox* tb, int HP=heroNS::HERO_HP) 
+		: Entity(position, radius, HP, image), input(input), audio(audio), textbox(tb) {initialize();}
 	void attack(DIR);
 	void attack();
 
 	virtual void draw(const VECTOR2& Center);
 	virtual void act(World* W) {}
 	virtual void update(float frameTime, World* W);
+	void turnToPlayer(NPC* n);
 
 	void initialize();
 
@@ -41,6 +43,9 @@ private:
 	Input* input;	
 	Audio* audio;
 	Image* armor;
+	TextBox* textbox;
+
+	
 };
 
 #endif

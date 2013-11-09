@@ -27,24 +27,21 @@ void TextBox::draw()
 void TextBox::update(float frameTime)	
 {
 	if (!active) return;	
-	arrow->update(frameTime);
-	if (input->wasKeyPressed('E'))
-	{
-		audio->playCue(SELECT);
-		next();		
-	}
+	arrow->update(frameTime);	
 }
 
 //iterate to the next sequence of text to display
 void TextBox::next(){
 	if (++it == text.end()){
 		setActive(false);
-		text.clear();
-		it = text.begin();
-		audio->stopCue(BACKGROUND);
-		audio->stopCue(HOUSE);
-		audio->playCue(BATTLE_INTRO);
-		Sleep(3400);
-		audio->playCue(BATTLE);
+		text.clear();		
+		speaker->setPaused(false);
 	}
 }
+
+//save this code to initiate battle music
+		//audio->stopCue(BACKGROUND);
+		//audio->stopCue(HOUSE);
+		//audio->playCue(BATTLE_INTRO);
+		//Sleep(3400);
+		//audio->playCue(BATTLE);
