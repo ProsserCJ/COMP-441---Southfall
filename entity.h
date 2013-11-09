@@ -64,15 +64,50 @@ const int ATTACK_UP_END = 0;
 const int ATTACK_LEFT_START = 0;
 const int ATTACK_LEFT_END = 0;
 
+class Drawable
+{
+public:
+	Drawable() : image(0) {};
+	Drawable(Image* image) : image(image) {};
+	void initialize();
+	// Mutators
+	void setImageX(int x)					{image->setX(x);}
+	void setImageY(int y)					{image->setY(y);}
+	void setScale(float scale)				{image->setScale(scale);}
+	void draw()								{image->draw();}
+	void updateImage();
+	void setFrame()							{image->setCurrentFrame(_frame);}
+	void setFrame(int frame)				{_frame=frame;}	// Directly set the frame
+	// Image updating
+	void setStationaryFrame(int frame)		{_startFrame=_endFrame=_frame=frame;}
+	void updateImage(float frameTime);
+	void setFrames(int start, int end)		{_startFrame=start;_endFrame=end;_frame=start;}
+	void setFrameDelay(float delay)			{_imageDelay=delay;}
+	void startImage()						{_frame=_startFrame;}
+	// Accessors
+	Image* & getImage()						{return image;}
+	int getFrame()							{return _frame;}
+	bool noImage()							{return image == 0;}
+private:
+	private:
+	// Image and animation control
+	int _frame;			// What frame to display
+	float _imageTime;	// How long the current frame has displayed
+	float _imageDelay;	// How long each frame should display
+	int _startFrame;		// Start of the animation loop
+	int _endFrame;		// End of the animation loop
+	Image* image;		// The sprite sheet to display from
+};
+
 // Base for in game characters, monsters, and animals
-class Entity
+class Entity : public Drawable
 {
 public:
 	// Constructors and destructors
-	Entity() : position(ZERO), velocity(ZERO), knockback(ZERO), image(0), maxHP(0), HP(0), 
+	Entity() : position(ZERO), velocity(ZERO), knockback(ZERO), Drawable(0), maxHP(0), HP(0), 
 		radius(0.25), active(false), collisionType(POINTCOLLISION) {initialize();}
 	Entity(VECTOR2 pos, float radius, int HP, Image* image) 
-		: position(pos), radius(radius), collisionType(CIRCLE), image(image), HP(HP), 
+		: position(pos), radius(radius), collisionType(CIRCLE), Drawable(image), HP(HP), 
 		maxHP(HP), velocity(ZERO), knockback(ZERO), active(true) {initialize();}
 	~Entity() {};
 
@@ -95,11 +130,10 @@ public:
 	virtual bool alive()		{return HP > 0;}
 	virtual bool isActive()		{return active;}
 	DIR getDirectionFacing()	{return facing;}
-	int getFrame()				const {return _frame;}
 	World* getWorld()			const {return world;}
 
 	// Mutators
-	void setPosition(const VECTOR2& pos)	{position = pos; image->setX(pos.x); image->setY(pos.y);}
+	void setPosition(const VECTOR2& pos)	{position = pos;/* setImageX(pos.x); setImageY(pos.y);*/}
 	void setVelocity(const VECTOR2& vel)	{velocity = vel;}
 	void setKnockback(const VECTOR2& kb)	{knockback = kb;}
 	void setActive(bool act)				{active = act;}
@@ -107,13 +141,7 @@ public:
 	void setWorld(World* W)					{world = W;}
 	void kill()								{HP = 0;}	
 	
-	// Image updating
-	void setFrame(int frame)				{_frame=frame;}	// Directly set the frame
-	void setStationaryFrame(int frame)		{_startFrame=_endFrame=_frame=frame;}
-	void updateImage(float frameTime)		{_imageTime+=frameTime;}
-	void setFrames(int start, int end)		{_startFrame=start;_endFrame=end;_frame=start;}
-	void setFrameDelay(float delay)			{_imageDelay=delay;}
-	void startImage()						{_frame=_startFrame;}
+	
 	void setDir(DIR face)					{facing=face;}
 	void go(DIR face);			
 	void standing();
@@ -140,15 +168,6 @@ protected:
 	bool startMoving;
 						
 	COLLISIONTYPE collisionType;
-
-private:
-	// Image and animation control
-	int _frame;			// What frame to display
-	float _imageTime;	// How long the current frame has displayed
-	float _imageDelay;	// How long each frame should display
-	int _startFrame;		// Start of the animation loop
-	int _endFrame;		// End of the animation loop
-	Image* image;		// The sprite sheet to display from
 };
 
 #endif

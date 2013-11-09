@@ -10,8 +10,10 @@ void Tile::draw(VECTOR2& Center)
 {
 	if(!image) return; // if the image is null
 	VECTOR2 diff = position*TILE_SIZE - Center;
-	int X = diff.x + HSCREEN_WIDTH - HTILE_SIZE;
-	int Y = diff.y + HSCREEN_HEIGHT - HTILE_SIZE;
+	int width = 0.5*image->getWidth()*image->getScale();
+	int height = 0.5*image->getHeight()*image->getScale();
+	int X = diff.x + HSCREEN_WIDTH - width;
+	int Y = diff.y + HSCREEN_HEIGHT - height;
 	image->setScale(DEFAULT_SCALE);
 	image->setX(X); image->setY(Y);
 	image->draw();
@@ -63,7 +65,10 @@ void World::act(){
 		(*p)->act(this);
 }
 
-void World::update(float frameTime){
+void World::update(float frameTime)
+{
+	for(auto s = structures.begin(); s != structures.end(); s++)
+		(*s)->update(frameTime);
 	for(auto p = npcs.begin(); p != npcs.end(); p++)
 		(*p)->update(frameTime, this);
 }

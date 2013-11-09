@@ -32,9 +32,8 @@ void StructureInterface::initialize(Graphics* graphics)
 	// Bar Counter
 	if(!BarCounterTX.initialize(graphics, BARCOUNTER))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Bar Counter texture"));
-	if(!BarCounterIM.initialize(graphics, 0, 0, 0, &BarCounterTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Bar Counter image"));
-	
+	if(!BarCounterIM.initialize(graphics, 32, 64, 1, &BarCounterTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Bar Counter image"));	
 }
 
 World* StructureInterface::loadStructure(string fileName, World** external, VECTOR2 Vout)

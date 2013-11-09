@@ -26,6 +26,11 @@ void WorldInterface::initialize(Graphics* graphics)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Boulder2 texture"));
 	if(!Boulder2IM.initialize(graphics, 0, 0, 0, &Boulder2TX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Boulder2 image"));
+	// Magic Portal
+	if(!MagicPortalTX.initialize(graphics, MAGICPORTAL1))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Magic portal texture"));
+	if(!MagicPortalIM.initialize(graphics, 32, 32, 4, &MagicPortalTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Magic portal image"));
 	// House
 	if(!HouseTX.initialize(graphics, HOUSE1))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing House texture"));
@@ -38,10 +43,11 @@ void WorldInterface::initialize(Graphics* graphics)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing River image"));
 
 	// Temporary world constants
-	int WORLD_WIDTH = 100;
+	
+	/*int WORLD_WIDTH = 100;
 	int WORLD_HEIGHT = 100;
 	Current = new World(WORLD_WIDTH, WORLD_HEIGHT);
-	//initializeWorld();
+	initializeWorld();*/
 	Current = loadWorld("Worlds\\TestWorld.txt");
 }
 

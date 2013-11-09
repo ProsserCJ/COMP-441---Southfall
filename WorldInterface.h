@@ -53,6 +53,8 @@ private:
 	Image Boulder2IM;
 	TextureManager RiverTX;
 	Image RiverIM;
+	TextureManager MagicPortalTX;
+	Image MagicPortalIM;
 
 	TextureManager HouseTX;
 	Image HouseIM;

@@ -103,6 +103,7 @@ const char GRASS1[] = "Images\\Grass1.png";
 const char TREE1[] = "Images\\Tree1.png";
 const char BOULDER1[] = "Images\\Boulder1.png";
 const char BOULDER2[] = "Images\\Boulder2.png";
+const char MAGICPORTAL1[] = "Images\\MagicPortal.png";
 const char HOUSE1[] = "Images\\House1.png";
 const char RIVER1[] = "Images\\River1.png";
 const char WOODTILE1[] = "Images\\WoodFloor1.png";
