@@ -67,8 +67,8 @@ const int ATTACK_LEFT_END = 0;
 class Drawable
 {
 public:
-	Drawable() : image(0) {};
-	Drawable(Image* image) : image(image) {};
+	Drawable() : image(0) {initialize();}
+	Drawable(Image* image) : image(image) {initialize();};
 	void initialize();
 	// Mutators
 	void setImageX(int x)					{image->setX(x);}

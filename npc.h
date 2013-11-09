@@ -15,8 +15,8 @@ using std::vector;
 
 namespace npcNS{
 	//assign constants here
-	const float NPC_SPEED = 2.f; //arbitrarily chosen to be slower than Hero
-	const int RADIUS = 0.25;
+	const float NPC_SPEED = 2.0f; //arbitrarily chosen to be slower than Hero
+	const float RADIUS = 0.25f;
 	const int HP = 100;
 	const int PIXELS_PER_MOVE = TILE_SIZE;
 }

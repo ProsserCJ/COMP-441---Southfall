@@ -172,6 +172,15 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 			W->getTile(x,y) = T;	// Give the tile to the world
 			break;
 		}
+		case 'P':
+		{
+			T = new Tile(VECTOR2(x,y), &GrassIM, false); // For now
+			W->getTile(x,y) = T;
+			Portal* P = new Portal(VECTOR2(x,y),1,1,&MagicPortalIM,W,VECTOR2(12,10));
+			W->addStructure(P);
+			T->giveStructure(P);
+			break;
+		}
 		case 'x':
 		default: W->getTile(x,y) = new Tile(VECTOR2(x,y), 0, false);
 	}

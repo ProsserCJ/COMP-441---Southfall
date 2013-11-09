@@ -39,7 +39,8 @@ class Portal : public Structure
 public:
 	Portal() {};
 	Portal(VECTOR2 TL, int width, int height, Image* image, World* out, VECTOR2 vout) 
-		: Structure(TL,width,height,image,out), open(true), vOut(vout) {};
+		: Structure(TL,width,height,image,out), open(true), vOut(vout) 
+		{Drawable::setFrames(0,3);}
 
 	virtual void interact(Entity* E);
 	virtual bool isPassable() {return false;}
