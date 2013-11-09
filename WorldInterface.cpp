@@ -34,13 +34,34 @@ void WorldInterface::initialize(Graphics* graphics)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing River texture"));
 	if(!RiverIM.initialize(graphics, 0, 0, 0, &RiverTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing River image"));
+	// Wood Floor 1
+	if(!WoodTileTX.initialize(graphics, WOODTILE1))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wood Tile texture"));
+	if(!WoodTileIM.initialize(graphics, 0, 0, 0, &WoodTileTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wood Tile image"));
+	// House Wall 1
+	if(!HouseWallTX.initialize(graphics, HOUSEWALL1))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing House Wall texture"));
+	if(!HouseWallIM.initialize(graphics, 0, 0, 0, &HouseWallTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing House Wall image"));
+	// House Door 1
+	if(!HouseDoorTX.initialize(graphics, HOUSEDOOR1))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing House Door texture"));
+	if(!HouseDoorIM.initialize(graphics, 0, 0, 0, &HouseDoorTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing House Door image"));
+	// Bar Counter
+	if(!BarCounterTX.initialize(graphics, BARCOUNTER))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Bar Counter texture"));
+	if(!BarCounterIM.initialize(graphics, 0, 0, 0, &BarCounterTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Bar Counter image"));
+	
 
 	// Temporary world constants
 	int WORLD_WIDTH = 100;
 	int WORLD_HEIGHT = 100;
 	Current = new World(WORLD_WIDTH, WORLD_HEIGHT);
 	//initializeWorld();
-	Current = loadWorld("Worlds\\TestWorld.txt");
+	Current = loadWorld("Worlds\\House1.txt");
 }
 
 World* WorldInterface::loadWorld(const string& fileName)
@@ -95,26 +116,69 @@ void WorldInterface::initializeWorld()
 
 inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 {
+	Tile* T;
 	switch(c)
 	{
-	case 'g': // Grass
-		W->getTile(x,y) = new Tile(VECTOR2(x,y), &GrassIM);
-		break;
-	case 'b': // Boulder
-		W->getTile(x,y) = new Tile(VECTOR2(x,y), &Boulder1IM, false);
-		break;
-	case 'B': // Boulder 2
-		W->getTile(x,y) = new Tile(VECTOR2(x,y), &Boulder2IM, false);
-		break;
-	case 'r': // River
-		W->getTile(x,y) = new Tile(VECTOR2(x,y), &RiverIM, false);
-		break;
-	case 's': // Structure blocker
-		W->getTile(x,y) = new Tile(VECTOR2(x,y), 0, false);
-		break;
-	case 'H': // House corner
-		W->getTile(x,y) = new Tile(VECTOR2(x,y), 0, false);
-		W->addStructure(new House(VECTOR2(x,y), HOUSE1WIDTH, HOUSE1HEIGHT, &HouseIM));
-		break;
+		case 'g': // Grass
+		{
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &GrassIM);
+			break;
+		}
+		case 'b': // Boulder
+		{
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &Boulder1IM, false);
+			break;
+		}
+		case 'B': // Boulder 2
+		{
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &Boulder2IM, false);
+			break;
+		}
+		case 'r': // River
+		{
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &RiverIM, false);
+			break;
+		}
+		case 's': // Structure blocker
+		{
+			T = new Tile(VECTOR2(x,y), 0, false);
+			if(0<x-1 && W->getTile(x-1,y)->hasStructure()) 
+				T->giveStructure(W->getTile(x-1,y)->getStructure());
+			else if(0<y-1 && W->getTile(x,y-1)->hasStructure()) 
+				T->giveStructure(W->getTile(x,y-1)->getStructure());
+			W->getTile(x,y) = T;
+			break;
+		}
+		case 'H': // House corner
+		{
+			T = new Tile(VECTOR2(x,y), 0, false);
+			House* H = new House(VECTOR2(x,y), HOUSE1WIDTH, HOUSE1HEIGHT, &HouseIM, W);
+			T->giveStructure(H);	// Point the tile to the house
+			W->addStructure(H);		// Give the house to the world
+			W->getTile(x,y) = T;	// Give the tile to the world
+			break;
+		}
+		case 't': // Wood floor tile
+		{
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &WoodTileIM);
+			break;
+		}
+		case '-':
+		{
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &HouseWallIM, false);
+			break;
+		}
+		case 'd': // Door - for now
+		{
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &HouseDoorIM, false);
+			//W->addStructure();
+			break;
+		}
+		case 'c': // Counter - for now
+		{
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &BarCounterIM, false);
+			break;
+		}
+		default: W->getTile(x,y) = new Tile(VECTOR2(x,y), &HouseWallIM, false);
 	}
 }

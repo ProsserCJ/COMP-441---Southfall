@@ -29,6 +29,7 @@ public:
 	// Accessors
 	bool isTraversable()	{return _traversable;}
 	bool hasStructure()		{return S != 0;}
+	Structure* getStructure()	{return S;}
 
 	// Mutators
 	void giveStructure(Structure* S)	{this->S = S;}

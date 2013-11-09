@@ -105,6 +105,10 @@ const char BOULDER1[] = "Images\\Boulder1.png";
 const char BOULDER2[] = "Images\\Boulder2.png";
 const char HOUSE1[] = "Images\\House1.png";
 const char RIVER1[] = "Images\\River1.png";
+const char WOODTILE1[] = "Images\\WoodFloor1.png";
+const char HOUSEWALL1[] = "Images\\HouseWall1.png";
+const char HOUSEDOOR1[] = "Images\\HouseDoor1.png";
+const char BARCOUNTER[] = "Images\\Counter1.png";
 const char TEXTBOX[] = "Images\\textBox.png";
 const char TEXTBOX_ARROW[] = "Images\\textBoxArrow.png";
 

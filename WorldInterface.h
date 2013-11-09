@@ -52,6 +52,14 @@ private:
 	Image Boulder2IM;
 	TextureManager RiverTX;
 	Image RiverIM;
+	TextureManager WoodTileTX;
+	Image WoodTileIM;
+	TextureManager HouseWallTX;
+	Image HouseWallIM;
+	TextureManager HouseDoorTX;
+	Image HouseDoorIM;
+	TextureManager BarCounterTX;
+	Image BarCounterIM;
 
 	TextureManager HouseTX;
 	Image HouseIM;

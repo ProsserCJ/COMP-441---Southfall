@@ -41,9 +41,9 @@ void Southfall::initialize(HWND hwnd)
 
 	//Initialize global TextBox
 	textbox = new TextBox(gameFont, audio, input, &TextBoxIM, &TextBoxArrowIM);
-	textbox->addText("A perilous world awaits...");
+	/*textbox->addText("A perilous world awaits...");
 	textbox->addText("...you have no idea what is coming...");
-	textbox->addText("...and neither do we.");
+	textbox->addText("...and neither do we.");*/
 	audio->playCue(BACKGROUND);
 
 	
@@ -89,7 +89,7 @@ void Southfall::update()
 	player->update(frameTime, getWorld());
 	npc1->update(frameTime, getWorld());
 	
-	textbox->update(frameTime);	
+	//textbox->update(frameTime);	
 }
 
 //=============================================================================
@@ -116,7 +116,7 @@ void Southfall::render()
 	Interface.draw(Center());
 	player->draw(Center());	// For now
 	npc1->draw(Center());
-	textbox->draw();
+	//textbox->draw();
 }
 
 //=============================================================================
