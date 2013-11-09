@@ -21,7 +21,7 @@ public:
 		: TL(TL), BR(VECTOR2(TL.x+width,TL.y+height)), image(image), out(out) {};
 	~Structure() {};
 
-	void draw(VECTOR2 Center);
+	virtual void draw(VECTOR2 Center);
 	virtual void interact()=0;
 	virtual bool isPassable()=0;
 
@@ -33,6 +33,18 @@ protected:
 	World* out;
 };
 
+class Portal : public Structure
+{
+	Portal(VECTOR2 TL, int width, int height, Image* image, World* out) 
+		: Structure(TL,width,height,image,out), open(true) {};
+
+	void closePortal()	{open = false;}
+	void openPortal()	{open = true;}
+private:
+	bool open;
+};
+
+// An open and closeable door for use in buildings
 class Door : public Structure
 {
 public:
@@ -40,7 +52,8 @@ public:
 		: Structure(TL,width,height,image,out), open(0) {};
 	~Door() {};
 	virtual void interact();
-	virtual bool isPassable() {return static_cast<bool>(open);}
+	virtual void draw(VECTOR2 Center);
+	virtual bool isPassable() {return open == 1;}
 private:
 	int open;
 };

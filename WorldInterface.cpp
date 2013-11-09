@@ -49,15 +49,16 @@ void WorldInterface::initialize(Graphics* graphics)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing House Door texture"));
 	if(!HouseDoorIM.initialize(graphics, 0, 0, 0, &HouseDoorTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing House Door image"));
+	
 	// Horizontal in-house Door 1
 	if(!HorizInHouseDoorTX.initialize(graphics, HORIZINHOUSEDOOR1))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Horizontal in House Door texture"));
-	if(!HorizInHouseDoorIM.initialize(graphics, 0, 0, 0, &HorizInHouseDoorTX))
+	if(!HorizInHouseDoorIM.initialize(graphics, 32, 32, 2, &HorizInHouseDoorTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing House Door image"));
-	// Horizontal in-house 1
+	// Vertical in-house 1
 	if(!VertInHouseDoorTX.initialize(graphics, VERTINHOUSEDOOR1))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Vertical in House Door texture"));
-	if(!VertInHouseDoorIM.initialize(graphics, 0, 0, 0, &VertInHouseDoorTX))
+	if(!VertInHouseDoorIM.initialize(graphics, 32, 32, 2, &VertInHouseDoorTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Vertical in House Door image"));
 	
 	// Bar Counter
@@ -196,9 +197,18 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 			//W->addStructure();
 			break;
 		}
-		case 'd': // Inside door
+		case 'd': // Inside Horizontal door
 		{
-			W->getTile(x,y) = new Tile(VECTOR2(x,y), &HorizInHouseDoorIM, false);
+			T = new Tile(VECTOR2(x,y), &WoodTileIM, false);
+			T->giveStructure(new Door(VECTOR2(x,y),1,1,&HorizInHouseDoorIM, W), true); 
+			W->getTile(x,y) = T;
+			break;
+		}
+		case '|': // Inside Vertical door
+		{
+			T = new Tile(VECTOR2(x,y), &WoodTileIM, false);
+			T->giveStructure(new Door(VECTOR2(x,y),1,1,&VertInHouseDoorIM, W), true); 
+			W->getTile(x,y) = T;
 			break;
 		}
 		case 'c': // Counter - for now
@@ -206,6 +216,7 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 			W->getTile(x,y) = new Tile(VECTOR2(x,y), &BarCounterIM, false);
 			break;
 		}
-		default: W->getTile(x,y) = new Tile(VECTOR2(x,y), &HouseWallIM, false);
+		case 'x':
+		default: W->getTile(x,y) = new Tile(VECTOR2(x,y), 0, false);
 	}
 }

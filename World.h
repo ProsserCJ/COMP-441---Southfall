@@ -22,7 +22,8 @@ class Tile
 {
 public:
 	Tile(VECTOR2 position, Image* image, bool trav=true) 
-		: position(position), image(image), _traversable(trav), S(0) {};
+		: position(position), image(image), _traversable(trav), 
+		S(0), _drawStruct(false) {};
 	~Tile() {};
 
 	void draw(VECTOR2& Center);
@@ -33,12 +34,13 @@ public:
 	Structure* getStructure()	{return S;}
 
 	// Mutators
-	void giveStructure(Structure* S)	{this->S = S;}
-	void interact() {}; // Open a door on the tile or things like that
+	void giveStructure(Structure* S, bool draw=false)	{this->S = S;_drawStruct=draw;}
+	void interact();	// Open a door on the tile or things like that
 
 private:
 	VECTOR2 position;	// Position of the tile in the world
 	bool _traversable;	// True if entities can walk on it
+	bool _drawStruct;	// True if the tile should draw the structure on it
 	Structure* S;		// A building is sitting over this tile
 	
 	Image* image;		// Base image of the tile

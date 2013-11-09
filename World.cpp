@@ -15,6 +15,13 @@ void Tile::draw(VECTOR2& Center)
 	image->setScale(DEFAULT_SCALE);
 	image->setX(X); image->setY(Y);
 	image->draw();
+	if(_drawStruct) S->draw(Center);
+}
+
+void Tile::interact()
+{
+	if(S != 0)
+		S->interact();
 }
 
 void World::draw(VECTOR2& Center)

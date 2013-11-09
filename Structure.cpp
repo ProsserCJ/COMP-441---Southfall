@@ -11,6 +11,13 @@ void Structure::draw(VECTOR2 Center)
 	image->draw();
 }
 
+void Door::draw(VECTOR2 Center)
+{
+	if(!image) return;
+	image->setCurrentFrame(open);
+	Structure::draw(Center);
+}
+
 void Door::interact()
 {
 	open++;

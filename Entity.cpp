@@ -10,6 +10,7 @@ void Entity::initialize()
 	_imageDelay = DEFAULT_FRAME_DELAY;
 	_startFrame = 0;
 	_endFrame = 0;
+	timeSinceInteract = 0;
 	speed = 0;
 	facing = DOWN;
 }
@@ -17,6 +18,7 @@ void Entity::initialize()
 void Entity::update(float frameTime, World* W)
 {
 	updateImage(frameTime);
+	timeSinceInteract += frameTime;
 	move(frameTime, W);
 	if(startMoving && W->canMoveHere(position + velocity*frameTime, radius))
 		setPosition(position + velocity*frameTime);
@@ -94,6 +96,41 @@ void Entity::move(float frameTime, World* W)
 
 	lastDir = facing;
 	moving = true;
+}
+
+void Entity::interact(World* W)
+{
+	if(timeSinceInteract < INTERACTIONDELAY) return;
+	timeSinceInteract = 0;
+	float x = position.x + 0.5, y = position.y + 0.5;
+	float range = 0.6;
+	switch(facing)
+	{
+	case UP:
+		if(0<y)
+		{
+			W->getTile(x,y-range)->interact();
+		}
+		break;
+	case DOWN:
+		if(y+range<W->getHeight())
+		{
+			W->getTile(x,y+range)->interact();
+		}
+		break;
+	case RIGHT:
+		if(x+range<W->getWidth())
+		{
+			W->getTile(x+range,y)->interact();
+		}
+		break;
+	case LEFT:
+		if(0<x)
+		{
+			W->getTile(x-range,y)->interact();
+		}
+		break;
+	}
 }
 
 void Entity::go(DIR face)

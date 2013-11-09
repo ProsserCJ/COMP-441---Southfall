@@ -18,7 +18,8 @@ Last Modified 11/2/2013
 class World;
 
 const VECTOR2 ZERO = VECTOR2(0,0);
-const float DEFAULT_FRAME_DELAY = 0.2;
+const float DEFAULT_FRAME_DELAY = 0.2f;
+const float INTERACTIONDELAY = 0.5f;
 
 namespace entityNS
 {
@@ -81,6 +82,7 @@ public:
 	virtual void act(World* W) = 0;					// AI and decisions
 	virtual void update(float frameTime, World* W);
 	void move(float frameTime, World* W);
+	virtual void interact(World* W);	// Interact with a tile
 
 	// Collision Handler
 	friend bool HandleCollision(Entity* A, Entity* B) {return true;}; // True if the entities collided
@@ -129,6 +131,8 @@ protected:
 	int maxHP;
 	bool active;
 	World* world;
+
+	float timeSinceInteract;
 
 	//Movement control
 	DIR facing;	
