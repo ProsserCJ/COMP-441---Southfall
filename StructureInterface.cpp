@@ -90,7 +90,7 @@ inline void StructureInterface::assignTile(World* & W, char c, int x, int y, Wor
 		T = new Tile(V, &HouseDoorIM, false);
 		T->giveStructure(new Portal(V,1,1,&HouseDoorIM,external[N],Vout));
 		W->getTile(x,y) = T;
-		entrance = V;
+		entrance = VECTOR2(x,y-1);
 		return;
 	}
 	switch(c)
@@ -132,5 +132,5 @@ inline void StructureInterface::assignTile(World* & W, char c, int x, int y, Wor
 Portal* StructureInterface::createHouse(World** external, VECTOR2 vOut)
 {
 	World* W = loadStructure("Worlds\\House1.txt", external, vOut);
-	return new Portal(vOut,1,1,0,external[0],vOut);
+	return new Portal(vOut,1,1,0,W,entrance);
 }

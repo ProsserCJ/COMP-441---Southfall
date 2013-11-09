@@ -46,6 +46,7 @@ void Southfall::initialize(HWND hwnd)
 	// Initialized Player here, have center point at player's position
 	player = new Hero(ZERO, heroNS::HERO_RADIUS, &Character1IM, input, audio, textbox);	
 	player->setPosition(VECTOR2(5,3));
+	player->setWorld(Interface.getCurrent());
 	
 	audio->playCue(BACKGROUND);	
 }
@@ -82,8 +83,8 @@ void Southfall::initializeGraphics()
 //=============================================================================
 void Southfall::update()
 {	
-	Interface.update(frameTime);
-	player->update(frameTime, getWorld());		
+	player->getWorld()->update(frameTime);
+	player->update(frameTime, player->getWorld());	
 	textbox->update(frameTime);	
 }
 
@@ -108,7 +109,7 @@ void Southfall::collisions()
 //=============================================================================
 void Southfall::render()
 {// sprite begin and end in game now
-	Interface.draw(Center());
+	player->getWorld()->draw(Center());
 	player->draw(Center());	// For now
 	textbox->draw();
 }

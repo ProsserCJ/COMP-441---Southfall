@@ -13,7 +13,8 @@ void Structure::draw(VECTOR2 Center)
 
 void Portal::interact(Entity* E)
 {
-	
+	E->setWorld(out);
+	E->setPosition(vOut);
 }
 
 void Door::draw(VECTOR2 Center)

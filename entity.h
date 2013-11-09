@@ -88,10 +88,7 @@ public:
 	friend bool HandleCollision(Entity* A, Entity* B) {return true;}; // True if the entities collided
 
 	// Accessors
-	VECTOR2 getPosition()		
-	{
-		return position;
-	}
+	VECTOR2 getPosition()		const {return position;}
 	VECTOR2 getVelocity()		const {return velocity;}
 	float getRadius()			const {return radius;}
 	int getHP()					const {return HP;}
@@ -99,6 +96,7 @@ public:
 	virtual bool isActive()		{return active;}
 	DIR getDirectionFacing()	{return facing;}
 	int getFrame()				const {return _frame;}
+	World* getWorld()			const {return world;}
 
 	// Mutators
 	void setPosition(const VECTOR2& pos)	{position = pos; image->setX(pos.x); image->setY(pos.y);}
@@ -106,6 +104,7 @@ public:
 	void setKnockback(const VECTOR2& kb)	{knockback = kb;}
 	void setActive(bool act)				{active = act;}
 	void setHP(int HP)						{this->HP = HP;}
+	void setWorld(World* W)					{world = W;}
 	void kill()								{HP = 0;}	
 	
 	// Image updating
