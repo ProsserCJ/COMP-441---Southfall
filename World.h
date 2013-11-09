@@ -9,7 +9,11 @@ Last modified: 11/4/2013
 #ifndef _WORLD_H
 #define _WORLD_H
 
+#include <list>
+using std::list;
+
 #include "image.h"
+#include "Structure.h"
 
 class Structure;	// Forward reference to Structure
 
@@ -23,11 +27,11 @@ public:
 	void draw(VECTOR2& Center);
 
 	// Accessors
-	bool isTraversable() {return _traversable;}
-	bool hasStructure() {return S != 0;}
+	bool isTraversable()	{return _traversable;}
+	bool hasStructure()		{return S != 0;}
 
 	// Mutators
-	void giveStructure(Structure* S) {this->S = S;}
+	void giveStructure(Structure* S)	{this->S = S;}
 
 private:
 	VECTOR2 position;	// Position of the tile in the world
@@ -62,12 +66,14 @@ public:
 	
 	// Mutators
 	void setInitialized(bool init)	{_initialized = init;}
+	void addStructure(Structure* S)	{structures.push_back(S);}
 
 private:
-	int width, height;	// Dimensions of this world
-	Tile*** tiles;		// The tiles that make up the world
+	int width, height;				// Dimensions of this world
+	Tile*** tiles;					// The tiles that make up the world
+	list<Structure*> structures;	// List of structures in the world
 						
-	bool _initialized;
+	bool _initialized;				// Has the world been initialized
 };
 
 #endif

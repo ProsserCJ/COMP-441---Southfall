@@ -113,7 +113,8 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 		W->getTile(x,y) = new Tile(VECTOR2(x,y), 0, false);
 		break;
 	case 'H': // House corner
-		W->getTile(x,y) = new Tile(VECTOR2(x,y), &HouseIM, false);
+		W->getTile(x,y) = new Tile(VECTOR2(x,y), 0, false);
+		W->addStructure(new House(VECTOR2(x,y), HOUSE1WIDTH, HOUSE1HEIGHT, &HouseIM));
 		break;
 	}
 }

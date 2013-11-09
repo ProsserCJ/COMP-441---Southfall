@@ -19,6 +19,9 @@ Last Modified: 11/4/2013
 using std::string;
 using std::ifstream;
 
+const int HOUSE1WIDTH = 8;
+const int HOUSE1HEIGHT = 6;
+
 class WorldInterface
 {
 public:

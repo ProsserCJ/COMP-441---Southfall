@@ -19,6 +19,8 @@ void World::draw(VECTOR2& Center)
 	for(int x = x0; x < x1; x++)
 		for(int y = y0; y < y1; y++)
 			tiles[x][y]->draw(Center);
+	for(auto p = structures.begin(); p != structures.end(); p++)
+		(*p)->draw(Center);
 }
 
 bool World::canMoveHere(VECTOR2 position, float radius)
