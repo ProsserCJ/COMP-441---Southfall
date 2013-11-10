@@ -49,6 +49,8 @@ private:
 	Image WaterIM;
 	TextureManager Boulder1TX;
 	Image Boulder1IM;
+	TextureManager WoodTileTX;
+	Image WoodTileIM;
 	TextureManager Boulder2TX;
 	Image Boulder2IM;
 	TextureManager RiverTX;

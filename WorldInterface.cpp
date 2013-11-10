@@ -41,6 +41,11 @@ void WorldInterface::initialize(Graphics* graphics)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing River texture"));
 	if(!RiverIM.initialize(graphics, 0, 0, 0, &RiverTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing River image"));
+	// Wood Tile
+	if(!WoodTileTX.initialize(graphics, WOODTILE1))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wood Tile texture"));
+	if(!WoodTileIM.initialize(graphics, 0, 0, 0, &WoodTileTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wood Tile image"));
 
 	// Temporary world constants
 	
@@ -48,7 +53,8 @@ void WorldInterface::initialize(Graphics* graphics)
 	int WORLD_HEIGHT = 100;
 	Current = new World(WORLD_WIDTH, WORLD_HEIGHT);
 	initializeWorld();*/
-	Current = loadWorld("Worlds\\TestWorld.txt");
+	//Current = loadWorld("Worlds\\TestWorld.txt");
+	Current = loadWorld("Worlds\\TSouthfallMap.txt");
 }
 
 World* WorldInterface::loadWorld(const string& fileName)
@@ -120,6 +126,16 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 		case 'g': // Grass
 		{
 			W->getTile(x,y) = new Tile(VECTOR2(x,y), &GrassIM);
+			break;
+		}
+		case 't':	//Track (dirt or road)
+		{
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &WoodTileIM);
+			break;
+		}
+		case 'w':	//wall
+		{
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &Boulder1IM, false);
 			break;
 		}
 		case 'b': // Boulder
