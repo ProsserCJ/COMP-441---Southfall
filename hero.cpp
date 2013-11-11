@@ -51,9 +51,7 @@ void Hero::update(float frameTime, World* W)
 			NPCFacing = W->getNPCFacing(position, facing);
 			if (NPCFacing){
 				audio->playCue(SELECT);
-				turnToPlayer(NPCFacing);
-				string temp[] = {"Hi."};
-				NPCFacing->setText(temp, 1);
+				turnToPlayer(NPCFacing);				
 				textbox->setText(NPCFacing);
 				textbox->setActive(true);
 			}

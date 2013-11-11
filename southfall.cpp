@@ -45,7 +45,7 @@ void Southfall::initialize(HWND hwnd)
 	
 	// Initialized Player here, have center point at player's position
 	player = new Hero(ZERO, heroNS::HERO_RADIUS, &Character1IM, input, audio, textbox);	
-	player->setPosition(VECTOR2(5,3));
+	player->setPosition(VECTOR2(23,13));
 	player->setWorld(Interface.getCurrent());
 	
 	audio->playCue(BACKGROUND);	

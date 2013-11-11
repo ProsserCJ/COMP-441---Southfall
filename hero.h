@@ -14,7 +14,7 @@ Last modified: 11/5/2013
 
 namespace heroNS
 { //Store hero constants here
-	const float HERO_SPEED = 3.0f;
+	const float HERO_SPEED = 3.5f;
 	const float HEIGHT = TILE_SIZE;
 	const float WIDTH = TILE_SIZE;
 	const int COLS = 4;	

@@ -86,13 +86,23 @@ World* WorldInterface::loadWorld(const string& fileName)
 		fin.get(c);
 	}
 	
+	//read in NPCs
 	int npcCount;
 	fin >> npcCount;
 	for (int i=0; i<npcCount; i++)
 	{
-		int ID, x, y;
-		fin >> ID >> x >> y;
-		W->addNPC(new NPC(ID, VECTOR2(x,y)));
+		int ID, textLines, x, y;
+		fin >> ID >> textLines >> x >> y;
+		NPC* temp = new NPC(ID, VECTOR2(x,y));
+		string* text = new string[textLines];
+		char buffer[500];
+		fin.get();
+		for (int i=0; i<textLines; i++){ 
+			fin.getline(buffer,500);
+			text[i] = buffer;
+		}
+		temp->setText(text, textLines);
+		W->addNPC(temp);
 	}
 
 
