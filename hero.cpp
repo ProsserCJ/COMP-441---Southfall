@@ -60,7 +60,7 @@ void Hero::update(float frameTime, World* W)
 
 	Entity::update(frameTime, W);
 
-	if(startMoving && !W->canMoveHere(this, position + velocity*frameTime, radius))
+	if(startMoving && !W->canMoveHere(this, position + velocity*frameTime))
 	{
 		audio->playCue(COLLIDE);
 	}

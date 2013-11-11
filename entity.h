@@ -120,7 +120,7 @@ public:
 	virtual void interact(World* W);	// Interact with a tile
 
 	// Collision Handler
-	friend bool HandleCollision(Entity* A, Entity* B) {return true;}; // True if the entities collided
+	friend bool HandleCollision(Entity* A, Entity* B); // True if the entities collided
 
 	// Accessors
 	VECTOR2 getPosition()		const {return position;}

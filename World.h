@@ -63,7 +63,9 @@ public:
 	Tile* &		getTile(int x, int y)	{return tiles[x][y];}
 	Tile** &	getTile(int x)			{return tiles[x];}
 	Tile*** &	getTile()				{return tiles;}
-	bool canMoveHere(Entity *ent, VECTOR2 position, float radius);
+	bool canMoveHere(Entity *E, VECTOR2& position);
+	bool collidesWithTile(Entity* E, VECTOR2& position);
+	bool collidesWithNPC(Entity* E, VECTOR2& position);
 	bool isTraversible(VECTOR2 T);	// Pass in the world coords, not tile coords
 
 	int getWidth()	{return width;}
