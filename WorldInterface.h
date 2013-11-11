@@ -57,6 +57,12 @@ private:
 	Image RiverIM;
 	TextureManager MagicPortalTX;
 	Image MagicPortalIM;
+	TextureManager HWallTX;
+	Image HWallIM;
+	TextureManager VWallTX;
+	Image VWallIM;
+	TextureManager CWallTX;
+	Image CWallIM;
 
 	TextureManager HouseTX;
 	Image HouseIM;

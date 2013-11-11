@@ -36,6 +36,22 @@ void WorldInterface::initialize(Graphics* graphics)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing House texture"));
 	if(!HouseIM.initialize(graphics, 0, 0, 0, &HouseTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing House image"));
+	// Horizontal Wall
+	if(!HWallTX.initialize(graphics, HWALL))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing HWall texture"));
+	if(!HWallIM.initialize(graphics, 0, 0, 0, &HWallTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing HWall image"));
+	// Vertical Wall
+	if(!VWallTX.initialize(graphics, VWALL))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing VWall texture"));
+	if(!VWallIM.initialize(graphics, 0, 0, 0, &VWallTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing VWall image"));
+	// Wall Corner
+	if(!CWallTX.initialize(graphics, CWALL))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing CWall texture"));
+	if(!CWallIM.initialize(graphics, 0, 0, 0, &CWallTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing CWall image"));
+
 	// River
 	if(!RiverTX.initialize(graphics, RIVER1))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing River texture"));
@@ -198,13 +214,28 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 			W->getTile(x,y) = T;	// Give the tile to the world
 			break;
 		}
-		case 'P':
+		case 'P': // Portal
 		{
 			T = new Tile(VECTOR2(x,y), &GrassIM, false); // For now
 			W->getTile(x,y) = T;
 			Portal* P = new Portal(VECTOR2(x,y),1,1,&MagicPortalIM,W,VECTOR2(12,10));
 			W->addStructure(P);
 			T->giveStructure(P);
+			break;
+		}
+		case '_': // Horizontal Wall
+		{
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &HWallIM, false);
+			break;
+		}
+		case '|': // Vertical Wall
+		{
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &VWallIM, false);
+			break;
+		}
+		case '#': // Wall Corner
+		{
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &CWallIM, false);
 			break;
 		}
 		case 'x':

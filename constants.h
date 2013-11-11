@@ -97,8 +97,10 @@ const UINT HSCREEN_WIDTH = 0.5*SCREEN_WIDTH;
 const UINT HSCREEN_HEIGHT = 0.5*SCREEN_HEIGHT;
 
 // Image Files
+// Characters
 const char CHARACTER1_SHEET[] = "Images\\Character1Sheet.png";
 const char CHARACTER2_SHEET[] = "Images\\Character2Sheet.png";
+// Tiles
 const char GRASS1[] = "Images\\Grass1.png";
 const char TREE1[] = "Images\\Tree1.png";
 const char BOULDER1[] = "Images\\Boulder1.png";
@@ -112,6 +114,10 @@ const char HOUSEDOOR1[] = "Images\\HouseDoor1.png";
 const char HORIZINHOUSEDOOR1[] = "Images\\InHouseHorizDoor1.png";
 const char VERTINHOUSEDOOR1[] = "Images\\InHouseVertDoor1.png";
 const char BARCOUNTER[] = "Images\\Counter1.png";
+const char HWALL[] = "Images\\HorizontalWallPiece.png";
+const char VWALL[] = "Images\\VerticalWallPiece.png";
+const char CWALL[] = "Images\\CornerWallPiece.png";
+// NPC Interaction
 const char TEXTBOX[] = "Images\\textBox.png";
 const char TEXTBOX_ARROW[] = "Images\\textBoxArrow.png";
 
