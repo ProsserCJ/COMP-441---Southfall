@@ -40,16 +40,31 @@ void World::draw(VECTOR2& Center)
 		(*p)->draw(Center);
 }
 
-bool World::canMoveHere(VECTOR2 position, float radius)
+bool World::canMoveHere(Entity* ent, VECTOR2 position, float radius)
 {
 	VECTOR2 topLeft, topRight, bottomLeft, bottomRight;
 	topLeft = position + VECTOR2(0.5-radius,0.9-radius);
 	topRight = position + VECTOR2(0.5+radius,0.9-radius);
 	bottomLeft = position + VECTOR2(0.5-radius,0.7+radius);
 	bottomRight = position + VECTOR2(0.5+radius,0.7+radius);
-	if(isTraversible(topLeft) && isTraversible(topRight) &&
-		isTraversible(bottomLeft) && isTraversible(bottomRight))
-		return true;
+	if(	isTraversible(topLeft) && 
+		isTraversible(topRight) &&
+		isTraversible(bottomLeft) && 
+		isTraversible(bottomRight)){
+		
+		//check for NPCs
+		for(auto p = npcs.begin(); p != npcs.end(); p++){
+			if (*p == ent) continue;					//return if the pointer points to the NPC trying to move
+			VECTOR2 pos = (*p)->getPosition();
+			float x = pos.x, y = pos.y, rad = 2.5*(*p)->getRadius();
+			if (y + 1.37*rad > position.y &&			//constant multiple found by guess and check 
+				y - 1.37*rad < position.y &&			//can this be done more mathematically?
+				x + rad > position.x && 
+				x - rad < position.x)  
+				return false;
+		}
+		return true;	
+	}	
 	return false;
 }
 
