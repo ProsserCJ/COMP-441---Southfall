@@ -78,6 +78,7 @@ void Entity::move(float frameTime, World* W)
 		velocity.y = -DIAG_MULT * speed;
 		if (!W->canMoveHere(this, position+velocity*frameTime, radius)) velocity.y=0;
 		velocity.x = DIAG_MULT * speed;
+		if (!W->canMoveHere(this, position+velocity*frameTime, radius)) velocity.x=0;
 		break;
 	case UP_LEFT:
 		if(facing != lastDir || !moving) setFrames(WALKING_UP_LEFT_START, WALKING_UP_LEFT_END);	
