@@ -20,9 +20,14 @@ Southfall::~Southfall()
 void Southfall::initialize(HWND hwnd)
 {
     Game::initialize(hwnd);
+	currentState = MAIN_MENU;
 
 	// Graphics
 	initializeGraphics();
+
+	// Menu
+	mainMenu = new Menu();
+	mainMenu->initialize(graphics, input);
 
 	// Font
 	gameFont = new TextDX();
@@ -32,15 +37,8 @@ void Southfall::initialize(HWND hwnd)
 	// WorldInterface
 	Interface.initialize(graphics);
 
-	//Initizlize NPC
-	//npc1 = new NPC(&NPC1IM, VECTOR2(4,4));
-	//now handled by World
-
 	//Initialize global TextBox
 	textbox = new TextBox(gameFont, audio, input, &TextBoxIM, &TextBoxArrowIM);
-	/*textbox->addText("A perilous world awaits...");
-	textbox->addText("...you have no idea what is coming...");
-	textbox->addText("...and neither do we.");*/
 	textbox->setActive(false);
 	
 	// Initialized Player here, have center point at player's position
@@ -83,9 +81,16 @@ void Southfall::initializeGraphics()
 //=============================================================================
 void Southfall::update()
 {	
-	player->getWorld()->update(frameTime);
-	player->update(frameTime, player->getWorld());	
-	textbox->update(frameTime);	
+	switch(currentState){
+	case MAIN_MENU:
+		if (!mainMenu->update()) currentState = GAME;
+		break;
+	case GAME:
+		player->getWorld()->update(frameTime);
+		player->update(frameTime, player->getWorld());	
+		textbox->update(frameTime);	
+		break;
+	};	
 }
 
 //=============================================================================
@@ -109,9 +114,17 @@ void Southfall::collisions()
 //=============================================================================
 void Southfall::render()
 {// sprite begin and end in game now
-	player->getWorld()->draw(Center());
-	player->draw(Center());	// For now
-	textbox->draw();
+
+	switch(currentState){
+	case MAIN_MENU:
+		mainMenu->draw();
+		break;
+	case GAME:
+		player->getWorld()->draw(Center());
+		player->draw(Center());	// For now
+		textbox->draw();
+		break;
+	}
 }
 
 //=============================================================================

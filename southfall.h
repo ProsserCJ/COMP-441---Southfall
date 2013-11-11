@@ -21,7 +21,10 @@ Last modified: 11/4/2013
 #include "WorldInterface.h"
 #include "npc.h"
 #include "textBox.h"
+#include "menu.h"
 using std::stringstream;
+
+enum gameState {MAIN_MENU, GAME, CREDITS, GAME_OVER};
 
 class Southfall : public Game
 {
@@ -46,7 +49,9 @@ public:
 	VECTOR2 Center()		{return TILE_SIZE*player->getPosition();}
 
 private:
-    TextDX* gameFont;
+    Menu* mainMenu;
+	
+	TextDX* gameFont;
 	stringstream ss;
 
 	// Images and Textures
@@ -57,7 +62,7 @@ private:
 	void initializeGraphics();
 	
 	Hero* player;
-	//NPC* npc1;
+	gameState currentState;
 
 	TextBox* textbox;
 	WorldInterface Interface; 
