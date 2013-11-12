@@ -14,7 +14,9 @@ using std::list;
 
 #include "image.h"
 #include "Structure.h"
+#include "Item.h"
 #include "npc.h"
+#include "Effects.h"
 
 class Structure;	// Forward reference to Structure
 
@@ -81,13 +83,14 @@ public:
 	void removeEntity(Entity* E)	{entities.remove(E);}
 
 private:
-	int width, height;				// Dimensions of this world
-	Tile*** tiles;					// The tiles that make up the world
-	list<Structure*> structures;	// List of structures in the world
-						
+	int width, height;				// Dimensions of this world		
 	bool _initialized;				// Has the world been initialized
 
+	Tile*** tiles;					// The tiles that make up the world
+	list<Structure*> structures;	// List of structures in the world
 	list<Entity*> entities;			// List of NPCs in this world
+	list<Item*> items;				// List of items in this world
+	list<Effect*> effects;			// List of effects in the world
 };
 
 #endif
