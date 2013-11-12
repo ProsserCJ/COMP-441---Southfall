@@ -24,7 +24,7 @@ Last modified: 11/4/2013
 #include "menu.h"
 using std::stringstream;
 
-enum gameState {MAIN_MENU, INTRO, GAME, CREDITS, GAME_OVER};
+enum gameState {MAIN_MENU, GAME, CREDITS, GAME_OVER};
 
 class Southfall : public Game
 {
@@ -60,8 +60,6 @@ private:
 	WorldInterface worldInterface;
 
 	void initializeGraphics();
-	void loadIntro();
-	vector<string>* introText;
 	
 	Hero* player;
 	gameState currentState;

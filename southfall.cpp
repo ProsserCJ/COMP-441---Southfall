@@ -13,18 +13,6 @@ Southfall::~Southfall()
     releaseAll();
 }
 
-void Southfall::loadIntro()
-{
-	ifstream fin("Worlds\\intro.txt");
-	char buffer[500];
-	introText = new vector<string>;
-	while(!fin.eof()){
-		fin.getline(buffer, 500);
-		introText->push_back(buffer);		
-	}
-	fin.close();
-}
-
 //=============================================================================
 // Initializes the game
 // Throws GameError on error
@@ -59,7 +47,7 @@ void Southfall::initialize(HWND hwnd)
 	player->setWorld(Interface.getCurrent());
 	player->getWorld()->addEntity(player);
 	
-	//audio->playCue(BACKGROUND);	
+	audio->playCue(BACKGROUND);	
 }
 
 //=============================================================================
@@ -101,24 +89,8 @@ void Southfall::update()
 {	
 	switch(currentState){
 	case MAIN_MENU:
-		if (!mainMenu->update())
-		{
-			currentState = INTRO;
-			loadIntro();
-			textbox->setText(*introText);
-			textbox->setActive(true);
-			audio->playCue(INTRO_BACKGROUND);
-		}
+		if (!mainMenu->update()) currentState = GAME;
 		break;
-	case INTRO:		
-		textbox->update(frameTime);
-		if (!textbox->isActive())
-		{
-			audio->stopCue(INTRO_BACKGROUND);
-			currentState = GAME;
-			audio->playCue(BACKGROUND);
-			delete introText;
-		}
 	case GAME:
 		player->getWorld()->update(frameTime);
 		//player->update(frameTime, player->getWorld());	
@@ -152,9 +124,6 @@ void Southfall::render()
 	switch(currentState){
 	case MAIN_MENU:
 		mainMenu->draw();
-		break;
-	case INTRO:
-		textbox->draw();
 		break;
 	case GAME:
 		player->getWorld()->draw(Center());
