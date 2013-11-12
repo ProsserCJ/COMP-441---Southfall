@@ -36,13 +36,11 @@ void Southfall::initialize(HWND hwnd)
 
 	// WorldInterface
 	Interface.initialize(graphics);
-
 	//Initialize global TextBox
 	textbox = new TextBox(gameFont, audio, input, &TextBoxIM, &TextBoxArrowIM);
 	textbox->setActive(false);
-	
 	// Initialized Player here, have center point at player's position
-	player = new Hero(ZERO, heroNS::HERO_RADIUS, &Goblin1IM, input, audio, textbox);	
+	player = new Hero(ZERO, heroNS::HERO_RADIUS, &Character1IM, input, audio, textbox);	
 	player->setPosition(VECTOR2(23,13));
 	player->setWorld(Interface.getCurrent());
 	player->getWorld()->addEntity(player);
