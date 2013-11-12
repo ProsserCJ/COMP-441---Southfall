@@ -3,6 +3,7 @@
 
 const int OFFSET_X = 25;
 const int OFFSET_Y = 15;
+RECT TEXT_RECT = {135, SCREEN_HEIGHT - 175, SCREEN_WIDTH-125, SCREEN_HEIGHT};
 
 void TextBox::initialize(){	
 	position = VECTOR2(100,SCREEN_HEIGHT - background->getHeight());
@@ -20,8 +21,8 @@ void TextBox::draw()
 {
 	if (!active) return;
 	background->draw();
-	arrow->draw();
-	gameFont->print(*it, position.x + OFFSET_X, position.y + OFFSET_Y);
+	arrow->draw();    
+	gameFont->print((*it), TEXT_RECT, DT_WORDBREAK);  
 }
 
 void TextBox::update(float frameTime)	
@@ -35,7 +36,7 @@ void TextBox::next(){
 	if (++it == text.end()){
 		setActive(false);
 		text.clear();		
-		speaker->setPaused(false);
+		if (speaker) speaker->setPaused(false);
 	}
 }
 

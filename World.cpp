@@ -117,6 +117,10 @@ Entity* World::getNPCFacing(VECTOR2 pos, DIR dir)
 	case DOWN: pos.y += 1; break;
 	case LEFT: pos.x -= 1; break;
 	case RIGHT: pos.x += 1; break;
+	case UP_LEFT: pos.y -= 1; pos.x -= 1; break;
+	case UP_RIGHT: pos.y -= 1; pos.x += 1; break;
+	case DOWN_RIGHT: pos.y += 1; pos.x += 1; break;
+	case DOWN_LEFT: pos.y += 1; pos.x -= 1;  break; 
 	};
 
 	for(auto p = entities.begin(); p != entities.end(); p++)
