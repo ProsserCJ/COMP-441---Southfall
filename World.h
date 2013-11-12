@@ -2,7 +2,7 @@
 World header file, contains the definitions of Tile
 and World
 
-Last modified: 11/4/2013
+Last modified: 11/12/2013
 
 ******************************************************/
 
@@ -82,6 +82,7 @@ public:
 	void setInitialized(bool init)	{_initialized = init;}
 	void addStructure(Structure* S)	{structures.push_back(S);}
 	void addEntity(Entity* E)		{entities.push_back(E);}
+	void addEffect(Effect* E)		{effects.push_back(E);}
 	void removeEntity(Entity* E)	{entities.remove(E);}
 
 private:

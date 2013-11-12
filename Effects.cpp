@@ -9,7 +9,7 @@ void Effect::update(float frameTime, World* W)
 	if(_timed && time > maxTime) _done = true;
 }
 
-void ImpeadEffect::effect(Object* E)
+void ImpedeEffect::effect(Object* E)
 {
 	E->stop();
 }

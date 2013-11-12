@@ -18,9 +18,9 @@ class Effect : public Drawable, public Collidable
 {
 public:
 	Effect() 
-		: time(0), _timed(false), _hidden(false), _invisible(false), Collidable(ZERO, POINTCOLLISION, 0) {};
+		: time(0), _timed(false), _hidden(false), _invisible(false), _done(false), Collidable(ZERO, POINTCOLLISION, 0) {};
 	Effect(VECTOR2 position, float radius, COLLISIONTYPE CT)
-		: time(0), _timed(false), _hidden(true), _invisible(false), Collidable(position, CT, radius) {};
+		: time(0), _timed(false), _hidden(true), _invisible(false), _done(false), Collidable(position, CT, radius) {};
 
 	void update(float frameTime, World* W);
 	virtual void effect(Object* E) = 0;
@@ -37,10 +37,10 @@ private:
 	bool _done;		// True if the effect is over
 };
 
-class ImpeadEffect : public Effect
+class ImpedeEffect : public Effect
 {
 public:
-	ImpeadEffect(VECTOR2 position, float radius) : Effect(position, radius, CIRCLE) {};
+	ImpedeEffect(VECTOR2 position, float radius) : Effect(position, radius, CIRCLE) {};
 	virtual void effect(Object* E);
 };
 

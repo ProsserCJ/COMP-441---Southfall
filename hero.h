@@ -19,10 +19,11 @@ namespace heroNS
 	const float HERO_SPEED = 3.5f;
 	const float HEIGHT = TILE_SIZE;
 	const float WIDTH = TILE_SIZE;
+	const float HEROACTIONDELAY = 0.3;
 	const int COLS = 4;	
 	const int HERO_HP = 100;
 	const float HERO_RADIUS = 0.25;
-}
+};
 
 // The player's character
 class Hero: public Entity
@@ -46,8 +47,6 @@ private:
 	Audio* audio;
 	Image* armor;
 	TextBox* textbox;
-
-	
 };
 
 #endif
