@@ -8,6 +8,7 @@ Last modified: 11/4/2013
 
 #ifndef _WORLD_H
 #define _WORLD_H
+#define WIN32_LEAN_AND_MEAN
 
 #include <list>
 using std::list;
@@ -69,6 +70,7 @@ public:
 	bool canMoveHere(Object *E, VECTOR2& position);
 	bool collidesWithTile(Object* E, VECTOR2& position);
 	bool collidesWithNPC(Object* E, VECTOR2& position);
+	bool collidesWithEffect(Object* E, VECTOR2& position);
 	bool isTraversible(VECTOR2 T);	// Pass in the world coords, not tile coords
 
 	int getWidth()	{return width;}

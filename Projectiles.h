@@ -1,5 +1,13 @@
+/***************************************************************
+The header file for the Projectile class
+
+Last Modified 11/12/2013
+
+***************************************************************/
+
 #ifndef _PROJECTILES_H
 #define _PROJECTILES_H
+#define WIN32_LEAN_AND_MEAN
 
 #include "Entity.h"
 

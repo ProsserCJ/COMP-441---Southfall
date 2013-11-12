@@ -1,8 +1,9 @@
 /***************************************************************
 The header file for the entity class that living game entities
-and characters inherit from.
+and characters inherit from. Also contains Drawable, Collidable,
+and Object class definitions
 
-Last Modified 11/2/2013
+Last Modified 11/12/2013
 
 ***************************************************************/
 
@@ -21,6 +22,7 @@ const VECTOR2 ZERO = VECTOR2(0,0);
 const float DEFAULT_FRAME_DELAY = 0.2f;
 const float INTERACTIONDELAY = 0.5f;
 
+// Entity Namespace
 namespace entityNS
 {
 	enum DIR {UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT, NONE};
@@ -65,6 +67,8 @@ namespace entityNS
 }
 using namespace entityNS;
 
+class Object; // Forward reference to object
+
 // The class that allows drawing and animation control
 class Drawable
 {
@@ -101,43 +105,60 @@ private:
 	Image* image;		// The sprite sheet to display from
 };
 
-// An object that can appear in the game
-class Object : public Drawable
+// The class that allows for positioning and collision
+class Collidable
 {
 public:
-	Object() : position(ZERO), velocity(ZERO), Drawable(0), 
-		radius(0.25), active(false), collisionType(POINTCOLLISION) {initialize();}
-	Object(Image* image) 
-		: Drawable(image) {};
-	Object(VECTOR2 pos, float radius, Image* image, COLLISIONTYPE CT) : position(pos), 
-		radius(radius), Drawable(image), velocity(ZERO), active(true), collisionType(CT) {initialize();}
-
-	void update(float frameTime, World* W);
-
-	void initialize();
+	Collidable(VECTOR2 position, COLLISIONTYPE CT, float radius) 
+		: position(position), collisionType(CT), radius(radius) {}
 
 	// Collision Handler
-	friend bool HandleCollision(Object* A, Object* B); // True if the objects collided
+	friend bool HandleCollision(Collidable* A, Collidable* B); // True if the objects collided
 
 	// Accessors
 	VECTOR2 getPosition()		const {return position;}
-	VECTOR2 getVelocity()		const {return velocity;}
 	float getRadius()			const {return radius;}
+
+	// Mutators
+	void setPosition(const VECTOR2& pos)	{position = pos;}
+
+private:
+	VECTOR2 position;	// Position in the world (center)
+	COLLISIONTYPE collisionType;
+	float radius;
+};
+
+// An object that can appear in the game
+class Object : public Drawable, public Collidable
+{
+public:
+	Object() 
+		: Collidable(ZERO, POINTCOLLISION, 0), velocity(ZERO), Drawable(0), active(false) {initialize();}
+	Object(Image* image) 
+		: Collidable(ZERO, POINTCOLLISION, 0), Drawable(image) {initialize();};
+	Object(VECTOR2 pos, float radius, Image* image, COLLISIONTYPE CT) 
+		: Collidable(pos, CT, radius), Drawable(image), velocity(ZERO), active(true) {initialize();}
+
+	void update(float frameTime, World* W);
+	void initialize();
+
+	// Accessors
+	VECTOR2 getVelocity()		const {return velocity;}
 	virtual bool isActive()		{return active;}
 	World* getWorld()			const {return world;}
 
 	// Mutators
-	void setPosition(const VECTOR2& pos)	{position = pos;}
 	void setVelocity(const VECTOR2& vel)	{velocity = vel;}
+	void stop()								{velocity = ZERO;}
 
 protected:
-	VECTOR2 position;	// Position in the world (center)
+	
 	VECTOR2 velocity;	// Velocity direction of the entity
 	float speed;		// Speed the object travels at
 	bool moving;		// True if the object should move in the direction it is facing
 	float radius;		// Interaction radius
 	
-	COLLISIONTYPE collisionType;
+	
 	bool active;
 	World* world;
 };
@@ -159,7 +180,7 @@ public:
 	virtual void act(World* W) = 0;					// AI and decisions
 	virtual void update(float frameTime, World* W);
 	void move(float frameTime, World* W);
-	virtual void interact(World* W);	// Interact with a tile
+	virtual void interact(World* W);				// Interact with a tile
 
 	// Accessors
 	int getHP()					const {return HP;}
@@ -178,20 +199,14 @@ public:
 	virtual void setStandingImage();
 
 protected:
-	
 	VECTOR2 knockback;	// For knock back effects
-	//RECT collisionRectangle;
-	
 	int HP;
 	int maxHP;
-	
 	float timeSinceInteract;
-
 	//Movement control
 	DIR facing;	
 	DIR lastDir;
-	bool startMoving;
-						
+	bool startMoving;			
 };
 
 #endif

@@ -49,15 +49,17 @@ void Entity::update(float frameTime, World* W)
 	move(frameTime, W);
 
 	updateImage(frameTime);
-	if(startMoving && W->canMoveHere(this, position + velocity*frameTime))
-		setPosition(position + velocity*frameTime);
+	if(startMoving && W->canMoveHere(this, getPosition() + velocity*frameTime))
+	{
+		W->collidesWithEffect(this,  getPosition() + velocity*frameTime);
+		setPosition(getPosition() + velocity*frameTime);
+	}
 	else standing();
 }
 
 void Entity::draw(const VECTOR2& Center)
 {
-	
-	VECTOR2 diff = position*TILE_SIZE - Center;
+	VECTOR2 diff = getPosition()*TILE_SIZE - Center;
 	int X = diff.x + HSCREEN_WIDTH - HTILE_SIZE;
 	int Y = diff.y + HSCREEN_HEIGHT - HTILE_SIZE;
 	getImage()->setScale(DEFAULT_SCALE);
@@ -89,30 +91,30 @@ void Entity::move(float frameTime, World* W)
 	case UP_RIGHT:
 		if(facing != lastDir || !moving) setFrames(WALKING_UP_RIGHT_START, WALKING_UP_RIGHT_END);
 		velocity.y = -DIAG_MULT * speed;
-		if (!W->canMoveHere(this, position+velocity*frameTime)) velocity.y=0;
+		if (!W->canMoveHere(this, getPosition()+velocity*frameTime)) velocity.y=0;
 		velocity.x = DIAG_MULT * speed;
-		if (!W->canMoveHere(this, position+velocity*frameTime)) velocity.x=0;
+		if (!W->canMoveHere(this, getPosition()+velocity*frameTime)) velocity.x=0;
 		break;
 	case UP_LEFT:
 		if(facing != lastDir || !moving) setFrames(WALKING_UP_LEFT_START, WALKING_UP_LEFT_END);	
 		velocity.y = DIAG_MULT * -1 * speed;
-		if (!W->canMoveHere(this, position+velocity*frameTime)) velocity.y=0;
+		if (!W->canMoveHere(this, getPosition()+velocity*frameTime)) velocity.y=0;
 		velocity.x = -DIAG_MULT * speed;
-		if (!W->canMoveHere(this, position+velocity*frameTime)) velocity.x=0;
+		if (!W->canMoveHere(this, getPosition()+velocity*frameTime)) velocity.x=0;
 		break;
 	case DOWN_RIGHT:
 		if(facing != lastDir || !moving) setFrames(WALKING_DOWN_RIGHT_START, WALKING_DOWN_RIGHT_END);
 		velocity.y = DIAG_MULT * speed;
-		if (!W->canMoveHere(this, position+velocity*frameTime)) velocity.y=0;
+		if (!W->canMoveHere(this, getPosition()+velocity*frameTime)) velocity.y=0;
 		velocity.x = DIAG_MULT * speed;
-		if (!W->canMoveHere(this, position+velocity*frameTime)) velocity.x=0;
+		if (!W->canMoveHere(this, getPosition()+velocity*frameTime)) velocity.x=0;
 		break;
 	case DOWN_LEFT:
 		if(facing != lastDir || !moving) setFrames(WALKING_DOWN_LEFT_START, WALKING_DOWN_LEFT_END);	
 		velocity.y = DIAG_MULT * speed;
-		if (!W->canMoveHere(this, position+velocity*frameTime)) velocity.y=0;
+		if (!W->canMoveHere(this, getPosition()+velocity*frameTime)) velocity.y=0;
 		velocity.x = -DIAG_MULT * speed;
-		if (!W->canMoveHere(this, position+velocity*frameTime)) velocity.x=0;
+		if (!W->canMoveHere(this, getPosition()+velocity*frameTime)) velocity.x=0;
 		break;
 	case NONE:
 		standing();
@@ -127,7 +129,7 @@ void Entity::interact(World* W)
 {
 	if(timeSinceInteract < INTERACTIONDELAY) return;
 	timeSinceInteract = 0;
-	float x = position.x + 0.5, y = position.y + 0.5;
+	float x = getPosition().x + 0.5, y = getPosition().y + 0.5;
 	float range = 0.6;
 	switch(facing)
 	{
@@ -186,7 +188,7 @@ void Entity::setStandingImage()
 	}
 }
 
-bool HandleCollision(Object* A, Object* B)
+bool HandleCollision(Collidable* A, Collidable* B)
 {
 	float D, R;
 	VECTOR2 diff = A->position - B->position;

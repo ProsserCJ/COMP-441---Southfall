@@ -48,8 +48,9 @@ void Hero::update(float frameTime, World* W)
 		}
 		else
 		{
-			NPCFacing = W->getNPCFacing(position, facing);
-			if (NPCFacing){
+			NPCFacing = W->getNPCFacing(getPosition(), facing);
+			if (NPCFacing)
+			{
 				audio->playCue(SELECT);
 				turnToPlayer(NPCFacing);				
 				textbox->setText(reinterpret_cast<NPC*>(NPCFacing));
@@ -61,7 +62,7 @@ void Hero::update(float frameTime, World* W)
 
 	Entity::update(frameTime, W);
 
-	if(startMoving && !W->canMoveHere(this, position + velocity*frameTime))
+	if(startMoving && !W->canMoveHere(this, getPosition() + velocity*frameTime))
 	{
 		audio->playCue(COLLIDE);
 	}
@@ -88,7 +89,7 @@ void Hero::attack()
 {
 	// This function will need tweaking
 	//Indeed
-	VECTOR2 attackLocation(position);
+	VECTOR2 attackLocation(getPosition());
 	switch(facing)
 	{
 	case UP:
@@ -112,16 +113,6 @@ void Hero::attack()
 	case DOWN_RIGHT: break;
 	case DOWN_LEFT: break;
 	}
-
-	/*NOTE TO CONSIDER:
-		Do we have mechanics issues with being able to move and attack diagonally on a rectangular grid? 
-			- I don't think so, our entities themselves aren't confined to the grid
-		Is diagonal movement twice as fast as along the axes? 
-			- Not anymore.
-		Do diagonal attacks miss the squares to the sides? 
-			- An attack should put a hit sphere on the map at the appropriate location (in front of the player) approximating a sword swipe
-			- So it will be pretty accurate. We will need to implement this
-	*/
 }
 
 void Hero::draw(const VECTOR2& Center)
@@ -132,7 +123,7 @@ void Hero::draw(const VECTOR2& Center)
 	// Draw armor on top of hero
 	if(armor != 0)
 	{
-		VECTOR2 disp = Center - position;
+		VECTOR2 disp = Center - getPosition();
 		armor->setX(disp.x);
 		armor->setCurrentFrame(getFrame());
 		armor->setScale(DEFAULT_SCALE); // Probably unneccesary 

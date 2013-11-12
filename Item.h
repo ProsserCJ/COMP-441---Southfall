@@ -1,5 +1,13 @@
+/***************************************************************
+The header file for the Item class
+
+Last Modified 11/12/2013
+
+***************************************************************/
+
 #ifndef _ITEM_H
 #define _ITEM_H
+#define WIN32_LEAN_AND_MEAN
 
 #include "image.h"
 

@@ -1,25 +1,47 @@
+/***************************************************************
+The header file for the Effect class
+
+Last Modified 11/12/2013
+
+***************************************************************/
+
 #ifndef _EFFECTS_H
 #define _EFFECTS_H
+#define WIN32_LEAN_AND_MEAN
 
 #include "image.h"
+#include "entity.h"
 
 class World;
-class Entity;
 
-class Effect
+class Effect : public Drawable, public Collidable
 {
 public:
+	Effect() 
+		: time(0), _timed(false), _hidden(false), _invisible(false), Collidable(ZERO, POINTCOLLISION, 0) {};
+	Effect(VECTOR2 position, float radius, COLLISIONTYPE CT)
+		: time(0), _timed(false), _hidden(true), _invisible(false), Collidable(position, CT, radius) {};
 
 	void update(float frameTime, World* W);
-	void effect(Entity* E);
+	virtual void effect(Object* E) = 0;
+
+	// Accessors
+	bool done() {return _done;}
+
 private:
-	bool hidden;	// True if the effect is by default hidden
-	bool invisible;	// True if the effect can never be seen
+	bool _hidden;	// True if the effect is by default hidden
+	bool _invisible;// True if the effect can never be seen
+	bool _timed;	// True if the effect only lasts for a certain duration
+	float time;		// How long the effect has existed
+	float maxTime;	// How long the effect can exist
+	bool _done;		// True if the effect is over
+};
 
-	Image* image;	// What the effect looks like (if it is not invisible)
-
-	VECTOR2 position;
-	float radius;
+class ImpeadEffect : public Effect
+{
+public:
+	ImpeadEffect(VECTOR2 position, float radius) : Effect(position, radius, CIRCLE) {};
+	virtual void effect(Object* E);
 };
 
 #endif

@@ -8,10 +8,12 @@ Last modified: 11/5/2013
 
 #ifndef _HERO_H
 #define _HERO_H
+#define WIN32_LEAN_AND_MEAN
 
 #include "Entity.h"
 #include "textBox.h"
 
+// Hero Namespace
 namespace heroNS
 { //Store hero constants here
 	const float HERO_SPEED = 3.5f;

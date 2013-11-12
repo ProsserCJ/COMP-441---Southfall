@@ -64,8 +64,23 @@ bool World::collidesWithTile(Object* E, VECTOR2& position)
 	return true;
 }
 
-//This function needs to check for Hero.
-//NPCs don't know not to run over top of the player, and he gets stuck
+bool World::collidesWithEffect(Object* E, VECTOR2& position)
+{
+	VECTOR2 temp = E->getPosition();
+	E->setPosition(position);
+	for(auto p = effects.begin(); p != effects.end(); p++)
+	{
+		if(HandleCollision(*p, E))
+		{
+			E->setPosition(temp);
+			(*p)->effect(E);
+			return true;
+		}
+	}
+	E->setPosition(temp);
+	return false;
+}
+
 bool World::collidesWithNPC(Object* E, VECTOR2& position)
 {
 	VECTOR2 temp = E->getPosition();
@@ -97,15 +112,29 @@ void World::act(){
 
 void World::update(float frameTime)
 {
+	// Update Structures
 	for(auto s = structures.begin(); s != structures.end(); s++)
 		(*s)->update(frameTime);
-	
+	// Update Entities
 	auto p = entities.begin();
 	while(p != entities.end())
 	{
 		auto q = p; q++;
 		(*p)->update(frameTime, this);
 		p=q;
+	}
+	// Update Effects
+	auto e = effects.begin();
+	while(e != effects.end())
+	{
+		auto q = e; q++;
+		(*e)->update(frameTime, this);
+		if((*e)->done())
+		{
+			effects.erase(e);
+			safeDelete<Effect*>(*e);
+		}
+		e=q;
 	}
 }
 
