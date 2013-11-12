@@ -21,9 +21,9 @@ class Structure;	// Forward reference to Structure
 class Tile
 {
 public:
-	Tile(VECTOR2 position, Image* image, bool trav=true) 
+	Tile(VECTOR2 position, Image* image, bool trav=true, int frame=0) 
 		: position(position), image(image), _traversable(trav), 
-		S(0), _drawStruct(false) {};
+		S(0), _drawStruct(false), frame(frame) {};
 	~Tile() {};
 
 	void draw(VECTOR2& Center);
@@ -44,6 +44,7 @@ private:
 	Structure* S;		// A building is sitting over this tile
 	
 	Image* image;		// Base image of the tile
+	int frame;			// Frame to draw
 };
 
 class World

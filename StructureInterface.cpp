@@ -24,16 +24,48 @@ void StructureInterface::initialize(Graphics* graphics)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Horizontal in House Door texture"));
 	if(!HorizInHouseDoorIM.initialize(graphics, 32, 32, 2, &HorizInHouseDoorTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing House Door image"));
-	// Vertical in-house 1
+	// Vertical in-house Door 1
 	if(!VertInHouseDoorTX.initialize(graphics, VERTINHOUSEDOOR1))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Vertical in House Door texture"));
 	if(!VertInHouseDoorIM.initialize(graphics, 32, 32, 2, &VertInHouseDoorTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Vertical in House Door image"));
+	// Bed
+	if(!BedTX.initialize(graphics, BED1))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Bed texture"));
+	if(!BedIM.initialize(graphics, 0, 0, 0, &BedTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Bed image"));
+	
 	// Bar Counter
 	if(!BarCounterTX.initialize(graphics, BARCOUNTER))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Bar Counter texture"));
-	if(!BarCounterIM.initialize(graphics, 32, 64, 1, &BarCounterTX))
+	if(!BarCounterIM.initialize(graphics, 0, 0, 0, &BarCounterTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Bar Counter image"));	
+	// Bar Backdrop
+	if(!BarBack1TX.initialize(graphics, BARBACKDROP))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Bar Backdrop 1 texture"));
+	if(!BarBack1IM.initialize(graphics, 32, 32, 8, &BarBack1TX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Bar Backdrop 1 image"));	
+	// Lower Bar Backdrop
+	if(!BarBack2TX.initialize(graphics, LOWERBARBACK))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Lower Bar Backdrop texture"));
+	if(!BarBack2IM.initialize(graphics, 0, 0, 0, &BarBack2TX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Lower Bar Backdrop image"));	
+	// Table
+	if(!TableTX.initialize(graphics, TABLE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing table texture"));
+	if(!TableIM.initialize(graphics, 0, 0, 0, &TableTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing table image"));	
+	// Right facing chair
+	if(!RChairTX.initialize(graphics, RIGHTCHAIR))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing RChair texture"));
+	if(!RChairIM.initialize(graphics, 0, 0, 0, &RChairTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing RChair image"));	
+	// Right facing chair
+	if(!LChairTX.initialize(graphics, LEFTCHAIR))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing LChair texture"));
+	if(!LChairIM.initialize(graphics, 0, 0, 0, &LChairTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing LChair image"));	
+	
 }
 
 World* StructureInterface::loadStructure(string fileName, World** external, VECTOR2 Vout)
@@ -118,9 +150,39 @@ inline void StructureInterface::assignTile(World* & W, char c, int x, int y, Wor
 			W->getTile(x,y) = T;
 			break;
 		}
+		case 'b': // Bed (Horizontal)
+		{
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &BedIM, false);
+			break;
+		}
 		case 'c': // Bar Counter - for now
 		{
 			W->getTile(x,y) = new Tile(VECTOR2(x,y), &BarCounterIM, false);
+			break;
+		}
+		case '[': // Bar backdrop - for now
+		{
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &BarBack1IM, false, rand()%4);
+			break;
+		}
+		case ']': // Lower Bar backdrop- for now
+		{
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &BarBack2IM);
+			break;
+		}
+		case 'T': // Table
+		{
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &TableIM, false);
+			break;
+		}
+		case 'r': // Right facing chair
+		{
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &RChairIM);
+			break;
+		}
+		case 'l': // Left facing chair
+		{
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &LChairIM);
 			break;
 		}
 		case 'x':
@@ -130,6 +192,6 @@ inline void StructureInterface::assignTile(World* & W, char c, int x, int y, Wor
 
 Portal* StructureInterface::createHouse(World** external, VECTOR2 vOut)
 {
-	World* W = loadStructure("Worlds\\House1.txt", external, vOut);
+	World* W = loadStructure("Worlds\\Bar1.txt", external, vOut);
 	return new Portal(vOut,1,1,0,W,entrance);
 }

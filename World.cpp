@@ -16,6 +16,7 @@ void Tile::draw(VECTOR2& Center)
 	int Y = diff.y + HSCREEN_HEIGHT - height;
 	image->setScale(DEFAULT_SCALE);
 	image->setX(X); image->setY(Y);
+	image->setCurrentFrame(frame);
 	image->draw();
 	if(_drawStruct) S->draw(Center);
 }
@@ -110,7 +111,8 @@ NPC* World::getNPCFacing(VECTOR2 pos, DIR dir)
 	case RIGHT: pos.x += 1; break;
 	};
 
-	for(auto p = npcs.begin(); p != npcs.end(); p++){
+	for(auto p = npcs.begin(); p != npcs.end(); p++)
+	{
 		VECTOR2 NPCposition = (*p)->getPosition();
 		
 		//if the position is within .2, it's close enough
