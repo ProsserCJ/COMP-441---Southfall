@@ -96,6 +96,7 @@ const UINT HTILE_SIZE = 0.5*TILE_SIZE;
 const UINT HSCREEN_WIDTH = 0.5*SCREEN_WIDTH;
 const UINT HSCREEN_HEIGHT = 0.5*SCREEN_HEIGHT;
 
+
 // Image Files
 // Characters
 const char CHARACTER1_SHEET[] = "Images\\Character1Sheet.png";
@@ -154,10 +155,10 @@ const char SOUND_BANK[] = "audio\\Win\\Sound Bank.xsb";
 // ADD CUE name here
 const char COLLIDE[] = "Collision";
 const char SELECT[] = "Blip_Select";
-const char BACKGROUND[] = "Background";
+const char INTRO_BACKGROUND[] = "Background";
 const char BATTLE[] = "Battle";
 const char BATTLE_INTRO[] = "Battle Intro";
-const char HOUSE[] = "Background2";
+const char BACKGROUND[] = "Background2";
 
 
 #endif

@@ -20,9 +20,9 @@ public:
 
 	void initialize();
 	virtual void draw();
-	virtual void update(float frameTime);
-	//void addText(string newText)			{text.push_back(newText); it=text.begin();}
+	virtual void update(float frameTime);	
 	void setText(NPC* n)					{speaker = n; text = n->getText(); it=text.begin();}
+	void setText(vector<string>& t)			{speaker = 0; text = t; it=text.begin();}
 	void setActive(bool b)					{active = b;}
 	void next();
 	bool isActive()							{return active;}

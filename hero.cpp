@@ -35,9 +35,9 @@ void Hero::update(float frameTime, World* W)
             else								go(DOWN);
     }
     else if (input->isKeyDown(AKEY))			go(LEFT);
-    else if (input->isKeyDown(DKEY))			go(RIGHT);
-    else										standing();
-	if(input->isKeyDown(ENTER_KEY)) interact(W);
+    else if (input->isKeyDown(DKEY))			go(RIGHT);    
+	else standing();		//rearranged to fix crash on multiple key presses
+	//if(input->isKeyDown(ENTER_KEY)) interact(W);	switched to E key
 
 	if (input->wasKeyPressed('E'))
 	{
@@ -55,8 +55,10 @@ void Hero::update(float frameTime, World* W)
 				textbox->setText(reinterpret_cast<NPC*>(NPCFacing));
 				textbox->setActive(true);
 			}
+			else interact(W);
 		}
 	}
+	
 
 	Entity::update(frameTime, W);
 
