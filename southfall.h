@@ -50,6 +50,8 @@ public:
 
 private:
     Menu* mainMenu;
+
+	inline void playerClickActions();
 	
 	TextDX* gameFont;
 	stringstream ss;
@@ -67,7 +69,15 @@ private:
 	gameState currentState;
 
 	TextBox* textbox;
-	WorldInterface Interface; 
+	WorldInterface Interface;  
+
+	// Images and Textures
+	TextureManager ImpedeEffectTX;
+	Image ImpedeEffectIM;
+	TextureManager PortalOpenTX;
+	Image PortalOpenIM;
+	TextureManager PortalCloseTX;
+	Image PortalCloseIM;
 
 };
 

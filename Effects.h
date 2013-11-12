@@ -10,7 +10,7 @@ Last Modified 11/12/2013
 #define WIN32_LEAN_AND_MEAN
 
 #include "image.h"
-#include "entity.h"
+#include "Entity.h"
 
 class World;
 
@@ -19,16 +19,17 @@ class Effect : public Drawable, public Collidable
 public:
 	Effect() 
 		: time(0), _timed(false), _hidden(false), _invisible(false), _done(false), Collidable(ZERO, POINTCOLLISION, 0) {};
-	Effect(VECTOR2 position, float radius, COLLISIONTYPE CT)
-		: time(0), _timed(false), _hidden(true), _invisible(false), _done(false), Collidable(position, CT, radius) {};
+	Effect(VECTOR2 position, float radius, COLLISIONTYPE CT, Image* image)
+		: time(0), _timed(false), _hidden(true), _invisible(false), _done(false), Collidable(position, CT, radius), Drawable(image) {};
 
 	void update(float frameTime, World* W);
 	virtual void effect(Object* E) = 0;
+	virtual void draw(VECTOR2 Center);
 
 	// Accessors
 	bool done() {return _done;}
 
-private:
+protected:
 	bool _hidden;	// True if the effect is by default hidden
 	bool _invisible;// True if the effect can never be seen
 	bool _timed;	// True if the effect only lasts for a certain duration
@@ -40,8 +41,21 @@ private:
 class ImpedeEffect : public Effect
 {
 public:
-	ImpedeEffect(VECTOR2 position, float radius) : Effect(position, radius, CIRCLE) {};
+	ImpedeEffect(VECTOR2 position, float radius, Image* image) 
+		: Effect(position, radius, CIRCLE, image) {};
 	virtual void effect(Object* E);
+};
+
+class PortalTrapEffect : public Effect
+{
+public:
+	PortalTrapEffect(VECTOR2 opening, VECTOR2 exit, float radius, Image* image, Image* exitImage)
+		: Effect(opening, radius, CIRCLE, image), exit(exit), exitImage(exitImage) {};
+	virtual void effect(Object* E);
+	virtual void draw(VECTOR2 Center);
+private:
+	VECTOR2 exit;
+	Image* exitImage;
 };
 
 #endif

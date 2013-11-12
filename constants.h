@@ -128,6 +128,10 @@ const char CWALL[] = "Images\\CornerWallPiece.png";
 // NPC Interaction
 const char TEXTBOX[] = "Images\\textBox.png";
 const char TEXTBOX_ARROW[] = "Images\\textBoxArrow.png";
+// Icons
+const char IMPEDEEFFECTICON[] = "Images\\ImpedeEffectIcon.png";
+const char PORTALOPEN[] = "Images\\PortalOpen.png";
+const char PORTALCLOSE[] = "Images\\PortalClose.png";
 
 // Sound Files
 

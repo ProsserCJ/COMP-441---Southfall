@@ -24,6 +24,7 @@ namespace heroNS
 	const int HERO_HP = 100;
 	const float HERO_RADIUS = 0.25;
 };
+using namespace heroNS;
 
 // The player's character
 class Hero: public Entity
@@ -41,6 +42,12 @@ public:
 	void turnToPlayer(Entity* n);
 
 	void initialize();
+
+	// Accesors
+	bool canAction()	{return timeSinceAction > HEROACTIONDELAY;}
+	
+	// Mutators
+	void resetAction()	{timeSinceAction = 0;}
 
 private:	
 	Input* input;	

@@ -2,6 +2,7 @@
 
 // References to other headers
 #include "World.h"
+#include "Effects.h"
 
 using namespace entityNS;
 
@@ -42,6 +43,8 @@ void Entity::initialize()
 	timeSinceAction = 0;
 	speed = 0;
 	facing = DOWN;
+	SpellType = NOSPELL;
+	_hasTarget = false;
 }
 
 void Entity::update(float frameTime, World* W)
@@ -118,7 +121,7 @@ void Entity::move(float frameTime, World* W)
 		velocity.x = -DIAG_MULT * speed;
 		if (!W->canMoveHere(this, getPosition()+velocity*frameTime)) velocity.x=0;
 		break;
-	case NONE:
+	case DIR::NONE:
 		standing();
 		break;
 	}

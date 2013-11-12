@@ -15,6 +15,8 @@ void Hero::initialize()
 	armor = 0;
 	setFrameDelay(DEFAULT_FRAME_DELAY);
 	speed = HERO_SPEED;
+
+	SpellType = PORTALTRAP; // For testing purposes
 };
 
 void Hero::update(float frameTime, World* W)
@@ -40,7 +42,7 @@ void Hero::update(float frameTime, World* W)
 	
 	// Test Effects
 
-	if(timeSinceAction > HEROACTIONDELAY && input->getMouseLButton())
+	/*if(timeSinceAction > HEROACTIONDELAY && input->getMouseLButton())
 	{
 		timeSinceAction = 0;
 		int X = input->getMouseX();
@@ -49,7 +51,7 @@ void Hero::update(float frameTime, World* W)
 
 		VECTOR2 target = getPosition()+(mouse-HSCREEN)*INVTILE_SIZE;
 		W->addEffect(new ImpedeEffect(target, 0.2));
-	}
+	}*/
 
 	///////////////
 

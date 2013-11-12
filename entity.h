@@ -16,6 +16,8 @@ Last Modified 11/12/2013
 #include "game.h"
 #include "Item.h"
 
+enum SPELLTYPE{NOSPELL, IMPEDE, PORTALTRAP};
+
 class World;
 
 const VECTOR2 ZERO(0,0);
@@ -186,13 +188,18 @@ public:
 	// Accessors
 	int getHP()					const {return HP;}
 	virtual bool alive()		{return HP > 0;}
+	bool hasTarget()			{return _hasTarget;}
 	DIR getDirectionFacing()	{return facing;}
+	VECTOR2 getTarget()			{return target;}
+	SPELLTYPE getSpellType()	{return SpellType;}
 
 	// Mutators
 	void setKnockback(const VECTOR2& kb)	{knockback = kb;}
 	void setActive(bool act)				{active = act;}
 	void setHP(int HP)						{this->HP = HP;}
 	void setWorld(World* W)					{world = W;}
+	void setTarget(VECTOR2 T)				{target = T; _hasTarget = true;}
+	void resetTarget()						{_hasTarget = false;}
 	void kill()								{HP = 0;}
 	void setDir(DIR face)					{facing=face;}
 	void go(DIR face);			
@@ -208,7 +215,10 @@ protected:
 	//Movement control
 	DIR facing;	
 	DIR lastDir;
-	bool startMoving;			
+	bool startMoving;	
+	SPELLTYPE SpellType;
+	VECTOR2 target;
+	bool _hasTarget;
 };
 
 #endif

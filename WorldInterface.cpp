@@ -62,15 +62,8 @@ void WorldInterface::initialize(Graphics* graphics)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wood Tile texture"));
 	if(!WoodTileIM.initialize(graphics, 0, 0, 0, &WoodTileTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wood Tile image"));
-
-	// Temporary world constants
 	
-	/*int WORLD_WIDTH = 100;
-	int WORLD_HEIGHT = 100;
-	Current = new World(WORLD_WIDTH, WORLD_HEIGHT);
-	initializeWorld();*/
-	//Current = loadWorld("Worlds\\TestWorld.txt");
-	Current = loadWorld("Worlds\\TTotalMap.txt");
+	Current = loadWorld("Worlds\\TSouthfallMap.txt");
 }
 
 World* WorldInterface::loadWorld(const string& fileName)
@@ -162,11 +155,6 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 		case 'w':	//wall
 		{
 			W->getTile(x,y) = new Tile(VECTOR2(x,y), &Boulder1IM, false);
-			break;
-		}
-		case 'f': // tree
-		{
-			W->getTile(x,y) = new Tile(VECTOR2(x,y), &TreeIM, false);
 			break;
 		}
 		case 'b': // Boulder
