@@ -70,7 +70,7 @@ void WorldInterface::initialize(Graphics* graphics)
 	Current = new World(WORLD_WIDTH, WORLD_HEIGHT);
 	initializeWorld();*/
 	//Current = loadWorld("Worlds\\TestWorld.txt");
-	Current = loadWorld("Worlds\\TSouthfallMap.txt");
+	Current = loadWorld("Worlds\\TTotalMap.txt");
 }
 
 World* WorldInterface::loadWorld(const string& fileName)
@@ -162,6 +162,11 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 		case 'w':	//wall
 		{
 			W->getTile(x,y) = new Tile(VECTOR2(x,y), &Boulder1IM, false);
+			break;
+		}
+		case 'f': // tree
+		{
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &TreeIM, false);
 			break;
 		}
 		case 'b': // Boulder

@@ -32,9 +32,11 @@ void World::draw(VECTOR2& Center)
 	if(!_initialized) return;
 	int x0 = max(0, (Center.x-HSCREEN_WIDTH)/TILE_SIZE), y0 = max(0, (Center.y-HSCREEN_HEIGHT)/TILE_SIZE);
 	int x1 = min(width, (Center.x + SCREEN_WIDTH)/TILE_SIZE), y1 = min(height, (Center.y + SCREEN_HEIGHT)/TILE_SIZE);
+		
 	for(int x = x0; x < x1; x++)
 		for(int y = y0; y < y1; y++)
 			tiles[x][y]->draw(Center);
+
 	for(auto p = structures.begin(); p != structures.end(); p++)
 		(*p)->draw(Center);
 	for(auto p = entities.begin(); p != entities.end(); p++)
