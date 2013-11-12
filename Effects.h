@@ -1,6 +1,8 @@
 #ifndef _EFFECTS_H
 #define _EFFECTS_H
 
+#include "image.h"
+
 class World;
 class Entity;
 

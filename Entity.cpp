@@ -3,6 +3,8 @@
 // References to other headers
 #include "World.h"
 
+using namespace entityNS;
+
 void Drawable::initialize()
 {
 	_frame = 0;

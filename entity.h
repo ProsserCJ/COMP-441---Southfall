@@ -13,7 +13,7 @@ Last Modified 11/2/2013
 #include "image.h"
 #include "input.h"
 #include "game.h"
-//#include "World.h"
+#include "Item.h"
 
 class World;
 
@@ -25,44 +25,45 @@ namespace entityNS
 {
 	enum DIR {UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT, NONE};
 	enum COLLISIONTYPE{CIRCLE, POINTCOLLISION};	
+
+	// Generic Frame Definitions
+	const int WALKING_DOWN_START = 8;
+	const int WALKING_DOWN_END = 11;
+	const int WALKING_DOWN_RIGHT_START = 12;
+	const int WALKING_DOWN_RIGHT_END = 15;
+	const int WALKING_RIGHT_START = 16;
+	const int WALKING_RIGHT_END = 19;
+	const int WALKING_UP_RIGHT_START = 20;
+	const int WALKING_UP_RIGHT_END = 23;
+	const int WALKING_UP_START = 24;
+	const int WALKING_UP_END = 27;
+	const int WALKING_UP_LEFT_START = 28;
+	const int WALKING_UP_LEFT_END = 31;
+	const int WALKING_LEFT_START = 32;
+	const int WALKING_LEFT_END = 35;
+	const int WALKING_DOWN_LEFT_START = 36;
+	const int WALKING_DOWN_LEFT_END = 39;
+	// Facing 
+	const int FACING_DOWN = 0;
+	const int FACING_DOWN_RIGHT = 1;
+	const int FACING_RIGHT = 2;
+	const int FACING_UP_RIGHT = 3;
+	const int FACING_UP = 4;
+	const int FACING_UP_LEFT = 5;
+	const int FACING_LEFT = 6;
+	const int FACING_DOWN_LEFT = 7;
+	// Attacking
+	const int ATTACK_DOWN_START = 0;
+	const int ATTACK_DOWN_END = 0;
+	const int ATTACK_RIGHT_START = 0;
+	const int ATTACK_RIGHT_END = 0;
+	const int ATTACK_UP_START = 0;
+	const int ATTACK_UP_END = 0;
+	const int ATTACK_LEFT_START = 0;
+	const int ATTACK_LEFT_END = 0;
+
 }
 using namespace entityNS;
-
-// Generic Frame Definitions
-const int WALKING_DOWN_START = 8;
-const int WALKING_DOWN_END = 11;
-const int WALKING_DOWN_RIGHT_START = 12;
-const int WALKING_DOWN_RIGHT_END = 15;
-const int WALKING_RIGHT_START = 16;
-const int WALKING_RIGHT_END = 19;
-const int WALKING_UP_RIGHT_START = 20;
-const int WALKING_UP_RIGHT_END = 23;
-const int WALKING_UP_START = 24;
-const int WALKING_UP_END = 27;
-const int WALKING_UP_LEFT_START = 28;
-const int WALKING_UP_LEFT_END = 31;
-const int WALKING_LEFT_START = 32;
-const int WALKING_LEFT_END = 35;
-const int WALKING_DOWN_LEFT_START = 36;
-const int WALKING_DOWN_LEFT_END = 39;
-// Facing 
-const int FACING_DOWN = 0;
-const int FACING_DOWN_RIGHT = 1;
-const int FACING_RIGHT = 2;
-const int FACING_UP_RIGHT = 3;
-const int FACING_UP = 4;
-const int FACING_UP_LEFT = 5;
-const int FACING_LEFT = 6;
-const int FACING_DOWN_LEFT = 7;
-// Attacking
-const int ATTACK_DOWN_START = 0;
-const int ATTACK_DOWN_END = 0;
-const int ATTACK_RIGHT_START = 0;
-const int ATTACK_RIGHT_END = 0;
-const int ATTACK_UP_START = 0;
-const int ATTACK_UP_END = 0;
-const int ATTACK_LEFT_START = 0;
-const int ATTACK_LEFT_END = 0;
 
 // The class that allows drawing and animation control
 class Drawable
