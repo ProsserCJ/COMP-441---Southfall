@@ -154,10 +154,10 @@ const char SOUND_BANK[] = "audio\\Win\\Sound Bank.xsb";
 // ADD CUE name here
 const char COLLIDE[] = "Collision";
 const char SELECT[] = "Blip_Select";
-const char BACKGROUND[] = "Background2";
+const char BACKGROUND[] = "Background";
 const char BATTLE[] = "Battle";
 const char BATTLE_INTRO[] = "Battle Intro";
-const char HOUSE[] = "Background";
+const char HOUSE[] = "Background2";
 
 
 #endif

@@ -31,39 +31,6 @@ void Object::initialize()
 void Object::update(float frameTime, World* W)
 {
 	updateImage(frameTime);
-	setPosition(position + velocity*frameTime);
-}
-
-bool HandleCollision(Object* A, Object* B)
-{
-	float D, R;
-	VECTOR2 diff = A->position - B->position;
-	switch(A->collisionType)
-	{
-		case CIRCLE:
-			switch (B->collisionType)
-			{
-			case CIRCLE:
-				R = A->radius+B->radius;
-				break;
-			case POINTCOLLISION:
-				R = A->radius;
-				break;
-			}
-		case POINTCOLLISION:
-			switch (B->collisionType)
-			{
-			case CIRCLE:
-				R = A->radius+B->radius;
-				break;
-			case POINTCOLLISION:
-				return A->position == B->position;
-				break;
-			}
-	}
-	D = D3DXVec2Dot(&diff,&diff);
-	if(D < R*R) return true;
-	return false;
 }
 
 void Entity::initialize()
@@ -78,8 +45,10 @@ void Entity::update(float frameTime, World* W)
 {
 	timeSinceInteract += frameTime;
 	move(frameTime, W);
+
+	updateImage(frameTime);
 	if(startMoving && W->canMoveHere(this, position + velocity*frameTime))
-		Object::update(frameTime, W);
+		setPosition(position + velocity*frameTime);
 	else standing();
 }
 
@@ -161,16 +130,28 @@ void Entity::interact(World* W)
 	switch(facing)
 	{
 	case UP:
-		if(0<y) W->getTile(x,y-range)->interact(this);
+		if(0<y)
+		{
+			W->getTile(x,y-range)->interact(this);
+		}
 		break;
 	case DOWN:
-		if(y+range<W->getHeight()) W->getTile(x,y+range)->interact(this);
+		if(y+range<W->getHeight())
+		{
+			W->getTile(x,y+range)->interact(this);
+		}
 		break;
 	case RIGHT:
-		if(x+range<W->getWidth()) W->getTile(x+range,y)->interact(this);
+		if(x+range<W->getWidth())
+		{
+			W->getTile(x+range,y)->interact(this);
+		}
 		break;
 	case LEFT:
-		if(0<x) W->getTile(x-range,y)->interact(this);
+		if(0<x)
+		{
+			W->getTile(x-range,y)->interact(this);
+		}
 		break;
 	}
 }
@@ -201,4 +182,36 @@ void Entity::setStandingImage()
 		case DOWN_RIGHT: setStationaryFrame(FACING_DOWN_RIGHT); break;
 		case DOWN_LEFT: setStationaryFrame(FACING_DOWN_LEFT); break;
 	}
+}
+
+bool HandleCollision(Object* A, Object* B)
+{
+	float D, R;
+	VECTOR2 diff = A->position - B->position;
+	switch(A->collisionType)
+	{
+		case CIRCLE:
+			switch (B->collisionType)
+			{
+			case CIRCLE:
+				R = A->radius+B->radius;
+				break;
+			case POINTCOLLISION:
+				R = A->radius;
+				break;
+			}
+		case POINTCOLLISION:
+			switch (B->collisionType)
+			{
+			case CIRCLE:
+				R = A->radius+B->radius;
+				break;
+			case POINTCOLLISION:
+				return A->position == B->position;
+				break;
+			}
+	}
+	D = D3DXVec2Dot(&diff,&diff);
+	if(D < R*R) return true;
+	return false;
 }
