@@ -37,7 +37,21 @@ void Hero::update(float frameTime, World* W)
     else if (input->isKeyDown(AKEY))			go(LEFT);
     else if (input->isKeyDown(DKEY))			go(RIGHT);    
 	else										standing();  
-	//if(input->isKeyDown(ENTER_KEY)) interact(W);  switched to E key
+	
+	// Test Effects
+
+	if(timeSinceAction > HEROACTIONDELAY && input->getMouseLButton())
+	{
+		timeSinceAction = 0;
+		int X = input->getMouseX();
+		int Y = input->getMouseY();
+		VECTOR2 mouse(X,Y);
+
+		VECTOR2 target = getPosition()+(mouse-HSCREEN)*INVTILE_SIZE;
+		W->addEffect(new ImpedeEffect(target, 0.2));
+	}
+
+	///////////////
 
 	if (input->wasKeyPressed('E'))
 	{

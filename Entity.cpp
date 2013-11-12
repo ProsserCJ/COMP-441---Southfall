@@ -39,6 +39,7 @@ void Entity::initialize()
 {
 	Object::initialize();
 	timeSinceInteract = 0;
+	timeSinceAction = 0;
 	speed = 0;
 	facing = DOWN;
 }
@@ -46,6 +47,7 @@ void Entity::initialize()
 void Entity::update(float frameTime, World* W)
 {
 	timeSinceInteract += frameTime;
+	timeSinceAction += frameTime;
 	move(frameTime, W);
 
 	updateImage(frameTime);
@@ -204,6 +206,7 @@ bool HandleCollision(Collidable* A, Collidable* B)
 				R = A->radius;
 				break;
 			}
+			break;
 		case POINTCOLLISION:
 			switch (B->collisionType)
 			{
@@ -214,6 +217,7 @@ bool HandleCollision(Collidable* A, Collidable* B)
 				return A->position == B->position;
 				break;
 			}
+			break;
 	}
 	D = D3DXVec2Dot(&diff,&diff);
 	if(D < R*R) return true;

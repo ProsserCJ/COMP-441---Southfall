@@ -18,7 +18,8 @@ Last Modified 11/12/2013
 
 class World;
 
-const VECTOR2 ZERO = VECTOR2(0,0);
+const VECTOR2 ZERO(0,0);
+const VECTOR2 HSCREEN(HSCREEN_WIDTH, HSCREEN_HEIGHT);
 const float DEFAULT_FRAME_DELAY = 0.2f;
 const float INTERACTIONDELAY = 0.5f;
 
@@ -203,6 +204,7 @@ protected:
 	int HP;
 	int maxHP;
 	float timeSinceInteract;
+	float timeSinceAction;
 	//Movement control
 	DIR facing;	
 	DIR lastDir;

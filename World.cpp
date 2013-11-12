@@ -103,11 +103,12 @@ bool World::collidesWithNPC(Object* E, VECTOR2& position)
 bool World::isTraversible(VECTOR2 T)
 {
 	if(T.x < 0 || T.y < 0 || width-0.2 < T.x || height-0.2 < T.y)
-		return false;
+		return false; // Off the world map
 	return getTile((int)(T.x), (int)(T.y))->isTraversable();
 }
 
-void World::act(){
+void World::act()
+{
 	for(auto p = entities.begin(); p != entities.end(); p++)
 		(*p)->act(this);
 }
@@ -133,8 +134,8 @@ void World::update(float frameTime)
 		(*e)->update(frameTime, this);
 		if((*e)->done())
 		{
-			effects.erase(e);
 			safeDelete<Effect*>(*e);
+			effects.erase(e);
 		}
 		e=q;
 	}
