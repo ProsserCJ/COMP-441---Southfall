@@ -55,8 +55,8 @@ private:
 	stringstream ss;
 
 	// Images and Textures
-	TextureManager Character1TX, NPC1TX, TextBoxTX, TextBoxArrowTX;
-	Image Character1IM, NPC1IM, TextBoxIM, TextBoxArrowIM;
+	TextureManager Character1TX, NPC1TX, Goblin1TX, TextBoxTX, TextBoxArrowTX;
+	Image Character1IM, NPC1IM, TextBoxIM, Goblin1IM, TextBoxArrowIM;
 	WorldInterface worldInterface;
 
 	void initializeGraphics();

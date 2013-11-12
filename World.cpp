@@ -16,6 +16,7 @@ void Tile::draw(VECTOR2& Center)
 	int Y = diff.y + HSCREEN_HEIGHT - height;
 	image->setScale(DEFAULT_SCALE);
 	image->setX(X); image->setY(Y);
+	image->setCurrentFrame(frame);
 	image->draw();
 	if(_drawStruct) S->draw(Center);
 }
@@ -40,8 +41,14 @@ void World::draw(VECTOR2& Center)
 		(*p)->draw(Center);
 }
 
-bool World::canMoveHere(Entity* ent, VECTOR2 position, float radius)
+bool World::canMoveHere(Entity* E, VECTOR2& position)
 {
+	return !collidesWithTile(E, position) && !collidesWithNPC(E, position);	
+}
+
+bool World::collidesWithTile(Entity* E, VECTOR2& position)
+{
+	float radius = E->getRadius();
 	VECTOR2 topLeft, topRight, bottomLeft, bottomRight;
 	topLeft = position + VECTOR2(0.5-radius,0.9-radius);
 	topRight = position + VECTOR2(0.5+radius,0.9-radius);
@@ -50,21 +57,27 @@ bool World::canMoveHere(Entity* ent, VECTOR2 position, float radius)
 	if(	isTraversible(topLeft) && 
 		isTraversible(topRight) &&
 		isTraversible(bottomLeft) && 
-		isTraversible(bottomRight)){
-		
-		//check for NPCs
-		for(auto p = npcs.begin(); p != npcs.end(); p++){
-			if (*p == ent) continue;					//return if the pointer points to the NPC trying to move
-			VECTOR2 pos = (*p)->getPosition();
-			float x = pos.x, y = pos.y, rad = 2.5*(*p)->getRadius();
-			if (y + 1.37*rad > position.y &&			//constant multiple found by guess and check 
-				y - 1.37*rad < position.y &&			//can this be done more mathematically?
-				x + rad > position.x && 
-				x - rad < position.x)  
-				return false;
-		}
-		return true;	
+		isTraversible(bottomRight))
+	{
+		return false;	
 	}	
+	return true;
+}
+
+bool World::collidesWithNPC(Entity* E, VECTOR2& position)
+{
+	VECTOR2 temp = E->getPosition();
+	E->setPosition(position);
+	for(auto p = npcs.begin(); p != npcs.end(); p++)
+	{
+		if (*p == E) continue; // You can't collide with yourself
+		if(HandleCollision(*p, E)) 
+		{
+			E->setPosition(temp);
+			return true;
+		}
+	}
+	E->setPosition(temp);
 	return false;
 }
 
@@ -98,7 +111,8 @@ NPC* World::getNPCFacing(VECTOR2 pos, DIR dir)
 	case RIGHT: pos.x += 1; break;
 	};
 
-	for(auto p = npcs.begin(); p != npcs.end(); p++){
+	for(auto p = npcs.begin(); p != npcs.end(); p++)
+	{
 		VECTOR2 NPCposition = (*p)->getPosition();
 		
 		//if the position is within .2, it's close enough

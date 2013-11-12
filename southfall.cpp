@@ -42,7 +42,7 @@ void Southfall::initialize(HWND hwnd)
 	textbox->setActive(false);
 	
 	// Initialized Player here, have center point at player's position
-	player = new Hero(ZERO, heroNS::HERO_RADIUS, &Character1IM, input, audio, textbox);	
+	player = new Hero(ZERO, heroNS::HERO_RADIUS, &Goblin1IM, input, audio, textbox);	
 	player->setPosition(VECTOR2(23,13));
 	player->setWorld(Interface.getCurrent());
 	
@@ -59,9 +59,14 @@ void Southfall::initializeGraphics()
 
 	// Character 1
 	if(!Character1TX.initialize(graphics, CHARACTER2_SHEET))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character1 texture"));
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character 1 texture"));
 	if(!Character1IM.initialize(graphics, 32, 32, 8, &Character1TX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character1 image"));
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character 1 image"));
+	// Goblin 1
+	if(!Goblin1TX.initialize(graphics, GOBLIN1_SHEET))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Goblin 1 texture"));
+	if(!Goblin1IM.initialize(graphics, 32, 32, 8, &Goblin1TX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Goblin 1 image"));
 	// Textbox
 	if(!TextBoxTX.initialize(graphics, TEXTBOX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox texture"));

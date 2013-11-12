@@ -1,0 +1,11 @@
+17 10
+-----------------
+-[[[[[[[[[[[[[[[-
+-]]]]]]]]]]]]]]]-
+-ccccccccccccccc-
+-ttttttttttttttt-
+-trTlttttttttttt-
+-ttttttttrTltttt-
+-ttrTltttttttttt-
+-ttttttttttttttt-
+--------0--------

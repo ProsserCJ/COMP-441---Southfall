@@ -100,6 +100,7 @@ const UINT HSCREEN_HEIGHT = 0.5*SCREEN_HEIGHT;
 // Characters
 const char CHARACTER1_SHEET[] = "Images\\Character1Sheet.png";
 const char CHARACTER2_SHEET[] = "Images\\Character2Sheet.png";
+const char GOBLIN1_SHEET[] = "Images\\Goblin1Sheet.png";
 // Tiles
 const char GRASS1[] = "Images\\Grass1.png";
 const char TREE1[] = "Images\\Tree1.png";
@@ -114,6 +115,12 @@ const char HOUSEDOOR1[] = "Images\\HouseDoor1.png";
 const char HORIZINHOUSEDOOR1[] = "Images\\InHouseHorizDoor1.png";
 const char VERTINHOUSEDOOR1[] = "Images\\InHouseVertDoor1.png";
 const char BARCOUNTER[] = "Images\\Counter1.png";
+const char LOWERBARBACK[] = "Images\\LowerBarBackdrop.png";
+const char BARBACKDROP[] = "Images\\BarBackdrop.png";
+const char TABLE[] = "Images\\Table1.png";
+const char RIGHTCHAIR[] = "Images\\RightChair.png";
+const char LEFTCHAIR[] = "Images\\LeftChair.png";
+const char BED1[] = "Images\\Bed1.png";
 const char HWALL[] = "Images\\HorizontalWallPiece.png";
 const char VWALL[] = "Images\\VerticalWallPiece.png";
 const char CWALL[] = "Images\\CornerWallPiece.png";
