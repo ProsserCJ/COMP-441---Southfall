@@ -23,9 +23,19 @@ void Drawable::updateImage(float frameTime)
 	}
 }
 
-void Entity::initialize()
+void Object::initialize()
 {
 	Drawable::initialize();
+}
+
+void Object::update(float frameTime, World* W)
+{
+	updateImage(frameTime);
+}
+
+void Entity::initialize()
+{
+	Object::initialize();
 	timeSinceInteract = 0;
 	speed = 0;
 	facing = DOWN;
@@ -33,9 +43,10 @@ void Entity::initialize()
 
 void Entity::update(float frameTime, World* W)
 {
-	updateImage(frameTime);
 	timeSinceInteract += frameTime;
 	move(frameTime, W);
+
+	updateImage(frameTime);
 	if(startMoving && W->canMoveHere(this, position + velocity*frameTime))
 		setPosition(position + velocity*frameTime);
 	else standing();
@@ -173,7 +184,7 @@ void Entity::setStandingImage()
 	}
 }
 
-bool HandleCollision(Entity* A, Entity* B)
+bool HandleCollision(Object* A, Object* B)
 {
 	float D, R;
 	VECTOR2 diff = A->position - B->position;

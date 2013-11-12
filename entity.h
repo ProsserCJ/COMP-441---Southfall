@@ -64,6 +64,7 @@ const int ATTACK_UP_END = 0;
 const int ATTACK_LEFT_START = 0;
 const int ATTACK_LEFT_END = 0;
 
+// The class that allows drawing and animation control
 class Drawable
 {
 public:
@@ -99,16 +100,56 @@ private:
 	Image* image;		// The sprite sheet to display from
 };
 
+// An object that can appear in the game
+class Object : public Drawable
+{
+public:
+	Object() : position(ZERO), velocity(ZERO), Drawable(0), 
+		radius(0.25), active(false), collisionType(POINTCOLLISION) {initialize();}
+	Object(Image* image) 
+		: Drawable(image) {};
+	Object(VECTOR2 pos, float radius, Image* image, COLLISIONTYPE CT) : position(pos), 
+		radius(radius), Drawable(image), velocity(ZERO), active(true), collisionType(CT) {initialize();}
+
+	void update(float frameTime, World* W);
+
+	void initialize();
+
+	// Collision Handler
+	friend bool HandleCollision(Object* A, Object* B); // True if the objects collided
+
+	// Accessors
+	VECTOR2 getPosition()		const {return position;}
+	VECTOR2 getVelocity()		const {return velocity;}
+	float getRadius()			const {return radius;}
+	virtual bool isActive()		{return active;}
+	World* getWorld()			const {return world;}
+
+	// Mutators
+	void setPosition(const VECTOR2& pos)	{position = pos;}
+	void setVelocity(const VECTOR2& vel)	{velocity = vel;}
+
+protected:
+	VECTOR2 position;	// Position in the world (center)
+	VECTOR2 velocity;	// Velocity direction of the entity
+	float speed;		// Speed the object travels at
+	bool moving;		// True if the object should move in the direction it is facing
+	float radius;		// Interaction radius
+	
+	COLLISIONTYPE collisionType;
+	bool active;
+	World* world;
+};
+
 // Base for in game characters, monsters, and animals
-class Entity : public Drawable
+class Entity : public Object
 {
 public:
 	// Constructors and destructors
-	Entity() : position(ZERO), velocity(ZERO), knockback(ZERO), Drawable(0), maxHP(0), HP(0), 
-		radius(0.25), active(false), collisionType(POINTCOLLISION) {initialize();}
+	Entity() 
+		: Object(), knockback(ZERO), maxHP(0), HP(0) {initialize();}
 	Entity(VECTOR2 pos, float radius, int HP, Image* image) 
-		: position(pos), radius(radius), collisionType(CIRCLE), Drawable(image), HP(HP), 
-		maxHP(HP), velocity(ZERO), knockback(ZERO), active(true) {initialize();}
+		: Object(pos, radius, image, CIRCLE), HP(HP), maxHP(HP), knockback(ZERO) {initialize();}
 	~Entity() {};
 
 	// Basic functions
@@ -119,55 +160,37 @@ public:
 	void move(float frameTime, World* W);
 	virtual void interact(World* W);	// Interact with a tile
 
-	// Collision Handler
-	friend bool HandleCollision(Entity* A, Entity* B); // True if the entities collided
-
 	// Accessors
-	VECTOR2 getPosition()		const {return position;}
-	VECTOR2 getVelocity()		const {return velocity;}
-	float getRadius()			const {return radius;}
 	int getHP()					const {return HP;}
 	virtual bool alive()		{return HP > 0;}
-	virtual bool isActive()		{return active;}
 	DIR getDirectionFacing()	{return facing;}
-	World* getWorld()			const {return world;}
 
 	// Mutators
-	void setPosition(const VECTOR2& pos)	{position = pos;/* setImageX(pos.x); setImageY(pos.y);*/}
-	void setVelocity(const VECTOR2& vel)	{velocity = vel;}
 	void setKnockback(const VECTOR2& kb)	{knockback = kb;}
 	void setActive(bool act)				{active = act;}
 	void setHP(int HP)						{this->HP = HP;}
 	void setWorld(World* W)					{world = W;}
-	void kill()								{HP = 0;}	
-	
-	
+	void kill()								{HP = 0;}
 	void setDir(DIR face)					{facing=face;}
 	void go(DIR face);			
 	void standing();
 	virtual void setStandingImage();
 
 protected:
-	VECTOR2 position;	// Position in the world (center)
-	VECTOR2 velocity;	// Velocity of the entity
+	
 	VECTOR2 knockback;	// For knock back effects
-	RECT collisionRectangle;
-	float radius;
-	float speed;
+	//RECT collisionRectangle;
+	
 	int HP;
 	int maxHP;
-	bool active;
-	World* world;
-
+	
 	float timeSinceInteract;
 
 	//Movement control
 	DIR facing;	
 	DIR lastDir;
-	bool moving;		// True if the entity should move in the direction it is facing
 	bool startMoving;
 						
-	COLLISIONTYPE collisionType;
 };
 
 #endif

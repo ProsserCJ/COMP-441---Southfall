@@ -1,4 +1,5 @@
 #include "Structure.h"
+#include "World.h"
 
 void Structure::draw(VECTOR2 Center)
 {
@@ -19,8 +20,10 @@ void Structure::update(float frameTime)
 
 void Portal::interact(Entity* E)
 {
+	E->getWorld()->removeEntity(E);
 	E->setWorld(out);
 	E->setPosition(vOut);
+	out->addEntity(E);
 }
 
 void Door::draw(VECTOR2 Center)

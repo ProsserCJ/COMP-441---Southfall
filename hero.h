@@ -35,7 +35,7 @@ public:
 	virtual void draw(const VECTOR2& Center);
 	virtual void act(World* W) {}
 	virtual void update(float frameTime, World* W);
-	void turnToPlayer(NPC* n);
+	void turnToPlayer(Entity* n);
 
 	void initialize();
 

@@ -64,20 +64,21 @@ public:
 	Tile* &		getTile(int x, int y)	{return tiles[x][y];}
 	Tile** &	getTile(int x)			{return tiles[x];}
 	Tile*** &	getTile()				{return tiles;}
-	bool canMoveHere(Entity *E, VECTOR2& position);
-	bool collidesWithTile(Entity* E, VECTOR2& position);
-	bool collidesWithNPC(Entity* E, VECTOR2& position);
+	bool canMoveHere(Object *E, VECTOR2& position);
+	bool collidesWithTile(Object* E, VECTOR2& position);
+	bool collidesWithNPC(Object* E, VECTOR2& position);
 	bool isTraversible(VECTOR2 T);	// Pass in the world coords, not tile coords
 
 	int getWidth()	{return width;}
 	int getHeight()	{return height;}
 	bool isInitialized()	{return _initialized;}
-	NPC* getNPCFacing(VECTOR2 pos, DIR dir);
+	Entity* getNPCFacing(VECTOR2 pos, DIR dir);
 	
 	// Mutators
 	void setInitialized(bool init)	{_initialized = init;}
 	void addStructure(Structure* S)	{structures.push_back(S);}
-	void addNPC(NPC* n)				{npcs.push_back(n);}
+	void addEntity(Entity* E)		{entities.push_back(E);}
+	void removeEntity(Entity* E)	{entities.remove(E);}
 
 private:
 	int width, height;				// Dimensions of this world
@@ -86,7 +87,7 @@ private:
 						
 	bool _initialized;				// Has the world been initialized
 
-	list<NPC*> npcs;				// List of NPCs in this world
+	list<Entity*> entities;			// List of NPCs in this world
 };
 
 #endif

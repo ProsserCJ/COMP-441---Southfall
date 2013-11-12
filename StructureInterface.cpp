@@ -103,7 +103,7 @@ World* StructureInterface::loadStructure(string fileName, World** external, VECT
 	{
 		int ID, x, y;
 		fin >> ID >> x >> y;
-		W->addNPC(new NPC(ID, VECTOR2(x,y)));
+		W->addEntity(new NPC(ID, VECTOR2(x,y)));
 	}
 	// End of npc code
 

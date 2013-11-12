@@ -37,16 +37,16 @@ void World::draw(VECTOR2& Center)
 			tiles[x][y]->draw(Center);
 	for(auto p = structures.begin(); p != structures.end(); p++)
 		(*p)->draw(Center);
-	for(auto p = npcs.begin(); p != npcs.end(); p++)
+	for(auto p = entities.begin(); p != entities.end(); p++)
 		(*p)->draw(Center);
 }
 
-bool World::canMoveHere(Entity* E, VECTOR2& position)
+bool World::canMoveHere(Object* E, VECTOR2& position)
 {
 	return !collidesWithTile(E, position) && !collidesWithNPC(E, position);	
 }
 
-bool World::collidesWithTile(Entity* E, VECTOR2& position)
+bool World::collidesWithTile(Object* E, VECTOR2& position)
 {
 	float radius = E->getRadius();
 	VECTOR2 topLeft, topRight, bottomLeft, bottomRight;
@@ -66,11 +66,11 @@ bool World::collidesWithTile(Entity* E, VECTOR2& position)
 
 //This function needs to check for Hero.
 //NPCs don't know not to run over top of the player, and he gets stuck
-bool World::collidesWithNPC(Entity* E, VECTOR2& position)
+bool World::collidesWithNPC(Object* E, VECTOR2& position)
 {
 	VECTOR2 temp = E->getPosition();
 	E->setPosition(position);
-	for(auto p = npcs.begin(); p != npcs.end(); p++)
+	for(auto p = entities.begin(); p != entities.end(); p++)
 	{
 		if (*p == E) continue; // You can't collide with yourself
 		if(HandleCollision(*p, E)) 
@@ -91,7 +91,7 @@ bool World::isTraversible(VECTOR2 T)
 }
 
 void World::act(){
-	for(auto p = npcs.begin(); p != npcs.end(); p++)
+	for(auto p = entities.begin(); p != entities.end(); p++)
 		(*p)->act(this);
 }
 
@@ -99,11 +99,17 @@ void World::update(float frameTime)
 {
 	for(auto s = structures.begin(); s != structures.end(); s++)
 		(*s)->update(frameTime);
-	for(auto p = npcs.begin(); p != npcs.end(); p++)
+	
+	auto p = entities.begin();
+	while(p != entities.end())
+	{
+		auto q = p; q++;
 		(*p)->update(frameTime, this);
+		p=q;
+	}
 }
 
-NPC* World::getNPCFacing(VECTOR2 pos, DIR dir)
+Entity* World::getNPCFacing(VECTOR2 pos, DIR dir)
 {
 	switch(dir)
 	{
@@ -113,7 +119,7 @@ NPC* World::getNPCFacing(VECTOR2 pos, DIR dir)
 	case RIGHT: pos.x += 1; break;
 	};
 
-	for(auto p = npcs.begin(); p != npcs.end(); p++)
+	for(auto p = entities.begin(); p != entities.end(); p++)
 	{
 		VECTOR2 NPCposition = (*p)->getPosition();
 		

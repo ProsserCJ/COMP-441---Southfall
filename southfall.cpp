@@ -45,6 +45,7 @@ void Southfall::initialize(HWND hwnd)
 	player = new Hero(ZERO, heroNS::HERO_RADIUS, &Goblin1IM, input, audio, textbox);	
 	player->setPosition(VECTOR2(23,13));
 	player->setWorld(Interface.getCurrent());
+	player->getWorld()->addEntity(player);
 	
 	audio->playCue(BACKGROUND);	
 }
@@ -92,7 +93,7 @@ void Southfall::update()
 		break;
 	case GAME:
 		player->getWorld()->update(frameTime);
-		player->update(frameTime, player->getWorld());	
+		//player->update(frameTime, player->getWorld());	
 		textbox->update(frameTime);	
 		break;
 	};	
@@ -126,7 +127,7 @@ void Southfall::render()
 		break;
 	case GAME:
 		player->getWorld()->draw(Center());
-		player->draw(Center());	// For now
+		//player->draw(Center());	// For now
 		textbox->draw();
 		break;
 	}
