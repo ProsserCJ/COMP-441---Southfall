@@ -64,6 +64,8 @@ bool World::collidesWithTile(Entity* E, VECTOR2& position)
 	return true;
 }
 
+//This function needs to check for Hero.
+//NPCs don't know not to run over top of the player, and he gets stuck
 bool World::collidesWithNPC(Entity* E, VECTOR2& position)
 {
 	VECTOR2 temp = E->getPosition();
@@ -115,11 +117,11 @@ NPC* World::getNPCFacing(VECTOR2 pos, DIR dir)
 	{
 		VECTOR2 NPCposition = (*p)->getPosition();
 		
-		//if the position is within .2, it's close enough
+		//if the position is within .5, it's close enough
 		if (NPCposition.x > pos.x - .5 && 
 			NPCposition.x < pos.x + .5 &&
-			NPCposition.y > pos.y - .2 &&
-			NPCposition.y < pos.y + .2)
+			NPCposition.y > pos.y - .5 &&
+			NPCposition.y < pos.y + .5)
 			return (*p);
 	}
 
