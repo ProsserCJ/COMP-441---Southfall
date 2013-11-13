@@ -59,21 +59,21 @@ void Southfall::initialize(HWND hwnd)
 	player->setWorld(Interface.getCurrent());
 	player->getWorld()->addEntity(player);
 
-	// Impede effect
-	if(!ImpedeEffectTX.initialize(graphics, IMPEDEEFFECTICON))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Impede effect texture"));
-	if(!ImpedeEffectIM.initialize(graphics, 0, 0, 0, &ImpedeEffectTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Impede effect image"));
-	// Portal Opening
-	if(!PortalOpenTX.initialize(graphics, PORTALOPEN))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal open texture"));
-	if(!PortalOpenIM.initialize(graphics, 0, 0, 0, &PortalOpenTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal open image"));
-	// Portal Exit
-	if(!PortalCloseTX.initialize(graphics, PORTALCLOSE))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal close texture"));
-	if(!PortalCloseIM.initialize(graphics, 0, 0, 0, &PortalCloseTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal close image"));
+	//// Impede effect
+	//if(!ImpedeEffectTX.initialize(graphics, IMPEDEEFFECTICON))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Impede effect texture"));
+	//if(!ImpedeEffectIM.initialize(graphics, 0, 0, 0, &ImpedeEffectTX))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Impede effect image"));
+	//// Portal Opening
+	//if(!PortalOpenTX.initialize(graphics, PORTALOPEN))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal open texture"));
+	//if(!PortalOpenIM.initialize(graphics, 0, 0, 0, &PortalOpenTX))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal open image"));
+	//// Portal Exit
+	//if(!PortalCloseTX.initialize(graphics, PORTALCLOSE))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal close texture"));
+	//if(!PortalCloseIM.initialize(graphics, 0, 0, 0, &PortalCloseTX))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal close image"));
 	
 
 }
