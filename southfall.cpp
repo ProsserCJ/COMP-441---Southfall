@@ -206,6 +206,7 @@ void Southfall::update()
 			{
 				playerClickActions();
 				player->getWorld()->update(frameTime);
+				player->update(frameTime, player->getWorld());
 			}
 			textbox->update(frameTime);	
 			if (player->getPosition().x < 133 && player->getPosition().x > 86 && player->getPosition().y > 80 && fontLoc != 0)

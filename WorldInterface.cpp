@@ -111,7 +111,7 @@ World* WorldInterface::loadWorld(const string& fileName)
 			text[i] = buffer;
 		}
 		temp->setText(text, textLines);
-		W->addEntity(temp);
+		W->addNPC(temp);
 	}
 
 

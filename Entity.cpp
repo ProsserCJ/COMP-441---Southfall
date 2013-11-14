@@ -95,6 +95,7 @@ void Entity::draw(VECTOR2& Center, DWORD color)
 	else draw(Center, graphicsNS::BLUE);
 }
 
+// Makes the entity move in the direction it is going
 void Entity::move(float frameTime, World* W)
 {
 	switch(facing)
@@ -152,6 +153,7 @@ void Entity::move(float frameTime, World* W)
 	moving = true;
 }
 
+// Interact with whatever is in front of the entity
 void Entity::interact(World* W)
 {
 	if(timeSinceInteract < INTERACTIONDELAY) return;
@@ -187,12 +189,14 @@ void Entity::interact(World* W)
 	}
 }
 
+// Tell an entity to start moving in a direction
 void Entity::go(DIR face)
 {
 	startMoving=true;
 	facing=face;
 }
 
+// Tell an entity to stand
 void Entity::standing()
 {
 	startMoving = false;
