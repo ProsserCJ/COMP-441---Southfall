@@ -88,6 +88,9 @@ private:
 	TextureManager FireballIconTX;
 	Image FireballIconIM;
 
+	TextureManager FireballSheetTX;
+	Image FireballSheetIM;
+
 };
 
 #endif

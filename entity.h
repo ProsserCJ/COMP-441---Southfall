@@ -134,11 +134,11 @@ class Object : public Drawable, public Collidable
 {
 public:
 	Object() 
-		: Collidable(ZERO, POINTCOLLISION, 0), velocity(ZERO), Drawable(0), active(false) {initialize();}
+		: Collidable(ZERO, POINTCOLLISION, 0), velocity(ZERO), Drawable(0), active(false), speed(1) {initialize();}
 	Object(Image* image) 
-		: Collidable(ZERO, POINTCOLLISION, 0), Drawable(image) {initialize();};
-	Object(VECTOR2 pos, float radius, Image* image, COLLISIONTYPE CT) 
-		: Collidable(pos, CT, radius), Drawable(image), velocity(ZERO), active(true) {initialize();}
+		: Collidable(ZERO, POINTCOLLISION, 0), Drawable(image), speed(1) {initialize();};
+	Object(VECTOR2 pos, float speed, float radius, Image* image, COLLISIONTYPE CT) 
+		: Collidable(pos, CT, radius), Drawable(image), velocity(ZERO), active(true), speed(speed) {initialize();}
 
 	void update(float frameTime, World* W);
 	virtual void draw(VECTOR2& Center);
@@ -171,9 +171,9 @@ class Entity : public Object
 public:
 	// Constructors and destructors
 	Entity() 
-		: Object(), knockback(ZERO), maxHP(0), HP(0) {initialize();}
-	Entity(VECTOR2 pos, float radius, int HP, Image* image) 
-		: Object(pos, radius, image, CIRCLE), HP(HP), maxHP(HP), knockback(ZERO) {initialize();}
+		: Object(), knockback(ZERO), maxHP(0), HP(0), team(0) {initialize();}
+	Entity(VECTOR2 pos, float radius, int HP, Image* image, int team=0) 
+		: Object(pos, 1, radius, image, CIRCLE), HP(HP), maxHP(HP), knockback(ZERO), team(team) {initialize();}
 	~Entity() {};
 
 	// Basic functions
@@ -186,6 +186,7 @@ public:
 
 	// Accessors
 	int getHP()					const {return HP;}
+	int getTeam()				const {return team;}
 	virtual bool alive()		{return HP > 0;}
 	bool hasTarget()			{return _hasTarget;}
 	DIR getDirectionFacing()	{return facing;}
@@ -211,6 +212,7 @@ protected:
 	VECTOR2 knockback;	// For knock back effects
 	int HP;
 	int maxHP;
+	int team;
 	float timeSinceInteract;
 	float timeSinceAction;
 	//Movement control

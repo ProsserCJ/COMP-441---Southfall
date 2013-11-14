@@ -131,11 +131,17 @@ void Southfall::initializeGraphics()
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing BlinkIcon texture"));
 	if(!BlinkIconIM.initialize(graphics, 0, 0, 0, &BlinkIconTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing BlinkIcon image"));
-	// Blink Icon
+	// Fireball Icon
 	if(!FireballIconTX.initialize(graphics, FIREBALLICON))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing FireballIcon texture"));
 	if(!FireballIconIM.initialize(graphics, 0, 0, 0, &FireballIconTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing FireballIcon image"));
+
+	// Fireball projectile
+	if(!FireballSheetTX.initialize(graphics, FIREBALLSHEET))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Fireball sheet texture"));
+	if(!FireballSheetIM.initialize(graphics, 16, 16, 4, &FireballSheetTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Fireball sheet image"));
 
 	NPC::initGraphics(graphics);
 }
@@ -198,7 +204,9 @@ inline void Southfall::playerClickActions()
 		int Y = input->getMouseY();
 		VECTOR2 mouse(X,Y);
 		VECTOR2 target = player->getPosition()+(mouse-HSCREEN)*INVTILE_SIZE;
-		float orient = atan2((float)(Y - HSCREEN_HEIGHT), (float)(X - HSCREEN_WIDTH));
+		float sY = static_cast<float>(Y - (int)HSCREEN_HEIGHT);
+		float sX = static_cast<float>(X - (int)HSCREEN_WIDTH);
+		float orient = atan2(sY, sX);
 
 		switch (player->getSpellType())
 		{
@@ -229,11 +237,12 @@ inline void Southfall::playerClickActions()
 			}
 			break;
 		case FIREBALL:
-			Projectile* P = new Projectile(player->getPosition(), 0.2, 3, orient, &FireballIconIM);
+			Projectile* P = new Projectile(player->getPosition()+VECTOR2(0.5,0.5), 
+				FIREBALLSPEED, FIREBALLRADIUS, FIREBALLRANGE, orient, &FireballSheetIM);
 			P->setFrames(FIREBALLSTART, FIREBALLEND);
-			P->setFrameDelay(0.3);
-			player->getWorld()->addProjectile(P); // Temp image
-
+			P->setFrameDelay(0.1);
+			player->getWorld()->addProjectile(P);
+			player->resetAction();
 			break;
 		}
 	}

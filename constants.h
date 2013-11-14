@@ -137,6 +137,7 @@ const char BLINKICON[] = "Images\\BlinkIcon1.png";
 const char FIREBALLICON[] = "Images\\FireballIcon.png";
 // Other
 const char GAMEMENUBACK[] = "Images\\GameMenuBackground.png";
+const char FIREBALLSHEET[] = "Images\\FireballSheet.png";
 
 // Sound Files
 

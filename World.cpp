@@ -59,7 +59,7 @@ void World::collisions()
 	for(auto p = projectiles.begin(); p != projectiles.end(); p++)
 	{
 		for(auto e = entities.begin(); e != entities.end(); e++)
-			if((*e)->isActive() && (*p)->isActive() && HandleCollision(*e, *p))
+			if((*e)->isActive() && (*p)->isActive() && (*p)->getTeam() != (*e)->getTeam() && HandleCollision(*e, *p))
 			{
 				(*e)->receiveDamage(*p);
 			}

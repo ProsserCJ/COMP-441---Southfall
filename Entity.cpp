@@ -125,7 +125,7 @@ void Entity::move(float frameTime, World* W)
 		velocity.x = -DIAG_MULT * speed;
 		if (!W->canMoveHere(this, getPosition()+velocity*frameTime)) velocity.x=0;
 		break;
-	case DIR::NONE:
+	case NONE:
 		standing();
 		break;
 	}
