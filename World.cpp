@@ -147,11 +147,7 @@ bool World::isTraversible(VECTOR2 T)
 	return getTile((int)(T.x), (int)(T.y))->isTraversable();
 }
 
-void World::act()
-{
-	/*for(auto p = AIs.begin(); p != AIs.end(); p++)
-		(*p)->act(this);*/
-}
+void World::act() {}
 
 void World::update(float frameTime)
 {
@@ -164,6 +160,20 @@ void World::update(float frameTime)
 	{
 		auto q = ai; q++;
 		(*ai)->update(frameTime, this);
+		// Sectorization for entities
+		if((*ai)->isActive())
+		{
+			VECTOR2 V = (*ai)->getPosition();
+			int LX = (int)(*ai)->getLastPosition().x;
+			int LY = (int)(*ai)->getLastPosition().y;
+			int X = (int)V.x, Y = (int)V.y;
+			if(LX != X || LY != Y)
+			{
+				tiles[LX][LY]->remove((*ai)->getNPC());
+				tiles[X][Y]->add((*ai)->getNPC());
+			}
+		}
+
 		ai=q;
 	}
 	// Update Effects
@@ -188,6 +198,18 @@ void World::update(float frameTime)
 		if(!(*pr)->isActive())
 		{
 			projectiles.erase(pr);
+		}
+		else
+		{// Sectorization for projectiles
+			VECTOR2 V = (*pr)->getPosition();
+			int LX = (int)(*pr)->getLastPosition().x;
+			int LY = (int)(*pr)->getLastPosition().y;
+			int X = (int)V.x, Y = (int)V.y;
+			if(LX != X || LY != Y)
+			{
+				tiles[LX][LY]->remove(*pr);
+				tiles[X][Y]->add(*pr);
+			}
 		}
 		pr=q;
 	}

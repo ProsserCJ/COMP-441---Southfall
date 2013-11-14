@@ -35,6 +35,7 @@ void Object::initialize()
 void Object::update(float frameTime, World* W)
 {
 	if(!active) return;
+	lastPosition = position;
 	updateImage(frameTime);
 }
 
@@ -74,7 +75,7 @@ void Entity::update(float frameTime, World* W)
 	if(magic > maxMagic) magic = maxMagic;	
 	if(!_frozen)
 	{
-		updateImage(frameTime);
+		Object::update(frameTime, W);
 		if(startMoving && W->canMoveHere(this, getPosition() + speed*velocity*frameTime))
 		{
 			W->collidesWithEffect(this, getPosition() + speed*velocity*frameTime);
