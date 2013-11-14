@@ -29,31 +29,39 @@ void Tile::interact(Entity* E)
 
 void World::draw(VECTOR2& Center, bool magicSight)
 {
+	float delta = .05; //number >= ovelap of sprites before collision
 	if(!_initialized) return;
 	int x0 = max(0, (Center.x-HSCREEN_WIDTH)/TILE_SIZE), y0 = max(0, (Center.y-HSCREEN_HEIGHT)/TILE_SIZE);
 	int x1 = min(width, (Center.x + SCREEN_WIDTH)/TILE_SIZE), y1 = min(height, (Center.y + SCREEN_HEIGHT)/TILE_SIZE);
-	// Tiles
-	for(int x = x0; x < x1; x++)
-		for(int y = y0; y < y1; y++)
-			tiles[x][y]->draw(Center);
-
-	// All of the following are being drawn right now regardless of where they are on the map. This should be changed at some point
-
+	
 	// Structures
-	for(auto p = structures.begin(); p != structures.end(); p++)
-		(*p)->draw(Center);
-	// Entities
-	for(auto p = entities.begin(); p != entities.end(); p++)
-		(*p)->draw(Center);
-	// Effects
-	for(auto p = effects.begin(); p != effects.end(); p++)
-	{
-		if(!(*p)->isInvisible() && (!(*p)->isHidden() || magicSight))
+		for(auto p = structures.begin(); p != structures.end(); p++)
 			(*p)->draw(Center);
+	
+	for(int y = y0; y < y1; y++)
+	{
+		// Tiles
+		for(int x = x0; x < x1; x++)
+			tiles[x][y]->draw(Center);
+		
+		// Entities
+		for(auto p = entities.begin(); p != entities.end(); p++)
+			if((*p)->getPosition().y >= y-1+delta && (*p)->getPosition().y < y+delta)
+				(*p)->draw(Center);
+		// Effects
+		for(auto p = effects.begin(); p != effects.end(); p++)
+		{
+			if(!(*p)->isInvisible() && (!(*p)->isHidden() || magicSight) && 
+			(*p)->getPosition().y >= y-1+delta && (*p)->getPosition().y < y+delta)
+				(*p)->draw(Center);
+		}
+		// Projectiles
+		for(auto p = projectiles.begin(); p != projectiles.end(); p++)
+			if((*p)->getPosition().y >= y-1+delta && (*p)->getPosition().y < y+delta)
+				(*p)->draw(Center);
+		
 	}
-	// Projectiles
-	for(auto p = projectiles.begin(); p != projectiles.end(); p++)
-		(*p)->draw(Center);
+	// All of the previous are being drawn right now regardless of where they are on the map. This could be changed at some point
 }
 
 void World::collisions()
