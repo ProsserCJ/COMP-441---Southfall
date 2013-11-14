@@ -8,7 +8,7 @@ Image* NPC::NPC_IM1 = new Image();
 //called once to initialize all graphics
 void NPC::initGraphics(Graphics* graphics)
 {
-	if(!NPC_TX1->initialize(graphics, CHARACTER2_SHEET))
+	if(!NPC_TX1->initialize(graphics, CHARACTER1_SHEET))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing NPC1 texture"));
 	if(!NPC_IM1->initialize(graphics, 32, 32, 8, NPC_TX1))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing NPC1 image"));

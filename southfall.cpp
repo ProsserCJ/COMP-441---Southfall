@@ -32,7 +32,7 @@ void Southfall::loadIntro()
 void Southfall::initialize(HWND hwnd)
 {
     Game::initialize(hwnd);
-	currentState = GAME;
+	currentState = MAIN_MENU;
 	pause = false;
 
 	// Graphics
@@ -165,6 +165,7 @@ void Southfall::update()
 			break;
 		case INTRO:
 			textbox->update(frameTime);
+			player->update(frameTime, player->getWorld());
 			if (!textbox->isActive())
 			{
 				audio->stopCue(INTRO_BACKGROUND);
@@ -183,7 +184,7 @@ void Southfall::update()
 			{
 				playerClickActions();
 				player->getWorld()->update(frameTime);
-			}
+                                                                                                                                                                                                                                                                                        			}
 			textbox->update(frameTime);	
 			break;
 		case ACTIONMENU:
