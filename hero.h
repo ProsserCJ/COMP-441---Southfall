@@ -16,7 +16,7 @@ Last modified: 11/5/2013
 // Hero Namespace
 namespace heroNS
 { //Store hero constants here
-	const float HERO_SPEED = 3.5f;
+	const float HERO_SPEED = 2.0f;
 	const float HEIGHT = TILE_SIZE;
 	const float WIDTH = TILE_SIZE;
 	const float HEROACTIONDELAY = 0.3;
@@ -36,7 +36,7 @@ public:
 	void attack(DIR);
 	void attack();
 
-	virtual void draw(const VECTOR2& Center);
+	virtual void draw(VECTOR2& Center);
 	virtual void act(World* W) {}
 	virtual void update(float frameTime, World* W);
 	void turnToPlayer(Entity* n);

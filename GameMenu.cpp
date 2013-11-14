@@ -8,10 +8,11 @@ bool Button::clicked(int X, int Y)
 	return false;
 }
 
-void GameMenu::initialize(Graphics* graphics, Input* input)
+void GameMenu::initialize(Graphics* graphics, Input* input, string heading)
 {
 	this->graphics = graphics;
 	this->input = input;
+	Heading = heading;
 	selected = -1;
 	// Fonts
 	menuHeadingFont = new TextDX;
@@ -39,15 +40,18 @@ void GameMenu::initialize(Graphics* graphics, Input* input)
 void GameMenu::draw()
 {
 	BackgroundIM.draw();
-	menuHeadingFont->print("Action Choices:", anchor.x + 30, anchor.y + 30);
+	menuHeadingFont->print(Heading, anchor.x + 30, anchor.y + 30);
 	for(int i = 0; i<buttons.size(); i++)
 	{
-		int X = buttons.at(i)->topLeft.x;
-		int Y = buttons.at(i)->topLeft.y;
-		itemNameFont->print(buttons.at(i)->words, X, Y);
-		buttons.at(i)->icon->setX(X); buttons.at(i)->icon->setY(Y + 25);
-		buttons.at(i)->icon->setScale(ICONSCALE);
-		buttons.at(i)->icon->draw();
+		Button* B = buttons.at(i);
+		int X = B->topLeft.x;
+		int Y = B->topLeft.y;
+		
+		itemNameFont->print(B->words, X+B->wordShift, Y);
+		
+		B->icon->setX(X+B->imageShift); B->icon->setY(Y + ICONYSHIFT);
+		B->icon->setScale(ICONSCALE);
+		B->icon->draw();
 	}
 }
 
@@ -75,12 +79,15 @@ void GameMenu::addButton(Button* B)
 	nextX += BUTTONWIDTH + MENUXSHIFT;
 	if(nextX > BackgroundIM.getWidth() - BUTTONWIDTH)
 	{
-		nextX = 15;
+		nextX = MENUXSHIFT;
 		nextY += 120;
 	}
-	// What if it runs off the bottom of the screen?
+	// What if it runs off the bottom of the screen? Have a second page! Make a next, back button.
 	B->width = BUTTONWIDTH;
 	B->height = BUTTONHEIGHT;
+	int length = B->words.length();
+	B->wordShift = max((BUTTONWIDTH - length*LETTERWIDTH)*0.5,0);
+	B->imageShift = max((BUTTONWIDTH - B->icon->getWidth())*0.5,0);
 
 	buttons.push_back(B);
 }

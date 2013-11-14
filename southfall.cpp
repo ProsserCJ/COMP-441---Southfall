@@ -43,7 +43,7 @@ void Southfall::initialize(HWND hwnd)
 	mainMenu->initialize(graphics, input);
 
 	actionMenu = new GameMenu();
-	actionMenu->initialize(graphics, input);
+	actionMenu->initialize(graphics, input, "Available Actions:");
 
 	// Font
 	gameFont = new TextDX();
@@ -69,6 +69,7 @@ void Southfall::initialize(HWND hwnd)
 	actionMenu->addButton(new Button("Impede Spell", &ImpedeEffectIM, 1)); 
 	actionMenu->addButton(new Button("Portal Trap", &PortalOpenIM, 2));
 	actionMenu->addButton(new Button("Blink", &BlinkIconIM, 3));
+	actionMenu->addButton(new Button("Fireball", &FireballIconIM, 4));
 
 }
 
@@ -79,6 +80,8 @@ void Southfall::initializeGraphics()
 {
 	graphics = new Graphics();
     graphics->initialize(hwnd, SCREEN_WIDTH, SCREEN_HEIGHT, FULLSCREEN);
+
+	// Characters and npcs
 
 	// Character 1
 	if(!Character1TX.initialize(graphics, CHARACTER2_SHEET))
@@ -100,6 +103,8 @@ void Southfall::initializeGraphics()
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox arrow texture"));
 	if(!TextBoxArrowIM.initialize(graphics, 35, 20, 4, &TextBoxArrowTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox arrow image"));
+	
+	// Icons and spells
 
 	// Impede effect
 	if(!ImpedeEffectTX.initialize(graphics, IMPEDEEFFECTICON))
@@ -126,6 +131,11 @@ void Southfall::initializeGraphics()
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing BlinkIcon texture"));
 	if(!BlinkIconIM.initialize(graphics, 0, 0, 0, &BlinkIconTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing BlinkIcon image"));
+	// Blink Icon
+	if(!FireballIconTX.initialize(graphics, FIREBALLICON))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing FireballIcon texture"));
+	if(!FireballIconIM.initialize(graphics, 0, 0, 0, &FireballIconTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing FireballIcon image"));
 
 	NPC::initGraphics(graphics);
 }
@@ -158,30 +168,25 @@ void Southfall::update()
 			}
 			break;
 		case GAME:
-			{
-				if(input->wasKeyPressed(T_KEY))
-				{
-					pause = true;
-					currentState = ACTIONMENU;
-
-				}
-				else
-				{
-					playerClickActions();
-					player->getWorld()->update(frameTime);
-				}
-				textbox->update(frameTime);	
-				break;
+			if(input->wasKeyPressed(T_KEY))
+			{// Open action menu
+				pause = true;
+				currentState = ACTIONMENU;
 			}
+			else
+			{
+				playerClickActions();
+				player->getWorld()->update(frameTime);
+			}
+			textbox->update(frameTime);	
+			break;
 		case ACTIONMENU:
-			{
-				actionMenu->update(frameTime);
-				if(input->wasKeyPressed(T_KEY))
-					currentState = GAME;
-				if(actionMenu->getSelected() != -1)
-					player->setSpellType(SPELLTYPE(actionMenu->getSelected()));
-				break;
-			}
+			actionMenu->update(frameTime);
+			if(input->wasKeyPressed(T_KEY))
+				currentState = GAME;
+			if(actionMenu->getSelected() != -1)
+				player->setSpellType(SPELLTYPE(actionMenu->getSelected()));
+			break;
 	}
 }
 
@@ -193,6 +198,7 @@ inline void Southfall::playerClickActions()
 		int Y = input->getMouseY();
 		VECTOR2 mouse(X,Y);
 		VECTOR2 target = player->getPosition()+(mouse-HSCREEN)*INVTILE_SIZE;
+		float orient = atan2((float)(Y - HSCREEN_HEIGHT), (float)(X - HSCREEN_WIDTH));
 
 		switch (player->getSpellType())
 		{
@@ -222,6 +228,13 @@ inline void Southfall::playerClickActions()
 				player->resetAction();
 			}
 			break;
+		case FIREBALL:
+			Projectile* P = new Projectile(player->getPosition(), 0.2, 3, orient, &FireballIconIM);
+			P->setFrames(FIREBALLSTART, FIREBALLEND);
+			P->setFrameDelay(0.3);
+			player->getWorld()->addProjectile(P); // Temp image
+
+			break;
 		}
 	}
 	if(input->getMouseRButton()) player->resetTarget();
@@ -238,7 +251,10 @@ void Southfall::ai()
 //=============================================================================
 // Handle collisions
 //=============================================================================
-void Southfall::collisions() {}
+void Southfall::collisions() 
+{
+	player->getWorld()->collisions();
+}
 
 //=============================================================================
 // Render game items

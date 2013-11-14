@@ -131,10 +131,10 @@ void Hero::attack()
 	}
 }
 
-void Hero::draw(const VECTOR2& Center)
+void Hero::draw(VECTOR2& Center)
 {
 	// Draw the main image
-	Entity::draw(Center);
+	Object::draw(Center);
 
 	// Draw armor on top of hero
 	if(armor != 0)

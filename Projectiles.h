@@ -11,17 +11,26 @@ Last Modified 11/12/2013
 
 #include "Entity.h"
 
+class World;
+
+const int FIREBALLSTART = 0;
+const int FIREBALLEND = 0;
+
 class Projectile : public Object
 {
 public:
-	Projectile(VECTOR2 position, float radius, Image* image) 
-		: Object(position, radius, image, CIRCLE) {};
-	virtual void draw(const VECTOR2& center);
+	Projectile(VECTOR2 position, float radius, float range, float orient, Image* image) 
+		: Object(position, radius, image, CIRCLE), range(range), traveled(0), orientation(orient) 
+	{velocity.x = cos(orientation); velocity.y = sin(orientation);};
+
 	virtual void update(float frameTime, World* W);
 	virtual void interact(World* W);
 
 private:
-
+	int damage;	// How much damage the projectile does
+	float orientation;
+	float range;
+	float traveled;
 };
 
 #endif

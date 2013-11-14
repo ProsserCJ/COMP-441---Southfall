@@ -17,6 +17,7 @@ Last Modified 11/12/2013
 #include "Item.h"
 
 class World;
+class Projectile;
 
 const VECTOR2 HSCREEN(HSCREEN_WIDTH, HSCREEN_HEIGHT);
 const float DEFAULT_FRAME_DELAY = 0.2f;
@@ -140,6 +141,7 @@ public:
 		: Collidable(pos, CT, radius), Drawable(image), velocity(ZERO), active(true) {initialize();}
 
 	void update(float frameTime, World* W);
+	virtual void draw(VECTOR2& Center);
 	void initialize();
 
 	// Accessors
@@ -176,7 +178,7 @@ public:
 
 	// Basic functions
 	void initialize();
-	virtual void draw(const VECTOR2& center);		// Draw itself (possibly needs second parameter, zoomlevel or something)
+	//virtual void draw(const VECTOR2& center);
 	virtual void act(World* W) = 0;					// AI and decisions
 	virtual void update(float frameTime, World* W);
 	void move(float frameTime, World* W);
@@ -198,7 +200,8 @@ public:
 	void setTarget(VECTOR2 T)				{target = T; _hasTarget = true;}
 	void setSpellType(SPELLTYPE S)			{SpellType = S;}
 	void resetTarget()						{_hasTarget = false;}
-	void kill()								{HP = 0;}
+	void kill()								{HP = 0; active = false;}
+	void receiveDamage(Projectile* p);
 	void setDir(DIR face)					{facing=face;}
 	void go(DIR face);			
 	void standing();

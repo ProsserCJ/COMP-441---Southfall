@@ -134,6 +134,7 @@ const char PORTALOPEN[] = "Images\\PortalOpen.png";
 const char PORTALCLOSE[] = "Images\\PortalClose.png";
 const char SWORDICON[] = "Images\\SwordIcon1.png";
 const char BLINKICON[] = "Images\\BlinkIcon1.png";
+const char FIREBALLICON[] = "Images\\FireballIcon.png";
 // Other
 const char GAMEMENUBACK[] = "Images\\GameMenuBackground.png";
 

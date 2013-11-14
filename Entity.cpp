@@ -3,6 +3,7 @@
 // References to other headers
 #include "World.h"
 #include "Effects.h"
+#include "Projectiles.h"
 
 using namespace entityNS;
 
@@ -33,37 +34,13 @@ void Object::initialize()
 
 void Object::update(float frameTime, World* W)
 {
+	if(!active) return;
 	updateImage(frameTime);
 }
 
-void Entity::initialize()
+void Object::draw(VECTOR2& Center)
 {
-	Object::initialize();
-	timeSinceInteract = 0;
-	timeSinceAction = 0;
-	speed = 0;
-	facing = DOWN;
-	SpellType = NOSPELL;
-	_hasTarget = false;
-}
-
-void Entity::update(float frameTime, World* W)
-{
-	timeSinceInteract += frameTime;
-	timeSinceAction += frameTime;
-	move(frameTime, W);
-
-	updateImage(frameTime);
-	if(startMoving && W->canMoveHere(this, getPosition() + velocity*frameTime))
-	{
-		W->collidesWithEffect(this,  getPosition() + velocity*frameTime);
-		setPosition(getPosition() + velocity*frameTime);
-	}
-	else standing();
-}
-
-void Entity::draw(const VECTOR2& Center)
-{
+	if(!active) return;
 	VECTOR2 diff = getPosition()*TILE_SIZE - Center;
 	int X = diff.x + HSCREEN_WIDTH - HTILE_SIZE;
 	int Y = diff.y + HSCREEN_HEIGHT - HTILE_SIZE;
@@ -71,6 +48,33 @@ void Entity::draw(const VECTOR2& Center)
 	setFrame();
 	setImageX(X); setImageY(Y);
 	Drawable::draw();
+}
+
+void Entity::initialize()
+{
+	Object::initialize();
+	timeSinceInteract = 0;
+	timeSinceAction = 0;
+	speed = 1;
+	facing = DOWN;
+	SpellType = NOSPELL;
+	_hasTarget = false;
+}
+
+void Entity::update(float frameTime, World* W)
+{
+	if(!active) return;
+	timeSinceInteract += frameTime;
+	timeSinceAction += frameTime;
+	move(frameTime, W);
+
+	updateImage(frameTime);
+	if(startMoving && W->canMoveHere(this, getPosition() + velocity*frameTime))
+	{
+		W->collidesWithEffect(this, getPosition() + velocity*frameTime);
+		setPosition(getPosition() + velocity*frameTime*speed);
+	}
+	else standing();
 }
 
 void Entity::move(float frameTime, World* W)
@@ -191,6 +195,11 @@ void Entity::setStandingImage()
 		case DOWN_RIGHT: setStationaryFrame(FACING_DOWN_RIGHT); break;
 		case DOWN_LEFT: setStationaryFrame(FACING_DOWN_LEFT); break;
 	}
+}
+
+void Entity::receiveDamage(Projectile* p)
+{
+	kill(); // Obviously, this is temporary
 }
 
 bool HandleCollision(Collidable* A, Collidable* B)

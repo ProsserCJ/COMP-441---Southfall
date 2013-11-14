@@ -85,6 +85,8 @@ private:
 	Image SwordIconIM;
 	TextureManager BlinkIconTX;
 	Image BlinkIconIM;
+	TextureManager FireballIconTX;
+	Image FireballIconIM;
 
 };
 

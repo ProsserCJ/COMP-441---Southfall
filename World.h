@@ -18,6 +18,7 @@ using std::list;
 #include "Item.h"
 #include "npc.h"
 #include "Effects.h"
+#include "Projectiles.h"
 
 class Structure;	// Forward reference to Structure
 
@@ -61,6 +62,7 @@ public:
 
 	void draw(VECTOR2& Center);
 	void update(float frameTime);
+	void collisions();
 	void act();
 
 	// Accessors
@@ -83,6 +85,7 @@ public:
 	void addStructure(Structure* S)	{structures.push_back(S);}
 	void addEntity(Entity* E)		{entities.push_back(E);}
 	void addEffect(Effect* E)		{effects.push_back(E);}
+	void addProjectile(Projectile* P) {projectiles.push_back(P);}
 	void removeEntity(Entity* E)	{entities.remove(E);}
 
 private:
@@ -93,7 +96,8 @@ private:
 	list<Structure*> structures;	// List of structures in the world
 	list<Entity*> entities;			// List of NPCs in this world
 	list<Item*> items;				// List of items in this world
-	list<Effect*> effects;			// List of effects in the world
+	list<Effect*> effects;			// List of effects in this world
+	list<Projectile*> projectiles;	// List of projectiles in this world
 };
 
 #endif

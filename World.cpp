@@ -32,15 +32,38 @@ void World::draw(VECTOR2& Center)
 	if(!_initialized) return;
 	int x0 = max(0, (Center.x-HSCREEN_WIDTH)/TILE_SIZE), y0 = max(0, (Center.y-HSCREEN_HEIGHT)/TILE_SIZE);
 	int x1 = min(width, (Center.x + SCREEN_WIDTH)/TILE_SIZE), y1 = min(height, (Center.y + SCREEN_HEIGHT)/TILE_SIZE);
+	// Tiles
 	for(int x = x0; x < x1; x++)
 		for(int y = y0; y < y1; y++)
 			tiles[x][y]->draw(Center);
+
+	// All of the following are being drawn right now regardless of where they are on the map. This should be changed at some point
+
+	// Structures
 	for(auto p = structures.begin(); p != structures.end(); p++)
 		(*p)->draw(Center);
+	// Entities
 	for(auto p = entities.begin(); p != entities.end(); p++)
 		(*p)->draw(Center);
+	// Effects
 	for(auto p = effects.begin(); p != effects.end(); p++)
 		(*p)->draw(Center);
+	// Projectiles
+	for(auto p = projectiles.begin(); p != projectiles.end(); p++)
+		(*p)->draw(Center);
+}
+
+void World::collisions()
+{
+	// For now, brute force algorithm
+	for(auto p = projectiles.begin(); p != projectiles.end(); p++)
+	{
+		for(auto e = entities.begin(); e != entities.end(); e++)
+			if((*e)->isActive() && (*p)->isActive() && HandleCollision(*e, *p))
+			{
+				(*e)->receiveDamage(*p);
+			}
+	}
 }
 
 bool World::canMoveHere(Object* E, VECTOR2& position)
@@ -119,25 +142,37 @@ void World::update(float frameTime)
 	for(auto s = structures.begin(); s != structures.end(); s++)
 		(*s)->update(frameTime);
 	// Update Entities
-	auto p = entities.begin();
-	while(p != entities.end())
+	auto en = entities.begin();
+	while(en != entities.end())
 	{
-		auto q = p; q++;
-		(*p)->update(frameTime, this);
-		p=q;
+		auto q = en; q++;
+		(*en)->update(frameTime, this);
+		en=q;
 	}
 	// Update Effects
-	auto e = effects.begin();
-	while(e != effects.end())
+	auto ef = effects.begin();
+	while(ef != effects.end())
 	{
-		auto q = e; q++;
-		(*e)->update(frameTime, this);
-		if((*e)->done())
+		auto q = ef; q++;
+		(*ef)->update(frameTime, this);
+		if((*ef)->done())
 		{
-			safeDelete<Effect*>(*e);
-			effects.erase(e);
+			safeDelete<Effect*>(*ef);
+			effects.erase(ef);
 		}
-		e=q;
+		ef=q;
+	}
+	// Update Projectiles
+	auto pr = projectiles.begin();
+	while(pr != projectiles.end())
+	{
+		auto q = pr; q++;
+		(*pr)->update(frameTime, this);
+		if(!(*pr)->isActive())
+		{
+			projectiles.erase(pr);
+		}
+		pr=q;
 	}
 }
 

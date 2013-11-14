@@ -11,11 +11,13 @@
 using std::vector;
 using std::string;
 
-const float ICONSCALE = 2;
-const int MENUXSHIFT = 15;
+const float ICONSCALE = 1.5f;
+const int MENUXSHIFT = 20;
 const int MENUINITIALY = 100;
+const int ICONYSHIFT = 25;
 const int BUTTONWIDTH = 100;
 const int BUTTONHEIGHT = 100;
+const int LETTERWIDTH = 8;
 
 struct Button
 {
@@ -32,13 +34,16 @@ struct Button
 
 	int type;
 	Image* icon;
+
+	int wordShift;
+	int imageShift;
 };
 
 class GameMenu
 {
 public:
 	GameMenu() {};
-	void initialize(Graphics* graphics, Input* input);
+	void initialize(Graphics* graphics, Input* input, string heading);
 	void draw();
 	void update(float frameTime);
 
@@ -54,6 +59,7 @@ private:
 	int selected;
 	int nextX, nextY;	// For arranging new buttons
 
+	string Heading;
 	TextDX* menuHeadingFont;
 	TextDX* itemNameFont;
 
