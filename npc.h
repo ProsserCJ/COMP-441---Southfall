@@ -13,7 +13,8 @@ Last Modified 11/2/2013
 using std::string;
 using std::vector;
 
-namespace npcNS{
+namespace npcNS
+{
 	//assign constants here
 	const float NPC_SPEED = 2.0f; //arbitrarily chosen to be slower than Hero
 	const float RADIUS = 0.25f;

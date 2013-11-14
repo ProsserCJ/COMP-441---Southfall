@@ -63,6 +63,25 @@ void Southfall::initialize(HWND hwnd)
 	player->setWorld(Interface.getCurrent());
 	player->getWorld()->addEntity(player);
 
+	//Set up region fonts
+	if(!SouthfallFontTX[0].initialize(graphics, SOUTHFALLFONT))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing southfallFont texture"));
+	if(!SouthfallFontTX[1].initialize(graphics, ESBURGFONT))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing esburgFont texture"));
+	if(!SouthfallFontTX[2].initialize(graphics, WESELLYNFONT))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wesellynFont texture"));
+	if(!SouthfallFontTX[3].initialize(graphics, NORSTAFFFONT))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing norstaffFont texture"));
+	for(int i = 0; i < 4; ++i)
+	{
+		if(!SouthfallFontIM[i].initialize(graphics, 0, 0, 0, &SouthfallFontTX[i]))
+			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing southfallFont image: " + i));
+		SouthfallFontIM[i].setX(SCREEN_WIDTH/2-SouthfallFontIM[0].getWidth()/2);
+		SouthfallFontIM[i].setY(SCREEN_HEIGHT/4-SouthfallFontIM[0].getHeight()/2);
+	}
+	fontLoc = 0;
+	fontTimer = 6;
+
 	// For testing: set up action Menu:
 
 	actionMenu->addButton(new Button("No Spell", &SwordIconIM, 0)); 
@@ -70,6 +89,9 @@ void Southfall::initialize(HWND hwnd)
 	actionMenu->addButton(new Button("Portal Trap", &PortalOpenIM, 2));
 	actionMenu->addButton(new Button("Blink", &BlinkIconIM, 3));
 	actionMenu->addButton(new Button("Fireball", &FireballIconIM, 4));
+
+	actionMenu->addButton(new Button("Magic Sight On", &BlinkIconIM, 6));
+	actionMenu->addButton(new Button("Magic Sight Off", &BlinkIconIM, 7));
 
 }
 
@@ -150,7 +172,7 @@ void Southfall::initializeGraphics()
 // Update all game items
 //=============================================================================
 void Southfall::update()
-{	
+{
 	switch(currentState)
 	{
 		case MAIN_MENU:
@@ -184,16 +206,41 @@ void Southfall::update()
 			{
 				playerClickActions();
 				player->getWorld()->update(frameTime);
-                                                                                                                                                                                                                                                                                        			}
+				player->update(frameTime, player->getWorld());
+			}
 			textbox->update(frameTime);	
+			if (player->getPosition().x < 133 && player->getPosition().x > 86 && player->getPosition().y > 80 && fontLoc != 0)
+			{
+				fontTimer = 6; fontLoc = 0;
+			}
+			else if (player->getPosition().x > 160 && fontLoc != 1)
+			{
+				fontTimer = 6; fontLoc = 1;
+			}
+			else if (player->getPosition().y < 65 && fontLoc != 3)
+			{
+				fontTimer = 6; fontLoc = 3;
+			}
+			else if (player->getPosition().x < 50 && fontLoc != 2)
+			{
+				fontTimer = 6; fontLoc = 2;
+			}
 			break;
 		case ACTIONMENU:
 			actionMenu->update(frameTime);
 			if(input->wasKeyPressed(T_KEY))
 				currentState = GAME;
 			if(actionMenu->getSelected() != -1)
-				player->setSpellType(SPELLTYPE(actionMenu->getSelected()));
+			{
+				if(actionMenu->getSelected() == MAGICSIGHTON)
+					player->setMagicSight(true);
+				else if(actionMenu->getSelected() == MAGICSIGHTOFF)
+					player->setMagicSight(false);
+				else player->setSpellType(SPELLTYPE(actionMenu->getSelected()));
+				player->resetTarget();
+			}
 			break;
+		
 	}
 }
 
@@ -208,6 +255,7 @@ inline void Southfall::playerClickActions()
 		float sY = static_cast<float>(Y - (int)HSCREEN_HEIGHT);
 		float sX = static_cast<float>(X - (int)HSCREEN_WIDTH);
 		float orient = atan2(sY, sX);
+		Projectile* P;
 
 		switch (player->getSpellType())
 		{
@@ -221,13 +269,14 @@ inline void Southfall::playerClickActions()
 		case PORTALTRAP:
 			if(player->hasTarget())
 			{
-				if(player->getWorld()->canMoveHere(player, target))
+				if(!player->getWorld()->collidesWithTile(player, target))
 				{
-					player->getWorld()->addEffect(new PortalTrapEffect(player->getTarget(), target, 0.5, &PortalOpenIM, &PortalCloseIM));
+					player->getWorld()->addEffect(new PortalTrapEffect(player->getTarget(),
+						target, 0.5, &PortalOpenIM, &PortalCloseIM));
 					player->resetTarget();
 				}
 			}
-			else if(player->getWorld()->canMoveHere(player, target)) player->setTarget(target);
+			else if(!player->getWorld()->collidesWithTile(player, target)) player->setTarget(target);
 			player->resetAction();
 			break;
 		case BLINK:
@@ -238,12 +287,18 @@ inline void Southfall::playerClickActions()
 			}
 			break;
 		case FIREBALL:
-			Projectile* P = new Projectile(player->getPosition()+VECTOR2(0.5,0.5), 
-				FIREBALLSPEED, FIREBALLRADIUS, FIREBALLRANGE, orient, &FireballSheetIM);
+			P = new Projectile(player->getPosition()+VECTOR2(0.5,0.5), 
+				FIREBALLSPEED, FIREBALLRADIUS, FIREBALLRANGE, orient, &FireballSheetIM, 0);
 			P->setFrames(FIREBALLSTART, FIREBALLEND);
 			P->setFrameDelay(0.1);
 			player->getWorld()->addProjectile(P);
 			player->resetAction();
+			break;
+		case FREEZE:
+			break;
+		case MAGICSIGHTON: // Not a castable spell
+		case MAGICSIGHTOFF: // Not a castable spell
+		default:
 			break;
 		}
 	}
@@ -281,11 +336,21 @@ void Southfall::render()
 		textbox->draw();
 		break;
 	case GAME:
-		player->getWorld()->draw(Center());
+		player->getWorld()->draw(Center(), player->usingMagicSight());
 		textbox->draw();
+		if(fontTimer >= 0)
+		{
+			if(fontTimer >= 4)
+				SouthfallFontIM[fontLoc].draw(SETCOLOR_ARGB(int((6-fontTimer)*80),255,255,255));
+			else if(fontTimer < 2)
+				SouthfallFontIM[fontLoc].draw(SETCOLOR_ARGB(int(fontTimer*80),255,255,255));
+			else
+				SouthfallFontIM[fontLoc].draw(SETCOLOR_ARGB(160,255,255,255));
+			fontTimer -= frameTime;
+		}
 		break;
 	case ACTIONMENU:
-		player->getWorld()->draw(Center());
+		player->getWorld()->draw(Center(), player->usingMagicSight());
 		actionMenu->draw();
 		break;
 	}

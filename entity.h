@@ -3,7 +3,7 @@ The header file for the entity class that living game entities
 and characters inherit from. Also contains Drawable, Collidable,
 and Object class definitions
 
-Last Modified 11/12/2013
+Last Modified 11/14/2013
 
 ***************************************************************/
 
@@ -81,7 +81,7 @@ public:
 	void setImageX(int x)					{image->setX(x);}
 	void setImageY(int y)					{image->setY(y);}
 	void setScale(float scale)				{image->setScale(scale);}
-	void draw()								{image->draw();}
+	void draw(DWORD color=graphicsNS::WHITE){image->draw(color);}
 	void updateImage();
 	void setFrame()							{image->setCurrentFrame(_frame);}
 	void setFrame(int frame)				{_frame=frame;}	// Directly set the frame
@@ -141,7 +141,7 @@ public:
 		: Collidable(pos, CT, radius), Drawable(image), velocity(ZERO), active(true), speed(speed) {initialize();}
 
 	void update(float frameTime, World* W);
-	virtual void draw(VECTOR2& Center);
+	virtual void draw(VECTOR2& Center, DWORD color = graphicsNS::WHITE);
 	void initialize();
 
 	// Accessors
@@ -178,7 +178,7 @@ public:
 
 	// Basic functions
 	void initialize();
-	//virtual void draw(const VECTOR2& center);
+	virtual void draw(VECTOR2& center, DWORD color=graphicsNS::WHITE);
 	virtual void act(World* W) = 0;					// AI and decisions
 	virtual void update(float frameTime, World* W);
 	void move(float frameTime, World* W);
@@ -189,6 +189,7 @@ public:
 	int getTeam()				const {return team;}
 	virtual bool alive()		{return HP > 0;}
 	bool hasTarget()			{return _hasTarget;}
+	bool usingMagicSight()		const {return _magicSight;}
 	DIR getDirectionFacing()	{return facing;}
 	VECTOR2 getTarget()			{return target;}
 	SPELLTYPE getSpellType()	{return SpellType;}
@@ -207,6 +208,9 @@ public:
 	void go(DIR face);			
 	void standing();
 	virtual void setStandingImage();
+	void freeze(float time)					{_frozen=true;freezeTime=time;}
+	void switchMagicSight()					{_magicSight = !_magicSight;}
+	void setMagicSight(bool s)				{_magicSight = s;}
 
 protected:
 	VECTOR2 knockback;	// For knock back effects
@@ -222,6 +226,14 @@ protected:
 	SPELLTYPE SpellType;
 	VECTOR2 target;
 	bool _hasTarget;
+
+	bool _frozen;
+	float freezeTime;
+
+	bool _magicSight;
+	float magic;
+	float maxMagic;
+	float magicRecharge;
 };
 
 #endif

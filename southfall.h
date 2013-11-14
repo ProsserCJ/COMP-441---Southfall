@@ -27,6 +27,8 @@ using std::stringstream;
 
 enum gameState {MAIN_MENU, INTRO, GAME, ACTIONMENU, CREDITS, GAME_OVER};
 
+const float SELECTDELAY = 0.5;
+
 class Southfall : public Game
 {
 public:
@@ -60,9 +62,12 @@ private:
 	stringstream ss;
 
 	// Images and Textures
-	TextureManager Character1TX, NPC1TX, Goblin1TX, TextBoxTX, TextBoxArrowTX;
-	Image Character1IM, NPC1IM, TextBoxIM, Goblin1IM, TextBoxArrowIM;
+	TextureManager Character1TX, NPC1TX, Goblin1TX, TextBoxTX, TextBoxArrowTX, SouthfallFontTX[4];
+	Image Character1IM, NPC1IM, TextBoxIM, Goblin1IM, TextBoxArrowIM, SouthfallFontIM[4];
 	WorldInterface worldInterface;
+
+	double fontTimer;
+	int fontLoc; //southfall:0 esburg:1,wesellyn:2,norstaff:3
 
 	void initializeGraphics();
 	void loadIntro();

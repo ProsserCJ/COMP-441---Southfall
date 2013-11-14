@@ -1,7 +1,9 @@
-// Programming 2D Games
-// Copyright (c) 2011 by: 
-// Charles Kelly
-// Chapter 6 constants.h v1.1
+/***************************************************************
+Constants header file
+
+Last Modified 11/14/2013
+
+***************************************************************/
 
 #ifndef _CONSTANTS_H            // Prevent multiple definitions if this 
 #define _CONSTANTS_H            // file is included in more than one place
@@ -127,6 +129,10 @@ const char BED1[] = "Images\\Bed1.png";
 const char HWALL[] = "Images\\HorizontalWallPiece.png";
 const char VWALL[] = "Images\\VerticalWallPiece.png";
 const char CWALL[] = "Images\\CornerWallPiece.png";
+const char SOUTHFALLFONT[] = "Images\\SouthfallFont.png";
+const char ESBURGFONT[] = "Images\\EsburgFont.png";
+const char WESELLYNFONT[] = "Images\\WesellynFont.png";
+const char NORSTAFFFONT[] = "Images\\NorstaffFont.png";
 
 // NPC Interaction
 const char TEXTBOX[] = "Images\\textBox.png";

@@ -19,6 +19,7 @@ using std::list;
 #include "npc.h"
 #include "Effects.h"
 #include "Projectiles.h"
+#include "npcAI.h"
 
 class Structure;	// Forward reference to Structure
 
@@ -60,7 +61,7 @@ public:
 		: width(width), height(height), _initialized(false) {};
 	~World() {};
 
-	void draw(VECTOR2& Center);
+	void draw(VECTOR2& Center, bool magicSight);
 	void update(float frameTime);
 	void collisions();
 	void act();
@@ -84,6 +85,7 @@ public:
 	void setInitialized(bool init)	{_initialized = init;}
 	void addStructure(Structure* S)	{structures.push_back(S);}
 	void addEntity(Entity* E)		{entities.push_back(E);}
+	void addNPC(NPC* npc);
 	void addEffect(Effect* E)		{effects.push_back(E);}
 	void addProjectile(Projectile* P) {projectiles.push_back(P);}
 	void removeEntity(Entity* E)	{entities.remove(E);}
@@ -95,6 +97,7 @@ private:
 	Tile*** tiles;					// The tiles that make up the world
 	list<Structure*> structures;	// List of structures in the world
 	list<Entity*> entities;			// List of NPCs in this world
+	list<npcAI*> AIs;
 	list<Item*> items;				// List of items in this world
 	list<Effect*> effects;			// List of effects in this world
 	list<Projectile*> projectiles;	// List of projectiles in this world
