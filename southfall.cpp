@@ -90,7 +90,8 @@ void Southfall::initialize(HWND hwnd)
 	actionMenu->addButton(new Button("Blink", &BlinkIconIM, 3));
 	actionMenu->addButton(new Button("Fireball", &FireballIconIM, 4));
 
-	actionMenu->addButton(new Button("Magic Sight", &BlinkIconIM, 6));
+	actionMenu->addButton(new Button("Magic Sight On", &BlinkIconIM, 6));
+	actionMenu->addButton(new Button("Magic Sight Off", &BlinkIconIM, 7));
 
 }
 
@@ -171,7 +172,7 @@ void Southfall::initializeGraphics()
 // Update all game items
 //=============================================================================
 void Southfall::update()
-{	
+{
 	switch(currentState)
 	{
 		case MAIN_MENU:
@@ -207,21 +208,36 @@ void Southfall::update()
 				player->getWorld()->update(frameTime);
 			}
 			textbox->update(frameTime);	
-			if (player->getPosition().x < 133 && player->getPosition().x > 86 && player->getPosition().y > 80 && fontLoc != 0){
+			if (player->getPosition().x < 133 && player->getPosition().x > 86 && player->getPosition().y > 80 && fontLoc != 0)
+			{
 				fontTimer = 6; fontLoc = 0;
-			}else if (player->getPosition().x > 160 && fontLoc != 1){
+			}
+			else if (player->getPosition().x > 160 && fontLoc != 1)
+			{
 				fontTimer = 6; fontLoc = 1;
-			}else if (player->getPosition().y < 65 && fontLoc != 3){
+			}
+			else if (player->getPosition().y < 65 && fontLoc != 3)
+			{
 				fontTimer = 6; fontLoc = 3;
-			}else if (player->getPosition().x < 50 && fontLoc != 2){
+			}
+			else if (player->getPosition().x < 50 && fontLoc != 2)
+			{
 				fontTimer = 6; fontLoc = 2;
-			}break;
+			}
+			break;
 		case ACTIONMENU:
 			actionMenu->update(frameTime);
 			if(input->wasKeyPressed(T_KEY))
 				currentState = GAME;
 			if(actionMenu->getSelected() != -1)
-				player->setSpellType(SPELLTYPE(actionMenu->getSelected()));
+			{
+				if(actionMenu->getSelected() == MAGICSIGHTON)
+					player->setMagicSight(true);
+				else if(actionMenu->getSelected() == MAGICSIGHTOFF)
+					player->setMagicSight(false);
+				else player->setSpellType(SPELLTYPE(actionMenu->getSelected()));
+				player->resetTarget();
+			}
 			break;
 		
 	}
@@ -252,13 +268,14 @@ inline void Southfall::playerClickActions()
 		case PORTALTRAP:
 			if(player->hasTarget())
 			{
-				if(player->getWorld()->canMoveHere(player, target))
+				if(!player->getWorld()->collidesWithTile(player, target))
 				{
-					player->getWorld()->addEffect(new PortalTrapEffect(player->getTarget(), target, 0.5, &PortalOpenIM, &PortalCloseIM));
+					player->getWorld()->addEffect(new PortalTrapEffect(player->getTarget(),
+						target, 0.5, &PortalOpenIM, &PortalCloseIM));
 					player->resetTarget();
 				}
 			}
-			else if(player->getWorld()->canMoveHere(player, target)) player->setTarget(target);
+			else if(!player->getWorld()->collidesWithTile(player, target)) player->setTarget(target);
 			player->resetAction();
 			break;
 		case BLINK:
@@ -278,9 +295,9 @@ inline void Southfall::playerClickActions()
 			break;
 		case FREEZE:
 			break;
-		case MAGICSIGHT:
-			player->switchMagicSight();
-			player->resetAction();
+		case MAGICSIGHTON: // Not a castable spell
+		case MAGICSIGHTOFF: // Not a castable spell
+		default:
 			break;
 		}
 	}

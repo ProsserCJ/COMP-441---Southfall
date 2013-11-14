@@ -210,6 +210,7 @@ public:
 	virtual void setStandingImage();
 	void freeze(float time)					{_frozen=true;freezeTime=time;}
 	void switchMagicSight()					{_magicSight = !_magicSight;}
+	void setMagicSight(bool s)				{_magicSight = s;}
 
 protected:
 	VECTOR2 knockback;	// For knock back effects

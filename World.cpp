@@ -48,7 +48,7 @@ void World::draw(VECTOR2& Center, bool magicSight)
 	// Effects
 	for(auto p = effects.begin(); p != effects.end(); p++)
 	{
-		if(!(*p)->isInvisible() || magicSight)
+		if(!(*p)->isInvisible() && (!(*p)->isHidden() || magicSight))
 			(*p)->draw(Center);
 	}
 	// Projectiles

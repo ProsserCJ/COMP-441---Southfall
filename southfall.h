@@ -27,6 +27,8 @@ using std::stringstream;
 
 enum gameState {MAIN_MENU, INTRO, GAME, ACTIONMENU, CREDITS, GAME_OVER};
 
+const float SELECTDELAY = 0.5;
+
 class Southfall : public Game
 {
 public:
