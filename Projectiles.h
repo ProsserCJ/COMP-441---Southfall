@@ -22,8 +22,10 @@ const float FIREBALLRADIUS = 0.2;
 class Projectile : public Object
 {
 public:
-	Projectile(VECTOR2 position, float speed, float radius, float range, float orient, Image* image, int team=0) 
-		: Object(position, speed, radius, image, CIRCLE), range(range), traveled(0), orientation(orient), team(team)
+	Projectile(VECTOR2 position, float speed, float radius, float range, float orient,
+		Image* image, float freezeTime, int team=0) 
+		: Object(position, speed, radius, image, CIRCLE), range(range), traveled(0), 
+		orientation(orient), freezeTime(freezeTime), team(team)
 	{velocity.x = cos(orientation); velocity.y = sin(orientation);};
 
 	virtual void update(float frameTime, World* W);
@@ -37,6 +39,8 @@ private:
 	float orientation;
 	float range;
 	float traveled;
+
+	float freezeTime;
 };
 
 #endif

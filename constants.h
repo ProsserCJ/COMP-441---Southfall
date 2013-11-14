@@ -1,7 +1,9 @@
-// Programming 2D Games
-// Copyright (c) 2011 by: 
-// Charles Kelly
-// Chapter 6 constants.h v1.1
+/***************************************************************
+Constants header file
+
+Last Modified 11/14/2013
+
+***************************************************************/
 
 #ifndef _CONSTANTS_H            // Prevent multiple definitions if this 
 #define _CONSTANTS_H            // file is included in more than one place

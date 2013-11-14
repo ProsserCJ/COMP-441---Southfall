@@ -71,6 +71,8 @@ void Southfall::initialize(HWND hwnd)
 	actionMenu->addButton(new Button("Blink", &BlinkIconIM, 3));
 	actionMenu->addButton(new Button("Fireball", &FireballIconIM, 4));
 
+	actionMenu->addButton(new Button("Magic Sight", &BlinkIconIM, 6));
+
 }
 
 //=============================================================================
@@ -207,6 +209,7 @@ inline void Southfall::playerClickActions()
 		float sY = static_cast<float>(Y - (int)HSCREEN_HEIGHT);
 		float sX = static_cast<float>(X - (int)HSCREEN_WIDTH);
 		float orient = atan2(sY, sX);
+		Projectile* P;
 
 		switch (player->getSpellType())
 		{
@@ -237,11 +240,17 @@ inline void Southfall::playerClickActions()
 			}
 			break;
 		case FIREBALL:
-			Projectile* P = new Projectile(player->getPosition()+VECTOR2(0.5,0.5), 
-				FIREBALLSPEED, FIREBALLRADIUS, FIREBALLRANGE, orient, &FireballSheetIM);
+			P = new Projectile(player->getPosition()+VECTOR2(0.5,0.5), 
+				FIREBALLSPEED, FIREBALLRADIUS, FIREBALLRANGE, orient, &FireballSheetIM, 0);
 			P->setFrames(FIREBALLSTART, FIREBALLEND);
 			P->setFrameDelay(0.1);
 			player->getWorld()->addProjectile(P);
+			player->resetAction();
+			break;
+		case FREEZE:
+			break;
+		case MAGICSIGHT:
+			player->switchMagicSight();
 			player->resetAction();
 			break;
 		}
@@ -280,11 +289,11 @@ void Southfall::render()
 		textbox->draw();
 		break;
 	case GAME:
-		player->getWorld()->draw(Center());
+		player->getWorld()->draw(Center(), player->usingMagicSight());
 		textbox->draw();
 		break;
 	case ACTIONMENU:
-		player->getWorld()->draw(Center());
+		player->getWorld()->draw(Center(), player->usingMagicSight());
 		actionMenu->draw();
 		break;
 	}

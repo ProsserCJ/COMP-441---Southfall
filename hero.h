@@ -16,7 +16,7 @@ Last modified: 11/5/2013
 // Hero Namespace
 namespace heroNS
 { //Store hero constants here
-	const float HERO_SPEED = 2.0f;
+	const float HERO_SPEED = 5.0f;
 	const float HEIGHT = TILE_SIZE;
 	const float WIDTH = TILE_SIZE;
 	const float HEROACTIONDELAY = 0.3;

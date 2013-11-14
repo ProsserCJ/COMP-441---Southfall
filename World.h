@@ -60,7 +60,7 @@ public:
 		: width(width), height(height), _initialized(false) {};
 	~World() {};
 
-	void draw(VECTOR2& Center);
+	void draw(VECTOR2& Center, bool magicSight);
 	void update(float frameTime);
 	void collisions();
 	void act();

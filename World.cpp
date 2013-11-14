@@ -27,7 +27,7 @@ void Tile::interact(Entity* E)
 		S->interact(E);
 }
 
-void World::draw(VECTOR2& Center)
+void World::draw(VECTOR2& Center, bool magicSight)
 {
 	if(!_initialized) return;
 	int x0 = max(0, (Center.x-HSCREEN_WIDTH)/TILE_SIZE), y0 = max(0, (Center.y-HSCREEN_HEIGHT)/TILE_SIZE);
@@ -47,7 +47,10 @@ void World::draw(VECTOR2& Center)
 		(*p)->draw(Center);
 	// Effects
 	for(auto p = effects.begin(); p != effects.end(); p++)
-		(*p)->draw(Center);
+	{
+		if(!(*p)->isInvisible() || magicSight)
+			(*p)->draw(Center);
+	}
 	// Projectiles
 	for(auto p = projectiles.begin(); p != projectiles.end(); p++)
 		(*p)->draw(Center);

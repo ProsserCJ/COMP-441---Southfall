@@ -121,7 +121,7 @@ World* WorldInterface::loadWorld(const string& fileName)
 
 void WorldInterface::draw(VECTOR2& Center)
 {
-	if(Current != 0) Current->draw(Center);
+	//if(Current != 0) Current->draw(Center, );
 }
 
 void WorldInterface::initializeWorld()

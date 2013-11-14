@@ -26,6 +26,9 @@ public:
 	virtual void effect(Object* E) = 0;
 	virtual void draw(VECTOR2 Center);
 
+	bool isInvisible()	const {return _invisible;}
+	bool isHidden()		const {return _hidden;}
+
 	// Accessors
 	bool done() {return _done;}
 
