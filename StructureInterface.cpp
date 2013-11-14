@@ -192,6 +192,6 @@ inline void StructureInterface::assignTile(World* & W, char c, int x, int y, Wor
 
 Portal* StructureInterface::createHouse(World** external, VECTOR2 vOut)
 {
-	World* W = loadStructure("..\\source\\Worlds\\Bar1.txt", external, vOut);
+	World* W = loadStructure("Worlds\\Bar1.txt", external, vOut);
 	return new Portal(vOut,1,1,0,W,entrance);
 }

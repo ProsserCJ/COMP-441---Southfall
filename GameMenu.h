@@ -1,0 +1,66 @@
+#ifndef _GAME_MENU_H
+#define _GAME_MENU_H
+
+#include "image.h"
+#include "textDX.h"
+#include "input.h"
+#include "Item.h"
+
+#include <vector>
+#include <string>
+using std::vector;
+using std::string;
+
+const float ICONSCALE = 2;
+const int MENUXSHIFT = 15;
+const int MENUINITIALY = 100;
+const int BUTTONWIDTH = 100;
+const int BUTTONHEIGHT = 100;
+
+struct Button
+{
+	Button(string words, Image* icon, int type) 
+		: topLeft(ZERO), width(0), height(0), words(words), icon(icon), type(type) {};
+
+	Button(VECTOR2 TL, int width, int height, string words, Image* icon, int type) 
+		: topLeft(TL), width(width), height(height), words(words), icon(icon), type(type) {};
+	
+	VECTOR2 topLeft;
+	int width, height;
+	string words;
+	bool clicked(int,int);
+
+	int type;
+	Image* icon;
+};
+
+class GameMenu
+{
+public:
+	GameMenu() {};
+	void initialize(Graphics* graphics, Input* input);
+	void draw();
+	void update(float frameTime);
+
+	void addButton(Button* B);
+
+	int getSelected() {return selected;}
+
+private:
+	Input* input;
+	VECTOR2 anchor;
+	Graphics* graphics;
+
+	int selected;
+	int nextX, nextY;	// For arranging new buttons
+
+	TextDX* menuHeadingFont;
+	TextDX* itemNameFont;
+
+	vector<Button*> buttons;
+
+	TextureManager BackgroundTX;
+	Image BackgroundIM;
+};
+
+#endif

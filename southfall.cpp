@@ -33,6 +33,7 @@ void Southfall::initialize(HWND hwnd)
 {
     Game::initialize(hwnd);
 	currentState = GAME;
+	pause = false;
 
 	// Graphics
 	initializeGraphics();
@@ -40,6 +41,9 @@ void Southfall::initialize(HWND hwnd)
 	// Menu
 	mainMenu = new Menu();
 	mainMenu->initialize(graphics, input);
+
+	actionMenu = new GameMenu();
+	actionMenu->initialize(graphics, input);
 
 	// Font
 	gameFont = new TextDX();
@@ -58,6 +62,14 @@ void Southfall::initialize(HWND hwnd)
 	player->setPosition(VECTOR2(102,96));
 	player->setWorld(Interface.getCurrent());
 	player->getWorld()->addEntity(player);
+
+	// For testing: set up action Menu:
+
+	actionMenu->addButton(new Button("No Spell", &SwordIconIM, 0)); 
+	actionMenu->addButton(new Button("Impede Spell", &ImpedeEffectIM, 1)); 
+	actionMenu->addButton(new Button("Portal Trap", &PortalOpenIM, 2));
+	actionMenu->addButton(new Button("Blink", &BlinkIconIM, 3));
+
 }
 
 //=============================================================================
@@ -104,6 +116,16 @@ void Southfall::initializeGraphics()
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal close texture"));
 	if(!PortalCloseIM.initialize(graphics, 0, 0, 0, &PortalCloseTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal close image"));
+	// Sword Icon
+	if(!SwordIconTX.initialize(graphics, SWORDICON))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing SwordIcon texture"));
+	if(!SwordIconIM.initialize(graphics, 0, 0, 0, &SwordIconTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing SwordIcon image"));
+	// Blink Icon
+	if(!BlinkIconTX.initialize(graphics, BLINKICON))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing BlinkIcon texture"));
+	if(!BlinkIconIM.initialize(graphics, 0, 0, 0, &BlinkIconTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing BlinkIcon image"));
 
 	NPC::initGraphics(graphics);
 }
@@ -136,10 +158,30 @@ void Southfall::update()
 			}
 			break;
 		case GAME:
-			playerClickActions();
-			player->getWorld()->update(frameTime);
-			textbox->update(frameTime);	
-			break;
+			{
+				if(input->wasKeyPressed(T_KEY))
+				{
+					pause = true;
+					currentState = ACTIONMENU;
+
+				}
+				else
+				{
+					playerClickActions();
+					player->getWorld()->update(frameTime);
+				}
+				textbox->update(frameTime);	
+				break;
+			}
+		case ACTIONMENU:
+			{
+				actionMenu->update(frameTime);
+				if(input->wasKeyPressed(T_KEY))
+					currentState = GAME;
+				if(actionMenu->getSelected() != -1)
+					player->setSpellType(SPELLTYPE(actionMenu->getSelected()));
+				break;
+			}
 	}
 }
 
@@ -204,7 +246,8 @@ void Southfall::collisions() {}
 void Southfall::render()
 {// sprite begin and end in game now
 
-	switch(currentState){
+	switch(currentState)
+	{
 	case MAIN_MENU:
 		mainMenu->draw();
 		break;
@@ -213,8 +256,11 @@ void Southfall::render()
 		break;
 	case GAME:
 		player->getWorld()->draw(Center());
-		//player->draw(Center());	// For now
 		textbox->draw();
+		break;
+	case ACTIONMENU:
+		player->getWorld()->draw(Center());
+		actionMenu->draw();
 		break;
 	}
 }

@@ -84,6 +84,12 @@ public:
     // Exit the game
     void exitGame()         {PostMessage(hwnd, WM_DESTROY, 0, 0);}
 
+	// Pause the game
+	void pauseGame()		{paused = true;}
+
+	// Unpause the game
+	void unpauseGame()		{paused = false;}
+
     // Pure virtual function declarations
     // These functions MUST be written in any class that inherits from Game
 

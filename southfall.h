@@ -22,9 +22,10 @@ Last modified: 11/4/2013
 #include "npc.h"
 #include "textBox.h"
 #include "menu.h"
+#include "GameMenu.h"
 using std::stringstream;
 
-enum gameState {MAIN_MENU, INTRO, GAME, CREDITS, GAME_OVER};
+enum gameState {MAIN_MENU, INTRO, GAME, ACTIONMENU, CREDITS, GAME_OVER};
 
 class Southfall : public Game
 {
@@ -50,6 +51,8 @@ public:
 
 private:
     Menu* mainMenu;
+	GameMenu* actionMenu;
+	bool pause;
 
 	inline void playerClickActions();
 	
@@ -78,6 +81,10 @@ private:
 	Image PortalOpenIM;
 	TextureManager PortalCloseTX;
 	Image PortalCloseIM;
+	TextureManager SwordIconTX;
+	Image SwordIconIM;
+	TextureManager BlinkIconTX;
+	Image BlinkIconIM;
 
 };
 
