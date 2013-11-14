@@ -63,7 +63,7 @@ void WorldInterface::initialize(Graphics* graphics)
 	if(!WoodTileIM.initialize(graphics, 0, 0, 0, &WoodTileTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wood Tile image"));
 	
-	Current = loadWorld("..\\source\\Worlds\\TTotalMap.txt");
+	Current = loadWorld(SOUTHFALLMAP);
 }
 
 World* WorldInterface::loadWorld(const string& fileName)
