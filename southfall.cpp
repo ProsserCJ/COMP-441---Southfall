@@ -63,6 +63,25 @@ void Southfall::initialize(HWND hwnd)
 	player->setWorld(Interface.getCurrent());
 	player->getWorld()->addEntity(player);
 
+	//Set up region fonts
+	if(!SouthfallFontTX[0].initialize(graphics, SOUTHFALLFONT))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing southfallFont texture"));
+	if(!SouthfallFontTX[1].initialize(graphics, ESBURGFONT))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing esburgFont texture"));
+	if(!SouthfallFontTX[2].initialize(graphics, WESELLYNFONT))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wesellynFont texture"));
+	if(!SouthfallFontTX[3].initialize(graphics, NORSTAFFFONT))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing norstaffFont texture"));
+	for(int i = 0; i < 4; ++i)
+	{
+		if(!SouthfallFontIM[i].initialize(graphics, 0, 0, 0, &SouthfallFontTX[i]))
+			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing southfallFont image: " + i));
+		SouthfallFontIM[i].setX(SCREEN_WIDTH/2-SouthfallFontIM[0].getWidth()/2);
+		SouthfallFontIM[i].setY(SCREEN_HEIGHT/4-SouthfallFontIM[0].getHeight()/2);
+	}
+	fontLoc = 0;
+	fontTimer = 6;
+
 	// For testing: set up action Menu:
 
 	actionMenu->addButton(new Button("No Spell", &SwordIconIM, 0)); 
@@ -186,9 +205,17 @@ void Southfall::update()
 			{
 				playerClickActions();
 				player->getWorld()->update(frameTime);
-                                                                                                                                                                                                                                                                                        			}
+			}
 			textbox->update(frameTime);	
-			break;
+			if (player->getPosition().x < 133 && player->getPosition().x > 86 && player->getPosition().y > 80 && fontLoc != 0){
+				fontTimer = 6; fontLoc = 0;
+			}else if (player->getPosition().x > 160 && fontLoc != 1){
+				fontTimer = 6; fontLoc = 1;
+			}else if (player->getPosition().y < 65 && fontLoc != 3){
+				fontTimer = 6; fontLoc = 3;
+			}else if (player->getPosition().x < 50 && fontLoc != 2){
+				fontTimer = 6; fontLoc = 2;
+			}break;
 		case ACTIONMENU:
 			actionMenu->update(frameTime);
 			if(input->wasKeyPressed(T_KEY))
@@ -196,6 +223,7 @@ void Southfall::update()
 			if(actionMenu->getSelected() != -1)
 				player->setSpellType(SPELLTYPE(actionMenu->getSelected()));
 			break;
+		
 	}
 }
 
@@ -292,6 +320,16 @@ void Southfall::render()
 	case GAME:
 		player->getWorld()->draw(Center(), player->usingMagicSight());
 		textbox->draw();
+		if(fontTimer >= 0)
+		{
+			if(fontTimer >= 4)
+				SouthfallFontIM[fontLoc].draw(SETCOLOR_ARGB(int((6-fontTimer)*80),255,255,255));
+			else if(fontTimer < 2)
+				SouthfallFontIM[fontLoc].draw(SETCOLOR_ARGB(int(fontTimer*80),255,255,255));
+			else
+				SouthfallFontIM[fontLoc].draw(SETCOLOR_ARGB(160,255,255,255));
+			fontTimer -= frameTime;
+		}
 		break;
 	case ACTIONMENU:
 		player->getWorld()->draw(Center(), player->usingMagicSight());

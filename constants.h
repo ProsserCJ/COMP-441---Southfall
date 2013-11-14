@@ -129,6 +129,10 @@ const char BED1[] = "Images\\Bed1.png";
 const char HWALL[] = "Images\\HorizontalWallPiece.png";
 const char VWALL[] = "Images\\VerticalWallPiece.png";
 const char CWALL[] = "Images\\CornerWallPiece.png";
+const char SOUTHFALLFONT[] = "Images\\SouthfallFont.png";
+const char ESBURGFONT[] = "Images\\EsburgFont.png";
+const char WESELLYNFONT[] = "Images\\WesellynFont.png";
+const char NORSTAFFFONT[] = "Images\\NorstaffFont.png";
 
 // NPC Interaction
 const char TEXTBOX[] = "Images\\textBox.png";
