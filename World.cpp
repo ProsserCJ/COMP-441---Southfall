@@ -69,6 +69,12 @@ void World::collisions()
 	}
 }
 
+void World::addNPC(NPC* npc)
+{
+	entities.push_back(npc);
+	AIs.push_back(new npcAI(npc));
+}
+
 bool World::canMoveHere(Object* E, VECTOR2& position)
 {
 	return !collidesWithTile(E, position) && !collidesWithNPC(E, position);	
@@ -135,8 +141,8 @@ bool World::isTraversible(VECTOR2 T)
 
 void World::act()
 {
-	for(auto p = entities.begin(); p != entities.end(); p++)
-		(*p)->act(this);
+	/*for(auto p = AIs.begin(); p != AIs.end(); p++)
+		(*p)->act(this);*/
 }
 
 void World::update(float frameTime)
@@ -145,12 +151,12 @@ void World::update(float frameTime)
 	for(auto s = structures.begin(); s != structures.end(); s++)
 		(*s)->update(frameTime);
 	// Update Entities
-	auto en = entities.begin();
-	while(en != entities.end())
+	auto ai = AIs.begin();
+	while(ai != AIs.end())
 	{
-		auto q = en; q++;
-		(*en)->update(frameTime, this);
-		en=q;
+		auto q = ai; q++;
+		(*ai)->update(frameTime, this);
+		ai=q;
 	}
 	// Update Effects
 	auto ef = effects.begin();
