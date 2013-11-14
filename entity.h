@@ -16,7 +16,7 @@ Last Modified 11/12/2013
 #include "game.h"
 #include "Item.h"
 
-enum SPELLTYPE{NOSPELL, IMPEDE, PORTALTRAP};
+enum SPELLTYPE{NOSPELL, IMPEDE, PORTALTRAP, BLINK};
 
 class World;
 

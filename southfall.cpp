@@ -58,24 +58,6 @@ void Southfall::initialize(HWND hwnd)
 	player->setPosition(VECTOR2(102,96));
 	player->setWorld(Interface.getCurrent());
 	player->getWorld()->addEntity(player);
-
-	//// Impede effect
-	//if(!ImpedeEffectTX.initialize(graphics, IMPEDEEFFECTICON))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Impede effect texture"));
-	//if(!ImpedeEffectIM.initialize(graphics, 0, 0, 0, &ImpedeEffectTX))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Impede effect image"));
-	//// Portal Opening
-	//if(!PortalOpenTX.initialize(graphics, PORTALOPEN))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal open texture"));
-	//if(!PortalOpenIM.initialize(graphics, 0, 0, 0, &PortalOpenTX))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal open image"));
-	//// Portal Exit
-	//if(!PortalCloseTX.initialize(graphics, PORTALCLOSE))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal close texture"));
-	//if(!PortalCloseIM.initialize(graphics, 0, 0, 0, &PortalCloseTX))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal close image"));
-	
-
 }
 
 //=============================================================================
@@ -106,6 +88,22 @@ void Southfall::initializeGraphics()
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox arrow texture"));
 	if(!TextBoxArrowIM.initialize(graphics, 35, 20, 4, &TextBoxArrowTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox arrow image"));
+
+	// Impede effect
+	if(!ImpedeEffectTX.initialize(graphics, IMPEDEEFFECTICON))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Impede effect texture"));
+	if(!ImpedeEffectIM.initialize(graphics, 0, 0, 0, &ImpedeEffectTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Impede effect image"));
+	// Portal Opening
+	if(!PortalOpenTX.initialize(graphics, PORTALOPEN))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal open texture"));
+	if(!PortalOpenIM.initialize(graphics, 0, 0, 0, &PortalOpenTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal open image"));
+	// Portal Exit
+	if(!PortalCloseTX.initialize(graphics, PORTALCLOSE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal close texture"));
+	if(!PortalCloseIM.initialize(graphics, 0, 0, 0, &PortalCloseTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal close image"));
 
 	NPC::initGraphics(graphics);
 }
@@ -166,11 +164,21 @@ inline void Southfall::playerClickActions()
 		case PORTALTRAP:
 			if(player->hasTarget())
 			{
-				player->getWorld()->addEffect(new PortalTrapEffect(player->getTarget(), target, 0.5, &PortalOpenIM, &PortalCloseIM));
-				player->resetTarget();
+				if(player->getWorld()->canMoveHere(player, target))
+				{
+					player->getWorld()->addEffect(new PortalTrapEffect(player->getTarget(), target, 0.5, &PortalOpenIM, &PortalCloseIM));
+					player->resetTarget();
+				}
 			}
-			else player->setTarget(target);
+			else if(player->getWorld()->canMoveHere(player, target)) player->setTarget(target);
 			player->resetAction();
+			break;
+		case BLINK:
+			if(player->getWorld()->canMoveHere(player, target))
+			{
+				player->setPosition(target);
+				player->resetAction();
+			}
 			break;
 		}
 	}
