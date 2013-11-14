@@ -116,16 +116,16 @@ void Game::initialize(HWND hw)
         throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing high resolution timer"));
 	audio = new Audio();
 	
-    //if (*WAVE_BANK != '\0' && *SOUND_BANK != '\0')  // if sound files defined
-    //{
-    //    if( FAILED( hr = audio->initialize() ) )
-    //    {
-    //        if( hr == HRESULT_FROM_WIN32( ERROR_FILE_NOT_FOUND ) )
-    //            throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize sound system because media file not found."));
-    //        else
-    //            throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize sound system."));
-    //    }
-    //}
+    if (*WAVE_BANK != '\0' && *SOUND_BANK != '\0')  // if sound files defined
+    {
+        if( FAILED( hr = audio->initialize() ) )
+        {
+            if( hr == HRESULT_FROM_WIN32( ERROR_FILE_NOT_FOUND ) )
+                throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize sound system because media file not found."));
+            else
+                throw(GameError(gameErrorNS::FATAL_ERROR, "Failed to initialize sound system."));
+        }
+    }
     QueryPerformanceCounter(&timeStart);        // get starting time
 
     initialized = true;
