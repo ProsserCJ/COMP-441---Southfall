@@ -16,11 +16,8 @@ Last Modified 11/12/2013
 #include "game.h"
 #include "Item.h"
 
-enum SPELLTYPE{NOSPELL, IMPEDE, PORTALTRAP, BLINK};
-
 class World;
 
-const VECTOR2 ZERO(0,0);
 const VECTOR2 HSCREEN(HSCREEN_WIDTH, HSCREEN_HEIGHT);
 const float DEFAULT_FRAME_DELAY = 0.2f;
 const float INTERACTIONDELAY = 0.5f;
@@ -199,6 +196,7 @@ public:
 	void setHP(int HP)						{this->HP = HP;}
 	void setWorld(World* W)					{world = W;}
 	void setTarget(VECTOR2 T)				{target = T; _hasTarget = true;}
+	void setSpellType(SPELLTYPE S)			{SpellType = S;}
 	void resetTarget()						{_hasTarget = false;}
 	void kill()								{HP = 0;}
 	void setDir(DIR face)					{facing=face;}

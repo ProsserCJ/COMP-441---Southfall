@@ -11,6 +11,10 @@ Last Modified 11/12/2013
 
 #include "image.h"
 
+enum SPELLTYPE{NOSPELL, IMPEDE, PORTALTRAP, BLINK};
+
+const VECTOR2 ZERO(0,0);
+
 namespace itemNS
 {
 	enum ITEMTYPE{MONEY, WEAPON, SPELL};
