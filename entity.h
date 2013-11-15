@@ -14,11 +14,14 @@ Last Modified 11/14/2013
 #include "image.h"
 #include "input.h"
 #include "game.h"
-#include "Item.h"
 
+class Item;
 class World;
 class Projectile;
 
+enum SPELLTYPE{NOSPELL, IMPEDE, PORTALTRAP, BLINK, FIREBALL, FREEZE, MAGICSIGHTON, MAGICSIGHTOFF};
+
+const VECTOR2 ZERO(0,0);
 const VECTOR2 HSCREEN(HSCREEN_WIDTH, HSCREEN_HEIGHT);
 const float DEFAULT_FRAME_DELAY = 0.2f;
 const float INTERACTIONDELAY = 0.5f;
@@ -77,6 +80,14 @@ public:
 	Drawable() : image(0) {initialize();}
 	Drawable(Image* image) : image(image) {initialize();};
 	void initialize();
+
+	// Accessors
+	Image* & getImage()						{return image;}
+	int getFrame()							{return _frame;}
+	bool noImage()							{return image == 0;}
+	int getImageWidth()						{return image->getWidth();}
+	int getImageHeight()					{return image->getHeight();}
+	float getImageScale()					{return image->getScale();}
 	// Mutators
 	void setImageX(int x)					{image->setX(x);}
 	void setImageY(int y)					{image->setY(y);}
@@ -91,10 +102,7 @@ public:
 	void setFrames(int start, int end)		{_startFrame=start;_endFrame=end;_frame=start;}
 	void setFrameDelay(float delay)			{_imageDelay=delay;}
 	void startImage()						{_frame=_startFrame;}
-	// Accessors
-	Image* & getImage()						{return image;}
-	int getFrame()							{return _frame;}
-	bool noImage()							{return image == 0;}
+
 private:
 	private:
 	// Image and animation control
@@ -155,6 +163,8 @@ public:
 	void stop()								{velocity = ZERO;}
 
 protected:
+	inline void handleSectors(World* W);
+
 	VECTOR2 lastPosition;	// Last position (for sectorization)
 	VECTOR2 velocity;		// Velocity direction of the entity
 	float speed;			// Speed the object travels at

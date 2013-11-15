@@ -10,6 +10,7 @@ void Projectile::update(float frameTime, World* W)
 		traveled += frameTime*speed;
 		setPosition(getPosition() + velocity*frameTime*speed);
 		Object::update(frameTime, W);
+		handleSectors(W);
 	}
 	else active = false;
 	if(range < traveled) active = false;

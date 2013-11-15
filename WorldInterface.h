@@ -26,9 +26,6 @@ const int HOUSE1HEIGHT = 6;
 class WorldInterface
 {
 public:
-	void update(float frameTime) {Current->update(frameTime);}
-	void draw(VECTOR2& Center);
-	void act(){Current->act();}
 	void initialize(Graphics* graphics);
 	World* getCurrent() {return Current;}
 

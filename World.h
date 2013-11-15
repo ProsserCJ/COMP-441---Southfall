@@ -32,6 +32,7 @@ public:
 	~Tile() {}
 
 	void draw(VECTOR2& Center);
+	void drawObjects(VECTOR2& Center);
 
 	// Accessors
 	bool isTraversable();
@@ -88,12 +89,13 @@ public:
 	
 	// Mutators
 	void setInitialized(bool init)	{_initialized = init;}
-	void addStructure(Structure* S)	{structures.push_back(S);}
-	void addEntity(Entity* E)		{entities.push_back(E);}
+	void addStructure(Structure* S);
+	void addEntity(Entity* E);
 	void addNPC(NPC* npc);
-	void addEffect(Effect* E)		{effects.push_back(E);}
-	void addProjectile(Projectile* P) {projectiles.push_back(P);}
-	void removeEntity(Entity* E)	{entities.remove(E);}
+	void addEffect(Effect* E);
+	void addProjectile(Projectile* P);
+	void addObject(Object* Obj);
+	void removeEntity(Entity* E);
 
 private:
 	int width, height;				// Dimensions of this world		
@@ -103,7 +105,7 @@ private:
 	list<Structure*> structures;	// List of structures in the world
 	list<Entity*> entities;			// List of NPCs in this world
 	list<npcAI*> AIs;
-	list<Item*> items;				// List of items in this world
+	list<Object*> objects;			// List of objects (includes items) in this world
 	list<Effect*> effects;			// List of effects in this world
 	list<Projectile*> projectiles;	// List of projectiles in this world
 };

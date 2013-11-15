@@ -21,6 +21,12 @@ void Tile::draw(VECTOR2& Center)
 	if(_drawStruct) S->draw(Center);
 }
 
+void Tile::drawObjects(VECTOR2& Center)
+{
+	for(auto p = objects.begin(); p != objects.end(); p++)
+		(*p)->draw(Center);
+}
+
 void Tile::interact(Entity* E)
 {
 	if(S != 0)
@@ -29,39 +35,22 @@ void Tile::interact(Entity* E)
 
 void World::draw(VECTOR2& Center, bool magicSight)
 {
-	float delta = .05; //number >= ovelap of sprites before collision
 	if(!_initialized) return;
 	int x0 = max(0, (Center.x-HSCREEN_WIDTH)/TILE_SIZE), y0 = max(0, (Center.y-HSCREEN_HEIGHT)/TILE_SIZE);
 	int x1 = min(width, (Center.x + SCREEN_WIDTH)/TILE_SIZE), y1 = min(height, (Center.y + SCREEN_HEIGHT)/TILE_SIZE);
-	
+
 	// Structures
-		for(auto p = structures.begin(); p != structures.end(); p++)
-			(*p)->draw(Center);
-	
+	for(auto p = structures.begin(); p != structures.end(); p++)
+		(*p)->draw(Center);
 	for(int y = y0; y < y1; y++)
-	{
-		// Tiles
 		for(int x = x0; x < x1; x++)
 			tiles[x][y]->draw(Center);
-		
-		// Entities
-		for(auto p = entities.begin(); p != entities.end(); p++)
-			if((*p)->getPosition().y >= y-1+delta && (*p)->getPosition().y < y+delta)
-				(*p)->draw(Center);
-		// Effects
-		for(auto p = effects.begin(); p != effects.end(); p++)
-		{
-			if(!(*p)->isInvisible() && (!(*p)->isHidden() || magicSight) && 
-			(*p)->getPosition().y >= y-1+delta && (*p)->getPosition().y < y+delta)
-				(*p)->draw(Center);
-		}
-		// Projectiles
-		for(auto p = projectiles.begin(); p != projectiles.end(); p++)
-			if((*p)->getPosition().y >= y-1+delta && (*p)->getPosition().y < y+delta)
-				(*p)->draw(Center);
-		
-	}
-	// All of the previous are being drawn right now regardless of where they are on the map. This could be changed at some point
+	for(int y = y0; y < y1; y++)
+		for(int x = x0; x < x1; x++)
+			tiles[x][y]->drawObjects(Center);
+	for(auto ef = effects.begin(); ef != effects.end(); ef++)
+		if(!(*ef)->isInvisible() && (magicSight || !(*ef)->isHidden())) 
+			(*ef)->draw(Center);
 }
 
 void World::collisions()
@@ -77,11 +66,47 @@ void World::collisions()
 	}
 }
 
+void World::addStructure(Structure* S)
+{
+	structures.push_back(S);
+}
+
+void  World::addEntity(Entity* E)		
+{
+	tiles[(int)E->getPosition().x][(int)E->getPosition().y]->add(E);
+	entities.push_back(E);
+}
+
 void World::addNPC(NPC* npc)
 {
+	tiles[(int)npc->getPosition().x][(int)npc->getPosition().y]->add(npc);
 	entities.push_back(npc);
 	AIs.push_back(new npcAI(npc));
 }
+
+void World::addEffect(Effect* E)		
+{
+	effects.push_back(E);
+}
+
+void World::addProjectile(Projectile* P) 
+{
+	tiles[(int)P->getPosition().x][(int)P->getPosition().y]->add(P);
+	projectiles.push_back(P);
+}
+
+void World::addObject(Object* Obj)
+{
+	tiles[(int)Obj->getPosition().x][(int)Obj->getPosition().y]->add(Obj);
+	objects.push_back(Obj);
+}
+
+void World::removeEntity(Entity* E)	
+{
+	tiles[(int)E->getLastPosition().x][(int)E->getLastPosition().y]->remove(E);
+	entities.remove(E);
+}
+
 
 bool World::canMoveHere(Object* E, VECTOR2& position)
 {
@@ -160,20 +185,6 @@ void World::update(float frameTime)
 	{
 		auto q = ai; q++;
 		(*ai)->update(frameTime, this);
-		// Sectorization for entities
-		if((*ai)->isActive())
-		{
-			VECTOR2 V = (*ai)->getPosition();
-			int LX = (int)(*ai)->getLastPosition().x;
-			int LY = (int)(*ai)->getLastPosition().y;
-			int X = (int)V.x, Y = (int)V.y;
-			if(LX != X || LY != Y)
-			{
-				tiles[LX][LY]->remove((*ai)->getNPC());
-				tiles[X][Y]->add((*ai)->getNPC());
-			}
-		}
-
 		ai=q;
 	}
 	// Update Effects
@@ -198,18 +209,6 @@ void World::update(float frameTime)
 		if(!(*pr)->isActive())
 		{
 			projectiles.erase(pr);
-		}
-		else
-		{// Sectorization for projectiles
-			VECTOR2 V = (*pr)->getPosition();
-			int LX = (int)(*pr)->getLastPosition().x;
-			int LY = (int)(*pr)->getLastPosition().y;
-			int X = (int)V.x, Y = (int)V.y;
-			if(LX != X || LY != Y)
-			{
-				tiles[LX][LY]->remove(*pr);
-				tiles[X][Y]->add(*pr);
-			}
 		}
 		pr=q;
 	}
