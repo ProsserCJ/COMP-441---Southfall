@@ -322,12 +322,12 @@ void Entity::attack(float orient)
 		facing = DOWN;		
 		setSingleLoop(ATTACK_DOWN_START, ATTACK_DOWN_END, .08);
 	}
-	else if (orient < -3*PI/4 && orient <= 5*PI/4) 
+	else if (orient <= -3*PI/4 || orient > 3*PI/4) 
 	{
 		facing = LEFT;
 		setSingleLoop(ATTACK_LEFT_START, ATTACK_LEFT_END, .08);
 	}
-	else if (orient < -PI/4 && orient >= -3*PI/4) 
+	else if (orient <= -PI/4 && orient > -3*PI/4) 
 	{
 		facing = UP;
 		setSingleLoop(ATTACK_UP_START, ATTACK_UP_END, .08);
