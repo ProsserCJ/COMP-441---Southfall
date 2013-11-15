@@ -62,6 +62,7 @@ void Entity::initialize()
 	_hasTarget = false;
 	_frozen = false;
 	_magicSight = false;
+	attacking = false;
 	freezeTime = 0;
 }
 
@@ -89,18 +90,31 @@ void Entity::update(float frameTime, World* W)
 	if(!active) return;
 	timeSinceInteract += frameTime;
 	timeSinceAction += frameTime;
+	if(attacking)
+	{
+		if (timeSinceAttack > .18)
+		{
+			attacking = false;
+			setFrameDelay(DEFAULT_FRAME_DELAY);
+			standing();
+		}
+		else timeSinceAttack += frameTime;
+	}
 	move(frameTime, W);
 	magic += magicRecharge*frameTime;
 	if(magic > maxMagic) magic = maxMagic;	
 	if(!_frozen)
 	{
 		Object::update(frameTime, W);
+		
 		if(startMoving && W->canMoveHere(this, getPosition() + speed*velocity*frameTime))
 		{
 			W->collidesWithEffect(this, getPosition() + speed*velocity*frameTime);
 			setPosition(getPosition() + speed*velocity*frameTime);
 		}
 		else standing();
+		
+		
 		handleSectors(W);
 	}
 	else
@@ -222,7 +236,33 @@ void Entity::standing()
 {
 	startMoving = false;
 	moving=false;
-	setStandingImage();
+	if (!attacking) setStandingImage();
+}
+
+void Entity::attack(float orient)
+{
+	if (attacking) return;
+	timeSinceAttack = 0;
+	attacking = true;
+
+	if (orient > PI/4 && orient <= 3*PI/4) facing = DOWN;		
+	else if (orient < -3*PI/4 && orient <= 5*PI/4) facing = LEFT;
+	else if (orient < -PI/4 && orient >= -3*PI/4) facing = UP;
+	else if (orient > -PI/4 && orient <= PI/4) facing = RIGHT;	
+	
+	setAttackFrames();	
+}
+
+void Entity::setAttackFrames()
+{
+	setFrameDelay(.08);
+	switch(facing)
+	{
+	case UP: setFrames(ATTACK_UP_START, ATTACK_UP_END); break;
+	case DOWN: setFrames(ATTACK_DOWN_START, ATTACK_DOWN_END); break;
+	case LEFT: setFrames(ATTACK_LEFT_START, ATTACK_LEFT_END); break;
+	case RIGHT: setFrames(ATTACK_RIGHT_START, ATTACK_RIGHT_END); break;
+	}
 }
 
 void Entity::setStandingImage()

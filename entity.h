@@ -61,14 +61,14 @@ namespace entityNS
 	const int FACING_LEFT = 6;
 	const int FACING_DOWN_LEFT = 7;
 	// Attacking
-	const int ATTACK_DOWN_START = 0;
-	const int ATTACK_DOWN_END = 0;
-	const int ATTACK_RIGHT_START = 0;
-	const int ATTACK_RIGHT_END = 0;
-	const int ATTACK_UP_START = 0;
-	const int ATTACK_UP_END = 0;
-	const int ATTACK_LEFT_START = 0;
-	const int ATTACK_LEFT_END = 0;
+	const int ATTACK_DOWN_START = 48;
+	const int ATTACK_DOWN_END = 50;
+	const int ATTACK_RIGHT_START = 44;
+	const int ATTACK_RIGHT_END = 46;
+	const int ATTACK_UP_START = 52;
+	const int ATTACK_UP_END = 54;
+	const int ATTACK_LEFT_START = 40;
+	const int ATTACK_LEFT_END = 42;
 
 }
 using namespace entityNS;
@@ -86,6 +86,7 @@ public:
 	// Accessors
 	Image* & getImage()						{return image;}
 	int getFrame()							{return _frame;}
+	int getEndFrame()						{return _endFrame;}
 	bool noImage()							{return image == 0;}
 	int getImageWidth()						{return image->getWidth();}
 	int getImageHeight()					{return image->getHeight();}
@@ -199,6 +200,7 @@ public:
 	virtual void update(float frameTime, World* W);
 	void move(float frameTime, World* W);
 	virtual void interact(World* W);				// Interact with a tile
+	void attack(float orient);
 
 	// Accessors
 	int getHP()					const {return HP;}
@@ -227,6 +229,7 @@ public:
 	void freeze(float time)					{_frozen=true;freezeTime=time;}
 	void switchMagicSight()					{_magicSight = !_magicSight;}
 	void setMagicSight(bool s)				{_magicSight = s;}
+	void setAttackFrames();
 
 protected:
 	VECTOR2 knockback;	// For knock back effects
@@ -235,10 +238,12 @@ protected:
 	int team;
 	float timeSinceInteract;
 	float timeSinceAction;
+	float timeSinceAttack;
 	//Movement control
 	DIR facing;	
 	DIR lastDir;
-	bool startMoving;	
+	bool startMoving;
+	bool attacking;
 	SPELLTYPE SpellType;
 	VECTOR2 target;
 	bool _hasTarget;
