@@ -245,27 +245,28 @@ void World::update(float frameTime)
 
 Entity* World::getNPCFacing(VECTOR2 pos, DIR dir)
 {
+	float delta = .5;
 	switch(dir)
 	{
-	case UP: pos.y -= 1; break;
-	case DOWN: pos.y += 1; break;
-	case LEFT: pos.x -= 1; break;
-	case RIGHT: pos.x += 1; break;
-	case UP_LEFT: pos.y -= 1; pos.x -= 1; break;
-	case UP_RIGHT: pos.y -= 1; pos.x += 1; break;
-	case DOWN_RIGHT: pos.y += 1; pos.x += 1; break;
-	case DOWN_LEFT: pos.y += 1; pos.x -= 1;  break; 
+	case UP: pos.y -= delta; break;
+	case DOWN: pos.y += delta; break;
+	case LEFT: pos.x -= delta; break;
+	case RIGHT: pos.x += delta; break;
+	case UP_LEFT: pos.y -= delta; pos.x -= delta; break;
+	case UP_RIGHT: pos.y -= delta; pos.x += delta; break;
+	case DOWN_RIGHT: pos.y += delta; pos.x += delta; break;
+	case DOWN_LEFT: pos.y += delta; pos.x -= delta;  break; 
 	};
 
 	for(auto p = entities.begin(); p != entities.end(); p++)
 	{
 		VECTOR2 NPCposition = (*p)->getPosition();
 		
-		//if the position is within .5, it's close enough
-		if (NPCposition.x > pos.x - .5 && 
-			NPCposition.x < pos.x + .5 &&
-			NPCposition.y > pos.y - .5 &&
-			NPCposition.y < pos.y + .5)
+		//if the position is within delta, it's close enough
+		if (NPCposition.x > pos.x - delta && 
+			NPCposition.x < pos.x + delta &&
+			NPCposition.y > pos.y - delta &&
+			NPCposition.y < pos.y + delta)
 			return (*p);
 	}
 
