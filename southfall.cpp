@@ -91,7 +91,7 @@ void Southfall::initialize(HWND hwnd)
 	actionMenu->addButton(new Button("Fireball", &FireballIconIM, 4));
 
 	actionMenu->addButton(new Button("Magic Sight On", &MagicSightOnIM, 6));
-	actionMenu->addButton(new Button("Magic Sight Off", &MagicSightOnIM, 7));
+	actionMenu->addButton(new Button("Magic Sight Off", &MagicSightOffIM, 7));
 
 }
 

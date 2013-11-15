@@ -137,7 +137,6 @@ void World::removeEntity(Entity* E)
 	entities.remove(E);
 }
 
-
 bool World::canMoveHere(Object* E, VECTOR2& position)
 {
 	return !collidesWithTile(E, position) && !collidesWithNPC(E, position);	
