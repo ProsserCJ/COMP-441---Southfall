@@ -43,8 +43,8 @@ void Object::draw(VECTOR2& Center, DWORD color)
 {
 	if(!active) return;
 	VECTOR2 diff = getPosition()*TILE_SIZE - Center;
-	int X = diff.x + HSCREEN_WIDTH - HTILE_SIZE;
-	int Y = diff.y + HSCREEN_HEIGHT - HTILE_SIZE;
+	int X = diff.x + HSCREEN_WIDTH - 0.5*getImageWidth()*getImageScale();
+	int Y = diff.y + HSCREEN_HEIGHT - 0.5*getImageHeight()*getImageScale();
 	getImage()->setScale(DEFAULT_SCALE);
 	setFrame();
 	setImageX(X); setImageY(Y);
@@ -65,6 +65,19 @@ void Entity::initialize()
 	freezeTime = 0;
 }
 
+inline void Object::handleSectors(World* W)
+{
+	VECTOR2 V = getPosition();
+	int LX = (int)getLastPosition().x;
+	int LY = (int)getLastPosition().y;
+	int X = (int)V.x, Y = (int)V.y;
+	if(LX != X || LY != Y)
+	{
+		W->getTile(LX,LY)->remove(this);
+		W->getTile(X,Y)->add(this);
+	}
+}
+
 void Entity::update(float frameTime, World* W)
 {
 	if(!active) return;
@@ -82,6 +95,7 @@ void Entity::update(float frameTime, World* W)
 			setPosition(getPosition() + speed*velocity*frameTime);
 		}
 		else standing();
+		handleSectors(W);
 	}
 	else
 	{
@@ -93,7 +107,7 @@ void Entity::update(float frameTime, World* W)
 void Entity::draw(VECTOR2& Center, DWORD color)
 {
 	if(!_frozen) Object::draw(Center, color);
-	else draw(Center, graphicsNS::BLUE);
+	else Object::draw(Center, graphicsNS::BLUE);
 }
 
 // Makes the entity move in the direction it is going

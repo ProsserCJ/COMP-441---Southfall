@@ -222,21 +222,13 @@ void Southfall::update()
 				currentState = OPENTEXTBOX;
 			}
 			if (player->getPosition().x < 133 && player->getPosition().x > 86 && player->getPosition().y > 80 && fontLoc != 0)
-			{
-				fontTimer = 6; fontLoc = 0;
-			}
+			{fontTimer = 6; fontLoc = 0;}
 			else if (player->getPosition().x > 160 && fontLoc != 1)
-			{
-				fontTimer = 6; fontLoc = 1;
-			}
+			{fontTimer = 6; fontLoc = 1;}
 			else if (player->getPosition().y < 65 && fontLoc != 3)
-			{
-				fontTimer = 6; fontLoc = 3;
-			}
+			{fontTimer = 6; fontLoc = 3;}
 			else if (player->getPosition().x < 50 && fontLoc != 2)
-			{
-				fontTimer = 6; fontLoc = 2;
-			}
+			{fontTimer = 6; fontLoc = 2;}
 			break;
 		case ACTIONMENU:
 			actionMenu->update(frameTime);
@@ -299,8 +291,8 @@ inline void Southfall::playerClickActions()
 			}
 			break;
 		case FIREBALL:
-			P = new Projectile(player->getPosition()+VECTOR2(0.5,0.5), 
-				FIREBALLSPEED, FIREBALLRADIUS, FIREBALLRANGE, orient, &FireballSheetIM, 0);
+			P = new Projectile(player->getPosition(), FIREBALLSPEED, FIREBALLRADIUS, 
+				FIREBALLRANGE, orient, &FireballSheetIM, 0);
 			P->setFrames(FIREBALLSTART, FIREBALLEND);
 			P->setFrameDelay(0.1);
 			player->getWorld()->addProjectile(P);
@@ -322,7 +314,7 @@ inline void Southfall::playerClickActions()
 //=============================================================================
 void Southfall::ai()
 {
-	Interface.act();
+	player->getWorld()->act();
 }
 
 //=============================================================================

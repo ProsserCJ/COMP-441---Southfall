@@ -10,10 +10,7 @@ Last Modified 11/12/2013
 #define WIN32_LEAN_AND_MEAN
 
 #include "image.h"
-
-enum SPELLTYPE{NOSPELL, IMPEDE, PORTALTRAP, BLINK, FIREBALL, FREEZE, MAGICSIGHTON, MAGICSIGHTOFF};
-
-const VECTOR2 ZERO(0,0);
+#include "Entity.h"
 
 namespace itemNS
 {
@@ -21,7 +18,7 @@ namespace itemNS
 }; 
 using namespace itemNS;
 
-class Item 
+class Item : public Object
 {
 public:
 	Item() {};

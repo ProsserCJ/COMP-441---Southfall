@@ -114,14 +114,8 @@ World* WorldInterface::loadWorld(const string& fileName)
 		W->addNPC(temp);
 	}
 
-
 	W->setInitialized(true);
 	return W;
-}
-
-void WorldInterface::draw(VECTOR2& Center)
-{
-	//if(Current != 0) Current->draw(Center, );
 }
 
 void WorldInterface::initializeWorld()
@@ -157,9 +151,10 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 			W->getTile(x,y) = new Tile(VECTOR2(x,y), &Boulder1IM, false);
 			break;
 		}
-		case 'f': // Boulder
+		case 'f': // Tree
 		{
-			W->getTile(x,y) = new Tile(VECTOR2(x,y), &TreeIM, false);
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &GrassIM, false);
+			W->addObject(new Object(VECTOR2(x,y), 0, 0.5, &TreeIM, CIRCLE));
 			break;
 		}
 		case 'b': // Boulder
