@@ -26,8 +26,7 @@ void TextBox::draw()
 }
 
 void TextBox::update(float frameTime)	
-{
-	if (!active) return;	
+{		
 	arrow->update(frameTime);	
 }
 

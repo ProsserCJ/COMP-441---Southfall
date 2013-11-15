@@ -123,8 +123,8 @@ public:
 	// Mutators
 	void setPosition(const VECTOR2& pos)	{position = pos;}
 
-private:
-	VECTOR2 position;	// Position in the world (center)
+protected:
+	VECTOR2 position;		// Position in the world (center)
 	COLLISIONTYPE collisionType;
 	float radius;
 };
@@ -146,6 +146,7 @@ public:
 
 	// Accessors
 	VECTOR2 getVelocity()		const {return velocity;}
+	VECTOR2 getLastPosition()	const {return lastPosition;}
 	virtual bool isActive()		{return active;}
 	World* getWorld()			const {return world;}
 
@@ -154,11 +155,11 @@ public:
 	void stop()								{velocity = ZERO;}
 
 protected:
-	
-	VECTOR2 velocity;	// Velocity direction of the entity
-	float speed;		// Speed the object travels at
-	bool moving;		// True if the object should move in the direction it is facing
-	float radius;		// Interaction radius
+	VECTOR2 lastPosition;	// Last position (for sectorization)
+	VECTOR2 velocity;		// Velocity direction of the entity
+	float speed;			// Speed the object travels at
+	bool moving;			// True if the object should move in the direction it is facing
+	float radius;			// Interaction radius
 	
 	
 	bool active;

@@ -56,24 +56,17 @@ void Hero::update(float frameTime, World* W)
 	///////////////
 
 	if (input->wasKeyPressed('E'))
-	{
-		if (textbox->isActive())
+	{	
+		NPCFacing = W->getNPCFacing(getPosition(), facing);
+		if (NPCFacing)
 		{
 			audio->playCue(SELECT);
-			textbox->next();
+			turnToPlayer(NPCFacing);				
+			textbox->setText(reinterpret_cast<NPC*>(NPCFacing));
+			textbox->setActive(true);
 		}
-		else
-		{
-			NPCFacing = W->getNPCFacing(getPosition(), facing);
-			if (NPCFacing)
-			{
-				audio->playCue(SELECT);
-				turnToPlayer(NPCFacing);				
-				textbox->setText(reinterpret_cast<NPC*>(NPCFacing));
-				textbox->setActive(true);
-			}
-			else interact(W);
-		}
+		else interact(W);
+		
 	}
 
 	Entity::update(frameTime, W);

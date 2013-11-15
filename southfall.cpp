@@ -195,7 +195,15 @@ void Southfall::update()
 				audio->playCue(BACKGROUND);
 				delete introText;
 			}
-			break;
+		case OPENTEXTBOX:					//fallthrough is intentional
+			textbox->update(frameTime);
+			if (input->wasKeyPressed('E'))
+			{
+				audio->playCue(SELECT);
+				textbox->next();
+			}
+			if (!textbox->isActive()) currentState = GAME;
+			break;	
 		case GAME:
 			if(input->wasKeyPressed(T_KEY))
 			{// Open action menu
@@ -208,7 +216,11 @@ void Southfall::update()
 				player->getWorld()->update(frameTime);
 				player->update(frameTime, player->getWorld());
 			}
-			textbox->update(frameTime);	
+			if (textbox->isActive())
+			{
+				pause = true;
+				currentState = OPENTEXTBOX;
+			}
 			if (player->getPosition().x < 133 && player->getPosition().x > 86 && player->getPosition().y > 80 && fontLoc != 0)
 			{
 				fontTimer = 6; fontLoc = 0;
@@ -240,7 +252,7 @@ void Southfall::update()
 				player->resetTarget();
 			}
 			break;
-		
+			
 	}
 }
 
@@ -336,8 +348,7 @@ void Southfall::render()
 		textbox->draw();
 		break;
 	case GAME:
-		player->getWorld()->draw(Center(), player->usingMagicSight());
-		textbox->draw();
+		player->getWorld()->draw(Center(), player->usingMagicSight());		
 		if(fontTimer >= 0)
 		{
 			if(fontTimer >= 4)
@@ -352,6 +363,10 @@ void Southfall::render()
 	case ACTIONMENU:
 		player->getWorld()->draw(Center(), player->usingMagicSight());
 		actionMenu->draw();
+		break;
+	case OPENTEXTBOX:
+		player->getWorld()->draw(Center(), player->usingMagicSight());
+		textbox->draw();
 		break;
 	}
 }

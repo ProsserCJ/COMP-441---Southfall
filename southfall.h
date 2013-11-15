@@ -25,7 +25,7 @@ Last modified: 11/4/2013
 #include "GameMenu.h"
 using std::stringstream;
 
-enum gameState {MAIN_MENU, INTRO, GAME, ACTIONMENU, CREDITS, GAME_OVER};
+enum gameState {MAIN_MENU, INTRO, GAME, ACTIONMENU, OPENTEXTBOX, CREDITS, GAME_OVER};
 
 const float SELECTDELAY = 0.5;
 

@@ -29,7 +29,7 @@ public:
 	Tile(VECTOR2 position, Image* image, bool trav=true, int frame=0) 
 		: position(position), image(image), _traversable(trav), 
 		S(0), _drawStruct(false), frame(frame) {};
-	~Tile() {};
+	~Tile() {}
 
 	void draw(VECTOR2& Center);
 
@@ -41,6 +41,8 @@ public:
 	// Mutators
 	void giveStructure(Structure* S, bool draw=false)	{this->S = S;_drawStruct=draw;}
 	void interact(Entity* E);	// Open a door on the tile or things like that
+	void add(Object* Obj)		{objects.push_back(Obj);}
+	void remove(Object* Obj)	{objects.remove(Obj);}
 
 private:
 	VECTOR2 position;	// Position of the tile in the world
@@ -50,6 +52,9 @@ private:
 	
 	Image* image;		// Base image of the tile
 	int frame;			// Frame to draw
+
+	// Testing
+	list<Object*> objects;
 };
 
 class World
