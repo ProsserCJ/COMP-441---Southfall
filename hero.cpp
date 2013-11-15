@@ -93,37 +93,6 @@ void Hero::turnToPlayer(Entity* npc)
 	reinterpret_cast<NPC*>(npc)->setPaused(true);
 }
 
-
-void Hero::attack()
-{
-	// This function will need tweaking
-	//Indeed
-	VECTOR2 attackLocation(getPosition());
-	switch(facing)
-	{
-	case UP:
-		setFrames(ATTACK_UP_START, ATTACK_UP_END);
-		attackLocation.y -= TILE_SIZE;
-		break;
-	case DOWN:
-		setFrames(ATTACK_DOWN_START, ATTACK_DOWN_END);
-		attackLocation.y += TILE_SIZE;
-		break;
-	case LEFT:
-		setFrames(ATTACK_LEFT_START, ATTACK_LEFT_END);
-		attackLocation.x -= TILE_SIZE;
-		break;
-	case RIGHT:
-		setFrames(ATTACK_RIGHT_START, ATTACK_RIGHT_END);
-		attackLocation.x += TILE_SIZE;
-		break;
-	case UP_RIGHT: break;
-	case UP_LEFT: break;
-	case DOWN_RIGHT: break;
-	case DOWN_LEFT: break;
-	}
-}
-
 void Hero::draw(VECTOR2& Center)
 {
 	// Draw the main image
