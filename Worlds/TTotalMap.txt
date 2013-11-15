@@ -135,7 +135,7 @@ r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r 
 r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r
 r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r
 r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r
-4
+8
 1 3 100 125
 I used to be a fisherman.  I'd sail the seas looking for the biggest catch I could find.
 A giant serpent swallowed my reels.
@@ -146,4 +146,16 @@ Now I just hope I can find my way back!
 1 1 100 100
 Welcome to Southfall!
 1 1 20 83
-I wonder what's past these rocks.
+I wonder what's past those rocks.
+1 4 134 5
+...
+What?
+You want me to teach you something?
+What makes you think I know anything?
+1 1 86 45
+Mining is hard work.
+1 1 55 128
+Swimming and stuff!
+1 2 20 122
+:)
+Hi.
