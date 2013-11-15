@@ -264,7 +264,7 @@ void World::update(float frameTime)
 
 Entity* World::getNPCFacing(VECTOR2 pos, DIR dir)
 {
-	float delta = .5;
+	float delta = .8;
 	switch(dir)
 	{
 	case UP: pos.y -= delta; break;
