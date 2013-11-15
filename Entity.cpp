@@ -12,8 +12,12 @@ void Drawable::initialize()
 	_frame = 0;
 	_imageTime = 0;
 	_imageDelay = DEFAULT_FRAME_DELAY;
+	_saveImageDelay = DEFAULT_FRAME_DELAY;
+	_saveStartFrame = 0;
+	_saveEndFrame = 0;
 	_startFrame = 0;
 	_endFrame = 0;
+	_singleLoop = false;
 }
 
 void Drawable::updateImage(float frameTime)
@@ -22,8 +26,76 @@ void Drawable::updateImage(float frameTime)
 	if(_imageTime > _imageDelay)
 	{
 		_imageTime = 0;
-		++_frame;
-		if(_frame > _endFrame) _frame = _startFrame;
+		_frame++;
+		if(_frame > _endFrame) 
+		{
+			_frame = _startFrame;
+			if(_singleLoop)
+			{// Reset animation after a single loop
+				_singleLoop = false;
+				_imageDelay = _saveImageDelay;
+				_startFrame = _saveStartFrame;
+				_endFrame = _saveEndFrame;
+				_frame = _startFrame;
+			}
+		}
+	}
+}
+
+void Drawable::setStationaryFrame(int frame)
+{
+	if(!_singleLoop)
+	{
+		_startFrame=_endFrame=_frame=frame;
+		_saveStartFrame = _startFrame;
+		_saveEndFrame = _endFrame;
+	}
+}
+
+void Drawable::setFrames(int start, int end)		
+{
+	if(!_singleLoop)
+	{
+		_startFrame=start;_endFrame=end;_frame=start;
+		_saveStartFrame = _startFrame;
+		_saveEndFrame = _endFrame;
+	}
+}
+
+void Drawable::setSingleLoop(int start, int end)	
+{
+	if(!_singleLoop)
+	{
+		_singleLoop=true;
+		_startFrame=start;
+		_endFrame=end;
+		_frame=start;
+	}
+}
+
+void Drawable::setSingleLoop(int start, int end, float frameDelay)
+{
+	if(!_singleLoop)
+	{
+		_saveImageDelay = _imageDelay;
+		_singleLoop=true;
+		_startFrame=start;
+		_endFrame=end;
+		_frame=start;
+	}
+}
+
+void Drawable::setFrameDelay(float delay)			
+{
+	_imageDelay=delay;
+	_saveImageDelay=delay;
+}
+
+void Drawable::startImage()
+{
+	if(!_singleLoop)
+	{
+		_frame=_startFrame;
 	}
 }
 
@@ -245,23 +317,25 @@ void Entity::attack(float orient)
 	timeSinceAttack = 0;
 	attacking = true;
 
-	if (orient > PI/4 && orient <= 3*PI/4) facing = DOWN;		
-	else if (orient < -3*PI/4 && orient <= 5*PI/4) facing = LEFT;
-	else if (orient < -PI/4 && orient >= -3*PI/4) facing = UP;
-	else if (orient > -PI/4 && orient <= PI/4) facing = RIGHT;	
-	
-	setAttackFrames();	
-}
-
-void Entity::setAttackFrames()
-{
-	setFrameDelay(.08);
-	switch(facing)
+	if (orient > PI/4 && orient <= 3*PI/4) 
 	{
-	case UP: setFrames(ATTACK_UP_START, ATTACK_UP_END); break;
-	case DOWN: setFrames(ATTACK_DOWN_START, ATTACK_DOWN_END); break;
-	case LEFT: setFrames(ATTACK_LEFT_START, ATTACK_LEFT_END); break;
-	case RIGHT: setFrames(ATTACK_RIGHT_START, ATTACK_RIGHT_END); break;
+		facing = DOWN;		
+		setSingleLoop(ATTACK_DOWN_START, ATTACK_DOWN_END, .08);
+	}
+	else if (orient < -3*PI/4 && orient <= 5*PI/4) 
+	{
+		facing = LEFT;
+		setSingleLoop(ATTACK_LEFT_START, ATTACK_LEFT_END, .08);
+	}
+	else if (orient < -PI/4 && orient >= -3*PI/4) 
+	{
+		facing = UP;
+		setSingleLoop(ATTACK_UP_START, ATTACK_UP_END, .08);
+	}
+	else if (orient > -PI/4 && orient <= PI/4) 
+	{
+		facing = RIGHT;	
+		setSingleLoop(ATTACK_RIGHT_START, ATTACK_RIGHT_END, .08);
 	}
 }
 

@@ -100,20 +100,26 @@ public:
 	void setFrame()							{image->setCurrentFrame(_frame);}
 	void setFrame(int frame)				{_frame=frame;}	// Directly set the frame
 	// Image updating
-	void setStationaryFrame(int frame)		{_startFrame=_endFrame=_frame=frame;}
+	void setStationaryFrame(int frame);
 	void updateImage(float frameTime);
-	void setFrames(int start, int end)		{_startFrame=start;_endFrame=end;_frame=start;}
-	void setFrameDelay(float delay)			{_imageDelay=delay;}
-	void startImage()						{_frame=_startFrame;}
+	void setFrames(int start, int end);
+	void setSingleLoop(int start, int end);
+	void setSingleLoop(int start, int end, float frameDelay);
+	void setFrameDelay(float delay);
+	void startImage();
 
 private:
 	private:
 	// Image and animation control
 	int _frame;			// What frame to display
+	bool _singleLoop;
 	float _imageTime;	// How long the current frame has displayed
 	float _imageDelay;	// How long each frame should display
+	float _saveImageDelay;
 	int _startFrame;		// Start of the animation loop
 	int _endFrame;		// End of the animation loop
+	int _saveStartFrame;
+	int _saveEndFrame;
 	Image* image;		// The sprite sheet to display from
 };
 
@@ -229,7 +235,6 @@ public:
 	void freeze(float time)					{_frozen=true;freezeTime=time;}
 	void switchMagicSight()					{_magicSight = !_magicSight;}
 	void setMagicSight(bool s)				{_magicSight = s;}
-	void setAttackFrames();
 
 protected:
 	VECTOR2 knockback;	// For knock back effects
