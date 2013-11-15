@@ -92,6 +92,10 @@ private:
 	Image BlinkIconIM;
 	TextureManager FireballIconTX;
 	Image FireballIconIM;
+	TextureManager MagicSightOnTX;
+	Image MagicSightOnIM;
+	TextureManager MagicSightOffTX;
+	Image MagicSightOffIM;
 
 	TextureManager FireballSheetTX;
 	Image FireballSheetIM;

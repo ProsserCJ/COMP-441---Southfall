@@ -21,6 +21,19 @@ void Tile::draw(VECTOR2& Center)
 	if(_drawStruct) S->draw(Center);
 }
 
+void Tile::handleCollisions(Entity* E)
+{
+	for(auto obj = objects.begin(); obj != objects.end(); obj++)
+	{
+		if((*obj)->getType() == PROJECTILE)
+		{
+			Projectile* P = reinterpret_cast<Projectile*>(*obj);
+			if(P->isActive() && E->getTeam() != P->getTeam() && HandleCollision(E, P))
+				P->interact(E);
+		}
+	}
+}
+
 void Tile::drawObjects(VECTOR2& Center)
 {
 	for(auto p = objects.begin(); p != objects.end(); p++)
@@ -42,11 +55,12 @@ void World::draw(VECTOR2& Center, bool magicSight)
 	// Structures
 	for(auto p = structures.begin(); p != structures.end(); p++)
 		(*p)->draw(Center);
-	for(int y = y0; y < y1; y++)
-		for(int x = x0; x < x1; x++)
+	
+	for(int x = x0; x < x1; x++)
+		for(int y = y0; y < y1; y++)
 			tiles[x][y]->draw(Center);
-	for(int y = y0; y < y1; y++)
-		for(int x = x0; x < x1; x++)
+	for(int x = x0; x < x1; x++)
+		for(int y = y0; y < y1; y++)
 			tiles[x][y]->drawObjects(Center);
 	for(auto ef = effects.begin(); ef != effects.end(); ef++)
 		if(!(*ef)->isInvisible() && (magicSight || !(*ef)->isHidden())) 
@@ -63,6 +77,22 @@ void World::collisions()
 			{
 				(*e)->receiveDamage(*p);
 			}
+	}
+
+	for(auto e = entities.begin(); e != entities.end(); e++)
+	{
+		if((*e)->isActive())
+		{
+			int LX = max(0, (int)(*e)->getPosition().x - 1);
+			int UX = min(width, (int)(*e)->getPosition().x + 1);
+			int LY = max(0, (int)(*e)->getPosition().y - 1);
+			int UY = min(width, (int)(*e)->getPosition().y + 1);
+			for(int i=LX; i<=LY; i++)
+			{
+				for(int j=LY; j<=LY; j++)
+					tiles[i][j]->handleCollisions(*e);
+			}
+		}
 	}
 }
 

@@ -24,12 +24,13 @@ class Projectile : public Object
 public:
 	Projectile(VECTOR2 position, float speed, float radius, float range, float orient,
 		Image* image, float freezeTime, int team=0) 
-		: Object(position, speed, radius, image, CIRCLE), range(range), traveled(0), 
+		: Object(position, speed, radius, image, CIRCLE, PROJECTILE), range(range), traveled(0), 
 		orientation(orient), freezeTime(freezeTime), team(team)
 	{velocity.x = cos(orientation); velocity.y = sin(orientation);};
 
 	virtual void update(float frameTime, World* W);
 	virtual void interact(World* W);
+	virtual void interact(Entity* E) {}
 
 	int getTeam()	{return team;}
 

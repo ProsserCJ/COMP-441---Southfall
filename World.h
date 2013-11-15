@@ -17,6 +17,7 @@ using std::list;
 #include "Structure.h"
 #include "Item.h"
 #include "npc.h"
+#include "entity.h"
 #include "Effects.h"
 #include "Projectiles.h"
 #include "npcAI.h"
@@ -33,6 +34,7 @@ public:
 
 	void draw(VECTOR2& Center);
 	void drawObjects(VECTOR2& Center);
+	void handleCollisions(Entity* E);
 
 	// Accessors
 	bool isTraversable();
