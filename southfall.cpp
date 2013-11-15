@@ -32,7 +32,7 @@ void Southfall::loadIntro()
 void Southfall::initialize(HWND hwnd)
 {
     Game::initialize(hwnd);
-	currentState = MAIN_MENU;
+	currentState = GAME;
 	pause = false;
 
 	// Graphics
@@ -62,6 +62,7 @@ void Southfall::initialize(HWND hwnd)
 	player->setPosition(VECTOR2(102,96));
 	player->setWorld(Interface.getCurrent());
 	player->getWorld()->addEntity(player);
+	player->setSpellType(NOSPELL);
 
 	//Set up region fonts
 	if(!SouthfallFontTX[0].initialize(graphics, SOUTHFALLFONT))
@@ -196,8 +197,6 @@ void Southfall::update()
 			}
 			break;
 		case INTRO:
-			textbox->update(frameTime);
-			player->update(frameTime, player->getWorld());
 			if (!textbox->isActive())
 			{
 				audio->stopCue(INTRO_BACKGROUND);
@@ -261,8 +260,7 @@ void Southfall::update()
 				else player->setSpellType(SPELLTYPE(actionMenu->getSelected()));
 				player->resetTarget();
 			}
-			break;
-			
+			break;			
 	}
 }
 
@@ -282,7 +280,7 @@ inline void Southfall::playerClickActions()
 		switch (player->getSpellType())
 		{
 		case NOSPELL:
-			// Swing whatever you have in your hand
+			player->attack(orient);
 			break;
 		case IMPEDE:
 			player->getWorld()->addEffect(new ImpedeEffect(target, 0.2, &ImpedeEffectIM));
