@@ -90,8 +90,8 @@ void Southfall::initialize(HWND hwnd)
 	actionMenu->addButton(new Button("Blink", &BlinkIconIM, 3));
 	actionMenu->addButton(new Button("Fireball", &FireballIconIM, 4));
 
-	actionMenu->addButton(new Button("Magic Sight On", &BlinkIconIM, 6));
-	actionMenu->addButton(new Button("Magic Sight Off", &BlinkIconIM, 7));
+	actionMenu->addButton(new Button("Magic Sight On", &MagicSightOnIM, 6));
+	actionMenu->addButton(new Button("Magic Sight Off", &MagicSightOffIM, 7));
 
 }
 
@@ -158,6 +158,16 @@ void Southfall::initializeGraphics()
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing FireballIcon texture"));
 	if(!FireballIconIM.initialize(graphics, 0, 0, 0, &FireballIconTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing FireballIcon image"));
+	// Magic Sight On Icon
+	if(!MagicSightOnTX.initialize(graphics, MAGICSIGHTONICON))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing MagicSightOn texture"));
+	if(!MagicSightOnIM.initialize(graphics, 0, 0, 0, &MagicSightOnTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing MagicSightOn image"));
+	// Magic Sight Off Icon
+	if(!MagicSightOffTX.initialize(graphics, MAGICSIGHTOFFICON))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing MagicSightOff texture"));
+	if(!MagicSightOffIM.initialize(graphics, 0, 0, 0, &MagicSightOffTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing MagicSightOff image"));
 
 	// Fireball projectile
 	if(!FireballSheetTX.initialize(graphics, FIREBALLSHEET))

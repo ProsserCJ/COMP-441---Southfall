@@ -26,6 +26,8 @@ const VECTOR2 HSCREEN(HSCREEN_WIDTH, HSCREEN_HEIGHT);
 const float DEFAULT_FRAME_DELAY = 0.2f;
 const float INTERACTIONDELAY = 0.5f;
 
+enum OBJECTTYPE {PROJECTILE, OBJECT, ENTITY, NPCTYPE, HEROTYPE};
+
 // Entity Namespace
 namespace entityNS
 {
@@ -142,11 +144,12 @@ class Object : public Drawable, public Collidable
 {
 public:
 	Object() 
-		: Collidable(ZERO, POINTCOLLISION, 0), velocity(ZERO), Drawable(0), active(false), speed(1) {initialize();}
+		: Collidable(ZERO, POINTCOLLISION, 0), velocity(ZERO), Drawable(0), active(false), speed(1), type(OBJECT) 
+	{initialize();}
 	Object(Image* image) 
-		: Collidable(ZERO, POINTCOLLISION, 0), Drawable(image), speed(1) {initialize();};
-	Object(VECTOR2 pos, float speed, float radius, Image* image, COLLISIONTYPE CT) 
-		: Collidable(pos, CT, radius), Drawable(image), velocity(ZERO), active(true), speed(speed) {initialize();}
+		: Collidable(ZERO, POINTCOLLISION, 0), Drawable(image), speed(1), type(OBJECT) {initialize();};
+	Object(VECTOR2 pos, float speed, float radius, Image* image, COLLISIONTYPE CT, OBJECTTYPE type=OBJECT) 
+		: Collidable(pos, CT, radius), Drawable(image), velocity(ZERO), active(true), speed(speed), type(type) {initialize();}
 
 	void update(float frameTime, World* W);
 	virtual void draw(VECTOR2& Center, DWORD color = graphicsNS::WHITE);
@@ -157,6 +160,7 @@ public:
 	VECTOR2 getLastPosition()	const {return lastPosition;}
 	virtual bool isActive()		{return active;}
 	World* getWorld()			const {return world;}
+	OBJECTTYPE getType()		const {return type;}
 
 	// Mutators
 	void setVelocity(const VECTOR2& vel)	{velocity = vel;}
@@ -171,7 +175,7 @@ protected:
 	bool moving;			// True if the object should move in the direction it is facing
 	float radius;			// Interaction radius
 	
-	
+	OBJECTTYPE type;
 	bool active;
 	World* world;
 };
@@ -183,8 +187,8 @@ public:
 	// Constructors and destructors
 	Entity() 
 		: Object(), knockback(ZERO), maxHP(0), HP(0), team(0) {initialize();}
-	Entity(VECTOR2 pos, float radius, int HP, Image* image, int team=0) 
-		: Object(pos, 1, radius, image, CIRCLE), HP(HP), maxHP(HP), knockback(ZERO), team(team) {initialize();}
+	Entity(VECTOR2 pos, float radius, int HP, Image* image, int team, OBJECTTYPE type) 
+		: Object(pos, 1, radius, image, CIRCLE, type), HP(HP), maxHP(HP), knockback(ZERO), team(team) {initialize();}
 	~Entity() {};
 
 	// Basic functions

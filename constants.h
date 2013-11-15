@@ -144,6 +144,8 @@ const char PORTALCLOSE[] = "Images\\PortalClose.png";
 const char SWORDICON[] = "Images\\SwordIcon1.png";
 const char BLINKICON[] = "Images\\BlinkIcon1.png";
 const char FIREBALLICON[] = "Images\\FireballIcon.png";
+const char MAGICSIGHTONICON[] = "Images\\MagicSightOnIcon.png";
+const char MAGICSIGHTOFFICON[] = "Images\\MagicSightOffIcon.png";
 // Other
 const char GAMEMENUBACK[] = "Images\\GameMenuBackground.png";
 const char FIREBALLSHEET[] = "Images\\FireballSheet.png";
