@@ -163,6 +163,7 @@ public:
 	OBJECTTYPE getType()		const {return type;}
 
 	// Mutators
+	void newPosition(const VECTOR2& pos, World* W);
 	void setVelocity(const VECTOR2& vel)	{velocity = vel;}
 	void stop()								{velocity = ZERO;}
 

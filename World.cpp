@@ -36,14 +36,33 @@ void Tile::handleCollisions(Entity* E)
 
 void Tile::drawObjects(VECTOR2& Center)
 {
+	if(objects.empty()) return;
 	for(auto p = objects.begin(); p != objects.end(); p++)
+	{
+		int ymin = position.y;
 		(*p)->draw(Center);
+	}
 }
 
 void Tile::interact(Entity* E)
 {
-	if(S != 0)
-		S->interact(E);
+	if(S != 0) S->interact(E);
+}
+
+void Tile::add(Object* Obj)
+{
+	if(objects.empty())
+	{
+		objects.push_back(Obj);
+		return;
+	}
+	auto p = objects.begin();
+	int Y = Obj->getPosition().y;
+	for(; p != objects.end(); p++)
+		if((*p)->getPosition().y > Y)
+			continue;
+
+	objects.insert(p, Obj);
 }
 
 void World::draw(VECTOR2& Center, bool magicSight)

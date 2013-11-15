@@ -196,8 +196,6 @@ void Southfall::update()
 			}
 			break;
 		case INTRO:
-			textbox->update(frameTime);
-			player->update(frameTime, player->getWorld());
 			if (!textbox->isActive())
 			{
 				audio->stopCue(INTRO_BACKGROUND);
@@ -304,7 +302,7 @@ inline void Southfall::playerClickActions()
 		case BLINK:
 			if(player->getWorld()->canMoveHere(player, target))
 			{
-				player->setPosition(target);
+				player->newPosition(target, player->getWorld());
 				player->resetAction();
 			}
 			break;

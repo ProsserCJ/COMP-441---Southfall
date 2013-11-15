@@ -44,7 +44,7 @@ public:
 	// Mutators
 	void giveStructure(Structure* S, bool draw=false)	{this->S = S;_drawStruct=draw;}
 	void interact(Entity* E);	// Open a door on the tile or things like that
-	void add(Object* Obj)		{objects.push_back(Obj);}
+	void add(Object* Obj);
 	void remove(Object* Obj)	{objects.remove(Obj);}
 
 private:

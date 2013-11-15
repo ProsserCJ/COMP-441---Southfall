@@ -68,14 +68,20 @@ void Entity::initialize()
 inline void Object::handleSectors(World* W)
 {
 	VECTOR2 V = getPosition();
-	int LX = (int)getLastPosition().x;
-	int LY = (int)getLastPosition().y;
-	int X = (int)V.x, Y = (int)V.y;
+	int LX = (int)(getLastPosition().x+0.5);
+	int LY = (int)(getLastPosition().y+0.5);
+	int X = (int)(V.x+0.5), Y = (int)(V.y+0.5);
 	if(LX != X || LY != Y)
 	{
 		W->getTile(LX,LY)->remove(this);
 		W->getTile(X,Y)->add(this);
 	}
+}
+
+void Object::newPosition(const VECTOR2& pos, World* W)
+{
+	Collidable::setPosition(pos);
+	handleSectors(W);
 }
 
 void Entity::update(float frameTime, World* W)
