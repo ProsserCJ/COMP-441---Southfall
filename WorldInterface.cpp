@@ -198,17 +198,17 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 			{
 				string l = typeid(*(T->getStructure())).name();
 				if(l == "class House1")
-					T->giveStructure(StructInt->createHouse1(&W, VECTOR2(x,y+1))); // Create the inside of the house that the door leads to
+					T->giveStructure(StructInt->createHouse1(&W, VECTOR2(x+0.5,y+1.5))); // Create the inside of the house that the door leads to
 				else if(l == "class House2")
-					T->giveStructure(StructInt->createHouse2(&W, VECTOR2(x,y+1))); // Create the inside of the house that the door leads to
+					T->giveStructure(StructInt->createHouse2(&W, VECTOR2(x+0.5,y+1.5))); // Create the inside of the house that the door leads to
 				else if(l == "class House3")
-					T->giveStructure(StructInt->createHouse3(&W, VECTOR2(x,y+1))); // Create the inside of the house that the door leads to
+					T->giveStructure(StructInt->createHouse3(&W, VECTOR2(x+0.5,y+1.5))); // Create the inside of the house that the door leads to
 				else if(l == "class House4")
-					T->giveStructure(StructInt->createHouse4(&W, VECTOR2(x,y+1))); // Create the inside of the house that the door leads to
+					T->giveStructure(StructInt->createHouse4(&W, VECTOR2(x+0.5,y+1.5))); // Create the inside of the house that the door leads to
 				else if(l == "class Bar1")
-					T->giveStructure(StructInt->createBar1(&W, VECTOR2(x,y+1))); // Create the inside of the bar that the door leads to
+					T->giveStructure(StructInt->createBar1(&W, VECTOR2(x+0.5,y+1.5))); // Create the inside of the bar that the door leads to
 				else if(l == "class Bar2")
-					T->giveStructure(StructInt->createBar2(&W, VECTOR2(x,y+1))); // Create the inside of the bar that the door leads to
+					T->giveStructure(StructInt->createBar2(&W, VECTOR2(x+0.5,y+1.5))); // Create the inside of the bar that the door leads to
 				
 			}
 			W->getTile(x,y) = T;

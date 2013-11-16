@@ -263,7 +263,7 @@ void Entity::interact(World* W)
 {
 	if(timeSinceInteract < INTERACTIONDELAY) return;
 	timeSinceInteract = 0;
-	float x = getPosition().x + 0.5, y = getPosition().y + 0.5;
+	float x = getPosition().x, y = getPosition().y;
 	float range = 0.6;
 	switch(facing)
 	{

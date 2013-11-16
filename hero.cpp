@@ -38,25 +38,9 @@ void Hero::update(float frameTime, World* W)
     }
     else if (input->isKeyDown(AKEY))			go(LEFT);
     else if (input->isKeyDown(DKEY))			go(RIGHT);    
-	else										standing();  
-	
-	// Test Effects
-
-	/*if(timeSinceAction > HEROACTIONDELAY && input->getMouseLButton())
-	{
-		timeSinceAction = 0;
-		int X = input->getMouseX();
-		int Y = input->getMouseY();
-		VECTOR2 mouse(X,Y);
-
-		VECTOR2 target = getPosition()+(mouse-HSCREEN)*INVTILE_SIZE;
-		W->addEffect(new ImpedeEffect(target, 0.2));
-	}*/
-
-	///////////////
-
+	else										standing();
 	if (input->wasKeyPressed('E'))
-	{	
+	{// Interaction key
 		NPCFacing = W->getNPCFacing(getPosition(), facing);
 		if (NPCFacing)
 		{
@@ -66,7 +50,6 @@ void Hero::update(float frameTime, World* W)
 			textbox->setActive(true);
 		}
 		else interact(W);
-		
 	}
 
 	Entity::update(frameTime, W);
