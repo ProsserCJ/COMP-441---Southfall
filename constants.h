@@ -106,6 +106,7 @@ const UINT HSCREEN_HEIGHT = 0.5*SCREEN_HEIGHT;
 const char CHARACTER1_SHEET[] = "Images\\Character1Sheet.png";
 const char CHARACTER2_SHEET[] = "Images\\Character2Sheet.png";
 const char GOBLIN1_SHEET[] = "Images\\Goblin1Sheet.png";
+const char WRAITH1_SHEET[] = "Images\\Wraith1Sheet.png";
  // Tiles
 const char GRASS1[] = "Images\\Grass1.png";
 const char TREE1[] = "Images\\Tree1.png";

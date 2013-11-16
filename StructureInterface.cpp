@@ -122,7 +122,7 @@ World* StructureInterface::loadStructure(string fileName, World** external, VECT
 			text[i] = buffer;
 		}
 		temp->setText(text, textLines);
-		W->addNPC(temp);
+		W->addAIEntity(temp);
 	}
 	// End of npc code
 

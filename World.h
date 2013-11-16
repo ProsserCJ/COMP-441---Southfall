@@ -17,6 +17,7 @@ using std::list;
 #include "Structure.h"
 #include "Item.h"
 #include "npc.h"
+#include "hero.h"
 #include "entity.h"
 #include "Effects.h"
 #include "Projectiles.h"
@@ -92,6 +93,7 @@ public:
 	void setInitialized(bool init)	{_initialized = init;}
 	void addStructure(Structure* S);
 	void addEntity(Entity* E);
+	void addAIEntity(Entity* E);
 	void addNPC(NPC* npc);
 	void addEffect(Effect* E);
 	void addProjectile(Projectile* P);

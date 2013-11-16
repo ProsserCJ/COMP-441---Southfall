@@ -200,6 +200,12 @@ void Entity::draw(VECTOR2& Center, DWORD color)
 	else Object::draw(Center, graphicsNS::BLUE);
 }
 
+void Entity::act(World* W)
+{
+	velocity = ZERO;
+	DIR dir = NONE;
+}
+
 // Makes the entity move in the direction it is going
 void Entity::move(float frameTime, World* W)
 {
@@ -347,6 +353,7 @@ void Entity::receiveDamage(Projectile* p)
 
 bool HandleCollision(Collidable* A, Collidable* B)
 {
+	if(!A->isActive() || !B->isActive()) return false;
 	float D, R;
 	VECTOR2 diff = A->position - B->position;
 	switch(A->collisionType)

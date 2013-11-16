@@ -62,8 +62,8 @@ private:
 	stringstream ss;
 
 	// Images and Textures
-	TextureManager Character1TX, NPC1TX, Goblin1TX, TextBoxTX, TextBoxArrowTX, SouthfallFontTX[4];
-	Image Character1IM, NPC1IM, TextBoxIM, Goblin1IM, TextBoxArrowIM, SouthfallFontIM[4];
+	TextureManager Character1TX, NPC1TX, Goblin1TX, WraithTX, TextBoxTX, TextBoxArrowTX, SouthfallFontTX[4];
+	Image Character1IM, NPC1IM, TextBoxIM, Goblin1IM, WraithIM, TextBoxArrowIM, SouthfallFontIM[4];
 	WorldInterface worldInterface;
 
 	double fontTimer;

@@ -87,12 +87,16 @@ void Southfall::initialize(HWND hwnd)
 
 	actionMenu->addButton(new Button("No Spell", &SwordIconIM, 0)); 
 	actionMenu->addButton(new Button("Impede Spell", &ImpedeEffectIM, 1)); 
-	actionMenu->addButton(new Button("Portal Trap", &PortalOpenIM, 2));
+	actionMenu->addButton(new Button("Quick Portal", &PortalOpenIM, 2));
 	actionMenu->addButton(new Button("Blink", &BlinkIconIM, 3));
 	actionMenu->addButton(new Button("Fireball", &FireballIconIM, 4));
 
 	actionMenu->addButton(new Button("Magic Sight On", &MagicSightOnIM, 6));
 	actionMenu->addButton(new Button("Magic Sight Off", &MagicSightOffIM, 7));
+
+
+	// Add a test enemy wraith
+	player->getWorld()->addEntity(new Entity(VECTOR2(100,105), 0.5, 50, &WraithIM, 1));
 
 }
 
@@ -116,6 +120,12 @@ void Southfall::initializeGraphics()
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Goblin 1 texture"));
 	if(!Goblin1IM.initialize(graphics, 32, 32, 8, &Goblin1TX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Goblin 1 image"));
+	// Wraith 
+	if(!WraithTX.initialize(graphics, WRAITH1_SHEET))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wraith texture"));
+	if(!WraithIM.initialize(graphics, 32, 96, 8, &WraithTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wraith image"));
+
 	// Textbox
 	if(!TextBoxTX.initialize(graphics, TEXTBOX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox texture"));
@@ -286,12 +296,12 @@ inline void Southfall::playerClickActions()
 			player->getWorld()->addEffect(new ImpedeEffect(target, 0.2, &ImpedeEffectIM));
 			player->resetAction();
 			break;
-		case PORTALTRAP:
+		case QUICKPORTAL:
 			if(player->hasTarget())
 			{
 				if(!player->getWorld()->collidesWithTile(player, target))
 				{
-					player->getWorld()->addEffect(new PortalTrapEffect(player->getTarget(),
+					player->getWorld()->addEffect(new QuickPortal(player->getTarget(),
 						target, 0.5, &PortalOpenIM, &PortalCloseIM));
 					player->resetTarget();
 				}

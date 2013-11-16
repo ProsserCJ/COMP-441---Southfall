@@ -37,7 +37,6 @@ public:
 	~NPC() {}
 
 	//inherited functions
-	virtual void act(World* w);
 	virtual void update(float frameTime, World* W);
 
 	void initialize();

@@ -61,4 +61,16 @@ private:
 	Image* exitImage;
 };
 
+class QuickPortal : public Effect
+{
+public:
+	QuickPortal(VECTOR2 opening, VECTOR2 exit, float radius, Image* image, Image* exitImage)
+		: Effect(opening, radius, CIRCLE, image), exit(exit), exitImage(exitImage) {};
+	virtual void effect(Object* E);
+	virtual void draw(VECTOR2 Center);
+private:
+	VECTOR2 exit;
+	Image* exitImage;
+};
+
 #endif

@@ -22,7 +22,7 @@ namespace heroNS
 	const float HEROACTIONDELAY = 0.3;
 	const int COLS = 4;	
 	const int HERO_HP = 100;
-	const float HERO_RADIUS = 0.25;
+	const float HERO_RADIUS = 0.15;
 };
 using namespace heroNS;
 

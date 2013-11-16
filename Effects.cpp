@@ -27,12 +27,12 @@ void ImpedeEffect::effect(Object* E)
 	E->stop();
 }
 
-void PortalTrapEffect::effect(Object* E)
+void QuickPortal::effect(Object* E)
 {
 	E->setPosition(exit);
 }
 
-void PortalTrapEffect::draw(VECTOR2 Center)
+void QuickPortal::draw(VECTOR2 Center)
 {
 	if(_invisible) return;
 	// Draw entrance portal

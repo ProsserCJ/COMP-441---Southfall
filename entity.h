@@ -19,7 +19,7 @@ class Item;
 class World;
 class Projectile;
 
-enum SPELLTYPE{NOSPELL, IMPEDE, PORTALTRAP, BLINK, FIREBALL, FREEZE, MAGICSIGHTON, MAGICSIGHTOFF};
+enum SPELLTYPE{NOSPELL, IMPEDE, QUICKPORTAL, BLINK, FIREBALL, FREEZE, MAGICSIGHTON, MAGICSIGHTOFF, PORTALTRAP};
 
 const VECTOR2 ZERO(0,0);
 const VECTOR2 HSCREEN(HSCREEN_WIDTH, HSCREEN_HEIGHT);
@@ -128,7 +128,7 @@ class Collidable
 {
 public:
 	Collidable(VECTOR2 position, COLLISIONTYPE CT, float radius) 
-		: position(position), collisionType(CT), radius(radius) {}
+		: position(position), collisionType(CT), radius(radius), active(true) {}
 
 	// Collision Handler
 	friend bool HandleCollision(Collidable* A, Collidable* B); // True if the objects collided
@@ -136,6 +136,7 @@ public:
 	// Accessors
 	VECTOR2 getPosition()		const {return position;}
 	float getRadius()			const {return radius;}
+	bool isActive()				const {return active;}
 
 	// Mutators
 	void setPosition(const VECTOR2& pos)	{position = pos;}
@@ -144,6 +145,7 @@ protected:
 	VECTOR2 position;		// Position in the world (center)
 	COLLISIONTYPE collisionType;
 	float radius;
+	bool active;
 };
 
 // An object that can appear in the game
@@ -151,12 +153,12 @@ class Object : public Drawable, public Collidable
 {
 public:
 	Object() 
-		: Collidable(ZERO, POINTCOLLISION, 0), velocity(ZERO), Drawable(0), active(false), speed(1), type(OBJECT) 
+		: Collidable(ZERO, POINTCOLLISION, 0), velocity(ZERO), Drawable(0), speed(1), type(OBJECT) 
 	{initialize();}
 	Object(Image* image) 
 		: Collidable(ZERO, POINTCOLLISION, 0), Drawable(image), speed(1), type(OBJECT) {initialize();};
 	Object(VECTOR2 pos, float speed, float radius, Image* image, COLLISIONTYPE CT, OBJECTTYPE type=OBJECT) 
-		: Collidable(pos, CT, radius), Drawable(image), velocity(ZERO), active(true), speed(speed), type(type) {initialize();}
+		: Collidable(pos, CT, radius), Drawable(image), velocity(ZERO), speed(speed), type(type) {initialize();}
 
 	void update(float frameTime, World* W);
 	virtual void draw(VECTOR2& Center, DWORD color = graphicsNS::WHITE);
@@ -165,7 +167,6 @@ public:
 	// Accessors
 	VECTOR2 getVelocity()		const {return velocity;}
 	VECTOR2 getLastPosition()	const {return lastPosition;}
-	virtual bool isActive()		{return active;}
 	World* getWorld()			const {return world;}
 	OBJECTTYPE getType()		const {return type;}
 
@@ -184,7 +185,6 @@ protected:
 	float radius;			// Interaction radius
 	
 	OBJECTTYPE type;
-	bool active;
 	World* world;
 };
 
@@ -195,14 +195,14 @@ public:
 	// Constructors and destructors
 	Entity() 
 		: Object(), knockback(ZERO), maxHP(0), HP(0), team(0) {initialize();}
-	Entity(VECTOR2 pos, float radius, int HP, Image* image, int team, OBJECTTYPE type) 
+	Entity(VECTOR2 pos, float radius, int HP, Image* image, int team, OBJECTTYPE type=ENTITY) 
 		: Object(pos, 1, radius, image, CIRCLE, type), HP(HP), maxHP(HP), knockback(ZERO), team(team) {initialize();}
 	~Entity() {};
 
 	// Basic functions
 	void initialize();
 	virtual void draw(VECTOR2& center, DWORD color=graphicsNS::WHITE);
-	virtual void act(World* W) = 0;					// AI and decisions
+	virtual void act(World* W);					// AI and decisions
 	virtual void update(float frameTime, World* W);
 	void move(float frameTime, World* W);
 	virtual void interact(World* W);				// Interact with a tile

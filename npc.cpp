@@ -20,12 +20,6 @@ void NPC::initialize()
 	speed = NPC_SPEED;
 };
 
-void NPC::act(World* W)
-{
-	velocity = ZERO;
-	DIR dir = NONE;
-}
-
 void NPC::update(float frameTime, World* W)
 {
 	if (paused) return;

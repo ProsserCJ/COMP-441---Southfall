@@ -38,7 +38,7 @@ void Tile::drawObjects(VECTOR2& Center)
 	while(!temp.empty())
 	{
 		Object* Obj = 0;
-		float max = position.y + 10;
+		float max = INT_MAX;
 		for(auto p = temp.begin(); p != temp.end(); p++)
 		{
 			if((*p)->getPosition().y <= max)
@@ -108,10 +108,17 @@ void World::addStructure(Structure* S)
 	structures.push_back(S);
 }
 
-void  World::addEntity(Entity* E)		
+void World::addEntity(Entity* E)
 {
 	tiles[(int)E->getPosition().x][(int)E->getPosition().y]->add(E);
 	entities.push_back(E);
+}
+
+void World::addAIEntity(Entity* E)		
+{
+	tiles[(int)E->getPosition().x][(int)E->getPosition().y]->add(E);
+	entities.push_back(E);
+	AIs.push_back(new npcAI(E));
 }
 
 void World::addNPC(NPC* npc)

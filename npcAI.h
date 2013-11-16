@@ -16,18 +16,18 @@ class npcAI
 {
 public:
 	npcAI() : priority(IDLE), npc(0) {initialize();}
-	npcAI(NPC* E) : npc(E), priority(IDLE) {initialize();}
+	npcAI(Entity* E) : npc(E), priority(IDLE) {initialize();}
 
 	void update(float frameTime, World* W);
 	void initialize();
 	
 	VECTOR2 getLastPosition()	{return npc->getLastPosition();}
 	VECTOR2 getPosition()		{return npc->getPosition();}
-	NPC* & getNPC()				{return npc;}
+	Entity* & getNPC()			{return npc;}
 	bool isActive()				{return npc->isActive();}
 
 private:
-	NPC* npc;	// The npc the ai controls
+	Entity* npc;	// The npc the ai controls
 	Entity* target;
 	PRIORITY priority;
 
