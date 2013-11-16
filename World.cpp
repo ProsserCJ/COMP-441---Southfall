@@ -264,6 +264,7 @@ void World::update(float frameTime)
 
 Entity* World::getNPCFacing(VECTOR2 pos, DIR dir)
 {
+	VECTOR2 pos0 = pos;
 	float delta = .8;
 	switch(dir)
 	{
@@ -276,6 +277,9 @@ Entity* World::getNPCFacing(VECTOR2 pos, DIR dir)
 	case DOWN_RIGHT: pos.y += delta; pos.x += delta; break;
 	case DOWN_LEFT: pos.y += delta; pos.x -= delta;  break; 
 	};
+	delta -= .01;
+	Entity* closest = NULL;
+	float closestDist2 = 0;
 
 	for(auto p = entities.begin(); p != entities.end(); p++)
 	{
@@ -285,10 +289,13 @@ Entity* World::getNPCFacing(VECTOR2 pos, DIR dir)
 		if (NPCposition.x > pos.x - delta && 
 			NPCposition.x < pos.x + delta &&
 			NPCposition.y > pos.y - delta &&
-			NPCposition.y < pos.y + delta)
-			return (*p);
+			NPCposition.y < pos.y + delta &&
+			closestDist2 < (NPCposition - pos).x*(NPCposition - pos).x + (NPCposition - pos).y*(NPCposition - pos).y)
+		{
+			closestDist2 = (NPCposition - pos).x*(NPCposition - pos).x + (NPCposition - pos).y*(NPCposition - pos).y;
+			closest = *p;
+		}
 	}
-
-	return 0;
+	return closest;
 }
 	
