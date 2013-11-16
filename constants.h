@@ -188,6 +188,7 @@ const char INTRO_BACKGROUND[] = "Background";
 const char BATTLE[] = "Battle";
 const char BATTLE_INTRO[] = "Battle Intro";
 const char BACKGROUND[] = "Background2";
+const char HOOH[] = "Hooh";
 
 
 #endif

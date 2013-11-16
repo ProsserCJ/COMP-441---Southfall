@@ -280,7 +280,8 @@ inline void Southfall::playerClickActions()
 		switch (player->getSpellType())
 		{
 		case NOSPELL:
-			player->attack(orient);
+			if (!player->isAttacking()) audio->playCue(HOOH);
+			player->attack(orient);			
 			break;
 		case IMPEDE:
 			player->getWorld()->addEffect(new ImpedeEffect(target, 0.2, &ImpedeEffectIM));

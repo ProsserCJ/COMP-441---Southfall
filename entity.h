@@ -206,7 +206,7 @@ public:
 	virtual void update(float frameTime, World* W);
 	void move(float frameTime, World* W);
 	virtual void interact(World* W);				// Interact with a tile
-	void attack(float orient);
+	virtual void attack(float orient);
 
 	// Accessors
 	int getHP()					const {return HP;}
@@ -214,6 +214,7 @@ public:
 	virtual bool alive()		{return HP > 0;}
 	bool hasTarget()			{return _hasTarget;}
 	bool usingMagicSight()		const {return _magicSight;}
+	bool isAttacking()			{return attacking;}
 	DIR getDirectionFacing()	{return facing;}
 	VECTOR2 getTarget()			{return target;}
 	SPELLTYPE getSpellType()	{return SpellType;}
