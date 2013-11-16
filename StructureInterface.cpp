@@ -96,7 +96,8 @@ World* StructureInterface::loadStructure(string fileName, World** external, VECT
 		}
 		fin.get(c);
 	}
-	// The npc code
+	// The old npc code
+	/*
 	int npcCount;
 	fin >> npcCount;
 	for (int i=0; i<npcCount; i++)
@@ -104,6 +105,24 @@ World* StructureInterface::loadStructure(string fileName, World** external, VECT
 		int ID, x, y;
 		fin >> ID >> x >> y;
 		W->addEntity(new NPC(ID, VECTOR2(x,y)));
+	
+	*/
+	int npcCount;
+	fin >> npcCount;
+	for (int i=0; i<npcCount; i++)
+	{
+		int ID, textLines, x, y;
+		fin >> ID >> textLines >> x >> y;
+		NPC* temp = new NPC(ID, VECTOR2(x,y));
+		string* text = new string[textLines];
+		char buffer[500];
+		fin.get();
+		for (int i=0; i<textLines; i++){ 
+			fin.getline(buffer,500);
+			text[i] = buffer;
+		}
+		temp->setText(text, textLines);
+		W->addNPC(temp);
 	}
 	// End of npc code
 
@@ -190,8 +209,34 @@ inline void StructureInterface::assignTile(World* & W, char c, int x, int y, Wor
 	}
 }
 
-Portal* StructureInterface::createHouse(World** external, VECTOR2 vOut)
+Portal* StructureInterface::createBar1(World** external, VECTOR2 vOut)
 {
-	World* W = loadStructure(BARSTRUCTURE, external, vOut);
+	World* W = loadStructure(BAR1STRUCTURE, external, vOut);
+	return new Portal(vOut,1,1,0,W,entrance);
+}
+Portal* StructureInterface::createBar2(World** external, VECTOR2 vOut)
+{
+	World* W = loadStructure(BAR2STRUCTURE, external, vOut);
+	return new Portal(vOut,1,1,0,W,entrance);
+}
+
+Portal* StructureInterface::createHouse1(World** external, VECTOR2 vOut)
+{
+	World* W = loadStructure(HOUSE1STRUCTURE, external, vOut);
+	return new Portal(vOut,1,1,0,W,entrance);
+}
+Portal* StructureInterface::createHouse2(World** external, VECTOR2 vOut)
+{
+	World* W = loadStructure(HOUSE2STRUCTURE, external, vOut);
+	return new Portal(vOut,1,1,0,W,entrance);
+}
+Portal* StructureInterface::createHouse3(World** external, VECTOR2 vOut)
+{
+	World* W = loadStructure(HOUSE3STRUCTURE, external, vOut);
+	return new Portal(vOut,1,1,0,W,entrance);
+}
+Portal* StructureInterface::createHouse4(World** external, VECTOR2 vOut)
+{
+	World* W = loadStructure(HOUSE4STRUCTURE, external, vOut);
 	return new Portal(vOut,1,1,0,W,entrance);
 }

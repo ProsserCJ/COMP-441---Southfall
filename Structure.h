@@ -66,28 +66,66 @@ private:
 	int open;
 };
 
-class House : public Structure
+class House1 : public Structure
 {
 public:
-	House(VECTOR2 TL, int width, int height, Image* image) 
+	House1(VECTOR2 TL, int width, int height, Image* image) 
 		: Structure(TL,width,height,image,0) {};
-	~House();
+	~House1();
 	virtual void interact(Entity*) {};
 	virtual bool isPassable() {return false;}
 private:
-
+};
+class House2 : public Structure
+{
+public:
+	House2(VECTOR2 TL, int width, int height, Image* image) 
+		: Structure(TL,width,height,image,0) {};
+	~House2();
+	virtual void interact(Entity*) {};
+	virtual bool isPassable() {return false;}
+private:
+};
+class House3 : public Structure
+{
+public:
+	House3(VECTOR2 TL, int width, int height, Image* image) 
+		: Structure(TL,width,height,image,0) {};
+	~House3();
+	virtual void interact(Entity*) {};
+	virtual bool isPassable() {return false;}
+private:
+};
+class House4 : public Structure
+{
+public:
+	House4(VECTOR2 TL, int width, int height, Image* image) 
+		: Structure(TL,width,height,image,0) {};
+	~House4();
+	virtual void interact(Entity*) {};
+	virtual bool isPassable() {return false;}
+private:
 };
 
-class Bar : public Structure
+class Bar1 : public Structure
 {
 public:
-	Bar(VECTOR2 TL, int width, int height, Image* image) 
-		: Structure(TL,width,height,image,0) {};
-	~Bar();
+	Bar1(VECTOR2 TL, int width, int height, Image* image) 
+		: Structure(TL,width,height,image,0){};
+	~Bar1();
 	virtual void interact(Entity*) {};
 	virtual bool isPassable() {return false;}
 private:
-
+};
+class Bar2 : public Structure
+{
+public:
+	Bar2(VECTOR2 TL, int width, int height, Image* image) 
+		: Structure(TL,width,height,image,0){};
+	~Bar2();
+	virtual void interact(Entity*) {};
+	virtual bool isPassable() {return false;}
+private:
 };
 
 #endif

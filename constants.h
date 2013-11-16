@@ -150,7 +150,12 @@ const char MAGICSIGHTOFFICON[] = "Images\\MagicSightOffIcon.png";
 const char GAMEMENUBACK[] = "Images\\GameMenuBackground.png";
 const char FIREBALLSHEET[] = "Images\\FireballSheet.png";
 // Worlds
-const string BARSTRUCTURE = "Worlds\\Bar1.txt";
+const string BAR1STRUCTURE = "Worlds\\Bar1.txt";
+const string BAR2STRUCTURE = "Worlds\\Bar2.txt";
+const string HOUSE1STRUCTURE = "Worlds\\House1.txt";
+const string HOUSE2STRUCTURE = "Worlds\\House2.txt";
+const string HOUSE3STRUCTURE = "Worlds\\House3.txt";
+const string HOUSE4STRUCTURE = "Worlds\\House4.txt";
 const string SOUTHFALLMAP = "Worlds\\TTotalMap.txt";
 
 // Sound Files

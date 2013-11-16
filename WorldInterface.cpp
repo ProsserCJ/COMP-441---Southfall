@@ -1,4 +1,5 @@
 #include "WorldInterface.h"
+#include <typeinfo>
 
 void WorldInterface::initialize(Graphics* graphics)
 {
@@ -162,11 +163,11 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 			W->getTile(x,y) = new Tile(VECTOR2(x,y), &Boulder1IM, false);
 			break;
 		}
-		case 'B': // Boulder 2
+		/*case 'B': // Boulder 2
 		{
 			W->getTile(x,y) = new Tile(VECTOR2(x,y), &Boulder2IM, false);
 			break;
-		}
+		}*/
 		case 'r': // River
 		{
 			W->getTile(x,y) = new Tile(VECTOR2(x,y), &RiverIM, false);
@@ -194,14 +195,74 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 				T->giveStructure(W->getTile(x,y-1)->getStructure());
 			}
 			if(y+1<W->getHeight()) 
-				T->giveStructure(StructInt->createHouse(&W, VECTOR2(x,y+1))); // Create the inside of the house that the door leads to
+			{
+				string l = typeid(*(T->getStructure())).name();
+				if(l == "class House1")
+					T->giveStructure(StructInt->createHouse1(&W, VECTOR2(x,y+1))); // Create the inside of the house that the door leads to
+				else if(l == "class House2")
+					T->giveStructure(StructInt->createHouse2(&W, VECTOR2(x,y+1))); // Create the inside of the house that the door leads to
+				else if(l == "class House3")
+					T->giveStructure(StructInt->createHouse3(&W, VECTOR2(x,y+1))); // Create the inside of the house that the door leads to
+				else if(l == "class House4")
+					T->giveStructure(StructInt->createHouse4(&W, VECTOR2(x,y+1))); // Create the inside of the house that the door leads to
+				else if(l == "class Bar1")
+					T->giveStructure(StructInt->createBar1(&W, VECTOR2(x,y+1))); // Create the inside of the bar that the door leads to
+				else if(l == "class Bar2")
+					T->giveStructure(StructInt->createBar2(&W, VECTOR2(x,y+1))); // Create the inside of the bar that the door leads to
+				
+			}
 			W->getTile(x,y) = T;
 			break;
 		}
-		case 'H': // House corner
+		case 'B': // bar 1 corner
 		{
 			T = new Tile(VECTOR2(x,y), 0, false);
-			House* H = new House(VECTOR2(x,y), HOUSE1WIDTH, HOUSE1HEIGHT, &HouseIM);
+			Bar1* H = new Bar1(VECTOR2(x,y), HOUSE1WIDTH, HOUSE1HEIGHT, &HouseIM);
+			T->giveStructure(H);	// Point the tile to the house
+			W->addStructure(H);		// Give the house to the world
+			W->getTile(x,y) = T;	// Give the tile to the world
+			break;
+		}
+		case 'A': // bar 2 corner
+		{
+			T = new Tile(VECTOR2(x,y), 0, false);
+			Bar2* H = new Bar2(VECTOR2(x,y), HOUSE1WIDTH, HOUSE1HEIGHT, &HouseIM);
+			T->giveStructure(H);	// Point the tile to the house
+			W->addStructure(H);		// Give the house to the world
+			W->getTile(x,y) = T;	// Give the tile to the world
+			break;
+		}
+		case 'H': // House1 corner
+		{
+			T = new Tile(VECTOR2(x,y), 0, false);
+			House1* H = new House1(VECTOR2(x,y), HOUSE1WIDTH, HOUSE1HEIGHT, &HouseIM);
+			T->giveStructure(H);	// Point the tile to the house
+			W->addStructure(H);		// Give the house to the world
+			W->getTile(x,y) = T;	// Give the tile to the world
+			break;
+		}
+		case 'O': // House2 corner
+		{
+			T = new Tile(VECTOR2(x,y), 0, false);
+			House2* H = new House2(VECTOR2(x,y), HOUSE1WIDTH, HOUSE1HEIGHT, &HouseIM);
+			T->giveStructure(H);	// Point the tile to the house
+			W->addStructure(H);		// Give the house to the world
+			W->getTile(x,y) = T;	// Give the tile to the world
+			break;
+		}
+		case 'U': // House3 corner
+		{
+			T = new Tile(VECTOR2(x,y), 0, false);
+			House3* H = new House3(VECTOR2(x,y), HOUSE1WIDTH, HOUSE1HEIGHT, &HouseIM);
+			T->giveStructure(H);	// Point the tile to the house
+			W->addStructure(H);		// Give the house to the world
+			W->getTile(x,y) = T;	// Give the tile to the world
+			break;
+		}
+		case 'S': // House4 corner
+		{
+			T = new Tile(VECTOR2(x,y), 0, false);
+			House4* H = new House4(VECTOR2(x,y), HOUSE1WIDTH, HOUSE1HEIGHT, &HouseIM);
 			T->giveStructure(H);	// Point the tile to the house
 			W->addStructure(H);		// Give the house to the world
 			W->getTile(x,y) = T;	// Give the tile to the world

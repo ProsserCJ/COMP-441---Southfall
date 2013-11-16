@@ -28,7 +28,12 @@ public:
 	World* loadStructure(string, World**, VECTOR2);
 	void initialize(Graphics* graphics);
 
-	Portal* createHouse(World** external, VECTOR2 vOut);
+	Portal* createHouse1(World** external, VECTOR2 vOut);
+	Portal* createHouse2(World** external, VECTOR2 vOut);
+	Portal* createHouse3(World** external, VECTOR2 vOut);
+	Portal* createHouse4(World** external, VECTOR2 vOut);
+	Portal* createBar1(World** external, VECTOR2 vOut);
+	Portal* createBar2(World** external, VECTOR2 vOut);
 
 private:
 	inline void assignTile(World* &, char, int, int, World**, VECTOR2);

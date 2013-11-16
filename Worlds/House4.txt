@@ -1,0 +1,16 @@
+9 7
+---------
+-ttttttt-
+-ttttttt-
+-ttttttt-
+-ttttttt-
+-ttttttt-
+----0----
+1
+1 6 1 1
+Hello young one.
+You're not from around here, are you?
+Good.  All the people in my town are too dense to appreciate me.
+Would you like to learn about the secrets of the pyromancers?
+Acreadkeasnouokeesseauup pulderrrhurthrungenturg!
+(learned fireball attack)
