@@ -9,16 +9,13 @@ bool Tile::isTraversable()
 void Tile::draw(VECTOR2& Center)
 {
 	if(!image) return; // if the image is null
-	VECTOR2 diff = position*TILE_SIZE - Center;
-	int width = 0.5*image->getWidth()*image->getScale();
-	int height = 0.5*image->getHeight()*image->getScale();
-	int X = diff.x + HSCREEN_WIDTH - width;
-	int Y = diff.y + HSCREEN_HEIGHT - height;
+	VECTOR2 diff = (position - Center)*TILE_SIZE;
+	int X = diff.x + HSCREEN_WIDTH;
+	int Y = diff.y + HSCREEN_HEIGHT;
 	image->setScale(DEFAULT_SCALE);
 	image->setX(X); image->setY(Y);
 	image->setCurrentFrame(frame);
 	image->draw();
-	if(_drawStruct) S->draw(Center);
 }
 
 void Tile::handleCollisions(Entity* E)
@@ -37,10 +34,21 @@ void Tile::handleCollisions(Entity* E)
 void Tile::drawObjects(VECTOR2& Center)
 {
 	if(objects.empty()) return;
-	for(auto p = objects.begin(); p != objects.end(); p++)
+	list<Object*> temp = objects;
+	while(!temp.empty())
 	{
-		int ymin = position.y;
-		(*p)->draw(Center);
+		Object* Obj = 0;
+		float max = position.y + 10;
+		for(auto p = temp.begin(); p != temp.end(); p++)
+		{
+			if((*p)->getPosition().y <= max)
+			{
+				max = (*p)->getPosition().y;
+				Obj = *p;
+			}
+		}
+		Obj->draw(Center);
+		temp.remove(Obj);
 	}
 }
 
@@ -51,25 +59,14 @@ void Tile::interact(Entity* E)
 
 void Tile::add(Object* Obj)
 {
-	if(objects.empty())
-	{
-		objects.push_back(Obj);
-		return;
-	}
-	auto p = objects.begin();
-	int Y = Obj->getPosition().y;
-	for(; p != objects.end(); p++)
-		if((*p)->getPosition().y > Y)
-			continue;
-
-	objects.insert(p, Obj);
+	objects.push_back(Obj);
 }
 
 void World::draw(VECTOR2& Center, bool magicSight)
 {
 	if(!_initialized) return;
-	int x0 = max(0, (Center.x-HSCREEN_WIDTH)/TILE_SIZE), y0 = max(0, (Center.y-HSCREEN_HEIGHT)/TILE_SIZE);
-	int x1 = min(width, (Center.x + SCREEN_WIDTH)/TILE_SIZE), y1 = min(height, (Center.y + SCREEN_HEIGHT)/TILE_SIZE);
+	int x0 = max(0, Center.x-HSCREEN_WIDTH/TILE_SIZE-1), y0 = max(0, Center.y-HSCREEN_HEIGHT/TILE_SIZE-1);
+	int x1 = min(width, Center.x + SCREEN_WIDTH/TILE_SIZE), y1 = min(height, Center.y + SCREEN_HEIGHT/TILE_SIZE);
 
 	// Structures
 	for(auto p = structures.begin(); p != structures.end(); p++)
@@ -90,16 +87,10 @@ void World::collisions()
 {
 	// For now, brute force algorithm
 	for(auto p = projectiles.begin(); p != projectiles.end(); p++)
-	{
 		for(auto e = entities.begin(); e != entities.end(); e++)
 			if((*e)->isActive() && (*p)->isActive() && (*p)->getTeam() != (*e)->getTeam() && HandleCollision(*e, *p))
-			{
 				(*e)->receiveDamage(*p);
-			}
-	}
-
 	for(auto e = entities.begin(); e != entities.end(); e++)
-	{
 		if((*e)->isActive())
 		{
 			int LX = max(0, (int)(*e)->getPosition().x - 1);
@@ -107,12 +98,9 @@ void World::collisions()
 			int LY = max(0, (int)(*e)->getPosition().y - 1);
 			int UY = min(width, (int)(*e)->getPosition().y + 1);
 			for(int i=LX; i<=LY; i++)
-			{
 				for(int j=LY; j<=LY; j++)
 					tiles[i][j]->handleCollisions(*e);
-			}
 		}
-	}
 }
 
 void World::addStructure(Structure* S)
@@ -164,15 +152,15 @@ bool World::canMoveHere(Object* E, VECTOR2& position)
 bool World::collidesWithTile(Object* E, VECTOR2& position)
 {
 	float radius = E->getRadius();
-	VECTOR2 topLeft, topRight, bottomLeft, bottomRight;
-	topLeft = position + VECTOR2(0.5-radius,0.9-radius);
-	topRight = position + VECTOR2(0.5+radius,0.9-radius);
-	bottomLeft = position + VECTOR2(0.5-radius,0.7+radius);
-	bottomRight = position + VECTOR2(0.5+radius,0.7+radius);
-	if(	isTraversible(topLeft) && 
-		isTraversible(topRight) &&
-		isTraversible(bottomLeft) && 
-		isTraversible(bottomRight))
+	VECTOR2 top, right, bottom, left;
+	top = position + VECTOR2(0,radius);
+	right = position + VECTOR2(radius,0);
+	bottom = position + VECTOR2(0,-radius);
+	left = position + VECTOR2(-radius,0);
+	if(	isTraversible(top) && 
+		isTraversible(right) &&
+		isTraversible(bottom) && 
+		isTraversible(left))
 	{
 		return false;	
 	}	
@@ -219,8 +207,6 @@ bool World::isTraversible(VECTOR2 T)
 		return false; // Off the world map
 	return getTile((int)(T.x), (int)(T.y))->isTraversable();
 }
-
-void World::act() {}
 
 void World::update(float frameTime)
 {

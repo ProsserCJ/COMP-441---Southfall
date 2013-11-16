@@ -4,9 +4,9 @@
 void Structure::draw(VECTOR2 Center)
 {
 	if(noImage()) return; // if the image is null
-	VECTOR2 diff = TL*TILE_SIZE - Center;
-	int X = diff.x + HSCREEN_WIDTH - HTILE_SIZE;
-	int Y = diff.y + HSCREEN_HEIGHT - HTILE_SIZE;
+	VECTOR2 diff = (TL - Center)*TILE_SIZE;
+	int X = diff.x + HSCREEN_WIDTH;
+	int Y = diff.y + HSCREEN_HEIGHT;
 	setFrame();
 	setScale(DEFAULT_SCALE);
 	setImageX(X); setImageY(Y);

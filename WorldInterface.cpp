@@ -96,7 +96,7 @@ World* WorldInterface::loadWorld(const string& fileName)
 		fin.get(c);
 	}
 	
-	//read in NPCs
+	// Read in NPCs
 	int npcCount;
 	fin >> npcCount;
 	for (int i=0; i<npcCount; i++)
@@ -155,7 +155,7 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 		case 'f': // Tree
 		{
 			W->getTile(x,y) = new Tile(VECTOR2(x,y), &GrassIM, false);
-			W->addObject(new Object(VECTOR2(x,y), 0, 0.5, &TreeIM, CIRCLE));
+			W->addObject(new Object(VECTOR2(x+0.5,y+0.5), 0, 0.25, &TreeIM, CIRCLE));
 			break;
 		}
 		case 'b': // Boulder

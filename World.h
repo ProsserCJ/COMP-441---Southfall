@@ -29,7 +29,7 @@ class Tile
 public:
 	Tile(VECTOR2 position, Image* image, bool trav=true, int frame=0) 
 		: position(position), image(image), _traversable(trav), 
-		S(0), _drawStruct(false), frame(frame) {};
+		S(0), frame(frame) {};
 	~Tile() {}
 
 	void draw(VECTOR2& Center);
@@ -42,7 +42,7 @@ public:
 	Structure* getStructure()	{return S;}
 
 	// Mutators
-	void giveStructure(Structure* S, bool draw=false)	{this->S = S;_drawStruct=draw;}
+	void giveStructure(Structure* S)	{this->S = S;}
 	void interact(Entity* E);	// Open a door on the tile or things like that
 	void add(Object* Obj);
 	void remove(Object* Obj)	{objects.remove(Obj);}
@@ -50,7 +50,6 @@ public:
 private:
 	VECTOR2 position;	// Position of the tile in the world
 	bool _traversable;	// True if entities can walk on it
-	bool _drawStruct;	// True if the tile should draw the structure on it
 	Structure* S;		// A building is sitting over this tile
 	
 	Image* image;		// Base image of the tile
@@ -72,7 +71,7 @@ public:
 	void draw(VECTOR2& Center, bool magicSight);
 	void update(float frameTime);
 	void collisions();
-	void act();
+	void act() {}
 
 	// Accessors
 	Tile* &		getTile(int x, int y)	{return tiles[x][y];}

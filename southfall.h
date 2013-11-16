@@ -49,7 +49,7 @@ public:
 	// Accessors
 	VECTOR2 heroPosition()	{return player->getPosition();}
 	World* getWorld()		{return Interface.getCurrent();}
-	VECTOR2 Center()		{return TILE_SIZE*player->getPosition();}
+	VECTOR2 Center()		{return player->getPosition();}
 
 private:
     Menu* mainMenu;

@@ -158,14 +158,14 @@ inline void StructureInterface::assignTile(World* & W, char c, int x, int y, Wor
 		case 'd': // Inside Horizontal door
 		{
 			T = new Tile(VECTOR2(x,y), &WoodTileIM, false);
-			T->giveStructure(new Door(VECTOR2(x,y),1,1,&HorizInHouseDoorIM), true); 
+			T->giveStructure(new Door(VECTOR2(x,y),1,1,&HorizInHouseDoorIM)); 
 			W->getTile(x,y) = T;
 			break;
 		}
 		case '|': // Inside Vertical door
 		{
 			T = new Tile(VECTOR2(x,y), &WoodTileIM, false);
-			T->giveStructure(new Door(VECTOR2(x,y),1,1,&VertInHouseDoorIM), true); 
+			T->giveStructure(new Door(VECTOR2(x,y),1,1,&VertInHouseDoorIM)); 
 			W->getTile(x,y) = T;
 			break;
 		}

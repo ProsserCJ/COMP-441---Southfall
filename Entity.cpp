@@ -114,9 +114,9 @@ void Object::update(float frameTime, World* W)
 void Object::draw(VECTOR2& Center, DWORD color)
 {
 	if(!active) return;
-	VECTOR2 diff = getPosition()*TILE_SIZE - Center;
+	VECTOR2 diff = (getPosition() - Center)*TILE_SIZE;
 	int X = diff.x + HSCREEN_WIDTH - 0.5*getImageWidth()*getImageScale();
-	int Y = diff.y + HSCREEN_HEIGHT - 0.5*getImageHeight()*getImageScale();
+	int Y = diff.y + HSCREEN_HEIGHT - getImageHeight()*getImageScale();
 	getImage()->setScale(DEFAULT_SCALE);
 	setFrame();
 	setImageX(X); setImageY(Y);
@@ -141,9 +141,9 @@ void Entity::initialize()
 inline void Object::handleSectors(World* W)
 {
 	VECTOR2 V = getPosition();
-	int LX = (int)(getLastPosition().x+0.5);
-	int LY = (int)(getLastPosition().y+0.5);
-	int X = (int)(V.x+0.5), Y = (int)(V.y+0.5);
+	int LX = (int)(getLastPosition().x);
+	int LY = (int)(getLastPosition().y);
+	int X = (int)(V.x), Y = (int)(V.y);
 	if(LX != X || LY != Y)
 	{
 		W->getTile(LX,LY)->remove(this);
@@ -185,8 +185,6 @@ void Entity::update(float frameTime, World* W)
 			setPosition(getPosition() + speed*velocity*frameTime);
 		}
 		else standing();
-		
-		
 		handleSectors(W);
 	}
 	else
@@ -270,28 +268,16 @@ void Entity::interact(World* W)
 	switch(facing)
 	{
 	case UP:
-		if(0<y)
-		{
-			W->getTile(x,y-range)->interact(this);
-		}
+		if(0<y) W->getTile(x,y-range)->interact(this);
 		break;
 	case DOWN:
-		if(y+range<W->getHeight())
-		{
-			W->getTile(x,y+range)->interact(this);
-		}
+		if(y+range<W->getHeight()) W->getTile(x,y+range)->interact(this);
 		break;
 	case RIGHT:
-		if(x+range<W->getWidth())
-		{
-			W->getTile(x+range,y)->interact(this);
-		}
+		if(x+range<W->getWidth()) W->getTile(x+range,y)->interact(this);
 		break;
 	case LEFT:
-		if(0<x)
-		{
-			W->getTile(x-range,y)->interact(this);
-		}
+		if(0<x) W->getTile(x-range,y)->interact(this);
 		break;
 	}
 }
@@ -319,7 +305,7 @@ void Entity::attack(float orient)
 
 	if (orient > PI/4 && orient <= 3*PI/4) 
 	{
-		facing = DOWN;		
+		facing = DOWN;
 		setSingleLoop(ATTACK_DOWN_START, ATTACK_DOWN_END, .08);
 	}
 	else if (orient <= -3*PI/4 || orient > 3*PI/4) 
@@ -334,7 +320,7 @@ void Entity::attack(float orient)
 	}
 	else if (orient > -PI/4 && orient <= PI/4) 
 	{
-		facing = RIGHT;	
+		facing = RIGHT;
 		setSingleLoop(ATTACK_RIGHT_START, ATTACK_RIGHT_END, .08);
 	}
 }
