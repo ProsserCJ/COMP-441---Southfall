@@ -27,6 +27,8 @@ const VECTOR2 HSCREEN(HSCREEN_WIDTH, HSCREEN_HEIGHT);
 const float DEFAULT_FRAME_DELAY = 0.2f;
 const float INTERACTIONDELAY = 0.5f;
 const float ACTIONDELAY = 0.5f;
+const float ATTACK_TIME_DELAY = 0.2f;
+const float ATTACK_FRAME_RATE = 0.08f;
 
 enum OBJECTTYPE {PROJECTILE, OBJECT, ENTITY, NPCTYPE, HEROTYPE};
 
@@ -40,7 +42,7 @@ struct ColRect
 // Collision Rectangles
 const ColRect EMPTY_RECT(0.f,0.f);
 const ColRect HUMAN_CRECT(0.2f,1.0f);
-const ColRect WRAITH_CRECT(0.25f,3.0f);
+const ColRect WRAITH_CRECT(0.25f,2.8f);
 const ColRect TREE_CRECT(0.25f, 1.2f);
 
 // Entity Namespace

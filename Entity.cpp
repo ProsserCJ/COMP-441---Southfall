@@ -82,6 +82,7 @@ void Drawable::setSingleLoop(int start, int end, float frameDelay)
 		_startFrame=start;
 		_endFrame=end;
 		_frame=start;
+		_imageDelay = frameDelay;
 	}
 }
 
@@ -170,7 +171,7 @@ void Entity::update(float frameTime, World* W)
 	timeSinceAction += frameTime;
 	if(attacking)
 	{
-		if (timeSinceAttack > .18)
+		if (timeSinceAttack > ATTACK_TIME_DELAY)
 		{
 			attacking = false;
 			setFrameDelay(DEFAULT_FRAME_DELAY);
@@ -319,26 +320,25 @@ void Entity::attack(float orient)
 	if(_skip || !active || attacking) return;
 	timeSinceAttack = 0;
 	attacking = true;
-
 	if (orient > PI/4 && orient <= 3*PI/4) 
 	{
 		facing = DOWN;
-		setSingleLoop(ATTACK_DOWN_START, ATTACK_DOWN_END, .08);
+		setSingleLoop(ATTACK_DOWN_START, ATTACK_DOWN_END, ATTACK_FRAME_RATE);
 	}
 	else if (orient <= -3*PI/4 || orient > 3*PI/4) 
 	{
 		facing = LEFT;
-		setSingleLoop(ATTACK_LEFT_START, ATTACK_LEFT_END, .08);
+		setSingleLoop(ATTACK_LEFT_START, ATTACK_LEFT_END, ATTACK_FRAME_RATE);
 	}
 	else if (orient <= -PI/4 && orient > -3*PI/4) 
 	{
 		facing = UP;
-		setSingleLoop(ATTACK_UP_START, ATTACK_UP_END, .08);
+		setSingleLoop(ATTACK_UP_START, ATTACK_UP_END, ATTACK_FRAME_RATE);
 	}
 	else if (orient > -PI/4 && orient <= PI/4) 
 	{
 		facing = RIGHT;
-		setSingleLoop(ATTACK_RIGHT_START, ATTACK_RIGHT_END, .08);
+		setSingleLoop(ATTACK_RIGHT_START, ATTACK_RIGHT_END, ATTACK_FRAME_RATE);
 	}
 }
 
@@ -404,15 +404,49 @@ bool ProjectileCollision(Projectile* P, Collidable* E)
 	if(!E->hasRect || !E->isActive() || !P->isActive() || E->_skip) return false;
 	ColRect CR = E->collisionRectangle;
 	VECTOR2 pos = E->position;
-	float left = pos.x - CR.boxRadius - P->getRadius();
-	float right = pos.x + CR.boxRadius + P->getRadius();
-	float top = pos.y - CR.height - P->getRadius();
-	float bot = pos.y + P->getRadius();
+	float radius = P->getRadius();
+	float left = pos.x - CR.boxRadius - radius;
+	float right = pos.x + CR.boxRadius + radius;
+	float top = pos.y - CR.height - radius;
+	float bot = pos.y + radius;
+	// Check Voronoi regions
+	
+	// Top left
+	if(P->position.x < left && P->position.y < top)
+	{
+		/*VECTOR2 diff = P->getPosition() - pos - VECTOR2(CR.boxRadius, CR.height);
+		if(D3DXVec2Length(&diff) < radius*radius)
+			return true;*/
+		return false;
+	}
+	// Top right
+	if(right < P->position.x && P->position.y < top)
+	{
+		/*VECTOR2 diff = P->getPosition() - pos - VECTOR2(-CR.boxRadius, CR.height);
+		if(D3DXVec2Length(&diff) < radius*radius)
+			return true;*/
+		return false;
+	}
+	// Bottom left
+	if(P->position.x < left && bot < P->position.y)
+	{
+		/*VECTOR2 diff = P->getPosition() - pos + VECTOR2(CR.boxRadius, 0);
+		if(D3DXVec2Length(&diff) < radius*radius)
+			return true;*/
+		return false;
+	}
+	// Bottom right
+	if(right < P->position.x && bot < P->position.y)
+	{
+		/*VECTOR2 diff = P->getPosition() - pos - VECTOR2(CR.boxRadius, 0);
+		if(D3DXVec2Length(&diff) < radius*radius)
+			return true;*/
+		return false;
+	}
+
 	// Assumes Projectiles are circles
 	if(left < P->position.x && P->position.x < right && 
 		top < P->position.y && P->position.y < bot)
 		return true;
-
-	// Neglects Voroni zones
 	return false;
 }

@@ -39,7 +39,7 @@ void Hero::update(float frameTime, World* W)
     else if (input->isKeyDown(AKEY))			go(LEFT);
     else if (input->isKeyDown(DKEY))			go(RIGHT);    
 	else										standing();
-	if (input->wasKeyPressed('E'))
+	if(input->wasKeyPressed('E'))
 	{// Interaction key
 		NPCFacing = W->getNPCFacing(getPosition(), facing);
 		if (NPCFacing && NPCFacing->getType() == NPCTYPE)

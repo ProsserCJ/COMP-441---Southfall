@@ -6,7 +6,7 @@
 #include "entity.h"
 #include "ImageLibrary.h"
 
-enum PRIORITY {IDLE, ATTACK};
+enum PRIORITY {IDLE, SEARCH, ATTACK};
 
 const float SEARCHDELAY = 0.2;
 const float EVALUATEDELAY = 0.5;
@@ -41,6 +41,7 @@ protected:
 	virtual void _assessPriority(World* W) = 0;
 	virtual void _idle(float frameTime, World* W);
 	virtual void _attack(float frameTime, World* W) = 0;
+	virtual void _search(float frameTime, World* W) = 0;
 
 	float searchDelay;
 	float evaluateDelay;
@@ -55,6 +56,7 @@ public:
 protected:
 	virtual void _assessPriority(World* W) {};
 	virtual void _attack(float frameTime, World* W) {};
+	virtual void _search(float frameTime, World* W) {};
 };
 
 class WraithAI : public npcAI
@@ -62,9 +64,10 @@ class WraithAI : public npcAI
 public:
 	WraithAI(Entity* E) : npcAI(E) {};
 protected:
-	virtual void _assessPriority(World* W) {};
+	virtual void _assessPriority(World* W);
 	//virtual void _idle(float frameTime, World* W);
 	virtual void _attack(float frameTime, World* W);
+	virtual void _search(float frameTime, World* W);
 };
 
 #endif
