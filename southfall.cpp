@@ -36,8 +36,9 @@ void Southfall::initialize(HWND hwnd)
 	pause = false;
 
 	// Graphics
-	initializeGraphics();
-
+	graphics = new Graphics();
+    graphics->initialize(hwnd, SCREEN_WIDTH, SCREEN_HEIGHT, FULLSCREEN);
+	NPC::initGraphics(graphics);
 	imageLibrary = new ImageLibrary(graphics);
 
 	// Menu
@@ -85,106 +86,6 @@ void Southfall::initialize(HWND hwnd)
 	// Add a test enemy wraith
 	player->getWorld()->addAIEntity(new Entity(VECTOR2(100,105), 0.5, 150, &imageLibrary->WraithIM, 1, WRAITH_CRECT));
 
-}
-
-//=============================================================================
-// Initialize images and textures
-//=============================================================================
-void Southfall::initializeGraphics()
-{
-	graphics = new Graphics();
-    graphics->initialize(hwnd, SCREEN_WIDTH, SCREEN_HEIGHT, FULLSCREEN);
-
-	// Characters and npcs
-
-	//// Character 1
-	//if(!Character1TX.initialize(graphics, CHARACTER2_SHEET))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character 1 texture"));
-	//if(!Character1IM.initialize(graphics, 32, 32, 8, &Character1TX))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character 1 image"));
-	//// Goblin 1
-	//if(!Goblin1TX.initialize(graphics, GOBLIN1_SHEET))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Goblin 1 texture"));
-	//if(!Goblin1IM.initialize(graphics, 32, 32, 8, &Goblin1TX))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Goblin 1 image"));
-	//// Wraith 
-	//if(!WraithTX.initialize(graphics, WRAITH1_SHEET))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wraith texture"));
-	//if(!WraithIM.initialize(graphics, 32, 96, 8, &WraithTX))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wraith image"));
-
-	//// Textbox
-	//if(!TextBoxTX.initialize(graphics, TEXTBOX))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox texture"));
-	//if(!TextBoxIM.initialize(graphics, 1000, 200, 1, &TextBoxTX))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox image"));
-	//// Textbox arrow
-	//if(!TextBoxArrowTX.initialize(graphics, TEXTBOX_ARROW))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox arrow texture"));
-	//if(!TextBoxArrowIM.initialize(graphics, 35, 20, 4, &TextBoxArrowTX))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox arrow image"));
-	//
-	//// Icons and spells
-
-	//// Impede effect
-	//if(!ImpedeEffectTX.initialize(graphics, IMPEDEEFFECTICON))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Impede effect texture"));
-	//if(!ImpedeEffectIM.initialize(graphics, 0, 0, 0, &ImpedeEffectTX))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Impede effect image"));
-	//// Portal Opening
-	//if(!PortalOpenTX.initialize(graphics, PORTALOPEN))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal open texture"));
-	//if(!PortalOpenIM.initialize(graphics, 0, 0, 0, &PortalOpenTX))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal open image"));
-	//// Portal Exit
-	//if(!PortalCloseTX.initialize(graphics, PORTALCLOSE))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal close texture"));
-	//if(!PortalCloseIM.initialize(graphics, 0, 0, 0, &PortalCloseTX))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal close image"));
-	//// Sword Icon
-	//if(!SwordIconTX.initialize(graphics, SWORDICON))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing SwordIcon texture"));
-	//if(!SwordIconIM.initialize(graphics, 0, 0, 0, &SwordIconTX))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing SwordIcon image"));
-	//// Blink Icon
-	//if(!BlinkIconTX.initialize(graphics, BLINKICON))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing BlinkIcon texture"));
-	//if(!BlinkIconIM.initialize(graphics, 0, 0, 0, &BlinkIconTX))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing BlinkIcon image"));
-	//// Fireball Icon
-	//if(!FireballIconTX.initialize(graphics, FIREBALLICON))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing FireballIcon texture"));
-	//if(!FireballIconIM.initialize(graphics, 0, 0, 0, &FireballIconTX))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing FireballIcon image"));
-	//// Magic Sight On Icon
-	//if(!MagicSightOnTX.initialize(graphics, MAGICSIGHTONICON))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing MagicSightOn texture"));
-	//if(!MagicSightOnIM.initialize(graphics, 0, 0, 0, &MagicSightOnTX))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing MagicSightOn image"));
-	//// Magic Sight Off Icon
-	//if(!MagicSightOffTX.initialize(graphics, MAGICSIGHTOFFICON))
-	//  throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing MagicSightOff texture"));
-	//if(!MagicSightOffIM.initialize(graphics, 0, 0, 0, &MagicSightOffTX))
-	//  throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing MagicSightOff image"));
-	//// Shadowball Icon
-	//if(!ShadowballIconTX.initialize(graphics, SHADOWBALLICON))
-	//  throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Shadowball texture"));
-	//if(!ShadowballIconIM.initialize(graphics, 0, 0, 0, &ShadowballIconTX))
-	//  throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Shadowball image"));
-
-	//// Fireball projectile
-	//if(!FireballSheetTX.initialize(graphics, FIREBALLSHEET))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Fireball sheet texture"));
-	//if(!FireballSheetIM.initialize(graphics, 16, 16, 4, &FireballSheetTX))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Fireball sheet image"));
-	//// Shadowball projectile
-	//if(!ShadowballSheetTX.initialize(graphics, SHADOWBALLSHEET))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Shadowball sheet texture"));
-	//if(!ShadowballSheetIM.initialize(graphics, 16, 16, 4, &ShadowballSheetTX))
-	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Shadowball sheet image"));
-	//
-
-	NPC::initGraphics(graphics);
 }
 
 //=============================================================================
