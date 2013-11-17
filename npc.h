@@ -27,8 +27,8 @@ class NPC: public Entity
 {
 public:
 	NPC() : Entity() {}
-	NPC(int ID, VECTOR2 pos, Image* image)
-		: Entity(pos, npcNS::RADIUS, npcNS::HP, image, 0, HUMAN_CRECT, NPCTYPE)
+	NPC(int ID, VECTOR2 pos, Image* image, Drawable* attackImage=0)
+		: Entity(pos, npcNS::RADIUS, npcNS::HP, image, 0, HUMAN_CRECT, attackImage, NPCTYPE)
 	{initialize();}
 	~NPC() {}
 

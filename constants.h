@@ -152,6 +152,7 @@ const char SHADOWBALLICON[] = "Images\\ShadowballIcon.png";
 const char GAMEMENUBACK[] = "Images\\GameMenuBackground.png";
 const char FIREBALLSHEET[] = "Images\\FireballSheet.png";
 const char SHADOWBALLSHEET[] = "Images\\ShadowballSheet.png";
+const char SWINGINGSWORD[] = "Images\\SwingingSwordSheet.png";
 // Worlds
 const string BAR1STRUCTURE = "Worlds\\Bar1.txt";
 const string BAR2STRUCTURE = "Worlds\\Bar2.txt";

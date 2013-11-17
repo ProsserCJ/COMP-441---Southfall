@@ -223,4 +223,10 @@ void ImageLibrary::initialize(Graphics* graphics)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing LChair texture"));
 	if(!LChairIM.initialize(graphics, 0, 0, 0, &LChairTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing LChair image"));	
+
+	// Swinging sword
+	if(!SwingingSwordTX.initialize(graphics, SWINGINGSWORD))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing SwingingSword texture"));
+	if(!SwingingSwordIM.initialize(graphics, 64, 32, 8, &SwingingSwordTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing SwingingSword image"));	
 }

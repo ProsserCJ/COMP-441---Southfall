@@ -49,6 +49,7 @@ public:
 	Image LChairIM;
 	Image HorizInHouseDoorIM;
 	Image VertInHouseDoorIM;
+	Image SwingingSwordIM;
 
 private:
 	bool _initialized;
@@ -89,6 +90,7 @@ private:
 	TextureManager BedTX;
 	TextureManager HouseDoorTX;
 	TextureManager HouseWallTX;
+	TextureManager SwingingSwordTX;
 };
 
 #endif

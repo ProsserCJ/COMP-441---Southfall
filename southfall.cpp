@@ -63,7 +63,8 @@ void Southfall::initialize(HWND hwnd)
 	textbox->setActive(false);
 	
 	// Initialized Player here, have center point at player's position
-	player = new Hero(ZERO, heroNS::HERO_RADIUS, &imageLibrary->Character1IM, input, audio, textbox);	
+	player = new Hero(ZERO, heroNS::HERO_RADIUS, &imageLibrary->Character1IM, input, 
+		audio, textbox, new Drawable(&imageLibrary->SwingingSwordIM));
 	player->setPosition(VECTOR2(102.5,96.5));
 	player->setWorld(Interface->getCurrent());
 	player->getWorld()->addEntity(player);
@@ -193,7 +194,7 @@ inline void Southfall::playerClickActions()
 		{
 		case NOSPELL:
 			if (!player->isAttacking()) audio->playCue(HOOH);
-			player->attack(orient);
+			player->attack(orient);			
 			break;
 		case IMPEDE:
 			player->getWorld()->addEffect(new ImpedeEffect(target, 0.2, &imageLibrary->ImpedeEffectIM));

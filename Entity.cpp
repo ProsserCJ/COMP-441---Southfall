@@ -190,8 +190,8 @@ void Entity::update(float frameTime, World* W)
 		Object::update(frameTime, W);		
 		if(startMoving && W->canMoveHere(this, newPos))
 		{
-			W->collidesWithEffect(this, newPos);
-			setPosition(newPos);
+			W->collidesWithEffect(this, getPosition() + speed*velocity*frameTime);
+			setPosition(getPosition() + speed*velocity*frameTime);
 		}
 		else standing();
 		handleSectors(W);
@@ -209,6 +209,17 @@ void Entity::draw(VECTOR2& Center, DWORD color)
 	if(_skip || !active) return;
 	if(!_frozen) Object::draw(Center, color);
 	else Object::draw(Center, graphicsNS::BLUE);
+	// Draw sword
+	if(attacking && attackImage != 0) 
+	{
+		VECTOR2 diff = (getPosition() - Center)*TILE_SIZE;
+		int X = diff.x + HSCREEN_WIDTH - 32*getImageScale();
+		int Y = diff.y + HSCREEN_HEIGHT - 32*getImageScale();
+		attackImage->getImage()->setScale(DEFAULT_SCALE);
+		attackImage->setFrame();
+		attackImage->setImageX(X); attackImage->setImageY(Y);
+		attackImage->draw();
+	}
 }
 
 void Entity::act(World* W)
@@ -312,7 +323,7 @@ void Entity::go(DIR face)
 void Entity::standing()
 {
 	if(_skip || !active) return;
-	startMoving = (knockback != ZERO); 
+	startMoving = false;
 	moving=false;
 	if (!attacking) setStandingImage();
 }
@@ -326,21 +337,25 @@ void Entity::attack(float orient)
 	{
 		facing = DOWN;
 		setSingleLoop(ATTACK_DOWN_START, ATTACK_DOWN_END, ATTACK_FRAME_RATE);
+		if(attackImage) attackImage->setSingleLoop(DOWN_SWORD_START, DOWN_SWORD_END, ATTACK_FRAME_RATE);
 	}
 	else if (orient <= -3*PI/4 || orient > 3*PI/4) 
 	{
 		facing = LEFT;
 		setSingleLoop(ATTACK_LEFT_START, ATTACK_LEFT_END, ATTACK_FRAME_RATE);
+		if(attackImage) attackImage->setSingleLoop(LEFT_SWORD_START, LEFT_SWORD_END, ATTACK_FRAME_RATE);
 	}
 	else if (orient <= -PI/4 && orient > -3*PI/4) 
 	{
 		facing = UP;
 		setSingleLoop(ATTACK_UP_START, ATTACK_UP_END, ATTACK_FRAME_RATE);
+		if(attackImage) attackImage->setSingleLoop(UP_SWORD_START, UP_SWORD_END, ATTACK_FRAME_RATE);
 	}
 	else if (orient > -PI/4 && orient <= PI/4) 
 	{
 		facing = RIGHT;
 		setSingleLoop(ATTACK_RIGHT_START, ATTACK_RIGHT_END, ATTACK_FRAME_RATE);
+		if(attackImage) attackImage->setSingleLoop(RIGHT_SWORD_START, RIGHT_SWORD_END, ATTACK_FRAME_RATE);
 	}
 
 	VECTOR2 newPos = position;
@@ -352,7 +367,7 @@ void Entity::attack(float orient)
 	case RIGHT: newPos.x += .5; break;
 	}
 
-	getWorld()->addProjectile(new Projectile(newPos,.0001,.5,.00001, 0, 0, 15));
+	getWorld()->addProjectile(new Projectile(newPos,.0001,.5,.00001,0, getImage(), 15));
 
 
 }
@@ -375,12 +390,6 @@ void Entity::setStandingImage()
 void Entity::receiveDamage(Projectile* P)
 {
 	skip(P->getSkipTime());
-	VECTOR2 temp = P->getVelocity();
-	D3DXVec2Normalize(&temp,&temp);
-	setKnockback(temp*.65);
-	_skip = false;
-	setActive(true);
-	_frozen = false;	
 	// Freeze
 	HP -= P->getDamage();
 }

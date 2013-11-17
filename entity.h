@@ -86,6 +86,15 @@ namespace entityNS
 	const int ATTACK_UP_END = 54;
 	const int ATTACK_LEFT_START = 40;
 	const int ATTACK_LEFT_END = 42;
+	// Sword frames
+	const int LEFT_SWORD_START=0;
+	const int LEFT_SWORD_END=3;
+	const int RIGHT_SWORD_START=4;
+	const int RIGHT_SWORD_END=7;
+	const int DOWN_SWORD_START=8;
+	const int DOWN_SWORD_END=11;
+	const int UP_SWORD_START=12;
+	const int UP_SWORD_END=15;
 
 }
 using namespace entityNS;
@@ -102,17 +111,18 @@ public:
 
 	// Accessors
 	Image* & getImage()						{return image;}
-	int getFrame()							{return _frame;}
-	int getEndFrame()						{return _endFrame;}
-	bool noImage()							{return image == 0;}
-	int getImageWidth()						{return image->getWidth();}
-	int getImageHeight()					{return image->getHeight();}
-	float getImageScale()					{return image->getScale();}
+	int getFrame()							const {return _frame;}
+	int getEndFrame()						const {return _endFrame;}
+	bool noImage()							const {return image == 0;}
+	int getImageWidth()						const {return image->getWidth();}
+	int getImageHeight()					const {return image->getHeight();}
+	float getImageScale()					const {return image->getScale();}
+	bool looping()							const {return _singleLoop;}
 	// Mutators
 	void setImageX(int x)					{image->setX(x);}
 	void setImageY(int y)					{image->setY(y);}
 	void setScale(float scale)				{image->setScale(scale);}
-	void draw(DWORD color=graphicsNS::WHITE){if (image) image->draw(color);}
+	void draw(DWORD color=graphicsNS::WHITE){if(image) image->draw(color);}
 	void updateImage();
 	void setFrame()							{image->setCurrentFrame(_frame);}
 	void setFrame(int frame)				{_frame=frame;}	// Directly set the frame
@@ -223,15 +233,17 @@ class Entity : public Object
 public:
 	// Constructors and destructors
 	Entity() 
-		: Object(), knockback(ZERO), maxHP(0), HP(0), team(0) {initialize();}
-	Entity(VECTOR2 pos, float radius, int HP, Image* image, int team, ColRect CR, OBJECTTYPE type=ENTITY) 
-		: Object(pos, 1.0f, radius, image, CIRCLE, CR, type), HP(HP), maxHP(HP), knockback(ZERO), team(team) {initialize();}
+		: Object(), knockback(ZERO), maxHP(0), HP(0), team(0), attackImage(0) 
+	{initialize();}
+	Entity(VECTOR2 pos, float radius, int HP, Image* image, int team, ColRect CR, Drawable* attackImage = 0, OBJECTTYPE type=ENTITY) 
+		: Object(pos, 1.0f, radius, image, CIRCLE, CR, type), HP(HP), maxHP(HP), knockback(ZERO), team(team), attackImage(attackImage) 
+	{initialize();}
 	~Entity() {};
 
 	// Basic functions
 	void initialize();
 	virtual void draw(VECTOR2& center, DWORD color=graphicsNS::WHITE);
-	virtual void act(World* W);					// AI and decisions
+	virtual void act(World* W);						// AI and decisions
 	virtual void update(float frameTime, World* W);
 	void move(float frameTime, World* W);
 	virtual void interact(World* W);				// Interact with a tile
@@ -285,6 +297,8 @@ protected:
 	SPELLTYPE SpellType;
 	VECTOR2 target;
 	bool _hasTarget;
+
+	Drawable* attackImage;
 
 	bool _frozen;
 	float freezeTime;
