@@ -15,7 +15,8 @@ void Hero::initialize()
 	armor = 0;
 	setFrameDelay(DEFAULT_FRAME_DELAY);
 	speed = HERO_SPEED;
-
+	hasSword = 0;
+	hasFireball = 0;
 	SpellType = PORTALTRAP; // For testing purposes
 };
 
@@ -45,7 +46,11 @@ void Hero::update(float frameTime, World* W)
 		if (NPCFacing && NPCFacing->getType() == NPCTYPE)
 		{
 			audio->playCue(SELECT);
-			turnToPlayer(NPCFacing);				
+			turnToPlayer(NPCFacing);
+			if(NPCFacing->item == "sword")
+				hasSword = true;
+			else if(NPCFacing->item == "fireball")
+				hasFireball = true;
 			textbox->setText(reinterpret_cast<NPC*>(NPCFacing));
 			textbox->setActive(true);
 		}

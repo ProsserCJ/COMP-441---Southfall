@@ -133,7 +133,7 @@ public:
 	void setSingleLoop(int start, int end, float frameDelay);
 	void setFrameDelay(float delay);
 	void startImage();
-
+	string item;
 private:
 	private:
 	// Image and animation control

@@ -40,7 +40,8 @@ public:
 	void turnToPlayer(Entity* n);
 
 	void initialize();
-
+	bool hasSword;
+	bool hasFireball;
 private:	
 	Input* input;
 	Image* armor;
