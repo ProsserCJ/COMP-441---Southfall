@@ -193,7 +193,7 @@ inline void Southfall::playerClickActions()
 		{
 		case NOSPELL:
 			if (!player->isAttacking()) audio->playCue(HOOH);
-			player->attack(orient);			
+			player->attack(orient);
 			break;
 		case IMPEDE:
 			player->getWorld()->addEffect(new ImpedeEffect(target, 0.2, &imageLibrary->ImpedeEffectIM));

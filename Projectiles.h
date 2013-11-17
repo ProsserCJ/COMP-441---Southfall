@@ -34,9 +34,10 @@ public:
 	virtual void interact(Entity* E) {}
 
 	// Accessors
-	int getTeam()	const {return team;}
-	int getDamage()	const {return damage;}
-	int getSkipTime()	const {return skipTime;}
+	int getTeam()			const {return team;}
+	int getDamage()			const {return damage;}
+	int getSkipTime()		const {return skipTime;}
+	VECTOR2 getVelocity()	const {return velocity;}
 
 private:
 	int damage;	// How much damage the projectile does

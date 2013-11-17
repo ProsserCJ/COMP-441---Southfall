@@ -114,7 +114,7 @@ void Object::update(float frameTime, World* W)
 
 void Object::draw(VECTOR2& Center, DWORD color)
 {
-	if(!active) return;
+	if(!active || !getImage()) return;
 	VECTOR2 diff = (getPosition() - Center)*TILE_SIZE;
 	int X = diff.x + HSCREEN_WIDTH - 0.5*getImageWidth()*getImageScale();
 	int Y = diff.y + HSCREEN_HEIGHT - getImageHeight()*getImageScale();
@@ -184,12 +184,14 @@ void Entity::update(float frameTime, World* W)
 	if(magic > maxMagic) magic = maxMagic;	
 	if(!_frozen)
 	{
-		Object::update(frameTime, W);
-		
-		if(startMoving && W->canMoveHere(this, getPosition() + speed*velocity*frameTime))
+		VECTOR2 newPos = getPosition() + speed*velocity*frameTime + knockback;
+		knockback = ZERO;
+
+		Object::update(frameTime, W);		
+		if(startMoving && W->canMoveHere(this, newPos))
 		{
-			W->collidesWithEffect(this, getPosition() + speed*velocity*frameTime);
-			setPosition(getPosition() + speed*velocity*frameTime);
+			W->collidesWithEffect(this, newPos);
+			setPosition(newPos);
 		}
 		else standing();
 		handleSectors(W);
@@ -350,7 +352,7 @@ void Entity::attack(float orient)
 	case RIGHT: newPos.x += .5; break;
 	}
 
-	getWorld()->addProjectile(new Projectile(newPos,.0001,.5,.00001,0, getImage(), 15));
+	getWorld()->addProjectile(new Projectile(newPos,.0001,.5,.00001, 0, 0, 15));
 
 
 }
@@ -373,6 +375,12 @@ void Entity::setStandingImage()
 void Entity::receiveDamage(Projectile* P)
 {
 	skip(P->getSkipTime());
+	VECTOR2 temp = P->getVelocity();
+	D3DXVec2Normalize(&temp,&temp);
+	setKnockback(temp*1.5);
+	_skip = false;
+	setActive(true);
+	_frozen = false;
 	// Freeze
 	HP -= P->getDamage();
 }
