@@ -43,19 +43,41 @@ World* StructureInterface::loadStructure(string fileName, World** external, VECT
 	fin >> npcCount;
 	for (int i=0; i<npcCount; i++)
 	{
-		int ID, textLines, x, y;
-		fin >> ID >> textLines >> x >> y;
-		NPC* temp = new NPC(ID, VECTOR2(x,y), &imageLibrary->Character1IM);
-		string* text = new string[textLines];
-		char buffer[500];
-		fin.get();
-		for (int i=0; i<textLines; i++){ 
-			fin.getline(buffer,500);
-			text[i] = buffer;
+		int ID, textLines;
+		float x, y;
+		fin >> ID;
+		if(ID == 1)
+		{
+			fin >> textLines >> x >> y;
+			x += .5;y += .5;
+			NPC* temp = new NPC(ID, VECTOR2(x,y), &imageLibrary->Character1IM);
+			string* text = new string[textLines];
+			char buffer[500];
+			fin.get();
+			for (int i=0; i<textLines; i++){ 
+				fin.getline(buffer,500);
+				text[i] = buffer;
+			}
+			temp->setText(text, textLines);
+			W->addEntity(temp, new PassiveAI(temp));
 		}
-		temp->setText(text, textLines);
-		W->addEntity(temp, new PassiveAI(temp));
+		else if(ID == 2)
+		{
+			fin >> x >> y;
+			x += .5;y += .5;
+			Entity* wraith = new Entity(VECTOR2(x,y), 0.5, 150, &imageLibrary->WraithIM, 1, WRAITH_CRECT);
+			W->addEntity(wraith, new WraithAI(wraith));
+		}
+		else if(ID == 3)
+		{
+			fin >> x >> y;
+			x += .5;y += .5;
+			Entity* goblin = new Entity(VECTOR2(x,y), 0.5, 150, &imageLibrary->WraithIM, 1, WRAITH_CRECT);
+			W->addEntity(goblin, new WraithAI(goblin));
+		}
+	
 	}
+	
 	// End of npc code
 
 	W->setInitialized(true);
