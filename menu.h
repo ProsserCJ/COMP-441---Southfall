@@ -19,10 +19,23 @@ using std::string;
 namespace menuNS
 {
 	enum{
+		//Main menu items
 		SOUTHFALL,
 		NEWGAME,
 		LOADGAME,
-		EXIT
+		CONTROLS,
+		EXIT,
+
+		//Control menu items
+		CONTROLS_SUB,
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT,
+		INTERACT,
+		MENU,
+		ATTACK_CAST,
+		BACK
 	};
 }
 using namespace menuNS;

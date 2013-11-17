@@ -361,16 +361,16 @@ void Entity::attack(float orient)
 		if(attackImage) attackImage->setSingleLoop(RIGHT_SWORD_START, RIGHT_SWORD_END, ATTACK_FRAME_RATE);
 	}
 
-	VECTOR2 newPos = position;
+	/*VECTOR2 newPos = position;
 	switch(facing)
 	{
-	case UP: newPos.y -= .5; break;
-	case DOWN: newPos.y += .5; break;
-	case LEFT: newPos.x -= .5; break;
-	case RIGHT: newPos.x += .5; break;
-	}
+	case UP: newPos.y -= .25; break;
+	case DOWN: newPos.y += .25; break;
+	case LEFT: newPos.x -= .25; break;
+	case RIGHT: newPos.x += .25; break;
+	}*/
 
-	getWorld()->addProjectile(new Projectile(newPos,.0001,.5,.00001, orient, 0, 15));
+	getWorld()->addProjectile(new Projectile(position,.0001,.75,.00005, orient, 0, 15));
 
 }
 

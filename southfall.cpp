@@ -33,7 +33,7 @@ void Southfall::loadIntro()
 void Southfall::initialize(HWND hwnd)
 {
     Game::initialize(hwnd);
-	currentState = GAME;
+	currentState = MAIN_MENU;
 	pause = false;
 
 	// Graphics
@@ -152,7 +152,11 @@ void Southfall::update()
 			}
 			else if (player->getPosition().y < 65 && fontLoc != 3)
 			{
-				fontTimer = 6; fontLoc = 3;
+				fontTimer = 6; fontLoc = 3; 
+				audio->stopCue(BACKGROUND);				
+				audio->playCue(BATTLE_INTRO);
+				Sleep(3400);
+				audio->playCue(BATTLE);
 			}
 			else if (player->getPosition().x < 50 && fontLoc != 2)
 			{
