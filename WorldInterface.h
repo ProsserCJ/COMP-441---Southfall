@@ -26,6 +26,8 @@ const int HOUSE1HEIGHT = 6;
 class WorldInterface
 {
 public:
+	WorldInterface(ImageLibrary* imageLibrary) 
+		: imageLibrary(imageLibrary) {};
 	void initialize(Graphics* graphics);
 	World* getCurrent() {return Current;}
 
@@ -39,34 +41,7 @@ private:
 
 	//World** worlds;	// An array of template worlds
 
-	// Images and Textures
-	TextureManager GrassTX;
-	Image GrassIM;
-	TextureManager WaterTX;
-	Image WaterIM;
-	TextureManager Boulder1TX;
-	Image Boulder1IM;
-	TextureManager WoodTileTX;
-	Image WoodTileIM;
-	TextureManager Boulder2TX;
-	Image Boulder2IM;
-	TextureManager RiverTX;
-	Image RiverIM;
-	TextureManager MagicPortalTX;
-	Image MagicPortalIM;
-	TextureManager HWallTX;
-	Image HWallIM;
-	TextureManager VWallTX;
-	Image VWallIM;
-	TextureManager CWallTX;
-	Image CWallIM;
-
-	TextureManager HouseTX;
-	Image HouseIM;
-	TextureManager TreeTX;
-	Image TreeIM;
-
-	Graphics* graphics;
+	ImageLibrary* imageLibrary;
 	StructureInterface* StructInt;
 };
 

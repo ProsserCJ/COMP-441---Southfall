@@ -19,12 +19,14 @@ class Item;
 class World;
 class Projectile;
 
-enum SPELLTYPE{NOSPELL, IMPEDE, QUICKPORTAL, BLINK, FIREBALL, FREEZE, MAGICSIGHTON, MAGICSIGHTOFF, PORTALTRAP};
+enum SPELLTYPE{NOSPELL, IMPEDE, QUICKPORTAL, BLINK, FIREBALL, SHADOWBALL, FREEZE, PORTALTRAP, 
+	MAGICSIGHTON, MAGICSIGHTOFF};
 
 const VECTOR2 ZERO(0,0);
 const VECTOR2 HSCREEN(HSCREEN_WIDTH, HSCREEN_HEIGHT);
 const float DEFAULT_FRAME_DELAY = 0.2f;
 const float INTERACTIONDELAY = 0.5f;
+const float ACTIONDELAY = 0.5f;
 
 enum OBJECTTYPE {PROJECTILE, OBJECT, ENTITY, NPCTYPE, HEROTYPE};
 
@@ -38,7 +40,7 @@ struct ColRect
 // Collision Rectangles
 const ColRect EMPTY_RECT(0.f,0.f);
 const ColRect HUMAN_CRECT(0.2f,1.0f);
-const ColRect WRAITH_CRECT(0.25f,6.0f);
+const ColRect WRAITH_CRECT(0.25f,3.0f);
 const ColRect TREE_CRECT(0.25f, 1.2f);
 
 // Entity Namespace
@@ -142,10 +144,10 @@ class Collidable
 public:
 	Collidable(VECTOR2 position, COLLISIONTYPE CT, float radius) 
 		: position(position), collisionType(CT), radius(radius), active(true), 
-		collisionRectangle(EMPTY_RECT), hasRect(false) {}
+		collisionRectangle(EMPTY_RECT), hasRect(false), _skip(false), skipTime(0) {}
 	Collidable(VECTOR2 position, COLLISIONTYPE CT, float radius, ColRect CR) 
 		: position(position), collisionType(CT), radius(radius), active(true), 
-		collisionRectangle(CR), hasRect(true) {}
+		collisionRectangle(CR), hasRect(true), _skip(false), skipTime(0) {}
 
 	// Collision Handler
 	friend bool HandleCollision(Collidable* A, Collidable* B); // True if the objects collided
@@ -167,6 +169,8 @@ protected:
 	bool hasRect;
 	float radius;
 	bool active;
+	bool _skip;
+	float skipTime;
 };
 
 // An object that can appear in the game
@@ -241,6 +245,7 @@ public:
 	DIR getDirectionFacing()	{return facing;}
 	VECTOR2 getTarget()			{return target;}
 	SPELLTYPE getSpellType()	{return SpellType;}
+	bool canAction()			{return timeSinceAction > ACTIONDELAY;}	
 
 	// Mutators
 	void setKnockback(const VECTOR2& kb)	{knockback = kb;}
@@ -250,6 +255,7 @@ public:
 	void setTarget(VECTOR2 T)				{target = T; _hasTarget = true;}
 	void setSpellType(SPELLTYPE S)			{SpellType = S;}
 	void resetTarget()						{_hasTarget = false;}
+	void resetAction()	{timeSinceAction = 0;}
 	void kill()								{HP = 0; active = false;}
 	void receiveDamage(Projectile* p);
 	void setDir(DIR face)					{facing=face;}
@@ -257,6 +263,7 @@ public:
 	void standing();
 	virtual void setStandingImage();
 	void freeze(float time)					{_frozen=true;freezeTime=time;}
+	void skip(float time)					{skipTime = time; _skip = true;}
 	void switchMagicSight()					{_magicSight = !_magicSight;}
 	void setMagicSight(bool s)				{_magicSight = s;}
 

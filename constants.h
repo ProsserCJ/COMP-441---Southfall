@@ -147,9 +147,11 @@ const char BLINKICON[] = "Images\\BlinkIcon1.png";
 const char FIREBALLICON[] = "Images\\FireballIcon.png";
 const char MAGICSIGHTONICON[] = "Images\\MagicSightOnIcon.png";
 const char MAGICSIGHTOFFICON[] = "Images\\MagicSightOffIcon.png";
+const char SHADOWBALLICON[] = "Images\\ShadowballIcon.png";
 // Other
 const char GAMEMENUBACK[] = "Images\\GameMenuBackground.png";
 const char FIREBALLSHEET[] = "Images\\FireballSheet.png";
+const char SHADOWBALLSHEET[] = "Images\\ShadowballSheet.png";
 // Worlds
 const string BAR1STRUCTURE = "Worlds\\Bar1.txt";
 const string BAR2STRUCTURE = "Worlds\\Bar2.txt";

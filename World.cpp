@@ -21,14 +21,12 @@ void Tile::draw(VECTOR2& Center)
 void Tile::handleCollisions(Entity* E)
 {
 	for(auto obj = objects.begin(); obj != objects.end(); obj++)
-	{
-		if((*obj)->getType() == PROJECTILE)
+		if((*obj)->getType() == PROJECTILE && (*obj)->isActive())
 		{
 			Projectile* P = reinterpret_cast<Projectile*>(*obj);
-			if(P->isActive() && E->getTeam() != P->getTeam() && HandleCollision(E, P))
+			if(E->getTeam() != P->getTeam() && ProjectileCollision(P, E))
 				P->interact(E);
 		}
-	}
 }
 
 void Tile::drawObjects(VECTOR2& Center)
@@ -40,13 +38,11 @@ void Tile::drawObjects(VECTOR2& Center)
 		Object* Obj = 0;
 		float max = INT_MAX;
 		for(auto p = temp.begin(); p != temp.end(); p++)
-		{
 			if((*p)->getPosition().y <= max)
 			{
 				max = (*p)->getPosition().y;
 				Obj = *p;
 			}
-		}
 		Obj->draw(Center);
 		temp.remove(Obj);
 	}
@@ -86,21 +82,30 @@ void World::draw(VECTOR2& Center, bool magicSight)
 void World::collisions()
 {
 	// For now, brute force algorithm
-	for(auto p = projectiles.begin(); p != projectiles.end(); p++)
-		for(auto e = entities.begin(); e != entities.end(); e++)
-			if((*e)->isActive() && (*p)->isActive() && (*p)->getTeam() != (*e)->getTeam() && HandleCollision(*e, *p))
-				(*e)->receiveDamage(*p);
 	for(auto e = entities.begin(); e != entities.end(); e++)
-		if((*e)->isActive())
+	{
+		auto p = projectiles.begin();
+		//Projectile* P;
+		list<Projectile*>::iterator q;
+		while(p != projectiles.end())
 		{
-			int LX = max(0, (int)(*e)->getPosition().x - 1);
-			int UX = min(width, (int)(*e)->getPosition().x + 1);
-			int LY = max(0, (int)(*e)->getPosition().y - 1);
-			int UY = min(width, (int)(*e)->getPosition().y + 1);
-			for(int i=LX; i<=LY; i++)
-				for(int j=LY; j<=LY; j++)
-					tiles[i][j]->handleCollisions(*e);
+			q = p;
+			q++;
+			if((*e)->isActive() && (*p)->isActive() && (*p)->getTeam() != (*e)->getTeam() && ProjectileCollision(*p, *e))
+			{
+				(*e)->receiveDamage(*p);
+				(*p)->deactivate();
+			}
+			/*if(!(*p)->isActive())
+			{
+				P = *p;
+				projectiles.erase(p);
+				tiles[P->LTileX()][P->LTileY()]->remove(P);
+				safeDelete<Projectile*>(P);
+			}*/
+			p = q;
 		}
+	}
 }
 
 void World::addStructure(Structure* S)
@@ -118,14 +123,7 @@ void World::addAIEntity(Entity* E)
 {
 	tiles[(int)E->getPosition().x][(int)E->getPosition().y]->add(E);
 	entities.push_back(E);
-	AIs.push_back(new npcAI(E));
-}
-
-void World::addNPC(NPC* npc)
-{
-	tiles[(int)npc->getPosition().x][(int)npc->getPosition().y]->add(npc);
-	entities.push_back(npc);
-	AIs.push_back(new npcAI(npc));
+	AIs.push_back(new npcAI(E,imageLibrary));
 }
 
 void World::addEffect(Effect* E)		
@@ -292,3 +290,29 @@ Entity* World::getNPCFacing(VECTOR2 pos, DIR dir)
 	return closest;
 }
 	
+list<Entity*> World::search(VECTOR2 Center, float sight)
+{
+	int x0 = max(0, Center.x-sight), y0 = max(0, Center.y-sight);
+	int x1 = min(width, Center.x + sight), y1 = min(height, Center.y +sight);
+	float sightsqr = sight*sight;
+	list<Entity*> temp;
+	for(int x = x0; x < x1; x++)
+	{
+		for(int y = y0; y < y1; y++)
+		{
+			for(auto p = tiles[x][y]->begin(); p != tiles[x][y]->end(); p++)
+			{
+				if((*p)->getType() != OBJECT)
+				{
+					Entity* E = reinterpret_cast<Entity*>(*p);
+					const VECTOR2 V = Center - E->getPosition();
+					if(D3DXVec2Length(&V) < sightsqr)
+					{
+						temp.push_back(E);
+					}
+				}
+			}
+		}
+	}
+	return temp;
+}

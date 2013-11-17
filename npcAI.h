@@ -4,19 +4,22 @@
 
 #include "npc.h"
 #include "entity.h"
+#include "ImageLibrary.h"
 
 enum PRIORITY {IDLE, ATTACK};
 
 const float SEARCHDELAY = 0.2;
 const float MOVEMENTLENGTH = 1.0f;
 
+const float WRAITH_SIGHT = 10.0f;
+
 class World;
 
 class npcAI
 {
 public:
-	npcAI() : priority(IDLE), npc(0) {initialize();}
-	npcAI(Entity* E) : npc(E), priority(IDLE) {initialize();}
+	npcAI() : priority(IDLE), npc(0), imageLibrary(0) {initialize();}
+	npcAI(Entity* E, ImageLibrary* IL) : npc(E), priority(IDLE), imageLibrary(IL) {initialize();}
 
 	void update(float frameTime, World* W);
 	void initialize();
@@ -30,6 +33,8 @@ private:
 	Entity* npc;	// The npc the ai controls
 	Entity* target;
 	PRIORITY priority;
+
+	ImageLibrary* imageLibrary;
 
 	inline void act(float frameTime, World* W);
 

@@ -38,6 +38,8 @@ void Southfall::initialize(HWND hwnd)
 	// Graphics
 	initializeGraphics();
 
+	imageLibrary = new ImageLibrary(graphics);
+
 	// Menu
 	mainMenu = new Menu();
 	mainMenu->initialize(graphics, input);
@@ -51,52 +53,37 @@ void Southfall::initialize(HWND hwnd)
 	gameFont->setFontColor(SETCOLOR_ARGB(255,255,255,255));	
 
 	// WorldInterface
-	Interface.initialize(graphics);
+	Interface = new WorldInterface(imageLibrary);
+	Interface->initialize(graphics);
 
 	//Initialize global TextBox
-	textbox = new TextBox(gameFont, audio, input, &TextBoxIM, &TextBoxArrowIM);
+	textbox = new TextBox(gameFont, audio, input, &imageLibrary->TextBoxIM, &imageLibrary->TextBoxArrowIM);
 	textbox->setActive(false);
 	
 	// Initialized Player here, have center point at player's position
-	player = new Hero(ZERO, heroNS::HERO_RADIUS, &Character1IM, input, audio, textbox);	
+	player = new Hero(ZERO, heroNS::HERO_RADIUS, &imageLibrary->Character1IM, input, audio, textbox);	
 	player->setPosition(VECTOR2(102.5,96.5));
-	player->setWorld(Interface.getCurrent());
+	player->setWorld(Interface->getCurrent());
 	player->getWorld()->addEntity(player);
 	player->setSpellType(NOSPELL);
 
-	//Set up region fonts
-	if(!SouthfallFontTX[0].initialize(graphics, SOUTHFALLFONT))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing southfallFont texture"));
-	if(!SouthfallFontTX[1].initialize(graphics, ESBURGFONT))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing esburgFont texture"));
-	if(!SouthfallFontTX[2].initialize(graphics, WESELLYNFONT))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wesellynFont texture"));
-	if(!SouthfallFontTX[3].initialize(graphics, NORSTAFFFONT))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing norstaffFont texture"));
-	for(int i = 0; i < 4; ++i)
-	{
-		if(!SouthfallFontIM[i].initialize(graphics, 0, 0, 0, &SouthfallFontTX[i]))
-			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing southfallFont image: " + i));
-		SouthfallFontIM[i].setX(SCREEN_WIDTH/2-SouthfallFontIM[0].getWidth()/2);
-		SouthfallFontIM[i].setY(SCREEN_HEIGHT/4-SouthfallFontIM[0].getHeight()/2);
-	}
 	fontLoc = 0;
 	fontTimer = 6;
 
 	// For testing: set up action Menu:
 
-	actionMenu->addButton(new Button("No Spell", &SwordIconIM, 0)); 
-	actionMenu->addButton(new Button("Impede Spell", &ImpedeEffectIM, 1)); 
-	actionMenu->addButton(new Button("Quick Portal", &PortalOpenIM, 2));
-	actionMenu->addButton(new Button("Blink", &BlinkIconIM, 3));
-	actionMenu->addButton(new Button("Fireball", &FireballIconIM, 4));
+	actionMenu->addButton(new Button("No Spell", &imageLibrary->SwordIconIM, 0)); 
+	actionMenu->addButton(new Button("Impede Spell", &imageLibrary->ImpedeEffectIM, 1)); 
+	actionMenu->addButton(new Button("Quick Portal", &imageLibrary->PortalOpenIM, 2));
+	actionMenu->addButton(new Button("Blink", &imageLibrary->BlinkIconIM, 3));
+	actionMenu->addButton(new Button("Fireball", &imageLibrary->FireballIconIM, 4));
+	actionMenu->addButton(new Button("Shadowball", &imageLibrary->ShadowballIconIM, 5));
 
-	actionMenu->addButton(new Button("Magic Sight On", &MagicSightOnIM, 6));
-	actionMenu->addButton(new Button("Magic Sight Off", &MagicSightOffIM, 7));
-
+	actionMenu->addButton(new Button("Magic Sight On", &imageLibrary->MagicSightOnIM, 8));
+	actionMenu->addButton(new Button("Magic Sight Off", &imageLibrary->MagicSightOffIM, 9));
 
 	// Add a test enemy wraith
-	player->getWorld()->addAIEntity(new Entity(VECTOR2(100,105), 0.5, 50, &WraithIM, 1, WRAITH_CRECT));
+	player->getWorld()->addAIEntity(new Entity(VECTOR2(100,105), 0.5, 150, &imageLibrary->WraithIM, 1, WRAITH_CRECT));
 
 }
 
@@ -110,81 +97,92 @@ void Southfall::initializeGraphics()
 
 	// Characters and npcs
 
-	// Character 1
-	if(!Character1TX.initialize(graphics, CHARACTER2_SHEET))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character 1 texture"));
-	if(!Character1IM.initialize(graphics, 32, 32, 8, &Character1TX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character 1 image"));
-	// Goblin 1
-	if(!Goblin1TX.initialize(graphics, GOBLIN1_SHEET))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Goblin 1 texture"));
-	if(!Goblin1IM.initialize(graphics, 32, 32, 8, &Goblin1TX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Goblin 1 image"));
-	// Wraith 
-	if(!WraithTX.initialize(graphics, WRAITH1_SHEET))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wraith texture"));
-	if(!WraithIM.initialize(graphics, 32, 96, 8, &WraithTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wraith image"));
+	//// Character 1
+	//if(!Character1TX.initialize(graphics, CHARACTER2_SHEET))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character 1 texture"));
+	//if(!Character1IM.initialize(graphics, 32, 32, 8, &Character1TX))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character 1 image"));
+	//// Goblin 1
+	//if(!Goblin1TX.initialize(graphics, GOBLIN1_SHEET))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Goblin 1 texture"));
+	//if(!Goblin1IM.initialize(graphics, 32, 32, 8, &Goblin1TX))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Goblin 1 image"));
+	//// Wraith 
+	//if(!WraithTX.initialize(graphics, WRAITH1_SHEET))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wraith texture"));
+	//if(!WraithIM.initialize(graphics, 32, 96, 8, &WraithTX))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wraith image"));
 
-	// Textbox
-	if(!TextBoxTX.initialize(graphics, TEXTBOX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox texture"));
-	if(!TextBoxIM.initialize(graphics, 1000, 200, 1, &TextBoxTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox image"));
-	// Textbox arrow
-	if(!TextBoxArrowTX.initialize(graphics, TEXTBOX_ARROW))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox arrow texture"));
-	if(!TextBoxArrowIM.initialize(graphics, 35, 20, 4, &TextBoxArrowTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox arrow image"));
-	
-	// Icons and spells
+	//// Textbox
+	//if(!TextBoxTX.initialize(graphics, TEXTBOX))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox texture"));
+	//if(!TextBoxIM.initialize(graphics, 1000, 200, 1, &TextBoxTX))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox image"));
+	//// Textbox arrow
+	//if(!TextBoxArrowTX.initialize(graphics, TEXTBOX_ARROW))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox arrow texture"));
+	//if(!TextBoxArrowIM.initialize(graphics, 35, 20, 4, &TextBoxArrowTX))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox arrow image"));
+	//
+	//// Icons and spells
 
-	// Impede effect
-	if(!ImpedeEffectTX.initialize(graphics, IMPEDEEFFECTICON))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Impede effect texture"));
-	if(!ImpedeEffectIM.initialize(graphics, 0, 0, 0, &ImpedeEffectTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Impede effect image"));
-	// Portal Opening
-	if(!PortalOpenTX.initialize(graphics, PORTALOPEN))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal open texture"));
-	if(!PortalOpenIM.initialize(graphics, 0, 0, 0, &PortalOpenTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal open image"));
-	// Portal Exit
-	if(!PortalCloseTX.initialize(graphics, PORTALCLOSE))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal close texture"));
-	if(!PortalCloseIM.initialize(graphics, 0, 0, 0, &PortalCloseTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal close image"));
-	// Sword Icon
-	if(!SwordIconTX.initialize(graphics, SWORDICON))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing SwordIcon texture"));
-	if(!SwordIconIM.initialize(graphics, 0, 0, 0, &SwordIconTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing SwordIcon image"));
-	// Blink Icon
-	if(!BlinkIconTX.initialize(graphics, BLINKICON))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing BlinkIcon texture"));
-	if(!BlinkIconIM.initialize(graphics, 0, 0, 0, &BlinkIconTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing BlinkIcon image"));
-	// Fireball Icon
-	if(!FireballIconTX.initialize(graphics, FIREBALLICON))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing FireballIcon texture"));
-	if(!FireballIconIM.initialize(graphics, 0, 0, 0, &FireballIconTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing FireballIcon image"));
-	// Magic Sight On Icon
-	if(!MagicSightOnTX.initialize(graphics, MAGICSIGHTONICON))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing MagicSightOn texture"));
-	if(!MagicSightOnIM.initialize(graphics, 0, 0, 0, &MagicSightOnTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing MagicSightOn image"));
-	// Magic Sight Off Icon
-	if(!MagicSightOffTX.initialize(graphics, MAGICSIGHTOFFICON))
-	  throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing MagicSightOff texture"));
-	if(!MagicSightOffIM.initialize(graphics, 0, 0, 0, &MagicSightOffTX))
-	  throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing MagicSightOff image"));
+	//// Impede effect
+	//if(!ImpedeEffectTX.initialize(graphics, IMPEDEEFFECTICON))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Impede effect texture"));
+	//if(!ImpedeEffectIM.initialize(graphics, 0, 0, 0, &ImpedeEffectTX))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Impede effect image"));
+	//// Portal Opening
+	//if(!PortalOpenTX.initialize(graphics, PORTALOPEN))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal open texture"));
+	//if(!PortalOpenIM.initialize(graphics, 0, 0, 0, &PortalOpenTX))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal open image"));
+	//// Portal Exit
+	//if(!PortalCloseTX.initialize(graphics, PORTALCLOSE))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal close texture"));
+	//if(!PortalCloseIM.initialize(graphics, 0, 0, 0, &PortalCloseTX))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Portal close image"));
+	//// Sword Icon
+	//if(!SwordIconTX.initialize(graphics, SWORDICON))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing SwordIcon texture"));
+	//if(!SwordIconIM.initialize(graphics, 0, 0, 0, &SwordIconTX))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing SwordIcon image"));
+	//// Blink Icon
+	//if(!BlinkIconTX.initialize(graphics, BLINKICON))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing BlinkIcon texture"));
+	//if(!BlinkIconIM.initialize(graphics, 0, 0, 0, &BlinkIconTX))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing BlinkIcon image"));
+	//// Fireball Icon
+	//if(!FireballIconTX.initialize(graphics, FIREBALLICON))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing FireballIcon texture"));
+	//if(!FireballIconIM.initialize(graphics, 0, 0, 0, &FireballIconTX))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing FireballIcon image"));
+	//// Magic Sight On Icon
+	//if(!MagicSightOnTX.initialize(graphics, MAGICSIGHTONICON))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing MagicSightOn texture"));
+	//if(!MagicSightOnIM.initialize(graphics, 0, 0, 0, &MagicSightOnTX))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing MagicSightOn image"));
+	//// Magic Sight Off Icon
+	//if(!MagicSightOffTX.initialize(graphics, MAGICSIGHTOFFICON))
+	//  throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing MagicSightOff texture"));
+	//if(!MagicSightOffIM.initialize(graphics, 0, 0, 0, &MagicSightOffTX))
+	//  throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing MagicSightOff image"));
+	//// Shadowball Icon
+	//if(!ShadowballIconTX.initialize(graphics, SHADOWBALLICON))
+	//  throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Shadowball texture"));
+	//if(!ShadowballIconIM.initialize(graphics, 0, 0, 0, &ShadowballIconTX))
+	//  throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Shadowball image"));
 
-	// Fireball projectile
-	if(!FireballSheetTX.initialize(graphics, FIREBALLSHEET))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Fireball sheet texture"));
-	if(!FireballSheetIM.initialize(graphics, 16, 16, 4, &FireballSheetTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Fireball sheet image"));
+	//// Fireball projectile
+	//if(!FireballSheetTX.initialize(graphics, FIREBALLSHEET))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Fireball sheet texture"));
+	//if(!FireballSheetIM.initialize(graphics, 16, 16, 4, &FireballSheetTX))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Fireball sheet image"));
+	//// Shadowball projectile
+	//if(!ShadowballSheetTX.initialize(graphics, SHADOWBALLSHEET))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Shadowball sheet texture"));
+	//if(!ShadowballSheetIM.initialize(graphics, 16, 16, 4, &ShadowballSheetTX))
+	//	throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Shadowball sheet image"));
+	//
 
 	NPC::initGraphics(graphics);
 }
@@ -294,7 +292,7 @@ inline void Southfall::playerClickActions()
 			player->attack(orient);			
 			break;
 		case IMPEDE:
-			player->getWorld()->addEffect(new ImpedeEffect(target, 0.2, &ImpedeEffectIM));
+			player->getWorld()->addEffect(new ImpedeEffect(target, 0.2, &imageLibrary->ImpedeEffectIM));
 			player->resetAction();
 			break;
 		case QUICKPORTAL:
@@ -303,7 +301,7 @@ inline void Southfall::playerClickActions()
 				if(!player->getWorld()->collidesWithTile(player, target))
 				{
 					player->getWorld()->addEffect(new QuickPortal(player->getTarget(),
-						target, 0.5, &PortalOpenIM, &PortalCloseIM));
+						target, 0.5, &imageLibrary->PortalOpenIM, &imageLibrary->PortalCloseIM));
 					player->resetTarget();
 				}
 			}
@@ -319,13 +317,21 @@ inline void Southfall::playerClickActions()
 			break;
 		case FIREBALL:
 			P = new Projectile(player->getPosition(), FIREBALLSPEED, FIREBALLRADIUS, 
-				FIREBALLRANGE, orient, &FireballSheetIM, 0);
+				FIREBALLRANGE, orient, &imageLibrary->FireballSheetIM, 10);
 			P->setFrames(FIREBALLSTART, FIREBALLEND);
 			P->setFrameDelay(0.1);
 			player->getWorld()->addProjectile(P);
 			player->resetAction();
 			break;
 		case FREEZE:
+			break;
+		case SHADOWBALL:
+			P = new Projectile(player->getPosition(), FIREBALLSPEED, FIREBALLRADIUS, 
+				FIREBALLRANGE, orient, &imageLibrary->ShadowballSheetIM, 10, 0.f, 1.0f);
+			P->setFrames(FIREBALLSTART, FIREBALLEND);
+			P->setFrameDelay(0.1);
+			player->getWorld()->addProjectile(P);
+			player->resetAction();
 			break;
 		case MAGICSIGHTON: // Not a castable spell
 		case MAGICSIGHTOFF: // Not a castable spell
@@ -371,11 +377,11 @@ void Southfall::render()
 		if(fontTimer >= 0)
 		{
 			if(fontTimer >= 4)
-				SouthfallFontIM[fontLoc].draw(SETCOLOR_ARGB(int((6-fontTimer)*80),255,255,255));
+				imageLibrary->SouthfallFontIM[fontLoc].draw(SETCOLOR_ARGB(int((6-fontTimer)*80),255,255,255));
 			else if(fontTimer < 2)
-				SouthfallFontIM[fontLoc].draw(SETCOLOR_ARGB(int(fontTimer*80),255,255,255));
+				imageLibrary->SouthfallFontIM[fontLoc].draw(SETCOLOR_ARGB(int(fontTimer*80),255,255,255));
 			else
-				SouthfallFontIM[fontLoc].draw(SETCOLOR_ARGB(160,255,255,255));
+				imageLibrary->SouthfallFontIM[fontLoc].draw(SETCOLOR_ARGB(160,255,255,255));
 			fontTimer -= frameTime;
 		}
 		break;
@@ -397,10 +403,6 @@ void Southfall::render()
 void Southfall::releaseAll()
 {
     Game::releaseAll();
-	Character1TX.onLostDevice();
-	NPC1TX.onLostDevice();
-	TextBoxTX.onLostDevice();
-	TextBoxArrowTX.onLostDevice();
 	return;
 }
 
@@ -411,9 +413,5 @@ void Southfall::releaseAll()
 void Southfall::resetAll()
 {
     Game::resetAll();
-	Character1TX.onResetDevice();
-	NPC1TX.onResetDevice();
-	TextBoxTX.onResetDevice();
-	TextBoxArrowTX.onResetDevice();
     return;
 }

@@ -27,7 +27,7 @@ class NPC: public Entity
 public:
 	NPC() : Entity() {}
 	NPC(int ID, VECTOR2 pos)
-		: Entity(pos, npcNS::RADIUS, npcNS::HP, getImage(ID), 0, NPCTYPE)
+		: Entity(pos, npcNS::RADIUS, npcNS::HP, getImage(ID), 0, HUMAN_CRECT, NPCTYPE)
 	{
 		initialize(); 
 		distanceTraveled = npcNS::PIXELS_PER_MOVE + 1;

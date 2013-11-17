@@ -3,67 +3,7 @@
 
 void WorldInterface::initialize(Graphics* graphics)
 {
-	StructInt = new StructureInterface;
-	StructInt->initialize(graphics);
-	this->graphics = graphics;
-	
-	// Grass
-	if(!GrassTX.initialize(graphics, GRASS1))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Grass texture"));
-	if(!GrassIM.initialize(graphics, 0, 0, 0, &GrassTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Grass image"));
-	// Tree
-	if(!TreeTX.initialize(graphics, TREE1))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Tree texture"));
-	if(!TreeIM.initialize(graphics, 0, 0, 0, &TreeTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Tree image"));
-	// Boulder 1
-	if(!Boulder1TX.initialize(graphics, BOULDER1))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Boulder texture"));
-	if(!Boulder1IM.initialize(graphics, 0, 0, 0, &Boulder1TX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Boulder image"));
-	// Boulder 2
-	if(!Boulder2TX.initialize(graphics, BOULDER2))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Boulder2 texture"));
-	if(!Boulder2IM.initialize(graphics, 0, 0, 0, &Boulder2TX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Boulder2 image"));
-	// Magic Portal
-	if(!MagicPortalTX.initialize(graphics, MAGICPORTAL1))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Magic portal texture"));
-	if(!MagicPortalIM.initialize(graphics, 32, 32, 4, &MagicPortalTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Magic portal image"));
-	// House
-	if(!HouseTX.initialize(graphics, HOUSE1))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing House texture"));
-	if(!HouseIM.initialize(graphics, 0, 0, 0, &HouseTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing House image"));
-	// Horizontal Wall
-	if(!HWallTX.initialize(graphics, HWALL))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing HWall texture"));
-	if(!HWallIM.initialize(graphics, 0, 0, 0, &HWallTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing HWall image"));
-	// Vertical Wall
-	if(!VWallTX.initialize(graphics, VWALL))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing VWall texture"));
-	if(!VWallIM.initialize(graphics, 0, 0, 0, &VWallTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing VWall image"));
-	// Wall Corner
-	if(!CWallTX.initialize(graphics, CWALL))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing CWall texture"));
-	if(!CWallIM.initialize(graphics, 0, 0, 0, &CWallTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing CWall image"));
-
-	// River
-	if(!RiverTX.initialize(graphics, RIVER1))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing River texture"));
-	if(!RiverIM.initialize(graphics, 0, 0, 0, &RiverTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing River image"));
-	// Wood Tile
-	if(!WoodTileTX.initialize(graphics, WOODTILE1))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wood Tile texture"));
-	if(!WoodTileIM.initialize(graphics, 0, 0, 0, &WoodTileTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wood Tile image"));
-	
+	StructInt = new StructureInterface(imageLibrary);
 	Current = loadWorld(SOUTHFALLMAP);
 }
 
@@ -74,7 +14,7 @@ World* WorldInterface::loadWorld(const string& fileName)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error loading world"));
 	int width, height;
 	fin>>width; fin>>height;
-	World* W = new World(width, height);
+	World* W = new World(width, height, imageLibrary);
 	W->getTile() = new Tile**[width];
 	for(int i=0; i<width; i++)
 		W->getTile(i) = new Tile*[height];
@@ -127,7 +67,7 @@ void WorldInterface::initializeWorld()
 	{
 		Current->getTile(x) = new Tile*[height];
 		for(int y=0; y<height; y++)
-			Current->getTile(x,y) = new Tile(VECTOR2(x,y), &GrassIM);
+			Current->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->GrassIM);
 	}
 	Current->setInitialized(true);
 }
@@ -139,28 +79,28 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 	{
 		case 'g': // Grass
 		{
-			W->getTile(x,y) = new Tile(VECTOR2(x,y), &GrassIM);
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->GrassIM);
 			break;
 		}
 		case 't':	//Track (dirt or road)
 		{
-			W->getTile(x,y) = new Tile(VECTOR2(x,y), &WoodTileIM);
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->WoodTileIM);
 			break;
 		}
 		case 'w':	//wall
 		{
-			W->getTile(x,y) = new Tile(VECTOR2(x,y), &Boulder1IM, false);
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->Boulder1IM, false);
 			break;
 		}
 		case 'f': // Tree
 		{
-			W->getTile(x,y) = new Tile(VECTOR2(x,y), &GrassIM, false);
-			W->addObject(new Object(VECTOR2(x+0.5,y+0.5), 0, 0.25, &TreeIM, CIRCLE));
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->GrassIM, false);
+			W->addObject(new Object(VECTOR2(x+0.5,y+0.5), 0, 0.25, &imageLibrary->TreeIM, CIRCLE, TREE_CRECT));
 			break;
 		}
 		case 'b': // Boulder
 		{
-			W->getTile(x,y) = new Tile(VECTOR2(x,y), &Boulder1IM, false);
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->Boulder1IM, false);
 			break;
 		}
 		/*case 'B': // Boulder 2
@@ -170,7 +110,7 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 		}*/
 		case 'r': // River
 		{
-			W->getTile(x,y) = new Tile(VECTOR2(x,y), &RiverIM, false);
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->RiverIM, false);
 			break;
 		}
 		case 's': // Structure blocker
@@ -217,7 +157,7 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 		case 'B': // bar 1 corner
 		{
 			T = new Tile(VECTOR2(x,y), 0, false);
-			Bar1* H = new Bar1(VECTOR2(x,y), HOUSE1WIDTH, HOUSE1HEIGHT, &HouseIM);
+			Bar1* H = new Bar1(VECTOR2(x,y), HOUSE1WIDTH, HOUSE1HEIGHT, &imageLibrary->HouseIM);
 			T->giveStructure(H);	// Point the tile to the house
 			W->addStructure(H);		// Give the house to the world
 			W->getTile(x,y) = T;	// Give the tile to the world
@@ -226,7 +166,7 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 		case 'A': // bar 2 corner
 		{
 			T = new Tile(VECTOR2(x,y), 0, false);
-			Bar2* H = new Bar2(VECTOR2(x,y), HOUSE1WIDTH, HOUSE1HEIGHT, &HouseIM);
+			Bar2* H = new Bar2(VECTOR2(x,y), HOUSE1WIDTH, HOUSE1HEIGHT, &imageLibrary->HouseIM);
 			T->giveStructure(H);	// Point the tile to the house
 			W->addStructure(H);		// Give the house to the world
 			W->getTile(x,y) = T;	// Give the tile to the world
@@ -235,7 +175,7 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 		case 'H': // House1 corner
 		{
 			T = new Tile(VECTOR2(x,y), 0, false);
-			House1* H = new House1(VECTOR2(x,y), HOUSE1WIDTH, HOUSE1HEIGHT, &HouseIM);
+			House1* H = new House1(VECTOR2(x,y), HOUSE1WIDTH, HOUSE1HEIGHT, &imageLibrary->HouseIM);
 			T->giveStructure(H);	// Point the tile to the house
 			W->addStructure(H);		// Give the house to the world
 			W->getTile(x,y) = T;	// Give the tile to the world
@@ -244,7 +184,7 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 		case 'O': // House2 corner
 		{
 			T = new Tile(VECTOR2(x,y), 0, false);
-			House2* H = new House2(VECTOR2(x,y), HOUSE1WIDTH, HOUSE1HEIGHT, &HouseIM);
+			House2* H = new House2(VECTOR2(x,y), HOUSE1WIDTH, HOUSE1HEIGHT, &imageLibrary->HouseIM);
 			T->giveStructure(H);	// Point the tile to the house
 			W->addStructure(H);		// Give the house to the world
 			W->getTile(x,y) = T;	// Give the tile to the world
@@ -253,7 +193,7 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 		case 'U': // House3 corner
 		{
 			T = new Tile(VECTOR2(x,y), 0, false);
-			House3* H = new House3(VECTOR2(x,y), HOUSE1WIDTH, HOUSE1HEIGHT, &HouseIM);
+			House3* H = new House3(VECTOR2(x,y), HOUSE1WIDTH, HOUSE1HEIGHT, &imageLibrary->HouseIM);
 			T->giveStructure(H);	// Point the tile to the house
 			W->addStructure(H);		// Give the house to the world
 			W->getTile(x,y) = T;	// Give the tile to the world
@@ -262,7 +202,7 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 		case 'S': // House4 corner
 		{
 			T = new Tile(VECTOR2(x,y), 0, false);
-			House4* H = new House4(VECTOR2(x,y), HOUSE1WIDTH, HOUSE1HEIGHT, &HouseIM);
+			House4* H = new House4(VECTOR2(x,y), HOUSE1WIDTH, HOUSE1HEIGHT, &imageLibrary->HouseIM);
 			T->giveStructure(H);	// Point the tile to the house
 			W->addStructure(H);		// Give the house to the world
 			W->getTile(x,y) = T;	// Give the tile to the world
@@ -270,26 +210,26 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 		}
 		case 'P': // Portal
 		{
-			T = new Tile(VECTOR2(x,y), &GrassIM, false); // For now
+			T = new Tile(VECTOR2(x,y), &imageLibrary->GrassIM, false); // For now
 			W->getTile(x,y) = T;
-			Portal* P = new Portal(VECTOR2(x,y),1,1,&MagicPortalIM,W,VECTOR2(12,10));
+			Portal* P = new Portal(VECTOR2(x,y),1,1,&imageLibrary->MagicPortalIM,W,VECTOR2(12,10));
 			W->addStructure(P);
 			T->giveStructure(P);
 			break;
 		}
 		case '_': // Horizontal Wall
 		{
-			W->getTile(x,y) = new Tile(VECTOR2(x,y), &HWallIM, false);
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->HWallIM, false);
 			break;
 		}
 		case '|': // Vertical Wall
 		{
-			W->getTile(x,y) = new Tile(VECTOR2(x,y), &VWallIM, false);
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->VWallIM, false);
 			break;
 		}
 		case '#': // Wall Corner
 		{
-			W->getTile(x,y) = new Tile(VECTOR2(x,y), &CWallIM, false);
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->CWallIM, false);
 			break;
 		}
 		case 'x':

@@ -15,6 +15,7 @@ Last Modified: 11/8/2013
 #include <string>
 #include <fstream>
 #include <sstream>
+#include "ImageLibrary.h"
 using std::string;
 using std::ifstream;
 using std::stringstream;
@@ -24,9 +25,8 @@ class World;
 class StructureInterface
 {
 public:
-	StructureInterface() {};
+	StructureInterface(ImageLibrary* imageLibrary) {};
 	World* loadStructure(string, World**, VECTOR2);
-	void initialize(Graphics* graphics);
 
 	Portal* createHouse1(World** external, VECTOR2 vOut);
 	Portal* createHouse2(World** external, VECTOR2 vOut);
@@ -38,34 +38,9 @@ public:
 private:
 	inline void assignTile(World* &, char, int, int, World**, VECTOR2);
 	VECTOR2 entrance;
-
-	// Images and Textures
-	TextureManager WoodTileTX;
-	Image WoodTileIM;
-	TextureManager HouseWallTX;
-	Image HouseWallIM;
-	TextureManager HouseDoorTX;
-	Image HouseDoorIM;
-	TextureManager BedTX;
-	Image BedIM;
-	TextureManager BarCounterTX;
-	Image BarCounterIM;
-	TextureManager BarBack1TX;
-	Image BarBack1IM;
-	TextureManager BarBack2TX;
-	Image BarBack2IM;
-	TextureManager TableTX;
-	Image TableIM;
-	TextureManager RChairTX;
-	Image RChairIM;
-	TextureManager LChairTX;
-	Image LChairIM;
-	TextureManager HorizInHouseDoorTX;
-	Image HorizInHouseDoorIM;
-	TextureManager VertInHouseDoorTX;
-	Image VertInHouseDoorIM;
-
+	ImageLibrary* imageLibrary;
 	Graphics* graphics;
 };
 
 #endif
+

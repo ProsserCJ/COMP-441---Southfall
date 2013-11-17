@@ -23,6 +23,7 @@ Last modified: 11/4/2013
 #include "textBox.h"
 #include "menu.h"
 #include "GameMenu.h"
+#include "ImageLibrary.h"
 using std::stringstream;
 
 enum gameState {MAIN_MENU, INTRO, GAME, ACTIONMENU, OPENTEXTBOX, CREDITS, GAME_OVER};
@@ -48,7 +49,7 @@ public:
 
 	// Accessors
 	VECTOR2 heroPosition()	{return player->getPosition();}
-	World* getWorld()		{return Interface.getCurrent();}
+	World* getWorld()		{return Interface->getCurrent();}
 	VECTOR2 Center()		{return player->getPosition();}
 
 private:
@@ -61,10 +62,7 @@ private:
 	TextDX* gameFont;
 	stringstream ss;
 
-	// Images and Textures
-	TextureManager Character1TX, NPC1TX, Goblin1TX, WraithTX, TextBoxTX, TextBoxArrowTX, SouthfallFontTX[4];
-	Image Character1IM, NPC1IM, TextBoxIM, Goblin1IM, WraithIM, TextBoxArrowIM, SouthfallFontIM[4];
-	WorldInterface worldInterface;
+	ImageLibrary* imageLibrary;
 
 	double fontTimer;
 	int fontLoc; //southfall:0 esburg:1,wesellyn:2,norstaff:3
@@ -77,29 +75,7 @@ private:
 	gameState currentState;
 
 	TextBox* textbox;
-	WorldInterface Interface;  
-
-	// Images and Textures
-	TextureManager ImpedeEffectTX;
-	Image ImpedeEffectIM;
-	TextureManager PortalOpenTX;
-	Image PortalOpenIM;
-	TextureManager PortalCloseTX;
-	Image PortalCloseIM;
-	TextureManager SwordIconTX;
-	Image SwordIconIM;
-	TextureManager BlinkIconTX;
-	Image BlinkIconIM;
-	TextureManager FireballIconTX;
-	Image FireballIconIM;
-	TextureManager MagicSightOnTX;
-	Image MagicSightOnIM;
-	TextureManager MagicSightOffTX;
-	Image MagicSightOffIM;
-
-	TextureManager FireballSheetTX;
-	Image FireballSheetIM;
-
+	WorldInterface* Interface;
 };
 
 #endif

@@ -32,7 +32,7 @@ class Hero: public Entity
 public:
 	Hero() : Entity() {};
 	Hero(VECTOR2 position, float radius, Image* image, Input* input, Audio* audio, TextBox* tb, int HP=heroNS::HERO_HP) 
-		: Entity(position, radius, HP, image, 0, HEROTYPE), input(input), audio(audio), textbox(tb) {initialize();}
+		: Entity(position, radius, HP, image, 0, HUMAN_CRECT, HEROTYPE), input(input), audio(audio), textbox(tb) {initialize();}
 	
 	virtual void draw(VECTOR2& Center);
 	virtual void act(World* W) {}
@@ -40,12 +40,6 @@ public:
 	void turnToPlayer(Entity* n);
 
 	void initialize();
-
-	// Accesors
-	bool canAction()	{return timeSinceAction > HEROACTIONDELAY;}
-	
-	// Mutators
-	void resetAction()	{timeSinceAction = 0;}
 
 private:	
 	Input* input;	

@@ -41,6 +41,8 @@ public:
 	bool isTraversable();
 	bool hasStructure()			{return S != 0;}
 	Structure* getStructure()	{return S;}
+	list<Object*>::iterator begin() {return objects.begin();}
+	list<Object*>::iterator end()	{return objects.end();}
 
 	// Mutators
 	void giveStructure(Structure* S)	{this->S = S;}
@@ -64,9 +66,9 @@ class World
 {
 public:
 	// Constructors and destructors
-	World() : _initialized(false) {};
-	World(int width, int height) 
-		: width(width), height(height), _initialized(false) {};
+	World() : _initialized(false), imageLibrary(0) {};
+	World(int width, int height, ImageLibrary* imageLibrary) 
+		: width(width), height(height), _initialized(false), imageLibrary(imageLibrary) {};
 	~World() {};
 
 	void draw(VECTOR2& Center, bool magicSight);
@@ -84,17 +86,17 @@ public:
 	bool collidesWithEffect(Object* E, VECTOR2& position);
 	bool isTraversible(VECTOR2 T);	// Pass in the world coords, not tile coords
 
-	int getWidth()	{return width;}
-	int getHeight()	{return height;}
-	bool isInitialized()	{return _initialized;}
+	int getWidth()			const {return width;}
+	int getHeight()			const {return height;}
+	bool isInitialized()	const {return _initialized;}
 	Entity* getNPCFacing(VECTOR2 pos, DIR dir);
+	list<Entity*> search(VECTOR2 Center, float sight);
 	
 	// Mutators
 	void setInitialized(bool init)	{_initialized = init;}
 	void addStructure(Structure* S);
 	void addEntity(Entity* E);
 	void addAIEntity(Entity* E);
-	void addNPC(NPC* npc);
 	void addEffect(Effect* E);
 	void addProjectile(Projectile* P);
 	void addObject(Object* Obj);
@@ -103,6 +105,8 @@ public:
 private:
 	int width, height;				// Dimensions of this world		
 	bool _initialized;				// Has the world been initialized
+
+	ImageLibrary* imageLibrary;		// A pointer to the image library
 
 	Tile*** tiles;					// The tiles that make up the world
 	list<Structure*> structures;	// List of structures in the world

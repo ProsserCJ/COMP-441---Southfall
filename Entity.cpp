@@ -133,9 +133,9 @@ void Entity::initialize()
 	SpellType = NOSPELL;
 	_hasTarget = false;
 	_frozen = false;
+	freezeTime = 0;
 	_magicSight = false;
 	attacking = false;
-	freezeTime = 0;
 }
 
 inline void Object::handleSectors(World* W)
@@ -160,6 +160,12 @@ void Object::newPosition(const VECTOR2& pos, World* W)
 void Entity::update(float frameTime, World* W)
 {
 	if(!active) return;
+	if(_skip)
+	{
+		skipTime -= frameTime;
+		if(skipTime <= 0) _skip = false;
+		return;
+	}
 	timeSinceInteract += frameTime;
 	timeSinceAction += frameTime;
 	if(attacking)
@@ -192,10 +198,12 @@ void Entity::update(float frameTime, World* W)
 		freezeTime -= frameTime;
 		if(freezeTime <= 0) _frozen = false;
 	}
+	if(HP < 0) deactivate();
 }
 
 void Entity::draw(VECTOR2& Center, DWORD color)
 {
+	if(_skip || !active) return;
 	if(!_frozen) Object::draw(Center, color);
 	else Object::draw(Center, graphicsNS::BLUE);
 }
@@ -209,6 +217,7 @@ void Entity::act(World* W)
 // Makes the entity move in the direction it is going
 void Entity::move(float frameTime, World* W)
 {
+	if(_skip || !active) return;
 	switch(facing)
 	{
 	case UP:
@@ -267,6 +276,7 @@ void Entity::move(float frameTime, World* W)
 // Interact with whatever is in front of the entity
 void Entity::interact(World* W)
 {
+	if(_skip || !active) return;
 	if(timeSinceInteract < INTERACTIONDELAY) return;
 	timeSinceInteract = 0;
 	float x = getPosition().x, y = getPosition().y;
@@ -298,6 +308,7 @@ void Entity::go(DIR face)
 // Tell an entity to stand
 void Entity::standing()
 {
+	if(_skip || !active) return;
 	startMoving = false;
 	moving=false;
 	if (!attacking) setStandingImage();
@@ -305,7 +316,7 @@ void Entity::standing()
 
 void Entity::attack(float orient)
 {
-	if (attacking) return;
+	if(_skip || !active || attacking) return;
 	timeSinceAttack = 0;
 	attacking = true;
 
@@ -346,14 +357,16 @@ void Entity::setStandingImage()
 	}
 }
 
-void Entity::receiveDamage(Projectile* p)
+void Entity::receiveDamage(Projectile* P)
 {
-	kill(); // Obviously, this is temporary
+	skip(P->getSkipTime());
+	// Freeze
+	HP -= P->getDamage();
 }
 
 bool HandleCollision(Collidable* A, Collidable* B)
 {
-	if(!A->isActive() || !B->isActive()) return false;
+	if(!A->active || !B->active || A->_skip || B->_skip) return false;
 	float D, R;
 	VECTOR2 diff = A->position - B->position;
 	switch(A->collisionType)
@@ -388,7 +401,7 @@ bool HandleCollision(Collidable* A, Collidable* B)
 
 bool ProjectileCollision(Projectile* P, Collidable* E)
 {
-	if(!E->hasRect || !E->isActive() || !P->isActive()) return false;
+	if(!E->hasRect || !E->isActive() || !P->isActive() || E->_skip) return false;
 	ColRect CR = E->collisionRectangle;
 	VECTOR2 pos = E->position;
 	float left = pos.x - CR.boxRadius - P->getRadius();
