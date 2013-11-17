@@ -67,7 +67,6 @@ private:
 	double fontTimer;
 	int fontLoc; //southfall:0 esburg:1,wesellyn:2,norstaff:3
 
-	void initializeGraphics();
 	void loadIntro();
 	vector<string>* introText;
 	

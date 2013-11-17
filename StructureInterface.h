@@ -25,7 +25,8 @@ class World;
 class StructureInterface
 {
 public:
-	StructureInterface(ImageLibrary* imageLibrary) {};
+	StructureInterface(ImageLibrary* imageLibrary) 
+		: imageLibrary(imageLibrary) {};
 	World* loadStructure(string, World**, VECTOR2);
 
 	Portal* createHouse1(World** external, VECTOR2 vOut);
