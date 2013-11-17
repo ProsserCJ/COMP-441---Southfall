@@ -123,7 +123,6 @@ public:
 	void setImageY(int y)					{image->setY(y);}
 	void setScale(float scale)				{image->setScale(scale);}
 	void draw(DWORD color=graphicsNS::WHITE){if(image) image->draw(color);}
-	void updateImage();
 	void setFrame()							{image->setCurrentFrame(_frame);}
 	void setFrame(int frame)				{_frame=frame;}	// Directly set the frame
 	// Image updating

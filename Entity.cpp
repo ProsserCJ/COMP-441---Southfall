@@ -189,7 +189,8 @@ void Entity::update(float frameTime, World* W)
 		VECTOR2 newPos = getPosition() + speed*velocity*frameTime + knockback;
 		knockback = ZERO;
 
-		Object::update(frameTime, W);		
+		Object::update(frameTime, W);	
+		if(attackImage) attackImage->updateImage(frameTime);
 		if(startMoving && W->canMoveHere(this, newPos))
 		{
 			W->collidesWithEffect(this, newPos);
