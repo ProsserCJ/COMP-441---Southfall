@@ -85,10 +85,10 @@ public:
 	bool collidesWithNPC(Object* E, VECTOR2& position);
 	bool collidesWithEffect(Object* E, VECTOR2& position);
 	bool isTraversible(VECTOR2 T);	// Pass in the world coords, not tile coords
-
-	int getWidth()			const {return width;}
-	int getHeight()			const {return height;}
-	bool isInitialized()	const {return _initialized;}
+	ImageLibrary* getImageLibrary()	const {return imageLibrary;}
+	int getWidth()					const {return width;}
+	int getHeight()					const {return height;}
+	bool isInitialized()			const {return _initialized;}
 	Entity* getNPCFacing(VECTOR2 pos, DIR dir);
 	list<Entity*> search(VECTOR2 Center, float sight);
 	
@@ -96,7 +96,7 @@ public:
 	void setInitialized(bool init)	{_initialized = init;}
 	void addStructure(Structure* S);
 	void addEntity(Entity* E);
-	void addAIEntity(Entity* E);
+	void addEntity(Entity* E, npcAI* AI);
 	void addEffect(Effect* E);
 	void addProjectile(Projectile* P);
 	void addObject(Object* Obj);

@@ -18,7 +18,8 @@ void Southfall::loadIntro()
 	ifstream fin("Worlds\\intro.txt");
 	char buffer[500];
 	introText = new vector<string>;
-	while(!fin.eof()){
+	while(!fin.eof())
+	{
 		fin.getline(buffer, 500);
 		introText->push_back(buffer);    
 	}
@@ -84,7 +85,8 @@ void Southfall::initialize(HWND hwnd)
 	actionMenu->addButton(new Button("Magic Sight Off", &imageLibrary->MagicSightOffIM, 9));
 
 	// Add a test enemy wraith
-	player->getWorld()->addAIEntity(new Entity(VECTOR2(100,105), 0.5, 150, &imageLibrary->WraithIM, 1, WRAITH_CRECT));
+	Entity* wraith = new Entity(VECTOR2(100,105), 0.5, 150, &imageLibrary->WraithIM, 1, WRAITH_CRECT);
+	player->getWorld()->addEntity(wraith, new WraithAI(wraith));
 
 }
 

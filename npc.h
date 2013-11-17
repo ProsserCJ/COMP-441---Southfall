@@ -22,18 +22,14 @@ namespace npcNS
 	const int PIXELS_PER_MOVE = TILE_SIZE;
 }
 
+// Human Non Player Character class
 class NPC: public Entity
 {
 public:
 	NPC() : Entity() {}
-	NPC(int ID, VECTOR2 pos)
-		: Entity(pos, npcNS::RADIUS, npcNS::HP, getImage(ID), 0, HUMAN_CRECT, NPCTYPE)
-	{
-		initialize(); 
-		distanceTraveled = npcNS::PIXELS_PER_MOVE + 1;
-		timeSinceLastMove = 0;
-		paused = false;
-	}
+	NPC(int ID, VECTOR2 pos, Image* image)
+		: Entity(pos, npcNS::RADIUS, npcNS::HP, image, 0, HUMAN_CRECT, NPCTYPE)
+	{initialize();}
 	~NPC() {}
 
 	//inherited functions

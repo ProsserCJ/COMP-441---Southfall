@@ -18,6 +18,9 @@ void NPC::initialize()
 {	
 	setFrameDelay(DEFAULT_FRAME_DELAY);
 	speed = NPC_SPEED;
+	distanceTraveled = npcNS::PIXELS_PER_MOVE + 1;
+	timeSinceLastMove = 0;
+	paused = false;
 };
 
 void NPC::update(float frameTime, World* W)

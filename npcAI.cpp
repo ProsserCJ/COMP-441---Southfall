@@ -5,6 +5,7 @@
 void npcAI::initialize()
 {
 	searchDelay = 0;
+	evaluateDelay = 0;
 	delay = 0;
 	target = 0;
 }
@@ -19,26 +20,15 @@ void npcAI::update(float frameTime, World* W)
 	npc->update(frameTime, W);
 }
 
-inline void npcAI::act(float frameTime, World* W)
+void npcAI::act(float frameTime, World* W)
 {
 	if(npc == 0) return;
 	if(target != 0 && !target->isActive()) target = 0;
 	npc->act(W);
-	if(searchDelay > SEARCHDELAY)
+	if(evaluateDelay > EVALUATEDELAY)
 	{
-		searchDelay = 0;
-		// Basic search for now
-		list<Entity*> List = W->search(npc->getPosition(), WRAITH_SIGHT);
-		if(!List.empty())
-		{
-			for(auto p = List.begin(); p != List.end(); p++)
-			{
-				if((*p)->getTeam() != npc->getTeam())
-				{
-					target = *p;
-				}
-			}
-		}
+		evaluateDelay = 0;
+		_assessPriority(W);
 	}
 	switch(priority)
 	{
@@ -52,7 +42,7 @@ inline void npcAI::act(float frameTime, World* W)
 
 }
 
-inline void npcAI::_idle(float frameTime, World* W)
+void npcAI::_idle(float frameTime, World* W)
 {
 	bool moving = false;
 	if(delay > MOVEMENTLENGTH && rand()%100 == 0)
@@ -70,7 +60,7 @@ inline void npcAI::_idle(float frameTime, World* W)
 	
 }
 
-inline void npcAI::_attack(float frameTime, World* W)
+void WraithAI::_attack(float frameTime, World* W)
 {
 	if(target == 0) return;
 	if(npc->canAction())
@@ -80,7 +70,7 @@ inline void npcAI::_attack(float frameTime, World* W)
 		float orient = atan2(sY, sX);
 
 		Projectile* P = new Projectile(npc->getPosition(), FIREBALLSPEED, FIREBALLRADIUS, 
-			FIREBALLRANGE, orient, &npcAI::imageLibrary->ShadowballSheetIM, 10, 0.f, 1.0f, npc->getTeam());
+			FIREBALLRANGE, orient, &W->getImageLibrary()->ShadowballSheetIM, 10, 0.f, 1.0f, npc->getTeam());
 		P->setFrames(FIREBALLSTART, FIREBALLEND);
 		P->setFrameDelay(0.1);
 		W->addProjectile(P);

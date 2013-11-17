@@ -5,7 +5,7 @@ Last modified: 11/5/2013
 
 ******************************************************/
 
-#include "hero.h"
+#include "hero.h" 
 #include "World.h"
 
 using namespace heroNS;
@@ -42,7 +42,7 @@ void Hero::update(float frameTime, World* W)
 	if (input->wasKeyPressed('E'))
 	{// Interaction key
 		NPCFacing = W->getNPCFacing(getPosition(), facing);
-		if (NPCFacing)
+		if (NPCFacing && NPCFacing->getType() == NPCTYPE)
 		{
 			audio->playCue(SELECT);
 			turnToPlayer(NPCFacing);				

@@ -408,7 +408,9 @@ bool ProjectileCollision(Projectile* P, Collidable* E)
 	float right = pos.x + CR.boxRadius + P->getRadius();
 	float top = pos.y - CR.height - P->getRadius();
 	float bot = pos.y + P->getRadius();
-	if(left < P->position.x && P->position.x < right && top < P->position.y && pos.y < bot)
+	// Assumes Projectiles are circles
+	if(left < P->position.x && P->position.x < right && 
+		top < P->position.y && P->position.y < bot)
 		return true;
 
 	// Neglects Voroni zones

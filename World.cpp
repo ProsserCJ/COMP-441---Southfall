@@ -119,11 +119,12 @@ void World::addEntity(Entity* E)
 	entities.push_back(E);
 }
 
-void World::addAIEntity(Entity* E)		
+void World::addEntity(Entity* E, npcAI* AI)		
 {
+	// Assumes AI already is connected to E
 	tiles[(int)E->getPosition().x][(int)E->getPosition().y]->add(E);
 	entities.push_back(E);
-	AIs.push_back(new npcAI(E,imageLibrary));
+	AIs.push_back(AI);
 }
 
 void World::addEffect(Effect* E)		

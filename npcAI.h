@@ -9,6 +9,7 @@
 enum PRIORITY {IDLE, ATTACK};
 
 const float SEARCHDELAY = 0.2;
+const float EVALUATEDELAY = 0.5;
 const float MOVEMENTLENGTH = 1.0f;
 
 const float WRAITH_SIGHT = 10.0f;
@@ -18,8 +19,9 @@ class World;
 class npcAI
 {
 public:
-	npcAI() : priority(IDLE), npc(0), imageLibrary(0) {initialize();}
-	npcAI(Entity* E, ImageLibrary* IL) : npc(E), priority(IDLE), imageLibrary(IL) {initialize();}
+	npcAI() : priority(IDLE), npc(0) {initialize();}
+	npcAI(Entity* E) : npc(E), priority(IDLE) {initialize();}
+	~npcAI() {};
 
 	void update(float frameTime, World* W);
 	void initialize();
@@ -29,20 +31,40 @@ public:
 	Entity* & getNPC()			{return npc;}
 	bool isActive()				{return npc->isActive();}
 
-private:
+protected:
 	Entity* npc;	// The npc the ai controls
 	Entity* target;
 	PRIORITY priority;
 
-	ImageLibrary* imageLibrary;
+	void act(float frameTime, World* W);
 
-	inline void act(float frameTime, World* W);
-
-	inline void _idle(float frameTime, World* W);
-	inline void _attack(float frameTime, World* W);
+	virtual void _assessPriority(World* W) = 0;
+	virtual void _idle(float frameTime, World* W);
+	virtual void _attack(float frameTime, World* W) = 0;
 
 	float searchDelay;
+	float evaluateDelay;
 	float delay;
+};
+
+class PassiveAI : public npcAI
+{
+public:
+	PassiveAI(Entity* E) : npcAI(E) {};
+	void update(float frameTime, World* W); 
+protected:
+	virtual void _assessPriority(World* W) {};
+	virtual void _attack(float frameTime, World* W) {};
+};
+
+class WraithAI : public npcAI
+{
+public:
+	WraithAI(Entity* E) : npcAI(E) {};
+protected:
+	virtual void _assessPriority(World* W) {};
+	//virtual void _idle(float frameTime, World* W);
+	virtual void _attack(float frameTime, World* W);
 };
 
 #endif

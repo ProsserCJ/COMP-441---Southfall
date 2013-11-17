@@ -43,7 +43,7 @@ World* WorldInterface::loadWorld(const string& fileName)
 	{
 		int ID, textLines, x, y;
 		fin >> ID >> textLines >> x >> y;
-		NPC* temp = new NPC(ID, VECTOR2(x,y));
+		NPC* temp = new NPC(ID, VECTOR2(x,y), &imageLibrary->Character1IM);
 		string* text = new string[textLines];
 		char buffer[500];
 		fin.get();
@@ -52,7 +52,7 @@ World* WorldInterface::loadWorld(const string& fileName)
 			text[i] = buffer;
 		}
 		temp->setText(text, textLines);
-		W->addAIEntity(temp);
+		W->addEntity(temp, new PassiveAI(temp));
 	}
 
 	W->setInitialized(true);
