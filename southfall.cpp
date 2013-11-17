@@ -96,7 +96,7 @@ void Southfall::initialize(HWND hwnd)
 
 
 	// Add a test enemy wraith
-	player->getWorld()->addEntity(new Entity(VECTOR2(100,105), 0.5, 50, &WraithIM, 1));
+	player->getWorld()->addAIEntity(new Entity(VECTOR2(100,105), 0.5, 50, &WraithIM, 1, WRAITH_CRECT));
 
 }
 

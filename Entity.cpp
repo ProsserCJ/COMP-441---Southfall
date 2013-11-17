@@ -385,3 +385,19 @@ bool HandleCollision(Collidable* A, Collidable* B)
 	if(D < R*R) return true;
 	return false;
 }
+
+bool ProjectileCollision(Projectile* P, Collidable* E)
+{
+	if(!E->hasRect || !E->isActive() || !P->isActive()) return false;
+	ColRect CR = E->collisionRectangle;
+	VECTOR2 pos = E->position;
+	float left = pos.x - CR.boxRadius - P->getRadius();
+	float right = pos.x + CR.boxRadius + P->getRadius();
+	float top = pos.y - CR.height - P->getRadius();
+	float bot = pos.y + P->getRadius();
+	if(left < P->position.x && P->position.x < right && top < P->position.y && pos.y < bot)
+		return true;
+
+	// Neglects Voroni zones
+	return false;
+}

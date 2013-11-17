@@ -28,6 +28,19 @@ const float INTERACTIONDELAY = 0.5f;
 
 enum OBJECTTYPE {PROJECTILE, OBJECT, ENTITY, NPCTYPE, HEROTYPE};
 
+struct ColRect
+{
+	ColRect(float boxRadius, float height) 
+		: boxRadius(boxRadius), height(height) {};
+	float boxRadius;
+	float height;
+};
+// Collision Rectangles
+const ColRect EMPTY_RECT(0.f,0.f);
+const ColRect HUMAN_CRECT(0.2f,1.0f);
+const ColRect WRAITH_CRECT(0.25f,6.0f);
+const ColRect TREE_CRECT(0.25f, 1.2f);
+
 // Entity Namespace
 namespace entityNS
 {
@@ -128,10 +141,15 @@ class Collidable
 {
 public:
 	Collidable(VECTOR2 position, COLLISIONTYPE CT, float radius) 
-		: position(position), collisionType(CT), radius(radius), active(true) {}
+		: position(position), collisionType(CT), radius(radius), active(true), 
+		collisionRectangle(EMPTY_RECT), hasRect(false) {}
+	Collidable(VECTOR2 position, COLLISIONTYPE CT, float radius, ColRect CR) 
+		: position(position), collisionType(CT), radius(radius), active(true), 
+		collisionRectangle(CR), hasRect(true) {}
 
 	// Collision Handler
 	friend bool HandleCollision(Collidable* A, Collidable* B); // True if the objects collided
+	friend bool ProjectileCollision(Projectile* P, Collidable* E);
 
 	// Accessors
 	VECTOR2 getPosition()		const {return position;}
@@ -140,10 +158,13 @@ public:
 
 	// Mutators
 	void setPosition(const VECTOR2& pos)	{position = pos;}
+	void deactivate()						{active = false;}
 
 protected:
 	VECTOR2 position;		// Position in the world (center)
-	COLLISIONTYPE collisionType;
+	COLLISIONTYPE collisionType;	// For collisions with entities
+	ColRect collisionRectangle;		// For collisions with projectiles
+	bool hasRect;
 	float radius;
 	bool active;
 };
@@ -155,10 +176,10 @@ public:
 	Object() 
 		: Collidable(ZERO, POINTCOLLISION, 0), velocity(ZERO), Drawable(0), speed(1), type(OBJECT) 
 	{initialize();}
-	Object(Image* image) 
-		: Collidable(ZERO, POINTCOLLISION, 0), Drawable(image), speed(1), type(OBJECT) {initialize();};
-	Object(VECTOR2 pos, float speed, float radius, Image* image, COLLISIONTYPE CT, OBJECTTYPE type=OBJECT) 
-		: Collidable(pos, CT, radius), Drawable(image), velocity(ZERO), speed(speed), type(type) {initialize();}
+	Object(Image* image)
+		: Collidable(ZERO, POINTCOLLISION, 0), Drawable(image), speed(1), type(OBJECT) {initialize();}
+	Object(VECTOR2 pos, float speed, float radius, Image* image, COLLISIONTYPE CT, ColRect CR, OBJECTTYPE type=OBJECT) 
+		: Collidable(pos, CT, radius, CR), Drawable(image), velocity(ZERO), speed(speed), type(type) {initialize();}
 
 	void update(float frameTime, World* W);
 	virtual void draw(VECTOR2& Center, DWORD color = graphicsNS::WHITE);
@@ -169,6 +190,8 @@ public:
 	VECTOR2 getLastPosition()	const {return lastPosition;}
 	World* getWorld()			const {return world;}
 	OBJECTTYPE getType()		const {return type;}
+	int LTileX()				const {return (int)lastPosition.x;}
+	int LTileY()				const {return (int)lastPosition.y;}
 
 	// Mutators
 	void newPosition(const VECTOR2& pos, World* W);
@@ -195,8 +218,8 @@ public:
 	// Constructors and destructors
 	Entity() 
 		: Object(), knockback(ZERO), maxHP(0), HP(0), team(0) {initialize();}
-	Entity(VECTOR2 pos, float radius, int HP, Image* image, int team, OBJECTTYPE type=ENTITY) 
-		: Object(pos, 1, radius, image, CIRCLE, type), HP(HP), maxHP(HP), knockback(ZERO), team(team) {initialize();}
+	Entity(VECTOR2 pos, float radius, int HP, Image* image, int team, ColRect CR, OBJECTTYPE type=ENTITY) 
+		: Object(pos, 1.0f, radius, image, CIRCLE, CR, type), HP(HP), maxHP(HP), knockback(ZERO), team(team) {initialize();}
 	~Entity() {};
 
 	// Basic functions
