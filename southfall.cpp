@@ -56,7 +56,7 @@ void Southfall::initialize(HWND hwnd)
 
 	// WorldInterface
 	Interface = new WorldInterface(imageLibrary);
-	Interface->initialize(graphics, audio);
+	Interface->initialize(graphics);
 
 	//Initialize global TextBox
 	textbox = new TextBox(gameFont, audio, input, &imageLibrary->TextBoxIM, &imageLibrary->TextBoxArrowIM);
@@ -86,7 +86,7 @@ void Southfall::initialize(HWND hwnd)
 	actionMenu->addButton(new Button("Magic Sight Off", &imageLibrary->MagicSightOffIM, 9));
 
 	// Add a test enemy wraith
-	Entity* wraith = new Entity(VECTOR2(100,105), 0.5, 150, &imageLibrary->WraithIM, audio, 1, WRAITH_CRECT);
+	Entity* wraith = new Entity(VECTOR2(100,105), 0.5, 150, &imageLibrary->WraithIM, 1, WRAITH_CRECT);
 	player->getWorld()->addEntity(wraith, new WraithAI(wraith));
 
 }
@@ -134,7 +134,7 @@ void Southfall::update()
 			else
 			{
 				playerClickActions();
-				player->getWorld()->update(frameTime);
+				player->getWorld()->update(Center(), frameTime);
 				player->update(frameTime, player->getWorld());
 			}
 			if (textbox->isActive())

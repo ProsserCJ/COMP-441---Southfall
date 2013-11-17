@@ -48,6 +48,14 @@ void Tile::drawObjects(VECTOR2& Center)
 	}
 }
 
+void Tile::updateObjects(float frameTime, World* W)
+{
+	for(auto p = objects.begin(); p != objects.end(); p++)
+	{
+		(*p)->update(frameTime, W);
+	}
+}
+
 void Tile::interact(Entity* E)
 {
 	if(S != 0) S->interact(E);
@@ -84,8 +92,8 @@ void World::collisions()
 	// For now, brute force algorithm
 	for(auto e = entities.begin(); e != entities.end(); e++)
 	{
-		Projectile* P;
 		auto p = projectiles.begin();
+		//Projectile* P;
 		list<Projectile*>::iterator q;
 		while(p != projectiles.end())
 		{
@@ -99,9 +107,8 @@ void World::collisions()
 			/*if(!(*p)->isActive())
 			{
 				P = *p;
-				projectiles.remove(P);
-				int x = P->LTileX(), y = P->LTileY();
-				tiles[x][y]->remove(P);
+				projectiles.erase(p);
+				tiles[P->LTileX()][P->LTileY()]->remove(P);
 				safeDelete<Projectile*>(P);
 			}*/
 			p = q;
@@ -123,8 +130,7 @@ void World::addEntity(Entity* E)
 void World::addEntity(Entity* E, npcAI* AI)		
 {
 	// Assumes AI already is connected to E
-	int x = E->LTileX(), y = E->LTileY();
-	tiles[x][y]->add(E);
+	tiles[(int)E->getPosition().x][(int)E->getPosition().y]->add(E);
 	entities.push_back(E);
 	AIs.push_back(AI);
 }
@@ -137,7 +143,6 @@ void World::addEffect(Effect* E)
 void World::addProjectile(Projectile* P) 
 {
 	tiles[(int)P->getPosition().x][(int)P->getPosition().y]->add(P);
-	//tiles[P->LTileX()][P->LTileY()]->add(P);
 	projectiles.push_back(P);
 }
 
@@ -217,12 +222,23 @@ bool World::isTraversible(VECTOR2 T)
 	return getTile((int)(T.x), (int)(T.y))->isTraversable();
 }
 
-void World::update(float frameTime)
+void World::update(VECTOR2& Center, float frameTime)
 {
 	// Update Structures
 	for(auto s = structures.begin(); s != structures.end(); s++)
 		(*s)->update(frameTime);
 	// Update Entities
+	int x0 = max(0, Center.x-HSCREEN_WIDTH/TILE_SIZE-1), y0 = max(0, Center.y-HSCREEN_HEIGHT/TILE_SIZE-1);
+	int x1 = min(width, Center.x + SCREEN_WIDTH/TILE_SIZE), y1 = min(height, Center.y + SCREEN_HEIGHT/TILE_SIZE);
+
+	// Structures
+	for(auto p = structures.begin(); p != structures.end(); p++)
+		(*p)->draw(Center);
+	
+	for(int x = x0; x < x1; x++)
+		for(int y = y0; y < y1; y++)
+			tiles[x][y]->updateObjects(frameTime, this);
+
 	auto ai = AIs.begin();
 	while(ai != AIs.end())
 	{
@@ -230,6 +246,7 @@ void World::update(float frameTime)
 		(*ai)->update(frameTime, this);
 		ai=q;
 	}
+	
 	// Update Effects
 	auto ef = effects.begin();
 	while(ef != effects.end())

@@ -35,6 +35,7 @@ public:
 
 	void draw(VECTOR2& Center);
 	void drawObjects(VECTOR2& Center);
+	void updateObjects(float frameTime, World* W);
 	void handleCollisions(Entity* E);
 
 	// Accessors
@@ -72,7 +73,7 @@ public:
 	~World() {};
 
 	void draw(VECTOR2& Center, bool magicSight);
-	void update(float frameTime);
+	void update(VECTOR2& Center, float frameTime);
 	void collisions();
 	void act() {}
 
