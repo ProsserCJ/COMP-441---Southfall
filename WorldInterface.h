@@ -23,10 +23,10 @@ class WorldInterface
 public:
 	WorldInterface(ImageLibrary* imageLibrary) 
 		: imageLibrary(imageLibrary) {};
-	void initialize(Graphics* graphics);
+	void initialize(Graphics* graphics, Audio* audio);
 	World* getCurrent() {return Current;}
 
-	World* loadWorld(const string& fileName);
+	World* loadWorld(const string& fileName, Audio* audio);
 
 private:
 	World* Current;	// What world is currently in focus	

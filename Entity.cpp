@@ -396,7 +396,8 @@ void Entity::receiveDamage(Projectile* P)
 	setKnockback(temp);
 	_skip = false;
 	setActive(true);
-	_frozen = false;	
+	_frozen = false;
+	if (audio) audio->playCue(DAMAGE);
 	// Freeze
 	HP -= P->getDamage();
 }

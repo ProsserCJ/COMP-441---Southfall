@@ -234,8 +234,8 @@ public:
 	Entity() 
 		: Object(), knockback(ZERO), maxHP(0), HP(0), team(0), attackImage(0) 
 	{initialize();}
-	Entity(VECTOR2 pos, float radius, int HP, Image* image, int team, ColRect CR, Drawable* attackImage = 0, OBJECTTYPE type=ENTITY) 
-		: Object(pos, 1.0f, radius, image, CIRCLE, CR, type), HP(HP), maxHP(HP), knockback(ZERO), team(team), attackImage(attackImage) 
+	Entity(VECTOR2 pos, float radius, int HP, Image* image, Audio* a, int team, ColRect CR, Drawable* attackImage = 0, OBJECTTYPE type=ENTITY) 
+		: Object(pos, 1.0f, radius, image, CIRCLE, CR, type), HP(HP), maxHP(HP), knockback(ZERO), team(team), attackImage(attackImage), audio(a) 
 	{initialize();}
 	~Entity() {};
 
@@ -298,6 +298,7 @@ protected:
 	bool _hasTarget;
 
 	Drawable* attackImage;
+	Audio* audio;
 
 	bool _frozen;
 	float freezeTime;

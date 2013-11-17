@@ -1,13 +1,13 @@
 #include "WorldInterface.h"
 #include <typeinfo>
 
-void WorldInterface::initialize(Graphics* graphics)
+void WorldInterface::initialize(Graphics* graphics, Audio* audio)
 {
 	StructInt = new StructureInterface(imageLibrary);
-	Current = loadWorld(SOUTHFALLMAP);
+	Current = loadWorld(SOUTHFALLMAP, audio);
 }
 
-World* WorldInterface::loadWorld(const string& fileName)
+World* WorldInterface::loadWorld(const string& fileName, Audio* audio)
 {
 	ifstream fin(fileName);
 	if(fin.fail())
@@ -48,7 +48,7 @@ World* WorldInterface::loadWorld(const string& fileName)
 		{
 			fin >> textLines >> x >> y;
 			x += .5;y += .5;
-			NPC* temp = new NPC(ID, VECTOR2(x,y), &imageLibrary->Character1IM);
+			NPC* temp = new NPC(ID, VECTOR2(x,y), &imageLibrary->Character1IM, audio);
 			string* text = new string[textLines];
 			char buffer[500];
 			fin.get();
@@ -63,14 +63,14 @@ World* WorldInterface::loadWorld(const string& fileName)
 		{
 			fin >> x >> y;
 			x += .5;y += .5;
-			Entity* goblin = new Entity(VECTOR2(x,y), 0.3, 150, &imageLibrary->Goblin1IM, 1, HUMAN_CRECT);
+			Entity* goblin = new Entity(VECTOR2(x,y), 0.3, 150, &imageLibrary->Goblin1IM, audio, 1, HUMAN_CRECT);
 			W->addEntity(goblin, new WraithAI(goblin));
 		}
 		else if(ID == 3)
 		{
 			fin >> x >> y;
 			x += .5;y += .5;
-			Entity* wraith = new Entity(VECTOR2(x,y), 0.5, 150, &imageLibrary->WraithIM, 1, WRAITH_CRECT);
+			Entity* wraith = new Entity(VECTOR2(x,y), 0.5, 150, &imageLibrary->WraithIM, audio, 1, WRAITH_CRECT);
 			W->addEntity(wraith, new WraithAI(wraith));
 		}
 	

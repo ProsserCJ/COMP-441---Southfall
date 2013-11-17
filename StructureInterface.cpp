@@ -50,7 +50,7 @@ World* StructureInterface::loadStructure(string fileName, World** external, VECT
 		{
 			fin >> textLines >> x >> y;
 			x += .5;y += .5;
-			NPC* temp = new NPC(ID, VECTOR2(x,y), &imageLibrary->Character1IM);
+			NPC* temp = new NPC(ID, VECTOR2(x,y), &imageLibrary->Character1IM, 0);
 			string* text = new string[textLines];
 			char buffer[500];
 			fin.get();
@@ -65,14 +65,14 @@ World* StructureInterface::loadStructure(string fileName, World** external, VECT
 		{
 			fin >> x >> y;
 			x += .5;y += .5;
-			Entity* wraith = new Entity(VECTOR2(x,y), 0.5, 150, &imageLibrary->WraithIM, 1, WRAITH_CRECT);
+			Entity* wraith = new Entity(VECTOR2(x,y), 0.5, 150, &imageLibrary->WraithIM, 0, 1, WRAITH_CRECT);
 			W->addEntity(wraith, new WraithAI(wraith));
 		}
 		else if(ID == 3)
 		{
 			fin >> x >> y;
 			x += .5;y += .5;
-			Entity* goblin = new Entity(VECTOR2(x,y), 0.5, 150, &imageLibrary->WraithIM, 1, WRAITH_CRECT);
+			Entity* goblin = new Entity(VECTOR2(x,y), 0.5, 150, &imageLibrary->WraithIM, 0, 1, WRAITH_CRECT);
 			W->addEntity(goblin, new WraithAI(goblin));
 		}
 	
