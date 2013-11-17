@@ -190,11 +190,10 @@ void Entity::update(float frameTime, World* W)
 		knockback = ZERO;
 
 		Object::update(frameTime, W);		
-		if(attackImage) attackImage->updateImage(frameTime);
 		if(startMoving && W->canMoveHere(this, newPos))
 		{
-			W->collidesWithEffect(this, getPosition() + speed*velocity*frameTime);
-			setPosition(getPosition() + speed*velocity*frameTime);
+			W->collidesWithEffect(this, newPos);
+			setPosition(newPos);
 		}
 		else standing();
 		handleSectors(W);
@@ -326,7 +325,7 @@ void Entity::go(DIR face)
 void Entity::standing()
 {
 	if(_skip || !active) return;
-	startMoving = false;
+	startMoving = (knockback != ZERO);
 	moving=false;
 	if (!attacking) setStandingImage();
 }
@@ -370,8 +369,7 @@ void Entity::attack(float orient)
 	case RIGHT: newPos.x += .5; break;
 	}
 
-	getWorld()->addProjectile(new Projectile(newPos,.0001,.5,.00001,0, 0, 15));
-
+	getWorld()->addProjectile(new Projectile(newPos,.0001,.5,.00001, orient, 0, 15));
 
 }
 
@@ -393,6 +391,11 @@ void Entity::setStandingImage()
 void Entity::receiveDamage(Projectile* P)
 {
 	skip(P->getSkipTime());
+	VECTOR2 temp = VECTOR2(cos(P->getOrient()), sin(P->getOrient()));
+	setKnockback(temp);
+	_skip = false;
+	setActive(true);
+	_frozen = false;	
 	// Freeze
 	HP -= P->getDamage();
 }
