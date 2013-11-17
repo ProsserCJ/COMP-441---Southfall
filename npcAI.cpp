@@ -22,7 +22,7 @@ void npcAI::update(float frameTime, World* W)
 inline void npcAI::act(float frameTime, World* W)
 {
 	if(npc == 0) return;
-	if(!target->isActive()) target = 0;
+	if(target != 0 && !target->isActive()) target = 0;
 	npc->act(W);
 	if(searchDelay > SEARCHDELAY)
 	{
@@ -43,8 +43,7 @@ inline void npcAI::act(float frameTime, World* W)
 	switch(priority)
 	{
 	case IDLE:
-		_attack(frameTime, W);
-		//_idle(frameTime, W);
+		_idle(frameTime, W);
 		break;
 	case ATTACK:
 		_attack(frameTime, W);
