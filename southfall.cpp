@@ -214,12 +214,12 @@ void Southfall::update()
 			}
 		case OPENTEXTBOX:					//fallthrough is intentional
 			textbox->update(frameTime);
+			if (!textbox->isActive()) currentState = GAME;
 			if (input->wasKeyPressed('E'))
 			{
 				audio->playCue(SELECT);
 				textbox->next();
-			}
-			if (!textbox->isActive()) currentState = GAME;
+			}			
 			break;	
 		case GAME:
 			if(input->wasKeyPressed(T_KEY))
