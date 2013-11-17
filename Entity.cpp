@@ -188,6 +188,7 @@ void Entity::update(float frameTime, World* W)
 		knockback = ZERO;
 
 		Object::update(frameTime, W);		
+		if(attackImage) attackImage->updateImage(frameTime);
 		if(startMoving && W->canMoveHere(this, newPos))
 		{
 			W->collidesWithEffect(this, getPosition() + speed*velocity*frameTime);
@@ -367,7 +368,7 @@ void Entity::attack(float orient)
 	case RIGHT: newPos.x += .5; break;
 	}
 
-	getWorld()->addProjectile(new Projectile(newPos,.0001,.5,.00001,0, getImage(), 15));
+	getWorld()->addProjectile(new Projectile(newPos,.0001,.5,.00001,0, 0, 15));
 
 
 }
