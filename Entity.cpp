@@ -312,7 +312,7 @@ void Entity::go(DIR face)
 void Entity::standing()
 {
 	if(_skip || !active) return;
-	startMoving = false;
+	startMoving = (knockback != ZERO); 
 	moving=false;
 	if (!attacking) setStandingImage();
 }
@@ -377,10 +377,10 @@ void Entity::receiveDamage(Projectile* P)
 	skip(P->getSkipTime());
 	VECTOR2 temp = P->getVelocity();
 	D3DXVec2Normalize(&temp,&temp);
-	setKnockback(temp*1.5);
+	setKnockback(temp*.65);
 	_skip = false;
 	setActive(true);
-	_frozen = false;
+	_frozen = false;	
 	// Freeze
 	HP -= P->getDamage();
 }
