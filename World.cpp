@@ -84,8 +84,8 @@ void World::collisions()
 	// For now, brute force algorithm
 	for(auto e = entities.begin(); e != entities.end(); e++)
 	{
+		Projectile* P;
 		auto p = projectiles.begin();
-		//Projectile* P;
 		list<Projectile*>::iterator q;
 		while(p != projectiles.end())
 		{
@@ -99,8 +99,9 @@ void World::collisions()
 			/*if(!(*p)->isActive())
 			{
 				P = *p;
-				projectiles.erase(p);
-				tiles[P->LTileX()][P->LTileY()]->remove(P);
+				projectiles.remove(P);
+				int x = P->LTileX(), y = P->LTileY();
+				tiles[x][y]->remove(P);
 				safeDelete<Projectile*>(P);
 			}*/
 			p = q;
@@ -122,7 +123,8 @@ void World::addEntity(Entity* E)
 void World::addEntity(Entity* E, npcAI* AI)		
 {
 	// Assumes AI already is connected to E
-	tiles[(int)E->getPosition().x][(int)E->getPosition().y]->add(E);
+	int x = E->LTileX(), y = E->LTileY();
+	tiles[x][y]->add(E);
 	entities.push_back(E);
 	AIs.push_back(AI);
 }
@@ -135,6 +137,7 @@ void World::addEffect(Effect* E)
 void World::addProjectile(Projectile* P) 
 {
 	tiles[(int)P->getPosition().x][(int)P->getPosition().y]->add(P);
+	//tiles[P->LTileX()][P->LTileY()]->add(P);
 	projectiles.push_back(P);
 }
 

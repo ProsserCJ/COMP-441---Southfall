@@ -137,6 +137,7 @@ void Entity::initialize()
 	freezeTime = 0;
 	_magicSight = false;
 	attacking = false;
+	lastPosition = position;
 }
 
 inline void Object::handleSectors(World* W)
@@ -169,6 +170,7 @@ void Entity::update(float frameTime, World* W)
 	}
 	timeSinceInteract += frameTime;
 	timeSinceAction += frameTime;
+	if(!looping()) attacking = false;
 	if(attacking)
 	{
 		if (timeSinceAttack > ATTACK_TIME_DELAY)
