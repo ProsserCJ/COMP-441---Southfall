@@ -173,6 +173,7 @@ void Southfall::update()
 	}
 }
 
+
 inline void Southfall::playerClickActions()
 {
 	if(player->canAction() && input->getMouseLButton())
