@@ -340,6 +340,19 @@ void Entity::attack(float orient)
 		facing = RIGHT;
 		setSingleLoop(ATTACK_RIGHT_START, ATTACK_RIGHT_END, ATTACK_FRAME_RATE);
 	}
+
+	VECTOR2 newPos = position;
+	switch(facing)
+	{
+	case UP: newPos.y -= .5; break;
+	case DOWN: newPos.y += .5; break;
+	case LEFT: newPos.x -= .5; break;
+	case RIGHT: newPos.x += .5; break;
+	}
+
+	getWorld()->addProjectile(new Projectile(newPos,.0001,.5,.00001,0, getImage(), 15));
+
+
 }
 
 void Entity::setStandingImage()

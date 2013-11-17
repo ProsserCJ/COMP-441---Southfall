@@ -73,4 +73,12 @@ private:
 	Image* exitImage;
 };
 
+class Damage : public Effect
+{
+public:
+	Damage(VECTOR2 pos) {_hidden = true; _invisible = true;}
+	virtual void effect(Object* E);
+	virtual void draw(VECTOR2 Center);
+};
+
 #endif

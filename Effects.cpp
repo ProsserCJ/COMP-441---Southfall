@@ -51,3 +51,13 @@ void QuickPortal::draw(VECTOR2 Center)
 	exitImage->setX(X); exitImage->setY(Y);
 	exitImage->draw();
 }
+
+void Damage::draw(VECTOR2 Center)
+{
+
+}
+
+void Damage::effect(Object* E)
+{
+
+}
