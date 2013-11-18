@@ -29,9 +29,18 @@ void Tile::handleCollisions(Entity* E)
 		}
 }
 
+void Tile::remove(Object* Obj)
+{
+	objects.remove(Obj);
+}
+
 void Tile::drawObjects(VECTOR2& Center)
 {
 	if(objects.empty()) return;
+
+	if(position.y == 103)
+		int x = 4;
+
 	list<Object*> temp = objects;
 	while(!temp.empty())
 	{
@@ -50,9 +59,20 @@ void Tile::drawObjects(VECTOR2& Center)
 
 void Tile::updateObjects(float frameTime, World* W)
 {
-	for(auto p = objects.begin(); p != objects.end(); p++)
+	if(objects.empty()) return;
+	auto p = objects.begin();
+	while(p != objects.end())
 	{
-		(*p)->update(frameTime, W);
+		list<Object*>::iterator q = p;
+		q++;
+		if(!(*p)->isActive())
+		{
+			Object* Obj = *p;
+			Obj->remove();
+			safeDelete<Object*>(Obj);
+		}
+		else (*p)->update(frameTime, W);
+		p = q;
 	}
 }
 
@@ -64,6 +84,7 @@ void Tile::interact(Entity* E)
 void Tile::add(Object* Obj)
 {
 	objects.push_back(Obj);
+	Obj->setTile(this);
 }
 
 void World::draw(VECTOR2& Center, bool magicSight)
@@ -82,6 +103,7 @@ void World::draw(VECTOR2& Center, bool magicSight)
 	for(int x = x0; x < x1; x++)
 		for(int y = y0; y < y1; y++)
 			tiles[x][y]->drawObjects(Center);
+	// All effects are drawn
 	for(auto ef = effects.begin(); ef != effects.end(); ef++)
 		if(!(*ef)->isInvisible() && (magicSight || !(*ef)->isHidden())) 
 			(*ef)->draw(Center);
@@ -90,27 +112,27 @@ void World::draw(VECTOR2& Center, bool magicSight)
 void World::collisions()
 {
 	// For now, brute force algorithm
+	if(entities.empty()) return;
 	for(auto e = entities.begin(); e != entities.end(); e++)
 	{
+		int x0 = max(0, (int)(*e)->getPosition().x - 1), y0 = max(0, (int)(*e)->getPosition().y - 1);
+		int x1 = min(width, (int)(*e)->getPosition().x + 1), y1 = min(height, (int)(*e)->getPosition().y + 1);
+
+
+		if(projectiles.empty()) return;
 		auto p = projectiles.begin();
-		//Projectile* P;
+		Projectile* P;
 		list<Projectile*>::iterator q;
 		while(p != projectiles.end())
 		{
 			q = p;
 			q++;
-			if((*e)->isActive() && (*p)->isActive() && (*p)->getTeam() != (*e)->getTeam() && ProjectileCollision(*p, *e))
+			if((*e)->isActive() && (*p)->isActive() && (*p)->getTeam() != (*e)->getTeam() 
+				&& ProjectileCollision(*p, *e))
 			{
 				(*e)->receiveDamage(*p);
 				(*p)->deactivate();
 			}
-			/*if(!(*p)->isActive())
-			{
-				P = *p;
-				projectiles.erase(p);
-				tiles[P->LTileX()][P->LTileY()]->remove(P);
-				safeDelete<Projectile*>(P);
-			}*/
 			p = q;
 		}
 	}
@@ -154,7 +176,7 @@ void World::addObject(Object* Obj)
 
 void World::removeEntity(Entity* E)	
 {
-	tiles[(int)E->getLastPosition().x][(int)E->getLastPosition().y]->remove(E);
+	E->getTile()->remove(E);
 	entities.remove(E);
 }
 
@@ -184,22 +206,29 @@ bool World::collidesWithTile(Object* E, VECTOR2& position)
 bool World::collidesWithEffect(Object* E, VECTOR2& position)
 {
 	VECTOR2 temp = E->getPosition();
-	E->setPosition(position);
+	E->newPosition(position, this);
 	for(auto p = effects.begin(); p != effects.end(); p++)
 	{
 		if(HandleCollision(*p, E))
 		{
-			E->setPosition(temp);
-			(*p)->effect(E);
+			E->newPosition(temp, this);
+			(*p)->effect(E, this);
 			return true;
 		}
 	}
-	E->setPosition(temp);
+	E->newPosition(temp, this);
 	return false;
 }
 
 bool World::collidesWithNPC(Object* E, VECTOR2& position)
 {
+	// Use tile sectors to check this
+	//
+	//
+	//
+	//////////////////////////////////
+
+	// Old code
 	VECTOR2 temp = E->getPosition();
 	E->setPosition(position);
 	for(auto p = entities.begin(); p != entities.end(); p++)
@@ -228,25 +257,12 @@ void World::update(VECTOR2& Center, float frameTime)
 	for(auto s = structures.begin(); s != structures.end(); s++)
 		(*s)->update(frameTime);
 	// Update Entities
-	int x0 = max(0, Center.x-HSCREEN_WIDTH/TILE_SIZE-1), y0 = max(0, Center.y-HSCREEN_HEIGHT/TILE_SIZE-1);
-	int x1 = min(width, Center.x + SCREEN_WIDTH/TILE_SIZE), y1 = min(height, Center.y + SCREEN_HEIGHT/TILE_SIZE);
-
-	// Structures
-	for(auto p = structures.begin(); p != structures.end(); p++)
-		(*p)->draw(Center);
-	
+	int x0 = max(0, Center.x-HSCREEN_WIDTH/TILE_SIZE-20), y0 = max(0, Center.y-HSCREEN_HEIGHT/TILE_SIZE-20);
+	int x1 = min(width, Center.x + SCREEN_WIDTH/TILE_SIZE+20), y1 = min(height, Center.y + SCREEN_HEIGHT/TILE_SIZE+20);	
 	for(int x = x0; x < x1; x++)
 		for(int y = y0; y < y1; y++)
 			tiles[x][y]->updateObjects(frameTime, this);
 
-	auto ai = AIs.begin();
-	while(ai != AIs.end())
-	{
-		auto q = ai; q++;
-		(*ai)->update(frameTime, this);
-		ai=q;
-	}
-	
 	// Update Effects
 	auto ef = effects.begin();
 	while(ef != effects.end())
@@ -259,18 +275,6 @@ void World::update(VECTOR2& Center, float frameTime)
 			effects.erase(ef);
 		}
 		ef=q;
-	}
-	// Update Projectiles
-	auto pr = projectiles.begin();
-	while(pr != projectiles.end())
-	{
-		auto q = pr; q++;
-		(*pr)->update(frameTime, this);
-		if(!(*pr)->isActive())
-		{
-			projectiles.erase(pr);
-		}
-		pr=q;
 	}
 }
 

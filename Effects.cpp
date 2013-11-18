@@ -22,14 +22,14 @@ void Effect::draw(VECTOR2 Center)
 	Drawable::draw();
 }
 
-void ImpedeEffect::effect(Object* E)
+void ImpedeEffect::effect(Object* E, World* W)
 {
 	E->stop();
 }
 
-void QuickPortal::effect(Object* E)
+void QuickPortal::effect(Object* E, World* W)
 {
-	E->setPosition(exit);
+	E->newPosition(exit, W);
 }
 
 void QuickPortal::draw(VECTOR2 Center)
@@ -57,7 +57,7 @@ void Damage::draw(VECTOR2 Center)
 
 }
 
-void Damage::effect(Object* E)
+void Damage::effect(Object* E, World* W)
 {
 
 }

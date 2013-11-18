@@ -8,6 +8,7 @@ void npcAI::initialize()
 	evaluateDelay = 0;
 	delay = 0;
 	target = 0;
+	if(npc) npc->setController(this);
 }
 
 void npcAI::update(float frameTime, World* W)
@@ -18,7 +19,6 @@ void npcAI::update(float frameTime, World* W)
 	delay += frameTime;
 	// Act and update
 	act(frameTime, W);
-	npc->update(frameTime, W);
 }
 
 void npcAI::act(float frameTime, World* W)
@@ -43,7 +43,6 @@ void npcAI::act(float frameTime, World* W)
 		_attack(frameTime, W);
 		break;
 	}
-
 }
 
 void npcAI::_idle(float frameTime, World* W)
@@ -61,7 +60,6 @@ void npcAI::_idle(float frameTime, World* W)
 		npc->go(entityNS::DIR(rand()%4));
 		moving = true;
 	}
-	
 }
 
 void WraithAI::_assessPriority(World* W)
@@ -77,7 +75,7 @@ void WraithAI::_attack(float frameTime, World* W)
 		return;
 	}
 	if(npc->canAction())
-	{
+	{// Launch shadowbolts
 		VECTOR2 launchPos = npc->getPosition() - VECTOR2(0.f,1.8f);
 		float sY = static_cast<float>(target->getPosition().y - launchPos.y);
 		float sX = static_cast<float>(target->getPosition().x - launchPos.x);
@@ -91,7 +89,7 @@ void WraithAI::_attack(float frameTime, World* W)
 		npc->resetAction();
 	}
 	if(delay > MOVEMENTLENGTH)
-	{
+	{// Blink around
 		VECTOR2 blink = npc->getPosition() + VECTOR2(rand()%2000/500.f - 2, rand()%2000/500.f - 2);
 		if(rand()%100 == 0 && W->canMoveHere(npc, blink))
 		{

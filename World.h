@@ -44,12 +44,13 @@ public:
 	Structure* getStructure()	{return S;}
 	list<Object*>::iterator begin() {return objects.begin();}
 	list<Object*>::iterator end()	{return objects.end();}
+	VECTOR2 getPosition()		const {return position;}
 
 	// Mutators
 	void giveStructure(Structure* S)	{this->S = S;}
 	void interact(Entity* E);	// Open a door on the tile or things like that
 	void add(Object* Obj);
-	void remove(Object* Obj)	{objects.remove(Obj);}
+	void remove(Object* Obj);
 
 private:
 	VECTOR2 position;	// Position of the tile in the world

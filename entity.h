@@ -18,6 +18,8 @@ Last Modified 11/14/2013
 class Item;
 class World;
 class Projectile;
+class npcAI;
+class Tile;
 
 enum SPELLTYPE{NOSPELL, IMPEDE, QUICKPORTAL, BLINK, FIREBALL, SHADOWBALL, FREEZE, PORTALTRAP, 
 	MAGICSIGHTON, MAGICSIGHTOFF};
@@ -196,31 +198,32 @@ public:
 	Object(VECTOR2 pos, float speed, float radius, Image* image, COLLISIONTYPE CT, ColRect CR, OBJECTTYPE type=OBJECT) 
 		: Collidable(pos, CT, radius, CR), Drawable(image), velocity(ZERO), speed(speed), type(type) {initialize();}
 
-	void update(float frameTime, World* W);
+	virtual void update(float frameTime, World* W);
 	virtual void draw(VECTOR2& Center, DWORD color = graphicsNS::WHITE);
 	void initialize();
+	void remove();
 
 	// Accessors
 	VECTOR2 getVelocity()		const {return velocity;}
-	VECTOR2 getLastPosition()	const {return lastPosition;}
 	World* getWorld()			const {return world;}
 	OBJECTTYPE getType()		const {return type;}
-	int LTileX()				const {return (int)lastPosition.x;}
-	int LTileY()				const {return (int)lastPosition.y;}
+	int TileX()					const {return (int)getPosition().x;}
+	int TileY()					const {return (int)getPosition().y;}
+	Tile* getTile()				const {return tile;}
 
 	// Mutators
 	void newPosition(const VECTOR2& pos, World* W);
 	void setVelocity(const VECTOR2& vel)	{velocity = vel;}
 	void stop()								{velocity = ZERO;}
+	void setTile(Tile* T)					{tile = T;}
 
 protected:
 	inline void handleSectors(World* W);
 
-	VECTOR2 lastPosition;	// Last position (for sectorization)
+	Tile* tile;
 	VECTOR2 velocity;		// Velocity direction of the entity
 	float speed;			// Speed the object travels at
 	bool moving;			// True if the object should move in the direction it is facing
-	float radius;			// Interaction radius
 	
 	OBJECTTYPE type;
 	World* world;
@@ -268,17 +271,18 @@ public:
 	void setTarget(VECTOR2 T)				{target = T; _hasTarget = true;}
 	void setSpellType(SPELLTYPE S)			{SpellType = S;}
 	void resetTarget()						{_hasTarget = false;}
-	void resetAction()	{timeSinceAction = 0;}
+	void resetAction()						{timeSinceAction = 0;}
 	void kill()								{HP = 0; active = false;}
 	void receiveDamage(Projectile* p);
 	void setDir(DIR face)					{facing=face;}
-	void go(DIR face);			
+	void go(DIR face);
 	void standing();
 	virtual void setStandingImage();
 	void freeze(float time)					{_frozen=true;freezeTime=time;}
 	void skip(float time)					{skipTime = time; _skip = true;}
 	void switchMagicSight()					{_magicSight = !_magicSight;}
 	void setMagicSight(bool s)				{_magicSight = s;}
+	void setController(npcAI* control);
 
 protected:
 	VECTOR2 knockback;	// For knock back effects
@@ -296,6 +300,7 @@ protected:
 	SPELLTYPE SpellType;
 	VECTOR2 target;
 	bool _hasTarget;
+	npcAI* controller;
 
 	Drawable* attackImage;
 	Audio* audio;

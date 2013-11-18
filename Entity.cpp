@@ -4,6 +4,7 @@
 #include "World.h"
 #include "Effects.h"
 #include "Projectiles.h"
+#include "npcAI.h"
 
 using namespace entityNS;
 
@@ -103,12 +104,13 @@ void Drawable::startImage()
 void Object::initialize()
 {
 	Drawable::initialize();
+	tile = 0;
 }
 
 void Object::update(float frameTime, World* W)
 {
 	if(!active) return;
-	lastPosition = position;
+	handleSectors(W);
 	updateImage(frameTime);
 }
 
@@ -127,6 +129,7 @@ void Object::draw(VECTOR2& Center, DWORD color)
 void Entity::initialize()
 {
 	Object::initialize();
+	controller = 0;
 	timeSinceInteract = 0;
 	timeSinceAction = 0;
 	speed = 1;
@@ -137,19 +140,17 @@ void Entity::initialize()
 	freezeTime = 0;
 	_magicSight = false;
 	attacking = false;
-	lastPosition = position;
 }
 
 inline void Object::handleSectors(World* W)
 {
 	VECTOR2 V = getPosition();
-	int LX = (int)(getLastPosition().x);
-	int LY = (int)(getLastPosition().y);
 	int X = (int)(V.x), Y = (int)(V.y);
-	if(LX != X || LY != Y)
+	if(tile->getPosition().x != X || tile->getPosition().y != Y)
 	{
-		W->getTile(LX,LY)->remove(this);
-		W->getTile(X,Y)->add(this);
+		tile->remove(this);
+		tile = W->getTile(X,Y);
+		tile->add(this);
 	}
 }
 
@@ -159,8 +160,19 @@ void Object::newPosition(const VECTOR2& pos, World* W)
 	handleSectors(W);
 }
 
+void Object::remove()
+{
+	tile->remove(this);
+}
+
+void Entity::setController(npcAI* control)
+{
+	controller = control;
+}
+
 void Entity::update(float frameTime, World* W)
 {
+	if(controller) controller->update(frameTime, W);
 	if(!active) return;
 	if(_skip)
 	{
@@ -186,18 +198,19 @@ void Entity::update(float frameTime, World* W)
 	if(magic > maxMagic) magic = maxMagic;	
 	if(!_frozen)
 	{
+		knockback = ZERO;
 		VECTOR2 newPos = getPosition() + speed*velocity*frameTime + knockback;
 		knockback = ZERO;
-
-		Object::update(frameTime, W);	
+		
 		if(attackImage) attackImage->updateImage(frameTime);
 		if(startMoving && W->canMoveHere(this, newPos))
 		{
 			W->collidesWithEffect(this, newPos);
-			setPosition(newPos);
+			newPosition(newPos, W);
 		}
 		else standing();
-		handleSectors(W);
+
+		Object::update(frameTime, W);
 	}
 	else
 	{
@@ -361,7 +374,9 @@ void Entity::attack(float orient)
 		if(attackImage) attackImage->setSingleLoop(RIGHT_SWORD_START, RIGHT_SWORD_END, ATTACK_FRAME_RATE);
 	}
 
-	VECTOR2 newPos = position;
+	if(orient<0) orient += TPI;
+	orient = HPI-orient;
+	VECTOR2 newPos = position + VECTOR2(0,0.5) + 0.5*VECTOR2(sin(orient), cos(orient));
 	switch(facing)
 	{
 	case UP: newPos.y -= .5; break;
@@ -370,7 +385,7 @@ void Entity::attack(float orient)
 	case RIGHT: newPos.x += .5; break;
 	}
 
-	getWorld()->addProjectile(new Projectile(newPos,.0001,.5,.00001, orient, 0, 15));
+	getWorld()->addProjectile(new Projectile(newPos,0.0001f,0.5f,0.00001f, orient, 0, 15));
 
 }
 
@@ -394,11 +409,11 @@ void Entity::receiveDamage(Projectile* P)
 	skip(P->getSkipTime());
 	VECTOR2 temp = VECTOR2(cos(P->getOrient()), sin(P->getOrient()));
 	setKnockback(temp);
-	_skip = false;
-	setActive(true);
-	_frozen = false;
+	//_skip = false;
+	//setActive(true);
+	//_frozen = false;
 	if (audio) audio->playCue(DAMAGE);
-	// Freeze
+	// Freeze Effect will go here
 	HP -= P->getDamage();
 }
 

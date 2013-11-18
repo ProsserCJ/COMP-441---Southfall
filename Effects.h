@@ -23,7 +23,7 @@ public:
 		: time(0), _timed(false), _hidden(true), _invisible(false), _done(false), Collidable(position, CT, radius), Drawable(image) {};
 
 	void update(float frameTime, World* W);
-	virtual void effect(Object* E) = 0;
+	virtual void effect(Object* E, World* W) = 0;
 	virtual void draw(VECTOR2 Center);
 
 	bool isInvisible()	const {return _invisible;}
@@ -46,7 +46,7 @@ class ImpedeEffect : public Effect
 public:
 	ImpedeEffect(VECTOR2 position, float radius, Image* image) 
 		: Effect(position, radius, CIRCLE, image) {};
-	virtual void effect(Object* E);
+	virtual void effect(Object* E, World* W);
 };
 
 class PortalTrapEffect : public Effect
@@ -54,7 +54,7 @@ class PortalTrapEffect : public Effect
 public:
 	PortalTrapEffect(VECTOR2 opening, VECTOR2 exit, float radius, Image* image, Image* exitImage)
 		: Effect(opening, radius, CIRCLE, image), exit(exit), exitImage(exitImage) {};
-	virtual void effect(Object* E);
+	virtual void effect(Object* E, World* W);
 	virtual void draw(VECTOR2 Center);
 private:
 	VECTOR2 exit;
@@ -66,7 +66,7 @@ class QuickPortal : public Effect
 public:
 	QuickPortal(VECTOR2 opening, VECTOR2 exit, float radius, Image* image, Image* exitImage)
 		: Effect(opening, radius, CIRCLE, image), exit(exit), exitImage(exitImage) {};
-	virtual void effect(Object* E);
+	virtual void effect(Object* E, World* W);
 	virtual void draw(VECTOR2 Center);
 private:
 	VECTOR2 exit;
@@ -77,7 +77,7 @@ class Damage : public Effect
 {
 public:
 	Damage(VECTOR2 pos) {_hidden = true; _invisible = true;}
-	virtual void effect(Object* E);
+	virtual void effect(Object* E, World* W);
 	virtual void draw(VECTOR2 Center);
 };
 

@@ -26,7 +26,6 @@ public:
 	void update(float frameTime, World* W);
 	void initialize();
 	
-	VECTOR2 getLastPosition()	{return npc->getLastPosition();}
 	VECTOR2 getPosition()		{return npc->getPosition();}
 	Entity* & getNPC()			{return npc;}
 	bool isActive()				{return npc->isActive();}
