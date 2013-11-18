@@ -89,6 +89,11 @@ void Southfall::initialize(HWND hwnd)
 	Entity* wraith = new Entity(VECTOR2(100,105), 0.5, 150, &imageLibrary->WraithIM, audio, 1, WRAITH_CRECT);
 	player->getWorld()->addEntity(wraith, new WraithAI(wraith));
 	mainWorld = player->getWorld();
+	
+	player->getWorld()->addObject(new Object(VECTOR2(109.5,61.5),0,0, &imageLibrary->DeadGuyIM, entityNS::POINTCOLLISION, ColRect(0,0)));
+	player->getWorld()->addObject(new Object(VECTOR2(110.5,61.5),0,0, &imageLibrary->DeadGuyIM, entityNS::POINTCOLLISION, ColRect(0,0)));
+	player->getWorld()->addObject(new Object(VECTOR2(111.5,61.5),0,0, &imageLibrary->DeadGuyIM, entityNS::POINTCOLLISION, ColRect(0,0)));
+	
 }
 
 //=============================================================================
@@ -113,6 +118,13 @@ void Southfall::update()
 			{				
 				currentState = GAME;				
 				delete introText;
+				Entity* temp = player->getWorld()->getNPCFacing(player->getPosition(), entityNS::RIGHT);
+				if (temp)
+				{
+					temp->setDir(entityNS::LEFT);
+					textbox->setText((NPC*)temp);
+					textbox->setActive(true);
+				}
 			}
 		case OPENTEXTBOX:					//fallthrough is intentional
 			textbox->update(frameTime);
@@ -133,7 +145,7 @@ void Southfall::update()
 			{
 				playerClickActions();
 				player->getWorld()->update(Center(), frameTime);
-				//player->update(frameTime, player->getWorld());
+				player->update(frameTime, player->getWorld());
 			}
 			if (textbox->isActive())
 			{

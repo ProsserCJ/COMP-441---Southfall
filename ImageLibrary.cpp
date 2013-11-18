@@ -35,6 +35,11 @@ void ImageLibrary::initialize(Graphics* graphics)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character 1 texture"));
 	if(!Character1IM.initialize(graphics, 32, 32, 8, &Character1TX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character 1 image"));
+	// Dead guy
+	if(!DeadGuyTX.initialize(graphics, DEADGUY))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Dead Guy texture"));
+	if(!DeadGuyIM.initialize(graphics, 32, 32, 1, &DeadGuyTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Dead Guy image"));
 	// Goblin 1
 	if(!Goblin1TX.initialize(graphics, GOBLIN1_SHEET))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Goblin 1 texture"));
