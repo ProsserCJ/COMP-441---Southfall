@@ -145,7 +145,7 @@ void Southfall::update()
 			{
 				playerClickActions();
 				player->getWorld()->update(Center(), frameTime);
-				player->update(frameTime, player->getWorld());
+				//player->update(frameTime, player->getWorld());
 			}
 			if (textbox->isActive())
 			{
