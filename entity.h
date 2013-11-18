@@ -269,7 +269,7 @@ public:
 	// Mutators
 	void setKnockback(const VECTOR2& kb)	{knockback = kb;}
 	void setActive(bool act)				{active = act;}
-	void setHP(int HP)						{this->HP = HP;}
+	void setHP(int HP)						{this->HP = HP; if(HP > maxHP) maxHP = HP;}
 	void setWorld(World* W)					{world = W;}
 	void setTarget(VECTOR2 T)				{target = T; _hasTarget = true;}
 	void setSpellType(SPELLTYPE S)			{SpellType = S;}

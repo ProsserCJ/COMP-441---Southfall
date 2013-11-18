@@ -51,6 +51,7 @@ public:
 	Image VertInHouseDoorIM;
 	Image SwingingSwordIM;
 	Image DeadGuyIM;
+	Image BirminghamIM;
 
 private:
 	bool _initialized;
@@ -93,6 +94,7 @@ private:
 	TextureManager HouseWallTX;
 	TextureManager SwingingSwordTX;
 	TextureManager DeadGuyTX;
+	TextureManager BirminghamTX;
 };
 
 #endif

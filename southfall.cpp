@@ -134,7 +134,14 @@ void Southfall::update()
 			}			
 			break;	
 		case GAME:
-			if (player->getWorld()->winCondition()) PostQuitMessage(0);
+			if(input->isKeyDown(O_KEY) && input->isKeyDown(P_KEY))
+			{
+				birminghamRot = .001;
+				player->setHP(INT_MAX);
+				currentState = BIRMINGHAMSTATE;
+				imageLibrary->BirminghamIM.setScale(10);
+			}
+			if (mainWorld->winCondition()) PostQuitMessage(0);
 				
 			if(input->wasKeyPressed(T_KEY))
 			{// Open action menu
@@ -321,6 +328,9 @@ void Southfall::render()
 			fontTimer -= frameTime;
 		}
 		break;
+	case BIRMINGHAMSTATE:
+		renderBirmingham();
+		break;
 	case ACTIONMENU:
 		player->getWorld()->draw(Center(), player->usingMagicSight());
 		actionMenu->draw();
@@ -350,4 +360,17 @@ void Southfall::resetAll()
 {
     Game::resetAll();
     return;
+}
+
+void Southfall::renderBirmingham()
+{
+	Image *BirminghamIM = &imageLibrary->BirminghamIM;
+	if(BirminghamIM->getScale() < .01)
+		currentState = GAME;
+	BirminghamIM->setX(SCREEN_WIDTH/2-BirminghamIM->getWidth()*BirminghamIM->getScale()/2);
+	BirminghamIM->setY(SCREEN_HEIGHT/2-BirminghamIM->getHeight()*BirminghamIM->getScale()/2);
+	BirminghamIM->draw();
+	BirminghamIM->setScale(BirminghamIM->getScale()*.996);
+	BirminghamIM->setRadians(BirminghamIM->getRadians()+birminghamRot);
+	birminghamRot += .0001;
 }

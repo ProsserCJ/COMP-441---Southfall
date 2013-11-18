@@ -26,7 +26,7 @@ Last modified: 11/4/2013
 #include "ImageLibrary.h"
 using std::stringstream;
 
-enum gameState {MAIN_MENU, INTRO, GAME, ACTIONMENU, OPENTEXTBOX, CREDITS, GAME_OVER};
+enum gameState {MAIN_MENU, INTRO, GAME, BIRMINGHAMSTATE, ACTIONMENU, OPENTEXTBOX, CREDITS, GAME_OVER};
 
 const float SELECTDELAY = 0.5;
 
@@ -77,6 +77,9 @@ private:
 
 	TextBox* textbox;
 	WorldInterface* Interface;
+	
+	void renderBirmingham();
+	float birminghamRot;
 };
 
 #endif

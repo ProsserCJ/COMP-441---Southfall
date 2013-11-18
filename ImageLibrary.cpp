@@ -234,4 +234,10 @@ void ImageLibrary::initialize(Graphics* graphics)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing SwingingSword texture"));
 	if(!SwingingSwordIM.initialize(graphics, 64, 32, 8, &SwingingSwordTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing SwingingSword image"));	
+
+	// Birmingham
+	if(!BirminghamTX.initialize(graphics, BIRMINGHAM))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Birmingham texture"));
+	if(!BirminghamIM.initialize(graphics, 0, 0, 0, &BirminghamTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Birmingham image"));	
 }

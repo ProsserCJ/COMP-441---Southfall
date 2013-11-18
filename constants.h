@@ -154,6 +154,7 @@ const char GAMEMENUBACK[] = "Images\\GameMenuBackground.png";
 const char FIREBALLSHEET[] = "Images\\FireballSheet.png";
 const char SHADOWBALLSHEET[] = "Images\\ShadowballSheet.png";
 const char SWINGINGSWORD[] = "Images\\SwingingSwordSheet.png";
+const char BIRMINGHAM[] = "Images\\Birmingham.png";
 // Worlds
 const string BAR1STRUCTURE = "Worlds\\Bar1.txt";
 const string BAR2STRUCTURE = "Worlds\\Bar2.txt";
@@ -181,6 +182,8 @@ const UCHAR ZOOM_OUT		= 0x4f;			// The 'o' key
 const UCHAR M_KEY			= 0x4D;			// The 'm' key
 const UCHAR F_KEY			= 0x46;			// The 'f' key
 const UCHAR T_KEY			= 0x54;			// The 't' key
+const UCHAR P_KEY			= 0x50;			// The 'P' key
+const UCHAR O_KEY			= 0x4F;			// The 'O' key
 
 // ADD FILE names for Audio here
 const char WAVE_BANK[]  = "audio\\Win\\Wave Bank.xwb";

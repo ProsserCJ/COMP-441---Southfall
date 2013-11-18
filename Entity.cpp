@@ -220,6 +220,7 @@ void Entity::update(float frameTime, World* W)
 
 void Entity::draw(VECTOR2& Center, DWORD color)
 {
+	color = SETCOLOR_ARGB(255,255,int((float(HP)/maxHP)*255),int((float(HP)/maxHP)*255));
 	if(_skip || !active) return;
 	if(!_frozen) Object::draw(Center, color);
 	else Object::draw(Center, graphicsNS::BLUE);
