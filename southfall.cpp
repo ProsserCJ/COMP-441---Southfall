@@ -85,9 +85,6 @@ void Southfall::initialize(HWND hwnd)
 	actionMenu->addButton(new Button("Magic Sight On", &imageLibrary->MagicSightOnIM, 8));
 	actionMenu->addButton(new Button("Magic Sight Off", &imageLibrary->MagicSightOffIM, 9));
 
-	// Add a test enemy wraith
-	Entity* wraith = new Entity(VECTOR2(100,105), 0.5, 150, &imageLibrary->WraithIM, audio, 1, WRAITH_CRECT);
-	player->getWorld()->addEntity(wraith, new WraithAI(wraith));
 	mainWorld = player->getWorld();
 	
 	player->getWorld()->addObject(new Object(VECTOR2(109.5,61.5),0,0, &imageLibrary->DeadGuyIM, entityNS::POINTCOLLISION, HUMAN_CRECT));
@@ -136,6 +133,8 @@ void Southfall::update()
 			}			
 			break;	
 		case GAME:
+			if (player->getWorld()->winCondition()) PostQuitMessage(0);
+				
 			if(input->wasKeyPressed(T_KEY))
 			{// Open action menu
 				pause = true;
