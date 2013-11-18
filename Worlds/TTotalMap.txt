@@ -135,7 +135,7 @@ r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r 
 r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r
 r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r
 r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r
-56
+31
 1 4 103 96
 You there!
 Go due north past this here house to that tavern yonder.
@@ -173,41 +173,17 @@ Hi.
 2 82 7
 2 83 7
 2 84 7
-2 81 8
-2 82 8
-2 83 8
-2 84 8
-2 112 12
-2 115 12
-2 112 13
 2 113 13
 2 114 13
 2 115 13
 2 132 6
-2 132 7
-2 132 8
 2 132 9
 2 136 6
 2 136 7
-2 136 8
-2 136 9
-2 109 6
-2 109 7
-2 109 8
 2 109 9
-2 110 6
-2 110 7
-2 110 8
-2 110 9
-2 111 6
-2 111 7
 2 111 8
 2 111 9
-2 117 6
-2 117 7
-2 117 8
 2 117 9
 2 118 6
 2 118 7
-2 118 8
-2 118 9
+3 114 7
