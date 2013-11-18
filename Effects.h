@@ -80,11 +80,11 @@ private:
 class DamageEffect : public Effect
 {
 public:
-	DamageEffect(VECTOR2 pos, int damage, int team, Image* image=0, bool timed=false, float time=0) 
+	DamageEffect(VECTOR2 pos, int damage, float radius, int team, Image* image=0, bool timed=false, float time=0) 
 		: Effect(pos, radius, CIRCLE, image, timed, time), team(team), damage(damage) {};
 	virtual void effect(Object* E, World* W);
 private:
-	int damage;
+	float damage;
 	int team;
 };
 

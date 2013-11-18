@@ -205,10 +205,10 @@ void Entity::update(float frameTime, World* W)
 		if(attackImage) attackImage->updateImage(frameTime);
 		if(startMoving && W->canMoveHere(this, newPos))
 		{
-			W->collidesWithEffect(this, newPos);
 			newPosition(newPos, W);
 		}
 		else standing();
+		W->collidesWithEffect(this, getPosition());
 		Object::update(frameTime, W);
 	}
 	else
@@ -375,10 +375,8 @@ void Entity::attack(float orient)
 
 	if(orient<0) orient += TPI;
 	orient = HPI-orient;
-	VECTOR2 newPos = position - VECTOR2(0,0.5) + 1.5*VECTOR2(sin(orient), cos(orient));
-
-	//getWorld()->addProjectile(new Projectile(newPos,0.0001f,0.5f,0.00001f, orient, getImage(), 15));
-	Effect* damage = new DamageEffect(newPos, 15, 0, getImage(), true, 0.5);
+	VECTOR2 newPos = position - VECTOR2(0,0.5) + 1.3*VECTOR2(sin(orient), cos(orient));
+	Effect* damage = new DamageEffect(newPos, 3, 0.5, 0, 0, true, 0.3);
 	damage->setHidden(false);
 	getWorld()->addEffect(damage);
 

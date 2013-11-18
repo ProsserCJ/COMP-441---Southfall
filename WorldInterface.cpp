@@ -64,7 +64,9 @@ World* WorldInterface::loadWorld(const string& fileName, Audio* audio)
 			fin >> x >> y;
 			x += .5;y += .5;
 			Entity* goblin = new Entity(VECTOR2(x,y), 0.3, 150, &imageLibrary->Goblin1IM, audio, 1, HUMAN_CRECT);
+
 			W->addEntity(goblin, new GoblinAI(goblin));
+			W->addEnemy(goblin);
 		}
 		else if(ID == 3)
 		{
@@ -72,8 +74,8 @@ World* WorldInterface::loadWorld(const string& fileName, Audio* audio)
 			x += .5;y += .5;
 			Entity* wraith = new Entity(VECTOR2(x,y), 0.5, 150, &imageLibrary->WraithIM, audio, 1, WRAITH_CRECT);
 			W->addEntity(wraith, new WraithAI(wraith));
-		}
-	
+			W->addEnemy(wraith);
+		}	
 	}
 
 	W->setInitialized(true);

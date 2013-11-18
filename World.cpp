@@ -69,6 +69,7 @@ void Tile::updateObjects(float frameTime, World* W)
 		{
 			Object* Obj = *p;
 			Obj->remove();
+			if(Obj->getType() == ENTITY) W->removeEntity(dynamic_cast<Entity*>(Obj)); 
 			if(Obj->getType() != HEROTYPE) safeDelete<Object*>(Obj);
 		}
 		else (*p)->update(frameTime, W);
@@ -170,13 +171,14 @@ void World::addProjectile(Projectile* P)
 void World::addObject(Object* Obj)
 {
 	tiles[(int)Obj->getPosition().x][(int)Obj->getPosition().y]->add(Obj);
-	objects.push_back(Obj);
+	objects.push_back(Obj);	
 }
 
 void World::removeEntity(Entity* E)	
 {
 	E->getTile()->remove(E);
 	entities.remove(E);
+	enemies.remove(E);
 }
 
 bool World::canMoveHere(Object* E, VECTOR2& position)
@@ -339,4 +341,10 @@ list<Entity*> World::search(VECTOR2 Center, float sight)
 		}
 	}
 	return temp;
+}
+
+bool World::winCondition()
+{
+	if (enemies.empty()) return true;
+	return false;
 }

@@ -77,6 +77,7 @@ public:
 	void update(VECTOR2& Center, float frameTime);
 	void collisions();
 	void act() {}
+	bool winCondition();
 
 	// Accessors
 	Tile* &		getTile(int x, int y)	{return tiles[x][y];}
@@ -103,6 +104,7 @@ public:
 	void addProjectile(Projectile* P);
 	void addObject(Object* Obj);
 	void removeEntity(Entity* E);
+	void addEnemy(Entity* E)		{enemies.push_back(E);}
 
 private:
 	int width, height;				// Dimensions of this world		
@@ -117,6 +119,7 @@ private:
 	list<Object*> objects;			// List of objects (includes items) in this world
 	list<Effect*> effects;			// List of effects in this world
 	list<Projectile*> projectiles;	// List of projectiles in this world
+	list<Entity*> enemies;			// List of active enemies
 };
 
 #endif

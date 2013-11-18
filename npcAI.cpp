@@ -56,9 +56,6 @@ void npcAI::act(float frameTime, World* W)
 
 void npcAI::_idle(float frameTime, World* W)
 {
-	npc->go(DIR::UP);
-	return;
-
 	bool moving = false;
 	if(delay > MOVEMENTLENGTH && rand()%100 == 0)
 	{
@@ -129,7 +126,25 @@ void GoblinAI::_assessPriority(World* W)
 
 void GoblinAI::_attack(float frameTime, World* W)
 {
-	
+	if(target == 0) 
+	{
+		priority = IDLE;
+		return;
+	}
+	if(npc->canAction())
+	{// Launch fireballs
+		VECTOR2 launchPos = npc->getPosition() - VECTOR2(0.f,0.5f);
+		float sY = static_cast<float>(target->getPosition().y - launchPos.y);
+		float sX = static_cast<float>(target->getPosition().x - launchPos.x);
+		float orient = atan2(sY, sX);
+		if(orient < 0) orient += TPI;
+		Projectile* P = new Projectile(launchPos, FIREBALLSPEED, FIREBALLRADIUS, 
+			FIREBALLRANGE, orient, &W->getImageLibrary()->FireballSheetIM, 10, 0.f, 0.f, npc->getTeam());
+		P->setFrames(FIREBALLSTART, FIREBALLEND);
+		P->setFrameDelay(0.1);
+		W->addProjectile(P);
+		npc->resetAction();
+	}
 }
 
 void GoblinAI::_search(float frameTime, World* W)

@@ -133,6 +133,8 @@ void Southfall::update()
 			}			
 			break;	
 		case GAME:
+			if (player->getWorld()->winCondition()) PostQuitMessage(0);
+				
 			if(input->wasKeyPressed(T_KEY))
 			{// Open action menu
 				pause = true;
