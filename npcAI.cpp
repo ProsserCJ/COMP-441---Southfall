@@ -139,7 +139,7 @@ void GoblinAI::_attack(float frameTime, World* W)
 		float orient = atan2(sY, sX);
 		if(orient < 0) orient += TPI;
 		Projectile* P = new Projectile(launchPos, FIREBALLSPEED, FIREBALLRADIUS, 
-			FIREBALLRANGE, orient, &W->getImageLibrary()->FireballSheetIM, 10, 0.f, 0.f, npc->getTeam());
+			FIREBALLRANGE, orient, &W->getImageLibrary()->FireballSheetIM, FIREBALLDAMAGE, 0.f, 0.f, npc->getTeam());
 		P->setFrames(FIREBALLSTART, FIREBALLEND);
 		P->setFrameDelay(0.1);
 		W->addProjectile(P);

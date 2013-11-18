@@ -18,6 +18,7 @@ const int FIREBALLEND = 3;
 const float FIREBALLRANGE = 10.0f;
 const float FIREBALLSPEED = 10.0f;
 const float FIREBALLRADIUS = 0.1;
+const float FIREBALLDAMAGE = 98.6f; //haha
 
 class Projectile : public Object
 {

@@ -101,9 +101,9 @@ void Menu::selectChoice(int selected){
 		menuItems.push_back("DOWN - S");
 		menuItems.push_back("LEFT - A");
 		menuItems.push_back("RIGHT - D");
-		menuItems.push_back("Interact - E");
-		menuItems.push_back("Menu - T");
-		menuItems.push_back("Attack/Cast - Left Mouse");
+		menuItems.push_back("INTERACT - E");
+		menuItems.push_back("MENU - T");
+		menuItems.push_back("ATTACK/CAST - Left Mouse");
 		menuItems.push_back("Back");
 		menuStart = UP;
 		menuEnd = BACK;
