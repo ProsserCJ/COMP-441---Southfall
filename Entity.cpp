@@ -377,13 +377,6 @@ void Entity::attack(float orient)
 	if(orient<0) orient += TPI;
 	orient = HPI-orient;
 	VECTOR2 newPos = position + VECTOR2(0,0.5) + 0.5*VECTOR2(sin(orient), cos(orient));
-	switch(facing)
-	{
-	case UP: newPos.y -= .5; break;
-	case DOWN: newPos.y += .5; break;
-	case LEFT: newPos.x -= .5; break;
-	case RIGHT: newPos.x += .5; break;
-	}
 
 	getWorld()->addProjectile(new Projectile(newPos,0.0001f,0.5f,0.00001f, orient, 0, 15));
 

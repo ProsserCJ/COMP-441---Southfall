@@ -33,9 +33,9 @@ void Southfall::loadIntro()
 void Southfall::initialize(HWND hwnd)
 {
     Game::initialize(hwnd);
-	currentState = GAME;
+	currentState = MAIN_MENU;
 	pause = false;
-
+	
 	// Graphics
 	graphics = new Graphics();
     graphics->initialize(hwnd, SCREEN_WIDTH, SCREEN_HEIGHT, FULLSCREEN);
@@ -88,7 +88,7 @@ void Southfall::initialize(HWND hwnd)
 	// Add a test enemy wraith
 	Entity* wraith = new Entity(VECTOR2(100,105), 0.5, 150, &imageLibrary->WraithIM, audio, 1, WRAITH_CRECT);
 	player->getWorld()->addEntity(wraith, new WraithAI(wraith));
-
+	mainWorld = player->getWorld();
 }
 
 //=============================================================================
@@ -105,15 +105,13 @@ void Southfall::update()
 				loadIntro();
 				textbox->setText(*introText);
 				textbox->setActive(true);
-				audio->playCue(INTRO_BACKGROUND);
+				audio->playCue(SOUTHFALL_THEME);
 			}
 			break;
 		case INTRO:
 			if (!textbox->isActive())
-			{
-				audio->stopCue(INTRO_BACKGROUND);
-				currentState = GAME;
-				audio->playCue(BACKGROUND);
+			{				
+				currentState = GAME;				
 				delete introText;
 			}
 		case OPENTEXTBOX:					//fallthrough is intentional
@@ -142,22 +140,7 @@ void Southfall::update()
 				pause = true;
 				currentState = OPENTEXTBOX;
 			}
-			if (player->getPosition().x < 133 && player->getPosition().x > 86 && player->getPosition().y > 80 && fontLoc != 0)
-			{
-				fontTimer = 6; fontLoc = 0;
-			}
-			else if (player->getPosition().x > 160 && fontLoc != 1)
-			{
-				fontTimer = 6; fontLoc = 1;
-			}
-			else if (player->getPosition().y < 65 && fontLoc != 3)
-			{
-				fontTimer = 6; fontLoc = 3;
-			}
-			else if (player->getPosition().x < 50 && fontLoc != 2)
-			{
-				fontTimer = 6; fontLoc = 2;
-			}
+			handleFX();
 			break;
 		case ACTIONMENU:
 			actionMenu->update(frameTime);
@@ -176,6 +159,41 @@ void Southfall::update()
 	}
 }
 
+inline void Southfall::handleFX(){
+	if(player->getWorld() == mainWorld)
+		{
+			if (player->getPosition().x < 133 && player->getPosition().x > 86 && player->getPosition().y > 80 && fontLoc != 0)
+			{
+				audio->stopCue(BATTLE);
+				audio->stopCue(MAIN_THEME);
+				audio->playCue(SOUTHFALL_THEME);
+				fontTimer = 6; fontLoc = 0;
+			}
+			else if (player->getPosition().x > 160 && fontLoc != 1)
+			{
+				audio->stopCue(BATTLE);
+				audio->stopCue(SOUTHFALL_THEME);
+				audio->playCue(MAIN_THEME);					
+				fontTimer = 6; fontLoc = 1;
+			}
+			else if (player->getPosition().y < 65 && fontLoc != 3)
+			{
+				fontTimer = 6; fontLoc = 3; 
+				audio->stopCue(SOUTHFALL_THEME);				
+				audio->stopCue(MAIN_THEME);
+				audio->playCue(BATTLE_INTRO);
+				Sleep(3400);
+				audio->playCue(BATTLE);
+			}
+			else if (player->getPosition().x < 50 && fontLoc != 2)
+			{
+				audio->stopCue(BATTLE);
+				audio->stopCue(SOUTHFALL_THEME);
+				audio->playCue(MAIN_THEME);
+				fontTimer = 6; fontLoc = 2;
+			}
+		}
+}
 
 inline void Southfall::playerClickActions()
 {

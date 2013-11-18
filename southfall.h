@@ -55,9 +55,11 @@ public:
 private:
     Menu* mainMenu;
 	GameMenu* actionMenu;
+	World* mainWorld;
 	bool pause;
 
 	inline void playerClickActions();
+	inline void handleFX();
 	
 	TextDX* gameFont;
 	stringstream ss;

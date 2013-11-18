@@ -21,7 +21,7 @@ namespace heroNS
 	const float WIDTH = TILE_SIZE;
 	const float HEROACTIONDELAY = 0.3;
 	const int COLS = 4;	
-	const int HERO_HP = 100;
+	const int HERO_HP = 100*1000;//OP mode
 	const float HERO_RADIUS = 0.15;
 };
 using namespace heroNS;
@@ -40,7 +40,8 @@ public:
 	void turnToPlayer(Entity* n);
 
 	void initialize();
-
+	bool hasSword;
+	bool hasFireball;
 private:	
 	Input* input;
 	Image* armor;

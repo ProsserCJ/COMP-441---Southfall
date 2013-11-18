@@ -57,6 +57,10 @@ World* StructureInterface::loadStructure(string fileName, World** external, VECT
 			for (int i=0; i<textLines; i++){ 
 				fin.getline(buffer,500);
 				text[i] = buffer;
+				if(text[i] == "(sword acquired)")
+					temp->item = "sword";
+				else if(text[i] == "(learned fireball attack)")
+					temp->item = "fireball";
 			}
 			temp->setText(text, textLines);
 			W->addEntity(temp, new PassiveAI(temp));

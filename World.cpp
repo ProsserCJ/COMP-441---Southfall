@@ -121,7 +121,6 @@ void World::collisions()
 
 		if(projectiles.empty()) return;
 		auto p = projectiles.begin();
-		Projectile* P;
 		list<Projectile*>::iterator q;
 		while(p != projectiles.end())
 		{

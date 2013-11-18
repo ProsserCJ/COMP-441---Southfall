@@ -21,6 +21,7 @@ void NPC::initialize()
 	distanceTraveled = npcNS::PIXELS_PER_MOVE + 1;
 	timeSinceLastMove = 0;
 	paused = false;
+	item = "";
 };
 
 void NPC::update(float frameTime, World* W)

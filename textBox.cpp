@@ -38,10 +38,3 @@ void TextBox::next(){
 		if (speaker) speaker->setPaused(false);
 	}
 }
-
-//save this code to initiate battle music
-		//audio->stopCue(BACKGROUND);
-		//audio->stopCue(HOUSE);
-		//audio->playCue(BATTLE_INTRO);
-		//Sleep(3400);
-		//audio->playCue(BATTLE);
