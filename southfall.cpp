@@ -152,14 +152,7 @@ void Southfall::update()
 				actionMenu->addButton(new Button("Fireball", &imageLibrary->FireballIconIM, 4));
 				player->hasAddedFireball = true;
 			}
-			if (mainWorld->winCondition())
-			{
-				currentState = GAME_OVER;
-				audio->stopCue(BATTLE);
-				audio->stopCue(SOUTHFALL_THEME);
-				audio->stopCue(MAIN_THEME);
-				audio->playCue(WIN);
-			}
+			if (mainWorld->winCondition()) PostQuitMessage(0);
 				
 			if(input->wasKeyPressed(T_KEY))
 			{// Open action menu
@@ -357,9 +350,6 @@ void Southfall::render()
 	case OPENTEXTBOX:
 		player->getWorld()->draw(Center(), player->usingMagicSight());
 		textbox->draw();
-		break;
-	case GAME_OVER:
-		imageLibrary->EndIM.draw();		
 		break;
 	}
 }
