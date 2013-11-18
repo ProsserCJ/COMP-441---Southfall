@@ -377,7 +377,7 @@ void Southfall::resetAll()
 void Southfall::renderBirmingham()
 {
 	Image *BirminghamIM = &imageLibrary->BirminghamIM;
-	if(BirminghamIM->getScale() < .01)
+	if(BirminghamIM->getScale() < .1)
 		currentState = GAME;
 	BirminghamIM->setX(SCREEN_WIDTH/2-BirminghamIM->getWidth()*BirminghamIM->getScale()/2);
 	BirminghamIM->setY(SCREEN_HEIGHT/2-BirminghamIM->getHeight()*BirminghamIM->getScale()/2);

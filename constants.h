@@ -155,6 +155,7 @@ const char FIREBALLSHEET[] = "Images\\FireballSheet.png";
 const char SHADOWBALLSHEET[] = "Images\\ShadowballSheet.png";
 const char SWINGINGSWORD[] = "Images\\SwingingSwordSheet.png";
 const char BIRMINGHAM[] = "Images\\Birmingham.png";
+const char END_IMAGE[] = "Images\\EndScreen1.png";
 // Worlds
 const string BAR1STRUCTURE = "Worlds\\Bar1.txt";
 const string BAR2STRUCTURE = "Worlds\\Bar2.txt";
@@ -202,5 +203,6 @@ const char ALERT[] = "Intro_alert";
 const char FIREBALL_SOUND[] = "Fireball";
 const char LIGHTNING[] = "Lightning";
 const char BIRMINGHAM_SOUND[] = "Birmingham";
+const char WIN[] = "Win";
 
 #endif
