@@ -91,7 +91,7 @@ void WraithAI::_attack(float frameTime, World* W)
 		float orient = atan2(sY, sX);
 		if(orient < 0) orient += TPI;
 		Projectile* P = new Projectile(launchPos, FIREBALLSPEED, FIREBALLRADIUS, 
-			FIREBALLRANGE, orient, &W->getImageLibrary()->ShadowballSheetIM, 10, 0.f, 1.0f, npc->getTeam());
+			FIREBALLRANGE, orient, &W->getImageLibrary()->ShadowballSheetIM, FIREBALLDAMAGE, 0.f, 1.0f, npc->getTeam());
 		P->setFrames(FIREBALLSTART, FIREBALLEND);
 		P->setFrameDelay(0.1);
 		W->addProjectile(P);
