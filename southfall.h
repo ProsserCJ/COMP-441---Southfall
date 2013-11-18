@@ -55,6 +55,7 @@ public:
 private:
     Menu* mainMenu;
 	GameMenu* actionMenu;
+	World* mainWorld;
 	bool pause;
 
 	inline void playerClickActions();

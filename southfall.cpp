@@ -35,7 +35,7 @@ void Southfall::initialize(HWND hwnd)
     Game::initialize(hwnd);
 	currentState = MAIN_MENU;
 	pause = false;
-
+	
 	// Graphics
 	graphics = new Graphics();
     graphics->initialize(hwnd, SCREEN_WIDTH, SCREEN_HEIGHT, FULLSCREEN);
@@ -88,7 +88,7 @@ void Southfall::initialize(HWND hwnd)
 	// Add a test enemy wraith
 	Entity* wraith = new Entity(VECTOR2(100,105), 0.5, 150, &imageLibrary->WraithIM, audio, 1, WRAITH_CRECT);
 	player->getWorld()->addEntity(wraith, new WraithAI(wraith));
-
+	mainWorld = player->getWorld();
 }
 
 //=============================================================================
@@ -96,6 +96,7 @@ void Southfall::initialize(HWND hwnd)
 //=============================================================================
 void Southfall::update()
 {
+
 	switch(currentState)
 	{
 		case MAIN_MENU:
@@ -142,25 +143,30 @@ void Southfall::update()
 				pause = true;
 				currentState = OPENTEXTBOX;
 			}
-			if (player->getPosition().x < 133 && player->getPosition().x > 86 && player->getPosition().y > 80 && fontLoc != 0)
+			if(player->getWorld() == mainWorld)
 			{
-				fontTimer = 6; fontLoc = 0;
-			}
-			else if (player->getPosition().x > 160 && fontLoc != 1)
-			{
-				fontTimer = 6; fontLoc = 1;
-			}
-			else if (player->getPosition().y < 65 && fontLoc != 3)
-			{
-				fontTimer = 6; fontLoc = 3; 
-				audio->stopCue(BACKGROUND);				
-				audio->playCue(BATTLE_INTRO);
-				Sleep(3400);
-				audio->playCue(BATTLE);
-			}
-			else if (player->getPosition().x < 50 && fontLoc != 2)
-			{
-				fontTimer = 6; fontLoc = 2;
+				if (player->getPosition().x < 133 && player->getPosition().x > 86 && player->getPosition().y > 80 && fontLoc != 0)
+				{
+					audio->stopCue(BATTLE);
+					audio->playCue(BACKGROUND);
+					fontTimer = 6; fontLoc = 0;
+				}
+				else if (player->getPosition().x > 160 && fontLoc != 1)
+				{
+					fontTimer = 6; fontLoc = 1;
+				}
+				else if (player->getPosition().y < 65 && fontLoc != 3)
+				{
+					fontTimer = 6; fontLoc = 3; 
+					audio->stopCue(BACKGROUND);				
+					audio->playCue(BATTLE_INTRO);
+					Sleep(3400);
+					audio->playCue(BATTLE);
+				}
+				else if (player->getPosition().x < 50 && fontLoc != 2)
+				{
+					fontTimer = 6; fontLoc = 2;
+				}
 			}
 			break;
 		case ACTIONMENU:
