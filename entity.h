@@ -32,6 +32,9 @@ const float ACTIONDELAY = 0.5f;
 const float ATTACK_TIME_DELAY = 0.2f;
 const float ATTACK_FRAME_RATE = 0.08f;
 
+const int GOBLIN_HEALTH = 500;
+const int WRAITH_HEALTH = 1500;
+
 enum OBJECTTYPE {PROJECTILE, OBJECT, ENTITY, NPCTYPE, HEROTYPE};
 
 struct ColRect

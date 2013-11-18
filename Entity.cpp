@@ -376,7 +376,7 @@ void Entity::attack(float orient)
 	if(orient<0) orient += TPI;
 	orient = HPI-orient;
 	VECTOR2 newPos = position - VECTOR2(0,0.5f) + 0.8*VECTOR2(sin(orient), cos(orient));
-	Effect* damage = new DamageEffect(newPos, 3, 1.f, team, 0, true, 0.2);
+	Effect* damage = new DamageEffect(newPos, 1, 1.f, team, 0, true, 0.2);
 	damage->setHidden(false);
 	getWorld()->addEffect(damage);
 

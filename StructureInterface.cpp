@@ -58,14 +58,14 @@ World* StructureInterface::loadStructure(string fileName, World** external, VECT
 		{
 			fin >> x >> y;
 			x += .5;y += .5;
-			Entity* wraith = new Entity(VECTOR2(x,y), 0.5, 150, &imageLibrary->WraithIM, 0, 1, WRAITH_CRECT);
+			Entity* wraith = new Entity(VECTOR2(x,y), 0.5, GOBLIN_HEALTH, &imageLibrary->WraithIM, 0, 1, WRAITH_CRECT);
 			W->addEntity(wraith, new WraithAI(wraith));
 		}
 		else if(ID == 3)
 		{
 			fin >> x >> y;
 			x += .5;y += .5;
-			Entity* goblin = new Entity(VECTOR2(x,y), 0.5, 150, &imageLibrary->WraithIM, 0, 1, WRAITH_CRECT);
+			Entity* goblin = new Entity(VECTOR2(x,y), 0.5, WRAITH_HEALTH, &imageLibrary->WraithIM, 0, 1, WRAITH_CRECT);
 			W->addEntity(goblin, new GoblinAI(goblin));
 		}
 	
