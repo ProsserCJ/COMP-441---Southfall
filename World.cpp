@@ -71,6 +71,11 @@ void Tile::updateObjects(float frameTime, World* W)
 			Obj->remove();
 			if(Obj->getType() == ENTITY) W->removeEntity(dynamic_cast<Entity*>(Obj)); 
 			if(Obj->getType() != HEROTYPE) safeDelete<Object*>(Obj);
+			else 
+			{
+				Hero* hero = reinterpret_cast<Hero*>(Obj);
+				hero->reset();
+			}
 		}
 		else (*p)->update(frameTime, W);
 		p = q;

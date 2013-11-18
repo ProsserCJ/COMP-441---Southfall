@@ -100,3 +100,12 @@ void Hero::draw(VECTOR2& Center)
 
 	// Draw weapon here?
 }
+
+void Hero::reset()
+{
+	setHP(maxHP);
+	setPosition(VECTOR2(102.5,96.5));
+	setActive(true);
+	setDir(DOWN);
+	getWorld()->addEntity(this);
+}
