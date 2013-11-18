@@ -121,6 +121,7 @@ void Southfall::update()
 					temp->setDir(entityNS::LEFT);
 					textbox->setText((NPC*)temp);
 					textbox->setActive(true);
+					audio->playCue(ALERT);
 				}
 			}
 		case OPENTEXTBOX:					//fallthrough is intentional
@@ -256,6 +257,7 @@ inline void Southfall::playerClickActions()
 			P->setFrameDelay(0.1);
 			player->getWorld()->addProjectile(P);
 			player->resetAction();
+			audio->playCue(FIREBALL_SOUND);
 			break;
 		case FREEZE:
 			break;

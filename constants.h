@@ -195,5 +195,8 @@ const char BATTLE_INTRO[] = "Battle Intro";
 const char MAIN_THEME[] = "Background2";
 const char HOOH[] = "Hooh";
 const char DAMAGE[] = "Damage";
+const char ALERT[] = "Intro_alert";
+const char FIREBALL_SOUND[] = "Fireball";
+const char LIGHTNING[] = "Lightning";
 
 #endif

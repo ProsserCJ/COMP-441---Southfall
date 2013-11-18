@@ -198,7 +198,6 @@ void Entity::update(float frameTime, World* W)
 	if(magic > maxMagic) magic = maxMagic;	
 	if(!_frozen)
 	{
-		knockback = ZERO;
 		VECTOR2 newPos = getPosition() + speed*velocity*frameTime + knockback;
 		knockback = ZERO;
 		
@@ -401,7 +400,7 @@ void Entity::receiveDamage(Projectile* P)
 {
 	skip(P->getSkipTime());
 	VECTOR2 temp = VECTOR2(cos(P->getOrient()), sin(P->getOrient()));
-	setKnockback(temp);
+	setKnockback(.65*temp);
 	if (audio) audio->playCue(DAMAGE);
 	// Freeze Effect will go here
 	HP -= P->getDamage();
