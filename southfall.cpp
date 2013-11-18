@@ -90,9 +90,9 @@ void Southfall::initialize(HWND hwnd)
 	player->getWorld()->addEntity(wraith, new WraithAI(wraith));
 	mainWorld = player->getWorld();
 	
-	player->getWorld()->addObject(new Object(VECTOR2(109.5,61.5),0,0, &imageLibrary->DeadGuyIM, entityNS::POINTCOLLISION, ColRect(0,0)));
-	player->getWorld()->addObject(new Object(VECTOR2(110.5,61.5),0,0, &imageLibrary->DeadGuyIM, entityNS::POINTCOLLISION, ColRect(0,0)));
-	player->getWorld()->addObject(new Object(VECTOR2(111.5,61.5),0,0, &imageLibrary->DeadGuyIM, entityNS::POINTCOLLISION, ColRect(0,0)));
+	player->getWorld()->addObject(new Object(VECTOR2(109.5,61.5),0,0, &imageLibrary->DeadGuyIM, entityNS::POINTCOLLISION, HUMAN_CRECT));
+	player->getWorld()->addObject(new Object(VECTOR2(110.5,61.5),0,0, &imageLibrary->DeadGuyIM, entityNS::POINTCOLLISION, HUMAN_CRECT));
+	player->getWorld()->addObject(new Object(VECTOR2(111.5,61.5),0,0, &imageLibrary->DeadGuyIM, entityNS::POINTCOLLISION, HUMAN_CRECT));
 	
 }
 
