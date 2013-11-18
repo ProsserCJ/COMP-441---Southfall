@@ -98,6 +98,9 @@ namespace entityNS
 	const int UP_SWORD_START=12;
 	const int UP_SWORD_END=15;
 
+	//Dead guys
+	const int DEAD_GUY_ONE = 56;
+
 }
 using namespace entityNS;
 
@@ -275,7 +278,7 @@ public:
 	void kill()								{HP = 0; active = false;}
 	void receiveDamage(Projectile* p);
 	void setDir(DIR face)					{facing=face;}
-	void go(DIR face);
+	void go(DIR face);		
 	void standing();
 	virtual void setStandingImage();
 	void freeze(float time)					{_frozen=true;freezeTime=time;}
