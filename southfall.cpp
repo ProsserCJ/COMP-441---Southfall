@@ -277,7 +277,7 @@ inline void Southfall::playerClickActions()
 			break;
 		case FIREBALL:
 			P = new Projectile(player->getPosition(), FIREBALLSPEED, FIREBALLRADIUS, 
-				FIREBALLRANGE, orient, &imageLibrary->FireballSheetIM, 10);
+				FIREBALLRANGE, orient, &imageLibrary->FireballSheetIM, FIREBALLDAMAGE);
 			P->setFrames(FIREBALLSTART, FIREBALLEND);
 			P->setFrameDelay(0.1);
 			player->getWorld()->addProjectile(P);
