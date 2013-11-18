@@ -59,6 +59,7 @@ private:
 	bool pause;
 
 	inline void playerClickActions();
+	inline void handleFX();
 	
 	TextDX* gameFont;
 	stringstream ss;
