@@ -201,5 +201,6 @@ const char DAMAGE[] = "Damage";
 const char ALERT[] = "Intro_alert";
 const char FIREBALL_SOUND[] = "Fireball";
 const char LIGHTNING[] = "Lightning";
+const char BIRMINGHAM_SOUND[] = "Birmingham";
 
 #endif

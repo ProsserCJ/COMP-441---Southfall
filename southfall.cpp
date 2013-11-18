@@ -140,6 +140,7 @@ void Southfall::update()
 				player->setHP(INT_MAX);
 				currentState = BIRMINGHAMSTATE;
 				imageLibrary->BirminghamIM.setScale(10);
+				audio->playCue(BIRMINGHAM_SOUND);
 			}
 			if (mainWorld->winCondition()) PostQuitMessage(0);
 				
