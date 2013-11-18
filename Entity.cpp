@@ -134,7 +134,7 @@ void Entity::initialize()
 	timeSinceAction = 0;
 	speed = 1;
 	facing = DOWN;
-	SpellType = NOSPELL;
+	SpellType = NULLTYPE;
 	_hasTarget = false;
 	_frozen = false;
 	freezeTime = 0;

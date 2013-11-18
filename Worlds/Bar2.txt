@@ -10,17 +10,19 @@
 -ttttttttttttttt-
 --------0--------
 4
-1 13 6 7
+1 15 6 7
 Hi there sir.
-You look like a bum who needs something to do.
+You look like a fine young lad who needs something to do.
 I have just the task
 There is a large goblin force mustering in the north.
 Some say black riders from the east are leading them.
 We need young recruits like you.
 Have this blade, it's an old hag, but it'll serve well enough
-(sword acquired) 
+(sword acquired)
 Go around the country finding out what you can about how to fight them,
 and then when you think you're ready, come back to me.
+I hear rumors of a pyromancer to the east.  
+He keeps to himself mostly but is friendly to visitors.
 You and all the other recruits will go kill them all for me.
 I'd join you, but I took a knee on my arrows and they all broke
 Thanks, and best of luck.

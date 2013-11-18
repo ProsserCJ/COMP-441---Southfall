@@ -68,22 +68,22 @@ void Southfall::initialize(HWND hwnd)
 	player->setPosition(VECTOR2(102.5,96.5));
 	player->setWorld(Interface->getCurrent());
 	player->getWorld()->addEntity(player);
-	player->setSpellType(NOSPELL);
+	player->setSpellType(NULLTYPE);
 
 	fontLoc = 0;
 	fontTimer = 6;
 
 	// For testing: set up action Menu:
 
-	actionMenu->addButton(new Button("No Spell", &imageLibrary->SwordIconIM, 0)); 
-	/*actionMenu->addButton(new Button("Impede Spell", &imageLibrary->ImpedeEffectIM, 1)); 
-	actionMenu->addButton(new Button("Quick Portal", &imageLibrary->PortalOpenIM, 2));*/
-	actionMenu->addButton(new Button("Blink", &imageLibrary->BlinkIconIM, 3));
-	actionMenu->addButton(new Button("Fireball", &imageLibrary->FireballIconIM, 4));
-	actionMenu->addButton(new Button("Shadowball", &imageLibrary->ShadowballIconIM, 5));
+	//actionMenu->addButton(new Button("None", 0, 0)); 
+	//actionMenu->addButton(new Button("Impede Spell", &imageLibrary->ImpedeEffectIM, 1)); 
+	//actionMenu->addButton(new Button("Quick Portal", &imageLibrary->PortalOpenIM, 2));
+	//actionMenu->addButton(new Button("Blink", &imageLibrary->BlinkIconIM, 3));
+	//actionMenu->addButton(new Button("Fireball", &imageLibrary->FireballIconIM, 4));
+	//actionMenu->addButton(new Button("Shadowball", &imageLibrary->ShadowballIconIM, 5));
 
-	actionMenu->addButton(new Button("Magic Sight On", &imageLibrary->MagicSightOnIM, 8));
-	actionMenu->addButton(new Button("Magic Sight Off", &imageLibrary->MagicSightOffIM, 9));
+	//actionMenu->addButton(new Button("Magic Sight On", &imageLibrary->MagicSightOnIM, 8));
+	//actionMenu->addButton(new Button("Magic Sight Off", &imageLibrary->MagicSightOffIM, 9));
 
 	mainWorld = player->getWorld();
 	
@@ -140,6 +140,16 @@ void Southfall::update()
 				player->setHP(INT_MAX);
 				currentState = BIRMINGHAMSTATE;
 				imageLibrary->BirminghamIM.setScale(10);
+			}
+			if(player->hasSword && !player->hasAddedSword)
+			{
+				actionMenu->addButton(new Button("Sword", &imageLibrary->SwordIconIM, 0)); 
+				player->hasAddedSword = true;
+			}
+			if(player->hasFireball && !player->hasAddedFireball)
+			{
+				actionMenu->addButton(new Button("Fireball", &imageLibrary->FireballIconIM, 4));
+				player->hasAddedFireball = true;
 			}
 			if (mainWorld->winCondition()) PostQuitMessage(0);
 				
@@ -278,6 +288,7 @@ inline void Southfall::playerClickActions()
 			break;
 		case MAGICSIGHTON: // Not a castable spell
 		case MAGICSIGHTOFF: // Not a castable spell
+		case NULLTYPE:
 		default:
 			break;
 		}

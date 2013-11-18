@@ -136,10 +136,11 @@ r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r 
 r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r
 r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r
 56
-1 3 103 96
+1 4 103 96
 You there!
-Goblins have raided in the north!
-We need your help!
+Go due north past this here house to that tavern yonder.
+Your dad is waiting.
+He looks just like you.
 1 3 100 125
 I used to be a fisherman.  I'd sail the seas looking for the biggest catch I could find.
 A giant serpent swallowed my reels.
@@ -148,7 +149,7 @@ I swear he was the size of my house!
 I thought I'd find some treasure out here.
 Now I just hope I can find my way back!
 1 2 100 100
-Welcome to Southfall!
+I love Southfall!
 Go up to the tavern, I heard your dad's looking for you.
 1 1 20 83
 I wonder what's past those rocks.

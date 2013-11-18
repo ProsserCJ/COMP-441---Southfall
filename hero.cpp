@@ -17,7 +17,9 @@ void Hero::initialize()
 	speed = HERO_SPEED;
 	hasSword = 0;
 	hasFireball = 0;
-	SpellType = PORTALTRAP; // For testing purposes
+	hasAddedSword = 0;
+	hasAddedFireball = 0;
+	//SpellType = PORTALTRAP; // For testing purposes
 };
 
 void Hero::update(float frameTime, World* W)

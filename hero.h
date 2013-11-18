@@ -42,6 +42,8 @@ public:
 	void initialize();
 	bool hasSword;
 	bool hasFireball;
+	bool hasAddedSword;
+	bool hasAddedFireball;
 private:	
 	Input* input;
 	Image* armor;
