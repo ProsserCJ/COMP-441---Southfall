@@ -12,7 +12,7 @@ void Effect::update(float frameTime, World* W)
 
 void Effect::draw(VECTOR2 Center)
 {
-	if(_invisible) return;
+	if(_hidden || _invisible || noImage()) return;
 	VECTOR2 diff = (getPosition() - Center)*TILE_SIZE;
 	int X = diff.x + HSCREEN_WIDTH - 0.5*getImageWidth()*getImageScale();
 	int Y = diff.y + HSCREEN_HEIGHT - 0.75*getImageHeight()*getImageScale();
@@ -52,12 +52,11 @@ void QuickPortal::draw(VECTOR2 Center)
 	exitImage->draw();
 }
 
-void Damage::draw(VECTOR2 Center)
+void DamageEffect::effect(Object* E, World* W)
 {
-
-}
-
-void Damage::effect(Object* E, World* W)
-{
-
+	if(E->getType() != OBJECT)
+	{
+		Entity* Ent = reinterpret_cast<Entity*>(E);
+		if(Ent->getTeam() != team) Ent->damage(damage);
+	}
 }

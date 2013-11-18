@@ -69,7 +69,7 @@ void Tile::updateObjects(float frameTime, World* W)
 		{
 			Object* Obj = *p;
 			Obj->remove();
-			safeDelete<Object*>(Obj);
+			if(Obj->getType() != HEROTYPE) safeDelete<Object*>(Obj);
 		}
 		else (*p)->update(frameTime, W);
 		p = q;
@@ -229,17 +229,17 @@ bool World::collidesWithNPC(Object* E, VECTOR2& position)
 
 	// Old code
 	VECTOR2 temp = E->getPosition();
-	E->setPosition(position);
+	E->newPosition(position, this);
 	for(auto p = entities.begin(); p != entities.end(); p++)
 	{
-		if (*p == E) continue; // You can't collide with yourself
+		if (!(*p)->isActive() || *p == E) continue; // You can't collide with yourself
 		if(HandleCollision(*p, E)) 
 		{
-			E->setPosition(temp);
+			E->newPosition(temp, this);
 			return true;
 		}
 	}
-	E->setPosition(temp);
+	E->newPosition(temp, this);
 	return false;
 }
 

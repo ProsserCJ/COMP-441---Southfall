@@ -209,7 +209,6 @@ void Entity::update(float frameTime, World* W)
 			newPosition(newPos, W);
 		}
 		else standing();
-
 		Object::update(frameTime, W);
 	}
 	else
@@ -376,9 +375,12 @@ void Entity::attack(float orient)
 
 	if(orient<0) orient += TPI;
 	orient = HPI-orient;
-	VECTOR2 newPos = position + VECTOR2(0,0.5) + 0.5*VECTOR2(sin(orient), cos(orient));
+	VECTOR2 newPos = position - VECTOR2(0,0.5) + 1.5*VECTOR2(sin(orient), cos(orient));
 
-	getWorld()->addProjectile(new Projectile(newPos,0.0001f,0.5f,0.00001f, orient, 0, 15));
+	//getWorld()->addProjectile(new Projectile(newPos,0.0001f,0.5f,0.00001f, orient, getImage(), 15));
+	Effect* damage = new DamageEffect(newPos, 15, 0, getImage(), true, 0.5);
+	damage->setHidden(false);
+	getWorld()->addEffect(damage);
 
 }
 
@@ -402,9 +404,6 @@ void Entity::receiveDamage(Projectile* P)
 	skip(P->getSkipTime());
 	VECTOR2 temp = VECTOR2(cos(P->getOrient()), sin(P->getOrient()));
 	setKnockback(temp);
-	//_skip = false;
-	//setActive(true);
-	//_frozen = false;
 	if (audio) audio->playCue(DAMAGE);
 	// Freeze Effect will go here
 	HP -= P->getDamage();
@@ -440,7 +439,7 @@ bool HandleCollision(Collidable* A, Collidable* B)
 			}
 			break;
 	}
-	D = D3DXVec2Dot(&diff,&diff);
+	D = D3DXVec2Length(&diff);
 	if(D < R*R) return true;
 	return false;
 }

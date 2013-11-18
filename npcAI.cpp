@@ -25,6 +25,15 @@ void npcAI::act(float frameTime, World* W)
 {
 	if(npc == 0) return;
 	if(target != 0 && !target->isActive()) target = 0;
+	if(target != 0)
+	{
+		VECTOR2 track = target->getPosition() - npc->getPosition();
+		if(D3DXVec2Length(&track) > sight) 
+		{
+			target = 0;
+			priority = IDLE;
+		}
+	}
 	npc->act(W);
 	if(evaluateDelay > EVALUATEDELAY)
 	{
@@ -47,6 +56,9 @@ void npcAI::act(float frameTime, World* W)
 
 void npcAI::_idle(float frameTime, World* W)
 {
+	npc->go(DIR::UP);
+	return;
+
 	bool moving = false;
 	if(delay > MOVEMENTLENGTH && rand()%100 == 0)
 	{
@@ -108,4 +120,26 @@ void WraithAI::_search(float frameTime, World* W)
 			target = *p;
 			priority = ATTACK;
 		}
+}
+
+void GoblinAI::_assessPriority(World* W)
+{
+	priority = SEARCH;
+}
+
+void GoblinAI::_attack(float frameTime, World* W)
+{
+	
+}
+
+void GoblinAI::_search(float frameTime, World* W)
+{
+	list<Entity*> Targets = W->search(npc->getPosition(), WRAITH_SIGHT);
+	for(auto p = Targets.begin(); p != Targets.end(); p++)
+		if((*p)->getType() != PROJECTILE && (*p)->getTeam() != npc->getTeam())
+		{
+			target = *p;
+			priority = ATTACK;
+		}
+	_idle(frameTime, W);
 }

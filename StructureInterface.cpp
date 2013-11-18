@@ -28,17 +28,6 @@ World* StructureInterface::loadStructure(string fileName, World** external, VECT
 		}
 		fin.get(c);
 	}
-	// The old npc code
-	/*
-	int npcCount;
-	fin >> npcCount;
-	for (int i=0; i<npcCount; i++)
-	{
-		int ID, x, y;
-		fin >> ID >> x >> y;
-		W->addEntity(new NPC(ID, VECTOR2(x,y)));
-	
-	*/
 	int npcCount;
 	fin >> npcCount;
 	for (int i=0; i<npcCount; i++)
@@ -77,7 +66,7 @@ World* StructureInterface::loadStructure(string fileName, World** external, VECT
 			fin >> x >> y;
 			x += .5;y += .5;
 			Entity* goblin = new Entity(VECTOR2(x,y), 0.5, 150, &imageLibrary->WraithIM, 0, 1, WRAITH_CRECT);
-			W->addEntity(goblin, new WraithAI(goblin));
+			W->addEntity(goblin, new GoblinAI(goblin));
 		}
 	
 	}

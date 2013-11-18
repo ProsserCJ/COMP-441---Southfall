@@ -64,7 +64,7 @@ World* WorldInterface::loadWorld(const string& fileName, Audio* audio)
 			fin >> x >> y;
 			x += .5;y += .5;
 			Entity* goblin = new Entity(VECTOR2(x,y), 0.3, 150, &imageLibrary->Goblin1IM, audio, 1, HUMAN_CRECT);
-			W->addEntity(goblin, new WraithAI(goblin));
+			W->addEntity(goblin, new GoblinAI(goblin));
 		}
 		else if(ID == 3)
 		{

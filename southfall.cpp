@@ -76,8 +76,8 @@ void Southfall::initialize(HWND hwnd)
 	// For testing: set up action Menu:
 
 	actionMenu->addButton(new Button("No Spell", &imageLibrary->SwordIconIM, 0)); 
-	actionMenu->addButton(new Button("Impede Spell", &imageLibrary->ImpedeEffectIM, 1)); 
-	actionMenu->addButton(new Button("Quick Portal", &imageLibrary->PortalOpenIM, 2));
+	/*actionMenu->addButton(new Button("Impede Spell", &imageLibrary->ImpedeEffectIM, 1)); 
+	actionMenu->addButton(new Button("Quick Portal", &imageLibrary->PortalOpenIM, 2));*/
 	actionMenu->addButton(new Button("Blink", &imageLibrary->BlinkIconIM, 3));
 	actionMenu->addButton(new Button("Fireball", &imageLibrary->FireballIconIM, 4));
 	actionMenu->addButton(new Button("Shadowball", &imageLibrary->ShadowballIconIM, 5));
@@ -85,9 +85,6 @@ void Southfall::initialize(HWND hwnd)
 	actionMenu->addButton(new Button("Magic Sight On", &imageLibrary->MagicSightOnIM, 8));
 	actionMenu->addButton(new Button("Magic Sight Off", &imageLibrary->MagicSightOffIM, 9));
 
-	// Add a test enemy wraith
-	Entity* wraith = new Entity(VECTOR2(100,105), 0.5, 150, &imageLibrary->WraithIM, audio, 1, WRAITH_CRECT);
-	player->getWorld()->addEntity(wraith, new WraithAI(wraith));
 	mainWorld = player->getWorld();
 	
 	player->getWorld()->addObject(new Object(VECTOR2(109.5,61.5),0,0, &imageLibrary->DeadGuyIM, entityNS::POINTCOLLISION, HUMAN_CRECT));
@@ -170,7 +167,8 @@ void Southfall::update()
 	}
 }
 
-inline void Southfall::handleFX(){
+inline void Southfall::handleFX()
+{
 	if(player->getWorld() == mainWorld)
 		{
 			if (player->getPosition().x < 133 && player->getPosition().x > 86 && player->getPosition().y > 80 && fontLoc != 0)

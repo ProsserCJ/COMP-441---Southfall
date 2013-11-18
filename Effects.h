@@ -18,9 +18,11 @@ class Effect : public Drawable, public Collidable
 {
 public:
 	Effect() 
-		: time(0), _timed(false), _hidden(false), _invisible(false), _done(false), Collidable(ZERO, POINTCOLLISION, 0) {};
-	Effect(VECTOR2 position, float radius, COLLISIONTYPE CT, Image* image)
-		: time(0), _timed(false), _hidden(true), _invisible(false), _done(false), Collidable(position, CT, radius), Drawable(image) {};
+		: time(0), maxTime(0), _timed(false), _hidden(false), _invisible(false), 
+		_done(false), Collidable(ZERO, POINTCOLLISION, 0) {};
+	Effect(VECTOR2 position, float radius, COLLISIONTYPE CT, Image* image, bool timed=false, float time=0)
+		:  _timed(timed), _hidden(true), _invisible(false), _done(false), time(0), 
+		maxTime(time), Collidable(position, CT, radius), Drawable(image) {};
 
 	void update(float frameTime, World* W);
 	virtual void effect(Object* E, World* W) = 0;
@@ -28,6 +30,8 @@ public:
 
 	bool isInvisible()	const {return _invisible;}
 	bool isHidden()		const {return _hidden;}
+
+	void setHidden(bool hidden)	{_hidden = hidden;}
 
 	// Accessors
 	bool done() {return _done;}
@@ -73,12 +77,15 @@ private:
 	Image* exitImage;
 };
 
-class Damage : public Effect
+class DamageEffect : public Effect
 {
 public:
-	Damage(VECTOR2 pos) {_hidden = true; _invisible = true;}
+	DamageEffect(VECTOR2 pos, int damage, int team, Image* image=0, bool timed=false, float time=0) 
+		: Effect(pos, radius, CIRCLE, image, timed, time), team(team), damage(damage) {};
 	virtual void effect(Object* E, World* W);
-	virtual void draw(VECTOR2 Center);
+private:
+	int damage;
+	int team;
 };
 
 #endif

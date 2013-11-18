@@ -12,7 +12,9 @@ const float SEARCHDELAY = 0.2;
 const float EVALUATEDELAY = 0.5;
 const float MOVEMENTLENGTH = 1.0f;
 
-const float WRAITH_SIGHT = 10.0f;
+const float WRAITH_SIGHT = 14.0f;
+const float PASSIVE_SIGHT = 6.0f;
+const float GOBLIN_SIGHT = 7.5f;
 
 class World;
 
@@ -20,7 +22,7 @@ class npcAI
 {
 public:
 	npcAI() : priority(IDLE), npc(0) {initialize();}
-	npcAI(Entity* E) : npc(E), priority(IDLE) {initialize();}
+	npcAI(Entity* E, float sight) : npc(E), priority(IDLE), sight(sight) {initialize();}
 	~npcAI() {};
 
 	void update(float frameTime, World* W);
@@ -34,6 +36,8 @@ protected:
 	Entity* npc;	// The npc the ai controls
 	Entity* target;
 	PRIORITY priority;
+
+	float sight;
 
 	void act(float frameTime, World* W);
 
@@ -50,7 +54,7 @@ protected:
 class PassiveAI : public npcAI
 {
 public:
-	PassiveAI(Entity* E) : npcAI(E) {};
+	PassiveAI(Entity* E) : npcAI(E, PASSIVE_SIGHT) {};
 	void update(float frameTime, World* W); 
 protected:
 	virtual void _assessPriority(World* W) {};
@@ -61,10 +65,19 @@ protected:
 class WraithAI : public npcAI
 {
 public:
-	WraithAI(Entity* E) : npcAI(E) {};
+	WraithAI(Entity* E) : npcAI(E, WRAITH_SIGHT) {};
 protected:
 	virtual void _assessPriority(World* W);
-	//virtual void _idle(float frameTime, World* W);
+	virtual void _attack(float frameTime, World* W);
+	virtual void _search(float frameTime, World* W);
+};
+
+class GoblinAI : public npcAI
+{
+public:
+	GoblinAI(Entity* E) : npcAI(E, GOBLIN_SIGHT) {};
+protected:
+	virtual void _assessPriority(World* W);
 	virtual void _attack(float frameTime, World* W);
 	virtual void _search(float frameTime, World* W);
 };

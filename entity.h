@@ -273,6 +273,7 @@ public:
 	void setWorld(World* W)					{world = W;}
 	void setTarget(VECTOR2 T)				{target = T; _hasTarget = true;}
 	void setSpellType(SPELLTYPE S)			{SpellType = S;}
+	void damage(int damage)					{HP -= damage;}
 	void resetTarget()						{_hasTarget = false;}
 	void resetAction()						{timeSinceAction = 0;}
 	void kill()								{HP = 0; active = false;}
