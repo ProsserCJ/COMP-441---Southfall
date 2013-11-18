@@ -152,7 +152,14 @@ void Southfall::update()
 				actionMenu->addButton(new Button("Fireball", &imageLibrary->FireballIconIM, 4));
 				player->hasAddedFireball = true;
 			}
-			if (mainWorld->winCondition()) PostQuitMessage(0);
+			if (mainWorld->winCondition())
+			{
+				currentState = GAME_OVER;
+				audio->stopCue(BATTLE);
+				audio->stopCue(SOUTHFALL_THEME);
+				audio->stopCue(MAIN_THEME);
+				audio->playCue(WIN);
+			}
 				
 			if(input->wasKeyPressed(T_KEY))
 			{// Open action menu
@@ -351,6 +358,9 @@ void Southfall::render()
 		player->getWorld()->draw(Center(), player->usingMagicSight());
 		textbox->draw();
 		break;
+	case GAME_OVER:
+		imageLibrary->EndIM.draw();		
+		break;
 	}
 }
 
@@ -377,7 +387,7 @@ void Southfall::resetAll()
 void Southfall::renderBirmingham()
 {
 	Image *BirminghamIM = &imageLibrary->BirminghamIM;
-	if(BirminghamIM->getScale() < .01)
+	if(BirminghamIM->getScale() < .1)
 		currentState = GAME;
 	BirminghamIM->setX(SCREEN_WIDTH/2-BirminghamIM->getWidth()*BirminghamIM->getScale()/2);
 	BirminghamIM->setY(SCREEN_HEIGHT/2-BirminghamIM->getHeight()*BirminghamIM->getScale()/2);

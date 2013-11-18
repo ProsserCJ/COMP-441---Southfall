@@ -52,7 +52,7 @@ public:
 	Image SwingingSwordIM;
 	Image DeadGuyIM;
 	Image BirminghamIM;
-
+	Image EndIM;
 private:
 	bool _initialized;
 
@@ -95,6 +95,7 @@ private:
 	TextureManager SwingingSwordTX;
 	TextureManager DeadGuyTX;
 	TextureManager BirminghamTX;
+	TextureManager EndTX;
 };
 
 #endif
