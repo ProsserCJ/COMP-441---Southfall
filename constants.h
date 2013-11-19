@@ -103,67 +103,67 @@ const UINT HSCREEN_HEIGHT = 0.5*SCREEN_HEIGHT;
 
 // Image Files
 // Characters
-const char CHARACTER1_SHEET[] = "Images\\Character1Sheet.png";
-const char CHARACTER2_SHEET[] = "Images\\Character2Sheet.png";
-const char GOBLIN1_SHEET[] = "Images\\Goblin1Sheet.png";
-const char WRAITH1_SHEET[] = "Images\\Wraith1Sheet.png";
-const char DEADGUY[] = "Images\\DEADGUY.png";
+const char CHARACTER1_SHEET[] = "..\\source\\Images\\Character1Sheet.png";
+const char CHARACTER2_SHEET[] = "..\\source\\Images\\Character2Sheet.png";
+const char GOBLIN1_SHEET[] = "..\\source\\Images\\Goblin1Sheet.png";
+const char WRAITH1_SHEET[] = "..\\source\\Images\\Wraith1Sheet.png";
+const char DEADGUY[] = "..\\source\\Images\\DEADGUY.png";
  // Tiles
-const char GRASS1[] = "Images\\Grass1.png";
-const char TREE1[] = "Images\\Tree1.png";
-const char BOULDER1[] = "Images\\Boulder1.png";
-const char BOULDER2[] = "Images\\Boulder2.png";
-const char MAGICPORTAL1[] = "Images\\MagicPortal.png";
-const char HOUSE1[] = "Images\\House1.png";
-const char RIVER1[] = "Images\\River1.png";
-const char WOODTILE1[] = "Images\\WoodFloor1.png";
-const char HOUSEWALL1[] = "Images\\HouseWall1.png";
-const char HOUSEDOOR1[] = "Images\\HouseDoor1.png";
-const char HORIZINHOUSEDOOR1[] = "Images\\InHouseHorizDoor1.png";
-const char VERTINHOUSEDOOR1[] = "Images\\InHouseVertDoor1.png";
-const char BARCOUNTER[] = "Images\\Counter1.png";
-const char LOWERBARBACK[] = "Images\\LowerBarBackdrop.png";
-const char BARBACKDROP[] = "Images\\BarBackdrop.png";
-const char TABLE[] = "Images\\Table1.png";
-const char RIGHTCHAIR[] = "Images\\RightChair.png";
-const char LEFTCHAIR[] = "Images\\LeftChair.png";
-const char BED1[] = "Images\\Bed1.png";
-const char HWALL[] = "Images\\HorizontalWallPiece.png";
-const char VWALL[] = "Images\\VerticalWallPiece.png";
-const char CWALL[] = "Images\\CornerWallPiece.png";
-const char SOUTHFALLFONT[] = "Images\\SouthfallFont.png";
-const char ESBURGFONT[] = "Images\\EsburgFont.png";
-const char WESELLYNFONT[] = "Images\\WesellynFont.png";
-const char NORSTAFFFONT[] = "Images\\NorstaffFont.png";
+const char GRASS1[] = "..\\source\\Images\\Grass1.png";
+const char TREE1[] = "..\\source\\Images\\Tree1.png";
+const char BOULDER1[] = "..\\source\\Images\\Boulder1.png";
+const char BOULDER2[] = "..\\source\\Images\\Boulder2.png";
+const char MAGICPORTAL1[] = "..\\source\\Images\\MagicPortal.png";
+const char HOUSE1[] = "..\\source\\Images\\House1.png";
+const char RIVER1[] = "..\\source\\Images\\River1.png";
+const char WOODTILE1[] = "..\\source\\Images\\WoodFloor1.png";
+const char HOUSEWALL1[] = "..\\source\\Images\\HouseWall1.png";
+const char HOUSEDOOR1[] = "..\\source\\Images\\HouseDoor1.png";
+const char HORIZINHOUSEDOOR1[] = "..\\source\\Images\\InHouseHorizDoor1.png";
+const char VERTINHOUSEDOOR1[] = "..\\source\\Images\\InHouseVertDoor1.png";
+const char BARCOUNTER[] = "..\\source\\Images\\Counter1.png";
+const char LOWERBARBACK[] = "..\\source\\Images\\LowerBarBackdrop.png";
+const char BARBACKDROP[] = "..\\source\\Images\\BarBackdrop.png";
+const char TABLE[] = "..\\source\\Images\\Table1.png";
+const char RIGHTCHAIR[] = "..\\source\\Images\\RightChair.png";
+const char LEFTCHAIR[] = "..\\source\\Images\\LeftChair.png";
+const char BED1[] = "..\\source\\Images\\Bed1.png";
+const char HWALL[] = "..\\source\\Images\\HorizontalWallPiece.png";
+const char VWALL[] = "..\\source\\Images\\VerticalWallPiece.png";
+const char CWALL[] = "..\\source\\Images\\CornerWallPiece.png";
+const char SOUTHFALLFONT[] = "..\\source\\Images\\SouthfallFont.png";
+const char ESBURGFONT[] = "..\\source\\Images\\EsburgFont.png";
+const char WESELLYNFONT[] = "..\\source\\Images\\WesellynFont.png";
+const char NORSTAFFFONT[] = "..\\source\\Images\\NorstaffFont.png";
 
 // NPC Interaction
-const char TEXTBOX[] = "Images\\textBox.png";
-const char TEXTBOX_ARROW[] = "Images\\textBoxArrow.png";
+const char TEXTBOX[] = "..\\source\\Images\\textBox.png";
+const char TEXTBOX_ARROW[] = "..\\source\\Images\\textBoxArrow.png";
 // Icons
-const char IMPEDEEFFECTICON[] = "Images\\ImpedeEffectIcon.png";
-const char PORTALOPEN[] = "Images\\PortalOpen.png";
-const char PORTALCLOSE[] = "Images\\PortalClose.png";
-const char SWORDICON[] = "Images\\SwordIcon1.png";
-const char BLINKICON[] = "Images\\BlinkIcon1.png";
-const char FIREBALLICON[] = "Images\\FireballIcon.png";
-const char MAGICSIGHTONICON[] = "Images\\MagicSightOnIcon.png";
-const char MAGICSIGHTOFFICON[] = "Images\\MagicSightOffIcon.png";
-const char SHADOWBALLICON[] = "Images\\ShadowballIcon.png";
+const char IMPEDEEFFECTICON[] = "..\\source\\Images\\ImpedeEffectIcon.png";
+const char PORTALOPEN[] = "..\\source\\Images\\PortalOpen.png";
+const char PORTALCLOSE[] = "..\\source\\Images\\PortalClose.png";
+const char SWORDICON[] = "..\\source\\Images\\SwordIcon1.png";
+const char BLINKICON[] = "..\\source\\Images\\BlinkIcon1.png";
+const char FIREBALLICON[] = "..\\source\\Images\\FireballIcon.png";
+const char MAGICSIGHTONICON[] = "..\\source\\Images\\MagicSightOnIcon.png";
+const char MAGICSIGHTOFFICON[] = "..\\source\\Images\\MagicSightOffIcon.png";
+const char SHADOWBALLICON[] = "..\\source\\Images\\ShadowballIcon.png";
 // Other
-const char GAMEMENUBACK[] = "Images\\GameMenuBackground.png";
-const char FIREBALLSHEET[] = "Images\\FireballSheet.png";
-const char SHADOWBALLSHEET[] = "Images\\ShadowballSheet.png";
-const char SWINGINGSWORD[] = "Images\\SwingingSwordSheet.png";
-const char BIRMINGHAM[] = "Images\\Birmingham.png";
-const char END_IMAGE[] = "Images\\EndScreen1.png";
+const char GAMEMENUBACK[] = "..\\source\\Images\\GameMenuBackground.png";
+const char FIREBALLSHEET[] = "..\\source\\Images\\FireballSheet.png";
+const char SHADOWBALLSHEET[] = "..\\source\\Images\\ShadowballSheet.png";
+const char SWINGINGSWORD[] = "..\\source\\Images\\SwingingSwordSheet.png";
+const char BIRMINGHAM[] = "..\\source\\Images\\Birmingham.png";
+const char END_IMAGE[] = "..\\source\\Images\\EndScreen1.png";
 // Worlds
-const string BAR1STRUCTURE = "Worlds\\Bar1.txt";
-const string BAR2STRUCTURE = "Worlds\\Bar2.txt";
-const string HOUSE1STRUCTURE = "Worlds\\House1.txt";
-const string HOUSE2STRUCTURE = "Worlds\\House2.txt";
-const string HOUSE3STRUCTURE = "Worlds\\House3.txt";
-const string HOUSE4STRUCTURE = "Worlds\\House4.txt";
-const string SOUTHFALLMAP = "Worlds\\TTotalMap.txt";
+const string BAR1STRUCTURE = "..\\source\\Worlds\\Bar1.txt";
+const string BAR2STRUCTURE = "..\\source\\Worlds\\Bar2.txt";
+const string HOUSE1STRUCTURE = "..\\source\\Worlds\\House1.txt";
+const string HOUSE2STRUCTURE = "..\\source\\Worlds\\House2.txt";
+const string HOUSE3STRUCTURE = "..\\source\\Worlds\\House3.txt";
+const string HOUSE4STRUCTURE = "..\\source\\Worlds\\House4.txt";
+const string SOUTHFALLMAP = "..\\source\\Worlds\\TTotalMap.txt";
 
 // Sound Files
 
@@ -187,8 +187,8 @@ const UCHAR P_KEY			= 0x50;			// The 'P' key
 const UCHAR O_KEY			= 0x4F;			// The 'O' key
 
 // ADD FILE names for Audio here
-const char WAVE_BANK[]  = "audio\\Win\\Wave Bank.xwb";
-const char SOUND_BANK[] = "audio\\Win\\Sound Bank.xsb";
+const char WAVE_BANK[]  = "..\\source\\Audio\\Win\\Wave Bank.xwb";
+const char SOUND_BANK[] = "..\\source\\Audio\\Win\\Sound Bank.xsb";
 
 // ADD CUE name here
 const char COLLIDE[] = "Collision";
