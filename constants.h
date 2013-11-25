@@ -102,6 +102,8 @@ const UINT HSCREEN_WIDTH = 0.5*SCREEN_WIDTH;
 const UINT HSCREEN_HEIGHT = 0.5*SCREEN_HEIGHT;
 
 // Image Files
+// Texts
+const char INTRO_TEXT[] = "..\\source\\Worlds\\intro.txt";
 // Characters
 const char CHARACTER1_SHEET[] = "..\\source\\Images\\Character1Sheet.png";
 const char CHARACTER2_SHEET[] = "..\\source\\Images\\Character2Sheet.png";
