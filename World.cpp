@@ -19,7 +19,7 @@ void Tile::draw(VECTOR2& Center)
 }
 
 void Tile::handleCollisions(Entity* E)
-{
+{// Collisions b/w projectiles and objects
 	for(auto obj = objects.begin(); obj != objects.end(); obj++)
 		if((*obj)->getType() == PROJECTILE && (*obj)->isActive())
 		{

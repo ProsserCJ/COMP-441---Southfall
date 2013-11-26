@@ -13,8 +13,12 @@ public:
 	void initialize(Graphics* graphics);
 
 	// Images
-	Image Character1IM, NPC1IM, TextBoxIM, Goblin1IM, WraithIM, TextBoxArrowIM, SouthfallFontIM[4];
-	// Images and Textures
+	Image Character1IM;
+	Image NPC1IM;
+	Image TextBoxIM;
+	Image Goblin1IM, WraithIM;
+	Image TextBoxArrowIM;
+	Image SouthfallFontIM[4];
 	Image ShadowballSheetIM;
 	Image FireballSheetIM;
 	Image ShadowballIconIM;
@@ -27,6 +31,7 @@ public:
 	Image ImpedeEffectIM;
 	Image PortalOpenIM;
 	Image GrassIM;
+	Image SandIM;
 	Image WaterIM;
 	Image Boulder1IM;
 	Image WoodTileIM;
@@ -38,6 +43,9 @@ public:
 	Image CWallIM;
 	Image HouseIM;
 	Image TreeIM;
+	Image CactusIM;
+	Image CavewallIM;
+	Image CavefloorIM;
 	Image HouseWallIM;
 	Image HouseDoorIM;
 	Image BedIM;
@@ -57,7 +65,13 @@ private:
 	bool _initialized;
 
 	// Textures
-	TextureManager Character1TX, NPC1TX, Goblin1TX, WraithTX, TextBoxTX, TextBoxArrowTX, SouthfallFontTX[4];
+	TextureManager Character1TX;
+	TextureManager NPC1TX;
+	TextureManager Goblin1TX;
+	TextureManager WraithTX;
+	TextureManager TextBoxTX;
+	TextureManager TextBoxArrowTX;
+	TextureManager SouthfallFontTX[4];
 	TextureManager ImpedeEffectTX;
 	TextureManager PortalOpenTX;
 	TextureManager PortalCloseTX;
@@ -70,6 +84,9 @@ private:
 	TextureManager FireballSheetTX;
 	TextureManager ShadowballSheetTX;
 	TextureManager TreeTX;
+	TextureManager CactusTX;
+	TextureManager CavewallTX;
+	TextureManager CavefloorTX;
 	TextureManager HouseTX;
 	TextureManager CWallTX;
 	TextureManager VWallTX;
@@ -81,6 +98,7 @@ private:
 	TextureManager Boulder1TX;
 	TextureManager WaterTX;
 	TextureManager GrassTX;
+	TextureManager SandTX;
 	TextureManager VertInHouseDoorTX;
 	TextureManager HorizInHouseDoorTX;
 	TextureManager LChairTX;
@@ -96,6 +114,15 @@ private:
 	TextureManager DeadGuyTX;
 	TextureManager BirminghamTX;
 	TextureManager EndTX;
+
+	void _initializeEntities(Graphics* graphics);
+	void _initializeIcons(Graphics* graphics);
+	void _initializeObjects(Graphics* graphics);
+	void _initializeOther(Graphics* graphics);
+	void _initializeStructures(Graphics* graphics);
+	void _initializeStructureExteriors(Graphics* graphics);
+	void _initializeTerrain(Graphics* graphics);
+	
 };
 
 #endif

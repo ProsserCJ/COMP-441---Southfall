@@ -12,8 +12,8 @@ World* WorldInterface::loadWorld(const string& fileName, Audio* audio)
 	ifstream fin(fileName);
 	if(fin.fail())
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error loading world"));
-	int width, height;
-	fin>>width; fin>>height;
+	int type, width, height;
+	fin >> type; fin>>width; fin>>height;
 	World* W = new World(width, height, imageLibrary);
 	W->getTile() = new Tile**[width];
 	for(int i=0; i<width; i++)
@@ -25,7 +25,7 @@ World* WorldInterface::loadWorld(const string& fileName, Audio* audio)
 	{
 		if(!isspace(c))
 		{
-			assignTile(W, c, x, y);
+			assignTile(W, c, x, y, type);
 			x++;
 			if(x>=width)
 			{
@@ -95,14 +95,51 @@ void WorldInterface::initializeWorld()
 	Current->setInitialized(true);
 }
 
-inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
+inline void WorldInterface::assignTile(World* & W, char c, int x, int y, int type)
 {
 	Tile* T;
 	switch(c)
 	{
-		case 'g': // Grass
+		// Base tiles
+		case 'g': // Default ground cover (Grass, sand, or cave floor by type)
+		{
+			if(type == 0) W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->GrassIM);
+			else if(type == 1) W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->SandIM);
+			else W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->CavefloorIM);
+			break;
+		}
+		case 'f':	// Default Growth (Tree, cactus by type)
+		{
+			if(type == 0)
+			{
+				W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->GrassIM, false);
+				W->addObject(new Object(VECTOR2(x+0.5,y+0.5), 0, 0.25, &imageLibrary->TreeIM, CIRCLE, TREE_CRECT));
+			}
+			else if(type == 1) 
+			{
+				W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->SandIM, false);
+				W->addObject(new Object(VECTOR2(x+0.5,y+0.5), 0, 0.25, &imageLibrary->CactusIM, CIRCLE, TREE_CRECT));
+			}
+			else 
+			{
+				W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->CavefloorIM, false);
+				// None yet, large mushroom?
+			}
+			break;
+		}
+		case 'G':	// Grass (Explicit)
 		{
 			W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->GrassIM);
+			break;
+		}
+		case 'q':	// Sand (Explicit)
+		{
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->SandIM);
+			break;
+		}
+		case 'c':	// Rock surface (Explicit)
+		{
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->CavefloorIM);
 			break;
 		}
 		case 't':	//Track (dirt or road)
@@ -110,32 +147,33 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 			W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->WoodTileIM);
 			break;
 		}
-		case 'w':	//wall
-		{
-			W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->Boulder1IM, false);
-			break;
-		}
-		case 'f': // Tree
+		case 'F':	// Tree (Explicit)
 		{
 			W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->GrassIM, false);
 			W->addObject(new Object(VECTOR2(x+0.5,y+0.5), 0, 0.25, &imageLibrary->TreeIM, CIRCLE, TREE_CRECT));
 			break;
 		}
-		case 'b': // Boulder
+		case 'T':	// Cactus (Explicit)
 		{
-			W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->Boulder1IM, false);
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->SandIM, false);
+			W->addObject(new Object(VECTOR2(x+0.5f,y+0.5f), 0, 0.25, &imageLibrary->CactusIM, CIRCLE, TREE_CRECT));
 			break;
 		}
-		/*case 'B': // Boulder 2
+		case 'b': // Boulder
 		{
-			W->getTile(x,y) = new Tile(VECTOR2(x,y), &Boulder2IM, false);
+			if(type == 0) W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->GrassIM, false);
+			else if(type == 1) W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->SandIM, false);
+			else W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->CavefloorIM, false);
+
+			W->addObject(new Object(VECTOR2(x+0.5f,y+0.95f), 0, 0.25, &imageLibrary->Boulder1IM, CIRCLE, BOULDER_CRECT));
 			break;
-		}*/
-		case 'r': // River
+		}
+		case 'r':	// River
 		{
 			W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->RiverIM, false);
 			break;
 		}
+		// Structures
 		case 's': // Structure blocker
 		{
 			T = new Tile(VECTOR2(x,y), 0, false);
@@ -240,6 +278,7 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 			T->giveStructure(P);
 			break;
 		}
+		// Walls
 		case '_': // Horizontal Wall
 		{
 			W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->HWallIM, false);
@@ -253,6 +292,12 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y)
 		case '#': // Wall Corner
 		{
 			W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->CWallIM, false);
+			break;
+		}
+		// Cave / Dungeon
+		case 'C':	// Cave wall
+		{
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->CavewallIM, false);
 			break;
 		}
 		case 'x':

@@ -3,33 +3,20 @@
 void ImageLibrary::initialize(Graphics* graphics)
 {
 	if(_initialized) return;
-	//Set up region fonts
-	if(!SouthfallFontTX[0].initialize(graphics, SOUTHFALLFONT))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing southfallFont texture"));
-	if(!SouthfallFontTX[1].initialize(graphics, ESBURGFONT))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing esburgFont texture"));
-	if(!SouthfallFontTX[2].initialize(graphics, WESELLYNFONT))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wesellynFont texture"));
-	if(!SouthfallFontTX[3].initialize(graphics, NORSTAFFFONT))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing norstaffFont texture"));
-	for(int i = 0; i < 4; ++i)
-	{
-		if(!SouthfallFontIM[i].initialize(graphics, 0, 0, 0, &SouthfallFontTX[i]))
-			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing southfallFont image: " + i));
-		SouthfallFontIM[i].setX(SCREEN_WIDTH/2-SouthfallFontIM[0].getWidth()/2);
-		SouthfallFontIM[i].setY(SCREEN_HEIGHT/4-SouthfallFontIM[0].getHeight()/2);
-	}
-	// Textbox
-	if(!TextBoxTX.initialize(graphics, TEXTBOX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox texture"));
-	if(!TextBoxIM.initialize(graphics, 1000, 200, 1, &TextBoxTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox image"));
-	// Textbox arrow
-	if(!TextBoxArrowTX.initialize(graphics, TEXTBOX_ARROW))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox arrow texture"));
-	if(!TextBoxArrowIM.initialize(graphics, 35, 20, 4, &TextBoxArrowTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox arrow image"));
 	
+	_initializeEntities(graphics);
+	_initializeIcons(graphics);
+	_initializeObjects(graphics);
+	_initializeOther(graphics);
+	_initializeStructures(graphics);
+	_initializeStructureExteriors(graphics);
+	_initializeTerrain(graphics);
+	
+	_initialized = true;
+}
+
+void ImageLibrary::_initializeEntities(Graphics* graphics)
+{
 	// Character 1
 	if(!Character1TX.initialize(graphics, CHARACTER2_SHEET))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character 1 texture"));
@@ -50,9 +37,10 @@ void ImageLibrary::initialize(Graphics* graphics)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wraith texture"));
 	if(!WraithIM.initialize(graphics, 32, 96, 8, &WraithTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wraith image"));
+}
 
-	// Icons and spells
-
+void ImageLibrary::_initializeIcons(Graphics* graphics)
+{
 	// Impede effect
 	if(!ImpedeEffectTX.initialize(graphics, IMPEDEEFFECTICON))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Impede effect texture"));
@@ -98,7 +86,15 @@ void ImageLibrary::initialize(Graphics* graphics)
 	  throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Shadowball texture"));
 	if(!ShadowballIconIM.initialize(graphics, 0, 0, 0, &ShadowballIconTX))
 	  throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Shadowball image"));
+}
 
+void ImageLibrary::_initializeObjects(Graphics* graphics)
+{
+	// Swinging sword
+	if(!SwingingSwordTX.initialize(graphics, SWINGINGSWORD))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing SwingingSword texture"));
+	if(!SwingingSwordIM.initialize(graphics, 64, 32, 8, &SwingingSwordTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing SwingingSword image"));	
 	// Fireball projectile
 	if(!FireballSheetTX.initialize(graphics, FIREBALLSHEET))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Fireball sheet texture"));
@@ -109,64 +105,55 @@ void ImageLibrary::initialize(Graphics* graphics)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Shadowball sheet texture"));
 	if(!ShadowballSheetIM.initialize(graphics, 16, 16, 4, &ShadowballSheetTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Shadowball sheet image"));
-
-	// Grass
-	if(!GrassTX.initialize(graphics, GRASS1))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Grass texture"));
-	if(!GrassIM.initialize(graphics, 0, 0, 0, &GrassTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Grass image"));
-	// Tree
-	if(!TreeTX.initialize(graphics, TREE1))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Tree texture"));
-	if(!TreeIM.initialize(graphics, 0, 0, 0, &TreeTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Tree image"));
-	// Boulder 1
-	if(!Boulder1TX.initialize(graphics, BOULDER1))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Boulder texture"));
-	if(!Boulder1IM.initialize(graphics, 0, 0, 0, &Boulder1TX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Boulder image"));
-	// Boulder 2
-	if(!Boulder2TX.initialize(graphics, BOULDER2))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Boulder2 texture"));
-	if(!Boulder2IM.initialize(graphics, 0, 0, 0, &Boulder2TX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Boulder2 image"));
 	// Magic Portal
 	if(!MagicPortalTX.initialize(graphics, MAGICPORTAL1))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Magic portal texture"));
 	if(!MagicPortalIM.initialize(graphics, 32, 32, 4, &MagicPortalTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Magic portal image"));
-	// House
-	if(!HouseTX.initialize(graphics, HOUSE1))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing House texture"));
-	if(!HouseIM.initialize(graphics, 0, 0, 0, &HouseTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing House image"));
-	// Horizontal Wall
-	if(!HWallTX.initialize(graphics, HWALL))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing HWall texture"));
-	if(!HWallIM.initialize(graphics, 0, 0, 0, &HWallTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing HWall image"));
-	// Vertical Wall
-	if(!VWallTX.initialize(graphics, VWALL))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing VWall texture"));
-	if(!VWallIM.initialize(graphics, 0, 0, 0, &VWallTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing VWall image"));
-	// Wall Corner
-	if(!CWallTX.initialize(graphics, CWALL))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing CWall texture"));
-	if(!CWallIM.initialize(graphics, 0, 0, 0, &CWallTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing CWall image"));
+}
 
-	// River
-	if(!RiverTX.initialize(graphics, RIVER1))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing River texture"));
-	if(!RiverIM.initialize(graphics, 0, 0, 0, &RiverTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing River image"));
-	// Wood Tile
-	if(!WoodTileTX.initialize(graphics, WOODTILE1))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wood Tile texture"));
-	if(!WoodTileIM.initialize(graphics, 0, 0, 0, &WoodTileTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wood Tile image"));
+void ImageLibrary::_initializeOther(Graphics* graphics)
+{
+	//Set up region fonts
+	if(!SouthfallFontTX[0].initialize(graphics, SOUTHFALLFONT))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing southfallFont texture"));
+	if(!SouthfallFontTX[1].initialize(graphics, ESBURGFONT))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing esburgFont texture"));
+	if(!SouthfallFontTX[2].initialize(graphics, WESELLYNFONT))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing wesellynFont texture"));
+	if(!SouthfallFontTX[3].initialize(graphics, NORSTAFFFONT))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing norstaffFont texture"));
+	for(int i = 0; i < 4; ++i)
+	{
+		if(!SouthfallFontIM[i].initialize(graphics, 0, 0, 0, &SouthfallFontTX[i]))
+			throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing southfallFont image: " + i));
+		SouthfallFontIM[i].setX(SCREEN_WIDTH/2-SouthfallFontIM[0].getWidth()/2);
+		SouthfallFontIM[i].setY(SCREEN_HEIGHT/4-SouthfallFontIM[0].getHeight()/2);
+	}
+	// Textbox
+	if(!TextBoxTX.initialize(graphics, TEXTBOX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox texture"));
+	if(!TextBoxIM.initialize(graphics, 1000, 200, 1, &TextBoxTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox image"));
+	// Textbox arrow
+	if(!TextBoxArrowTX.initialize(graphics, TEXTBOX_ARROW))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox arrow texture"));
+	if(!TextBoxArrowIM.initialize(graphics, 35, 20, 4, &TextBoxArrowTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Textbox arrow image"));
+	// Birmingham
+	if(!BirminghamTX.initialize(graphics, BIRMINGHAM))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Birmingham texture"));
+	if(!BirminghamIM.initialize(graphics, 0, 0, 0, &BirminghamTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Birmingham image"));	
+	// End Screen
+	if(!EndTX.initialize(graphics, END_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing End Screen texture"));
+	if(!EndIM.initialize(graphics, SCREEN_WIDTH, SCREEN_HEIGHT, 0, &EndTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing End Screen image"));	
+}
 
+void ImageLibrary::_initializeStructures(Graphics* graphics)
+{
 	// Wood Floor 1
 	if(!WoodTileTX.initialize(graphics, WOODTILE1))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wood Tile texture"));
@@ -197,7 +184,6 @@ void ImageLibrary::initialize(Graphics* graphics)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Bed texture"));
 	if(!BedIM.initialize(graphics, 0, 0, 0, &BedTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Bed image"));
-	
 	// Bar Counter
 	if(!BarCounterTX.initialize(graphics, BARCOUNTER))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Bar Counter texture"));
@@ -228,22 +214,77 @@ void ImageLibrary::initialize(Graphics* graphics)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing LChair texture"));
 	if(!LChairIM.initialize(graphics, 0, 0, 0, &LChairTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing LChair image"));	
+	// Wood Tile
+	if(!WoodTileTX.initialize(graphics, WOODTILE1))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wood Tile texture"));
+	if(!WoodTileIM.initialize(graphics, 0, 0, 0, &WoodTileTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Wood Tile image"));
+	// Horizontal Wall
+	if(!HWallTX.initialize(graphics, HWALL))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing HWall texture"));
+	if(!HWallIM.initialize(graphics, 0, 0, 0, &HWallTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing HWall image"));
+	// Vertical Wall
+	if(!VWallTX.initialize(graphics, VWALL))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing VWall texture"));
+	if(!VWallIM.initialize(graphics, 0, 0, 0, &VWallTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing VWall image"));
+	// Wall Corner
+	if(!CWallTX.initialize(graphics, CWALL))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing CWall texture"));
+	if(!CWallIM.initialize(graphics, 0, 0, 0, &CWallTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing CWall image"));
+}
 
-	// Swinging sword
-	if(!SwingingSwordTX.initialize(graphics, SWINGINGSWORD))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing SwingingSword texture"));
-	if(!SwingingSwordIM.initialize(graphics, 64, 32, 8, &SwingingSwordTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing SwingingSword image"));	
+void ImageLibrary::_initializeStructureExteriors(Graphics* graphics)
+{
+	// House
+	if(!HouseTX.initialize(graphics, HOUSE1))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing House texture"));
+	if(!HouseIM.initialize(graphics, 0, 0, 0, &HouseTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing House image"));
+}
 
-	// Birmingham
-	if(!BirminghamTX.initialize(graphics, BIRMINGHAM))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Birmingham texture"));
-	if(!BirminghamIM.initialize(graphics, 0, 0, 0, &BirminghamTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Birmingham image"));	
-
-	// End Screen
-	if(!EndTX.initialize(graphics, END_IMAGE))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing End Screen texture"));
-	if(!EndIM.initialize(graphics, SCREEN_WIDTH, SCREEN_HEIGHT, 0, &EndTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing End Screen image"));	
+void ImageLibrary::_initializeTerrain(Graphics* graphics)
+{
+	// River
+	if(!RiverTX.initialize(graphics, RIVER1))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing River texture"));
+	if(!RiverIM.initialize(graphics, 0, 0, 0, &RiverTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing River image"));
+	// Grass
+	if(!GrassTX.initialize(graphics, GRASS1))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Grass texture"));
+	if(!GrassIM.initialize(graphics, 0, 0, 0, &GrassTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Grass image"));
+	// Sand
+	if(!SandTX.initialize(graphics, SAND1))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Sand texture"));
+	if(!SandIM.initialize(graphics, 0, 0, 0, &SandTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Sand image"));
+	// Cave floor
+	if(!CavefloorTX.initialize(graphics, ROCKSURFACE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Cave floor texture"));
+	if(!CavefloorIM.initialize(graphics, 0, 0, 0, &CavefloorTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Cave floor image"));
+	// Tree
+	if(!TreeTX.initialize(graphics, TREE1))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Tree texture"));
+	if(!TreeIM.initialize(graphics, 0, 0, 0, &TreeTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Tree image"));
+	// Cactus
+	if(!CactusTX.initialize(graphics, CACTUS1))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Cactus texture"));
+	if(!CactusIM.initialize(graphics, 0, 0, 0, &CactusTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Cactus image"));
+	// Boulder 1
+	if(!Boulder1TX.initialize(graphics, BOULDER1))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Boulder texture"));
+	if(!Boulder1IM.initialize(graphics, 0, 0, 0, &Boulder1TX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Boulder image"));
+	// Boulder 2
+	if(!Boulder2TX.initialize(graphics, BOULDER2))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Boulder2 texture"));
+	if(!Boulder2IM.initialize(graphics, 0, 0, 0, &Boulder2TX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Boulder2 image"));
 }

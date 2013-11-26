@@ -15,7 +15,7 @@ Southfall::~Southfall()
 
 void Southfall::loadIntro()
  {
-	ifstream fin("Worlds\\intro.txt");
+	ifstream fin(INTRO_TEXT);
 	char buffer[500];
 	introText = new vector<string>;
 	while(!fin.eof())
@@ -75,18 +75,18 @@ void Southfall::initialize(HWND hwnd)
 
 	// For testing: set up action Menu:
 
-	//actionMenu->addButton(new Button("None", 0, 0)); 
-	//actionMenu->addButton(new Button("Impede Spell", &imageLibrary->ImpedeEffectIM, 1)); 
-	//actionMenu->addButton(new Button("Quick Portal", &imageLibrary->PortalOpenIM, 2));
-	//actionMenu->addButton(new Button("Blink", &imageLibrary->BlinkIconIM, 3));
-	//actionMenu->addButton(new Button("Fireball", &imageLibrary->FireballIconIM, 4));
-	//actionMenu->addButton(new Button("Shadowball", &imageLibrary->ShadowballIconIM, 5));
+	actionMenu->addButton(new Button("Sword", &imageLibrary->SwordIconIM, 0)); 
+	actionMenu->addButton(new Button("Impede Spell", &imageLibrary->ImpedeEffectIM, 1)); 
+	actionMenu->addButton(new Button("Quick Portal", &imageLibrary->PortalOpenIM, 2));
+	actionMenu->addButton(new Button("Blink", &imageLibrary->BlinkIconIM, 3));
+	actionMenu->addButton(new Button("Fireball", &imageLibrary->FireballIconIM, 4));
+	actionMenu->addButton(new Button("Shadowball", &imageLibrary->ShadowballIconIM, 5));
 
-	//actionMenu->addButton(new Button("Magic Sight On", &imageLibrary->MagicSightOnIM, 8));
-	//actionMenu->addButton(new Button("Magic Sight Off", &imageLibrary->MagicSightOffIM, 9));
+	actionMenu->addButton(new Button("Magic Sight On", &imageLibrary->MagicSightOnIM, 8));
+	actionMenu->addButton(new Button("Magic Sight Off", &imageLibrary->MagicSightOffIM, 9));
 
 	mainWorld = player->getWorld();
-	
+	// Place the dead guys
 	player->getWorld()->addObject(new Object(VECTOR2(109.5,61.5),0,0, &imageLibrary->DeadGuyIM, entityNS::POINTCOLLISION, HUMAN_CRECT));
 	player->getWorld()->addObject(new Object(VECTOR2(110.5,61.5),0,0, &imageLibrary->DeadGuyIM, entityNS::POINTCOLLISION, HUMAN_CRECT));
 	player->getWorld()->addObject(new Object(VECTOR2(111.5,61.5),0,0, &imageLibrary->DeadGuyIM, entityNS::POINTCOLLISION, HUMAN_CRECT));

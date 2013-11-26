@@ -1,4 +1,4 @@
-40 20
+0 40 20
 ggggggggggggggggggggggggrrggggggggggggbg
 ggggggggggHsssssssggggggrrgggggggggggggg
 ggggggggggssssssssggggggrrggggggbggggggg

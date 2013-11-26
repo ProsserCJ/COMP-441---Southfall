@@ -49,6 +49,7 @@ const ColRect EMPTY_RECT(0.f,0.f);
 const ColRect HUMAN_CRECT(0.2f,1.0f);
 const ColRect WRAITH_CRECT(0.25f,2.8f);
 const ColRect TREE_CRECT(0.25f, 1.2f);
+const ColRect BOULDER_CRECT(0.45f, 0.9f);
 
 // Entity Namespace
 namespace entityNS

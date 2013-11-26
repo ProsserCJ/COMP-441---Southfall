@@ -32,7 +32,7 @@ private:
 	World* Current;	// What world is currently in focus	
 	void initializeWorld(); // Initialize a main world
 
-	inline void assignTile(World* & W, char c, int x, int y);
+	inline void assignTile(World* & W, char c, int x, int y, int type);
 
 	//World** worlds;	// An array of template worlds
 

@@ -112,7 +112,10 @@ const char DEADGUY[] = "..\\source\\Images\\Entities\\DEADGUY.png";
  // Terrain
 const char GRASS1[] = "..\\source\\Images\\Terrain\\Grass1.png";
 const char SAND1[] = "..\\source\\Images\\Terrain\\Sand1.png";
+const char ROCKSURFACE[] = "..\\source\\Images\\Terrain\\Rockfloor1.png";
+const char CAVEWALL[] = "..\\source\\Images\\CaveWall.png";
 const char TREE1[] = "..\\source\\Images\\Terrain\\Tree1.png";
+const char CACTUS1[] = "..\\source\\Images\\Terrain\\Cactus1.png";
 const char BOULDER1[] = "..\\source\\Images\\Terrain\\Boulder1.png";
 const char BOULDER2[] = "..\\source\\Images\\Terrain\\Boulder2.png";
 const char RIVER1[] = "..\\source\\Images\\Terrain\\River1.png";
@@ -159,6 +162,7 @@ const char SOUTHFALLFONT[] = "..\\source\\Images\\Other\\SouthfallFont.png";
 const char ESBURGFONT[] = "..\\source\\Images\\Other\\EsburgFont.png";
 const char WESELLYNFONT[] = "..\\source\\Images\\Other\\WesellynFont.png";
 const char NORSTAFFFONT[] = "..\\source\\Images\\Other\\NorstaffFont.png";
+
 // Worlds
 const string BAR1STRUCTURE = "..\\source\\Worlds\\Bar1.txt";
 const string BAR2STRUCTURE = "..\\source\\Worlds\\Bar2.txt";
