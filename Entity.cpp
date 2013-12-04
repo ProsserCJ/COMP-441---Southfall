@@ -405,6 +405,7 @@ void Entity::receiveDamage(Projectile* P)
 	if (audio) audio->playCue(DAMAGE);
 	// Freeze Effect will go here
 	HP -= P->getDamage();
+	if (HP <= 0 && audio) audio->playCue(GOBLIN_DEATH);
 }
 
 bool HandleCollision(Collidable* A, Collidable* B)

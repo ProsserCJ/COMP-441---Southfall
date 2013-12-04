@@ -6,7 +6,7 @@
 #include "entity.h"
 #include "ImageLibrary.h"
 
-enum PRIORITY {IDLE, SEARCH, ATTACK};
+enum PRIORITY {IDLE, SEARCH, TRACK, ATTACK};
 
 const float SEARCHDELAY = 0.2;
 const float EVALUATEDELAY = 0.5;
@@ -45,6 +45,7 @@ protected:
 	virtual void _idle(float frameTime, World* W);
 	virtual void _attack(float frameTime, World* W) = 0;
 	virtual void _search(float frameTime, World* W) = 0;
+	virtual void _track(float frameTime, World* W, VECTOR2 track) = 0;
 
 	float searchDelay;
 	float evaluateDelay;
@@ -60,16 +61,7 @@ protected:
 	virtual void _assessPriority(World* W) {};
 	virtual void _attack(float frameTime, World* W) {};
 	virtual void _search(float frameTime, World* W) {};
-};
-
-class WraithAI : public npcAI
-{
-public:
-	WraithAI(Entity* E) : npcAI(E, WRAITH_SIGHT) {};
-protected:
-	virtual void _assessPriority(World* W);
-	virtual void _attack(float frameTime, World* W);
-	virtual void _search(float frameTime, World* W);
+	virtual void _track(float frameTime, World* W, VECTOR2 track) {};
 };
 
 class GoblinAI : public npcAI
@@ -80,6 +72,20 @@ protected:
 	virtual void _assessPriority(World* W);
 	virtual void _attack(float frameTime, World* W);
 	virtual void _search(float frameTime, World* W);
+	virtual void _track(float frameTime, World* W, VECTOR2 track);
 };
+
+class WraithAI : public npcAI
+{
+public:
+	WraithAI(Entity* E) : npcAI(E, WRAITH_SIGHT) {};
+protected:
+	virtual void _assessPriority(World* W);
+	virtual void _attack(float frameTime, World* W);
+	virtual void _search(float frameTime, World* W);
+	virtual void _track(float frameTime, World* W, VECTOR2 track);
+};
+
+
 
 #endif

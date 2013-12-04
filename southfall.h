@@ -57,6 +57,7 @@ private:
 	GameMenu* actionMenu;
 	World* mainWorld;
 	bool pause;
+	bool firstTimeBattle; //bool used to play battle intro only once
 
 	inline void playerClickActions();
 	inline void handleFX();

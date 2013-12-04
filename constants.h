@@ -188,6 +188,7 @@ const char FIREBALL_SOUND[] = "Fireball";
 const char LIGHTNING[] = "Lightning";
 const char BIRMINGHAM_SOUND[] = "Birmingham";
 const char WIN[] = "Win";
+const char GOBLIN_DEATH[] = "goblin death";
 
 // Audio
 const char WAVE_BANK[]  = "..\\source\\Audio\\Win\\Wave Bank.xwb";

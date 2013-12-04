@@ -23,11 +23,13 @@ void npcAI::update(float frameTime, World* W)
 
 void npcAI::act(float frameTime, World* W)
 {
-	if(npc == 0) return;
+	if(npc == 0 || !npc->isActive()) return;
 	if(target != 0 && !target->isActive()) target = 0;
+	
+	VECTOR2 track;
 	if(target != 0)
 	{
-		VECTOR2 track = target->getPosition() - npc->getPosition();
+		track = target->getPosition() - npc->getPosition();
 		if(D3DXVec2Length(&track) > sight) 
 		{
 			target = 0;
@@ -50,6 +52,8 @@ void npcAI::act(float frameTime, World* W)
 		break;
 	case ATTACK:
 		_attack(frameTime, W);
+	case TRACK:
+		_track(frameTime, W, track);	
 		break;
 	}
 }
@@ -69,6 +73,60 @@ void npcAI::_idle(float frameTime, World* W)
 		npc->go(entityNS::DIR(rand()%4));
 		moving = true;
 	}
+}
+
+void GoblinAI::_assessPriority(World* W)
+{
+	priority = SEARCH;
+}
+
+void GoblinAI::_track(float frameTime, World* W, VECTOR2 track)
+{
+	if (target == 0 || !target->isActive() || npc == 0 || !npc->isActive()) return;
+	
+	DIR facing;
+	float orient = atan2(track.y, track.x);
+	if (orient > PI/4 && orient <= 3*PI/4) facing = DOWN;
+	else if (orient <= -3*PI/4 || orient > 3*PI/4) facing = LEFT;
+	else if (orient <= -PI/4 && orient > -3*PI/4) facing = UP;
+	else if (orient > -PI/4 && orient <= PI/4) facing = RIGHT;
+	npc->go(facing);
+	
+}
+
+void GoblinAI::_attack(float frameTime, World* W)
+{
+	if(target == 0) 
+	{
+		priority = IDLE;
+		return;
+	}
+	if(npc->canAction())
+	{// Launch fireballs
+		VECTOR2 launchPos = npc->getPosition() - VECTOR2(0.f,0.5f);
+		float sY = static_cast<float>(target->getPosition().y - launchPos.y);
+		float sX = static_cast<float>(target->getPosition().x - launchPos.x);
+		float orient = atan2(sY, sX);
+		if(orient < 0) orient += TPI;
+		Projectile* P = new Projectile(launchPos, FIREBALLSPEED, FIREBALLRADIUS, 
+			FIREBALLRANGE, orient, &W->getImageLibrary()->FireballSheetIM, FIREBALLDAMAGE, 0.f, 0.f, npc->getTeam());
+		P->setFrames(FIREBALLSTART, FIREBALLEND);
+		P->setFrameDelay(0.1);
+		W->addProjectile(P);
+		npc->resetAction();		
+	}
+}
+
+void GoblinAI::_search(float frameTime, World* W)
+{
+	list<Entity*> Targets = W->search(npc->getPosition(), WRAITH_SIGHT);
+	for(auto p = Targets.begin(); p != Targets.end(); p++)
+		if((*p)->getType() != PROJECTILE && (*p)->getTeam() != npc->getTeam())
+		{
+			target = *p;
+			priority = ATTACK;
+		}
+	_idle(frameTime, W);
 }
 
 void WraithAI::_assessPriority(World* W)
@@ -119,42 +177,16 @@ void WraithAI::_search(float frameTime, World* W)
 		}
 }
 
-void GoblinAI::_assessPriority(World* W)
+void WraithAI::_track(float frameTime, World* W, VECTOR2 track)
 {
-	priority = SEARCH;
-}
-
-void GoblinAI::_attack(float frameTime, World* W)
-{
-	if(target == 0) 
-	{
-		priority = IDLE;
-		return;
-	}
-	if(npc->canAction())
-	{// Launch fireballs
-		VECTOR2 launchPos = npc->getPosition() - VECTOR2(0.f,0.5f);
-		float sY = static_cast<float>(target->getPosition().y - launchPos.y);
-		float sX = static_cast<float>(target->getPosition().x - launchPos.x);
-		float orient = atan2(sY, sX);
-		if(orient < 0) orient += TPI;
-		Projectile* P = new Projectile(launchPos, FIREBALLSPEED, FIREBALLRADIUS, 
-			FIREBALLRANGE, orient, &W->getImageLibrary()->FireballSheetIM, FIREBALLDAMAGE, 0.f, 0.f, npc->getTeam());
-		P->setFrames(FIREBALLSTART, FIREBALLEND);
-		P->setFrameDelay(0.1);
-		W->addProjectile(P);
-		npc->resetAction();
-	}
-}
-
-void GoblinAI::_search(float frameTime, World* W)
-{
-	list<Entity*> Targets = W->search(npc->getPosition(), WRAITH_SIGHT);
-	for(auto p = Targets.begin(); p != Targets.end(); p++)
-		if((*p)->getType() != PROJECTILE && (*p)->getTeam() != npc->getTeam())
-		{
-			target = *p;
-			priority = ATTACK;
-		}
-	_idle(frameTime, W);
+	if (target == 0) return;
+	
+	DIR facing;
+	float orient = atan2(track.y, track.x);
+	if (orient > PI/4 && orient <= 3*PI/4) facing = DOWN;
+	else if (orient <= -3*PI/4 || orient > 3*PI/4) facing = LEFT;
+	else if (orient <= -PI/4 && orient > -3*PI/4) facing = UP;
+	else if (orient > -PI/4 && orient <= PI/4) facing = RIGHT;
+	npc->go(facing);
+	
 }

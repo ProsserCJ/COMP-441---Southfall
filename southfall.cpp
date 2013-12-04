@@ -35,6 +35,7 @@ void Southfall::initialize(HWND hwnd)
     Game::initialize(hwnd);
 	currentState = MAIN_MENU;
 	pause = false;
+	firstTimeBattle = true;
 	
 	// Graphics
 	graphics = new Graphics();
@@ -65,7 +66,11 @@ void Southfall::initialize(HWND hwnd)
 	// Initialized Player here, have center point at player's position
 	player = new Hero(ZERO, heroNS::HERO_RADIUS, &imageLibrary->Character1IM, input, 
 		audio, textbox, new Drawable(&imageLibrary->SwingingSwordIM));
-	player->setPosition(VECTOR2(102.5,96.5));
+	
+	//Real player position -- switched to simplify testing AI
+	//player->setPosition(VECTOR2(102.5,96.5));
+
+	player->setPosition(VECTOR2(112.5,60.5));
 	player->setWorld(Interface->getCurrent());
 	player->getWorld()->addEntity(player);
 	player->setSpellType(NULLTYPE);
@@ -178,6 +183,7 @@ void Southfall::update()
 			}
 			handleFX();
 			break;
+
 		case ACTIONMENU:
 			actionMenu->update(frameTime);
 			if(input->wasKeyPressed(T_KEY))
@@ -218,8 +224,12 @@ inline void Southfall::handleFX()
 				fontTimer = 6; fontLoc = 3; 
 				audio->stopCue(SOUTHFALL_THEME);				
 				audio->stopCue(MAIN_THEME);
-				audio->playCue(BATTLE_INTRO);
-				Sleep(3400);
+				if (firstTimeBattle)
+				{
+					audio->playCue(BATTLE_INTRO);
+					Sleep(3400);
+					firstTimeBattle = false;					
+				}
 				audio->playCue(BATTLE);
 			}
 			else if (player->getPosition().x < 50 && fontLoc != 2)

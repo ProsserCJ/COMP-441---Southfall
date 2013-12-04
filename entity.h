@@ -223,6 +223,7 @@ public:
 	void setVelocity(const VECTOR2& vel)	{velocity = vel;}
 	void stop()								{velocity = ZERO;}
 	void setTile(Tile* T)					{tile = T;}
+	void setSpeed(float spd)				{speed = spd;}
 
 protected:
 	inline void handleSectors(World* W);
@@ -277,20 +278,24 @@ public:
 	void setWorld(World* W)					{world = W;}
 	void setTarget(VECTOR2 T)				{target = T; _hasTarget = true;}
 	void setSpellType(SPELLTYPE S)			{SpellType = S;}
+	void setMagicSight(bool s)				{_magicSight = s;}
+	void setDir(DIR face)					{facing=face;}
+	void setDeathSound(string cue)			{deathSoundCue = cue;}
+	void setController(npcAI* control);
+
+	//Other Functions
 	void damage(int damage)					{HP -= damage;}
 	void resetTarget()						{_hasTarget = false;}
 	void resetAction()						{timeSinceAction = 0;}
 	void kill()								{HP = 0; active = false;}
-	void receiveDamage(Projectile* p);
-	void setDir(DIR face)					{facing=face;}
+	void receiveDamage(Projectile* p);	
 	void go(DIR face);		
 	void standing();
 	virtual void setStandingImage();
 	void freeze(float time)					{_frozen=true;freezeTime=time;}
 	void skip(float time)					{skipTime = time; _skip = true;}
 	void switchMagicSight()					{_magicSight = !_magicSight;}
-	void setMagicSight(bool s)				{_magicSight = s;}
-	void setController(npcAI* control);
+	
 
 protected:
 	VECTOR2 knockback;	// For knock back effects
@@ -320,6 +325,8 @@ protected:
 	float magic;
 	float maxMagic;
 	float magicRecharge;
+
+	string deathSoundCue;
 };
 
 #endif
