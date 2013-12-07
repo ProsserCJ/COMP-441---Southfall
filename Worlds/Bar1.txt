@@ -9,18 +9,29 @@
 -ttrTltttttttttt-
 -ttttttttttttttt-
 --------0--------
-2
-1 10 2 4
-Hi son, it's been a while! 
-I knew if I just stayed in here you'd show up.
-You're right on track to becoming a drunk like your Pa,
-but unfortunately our town is in grave danger.
-Since I'm exorbitantly lazy, I have a task I need you to do for me.
-Go down south south-east to the other tavern and look for a man by the name of..
-hmm...
-Bags! I can't remember his name, but I'm sure you'll be able to find him.
-Ask him what you can do for him.
-Then go home and talk to Ma, she'll know what to do.
-1 2 2 6
-Howdy brother, I hain't got no money, but I got my beer!
-*SLURPPPPP*
+3
+1 6 11 6 d
+You're awake!
+I was worried there for a minute.
+Those goblins got you pretty good.
+They've been giving us all kinds of trouble lately.
+Why don't you let your dad know that you're okay?
+I'm sure he'll be glad to see you...if he's sober.
+1 12 2 5.5 r
+You! *hic*
+Well I'll be *hic* damned.  It's my little boy.
+Got scraped up, eh? Thas good.  
+...
+*hic*
+Whas tha?  You wannna figh? Hah!
+You cu'int figh a wet cabbage.
+...
+Goblins? Eh, now yer talkin'.
+Don' beat around a dead horse.
+There's some revolutionary down at Sullivan's.
+He'll get you fixed up.
+1 3 4 5.5 l
+Howdy brother. *hic*
+I hain't got no money, but I got my beer!
+*SLURP*
+

@@ -7,7 +7,7 @@
 -ttttttt-
 ----0----
 1
-1 6 1 1
+1 6 1 1 d
 Hello young one.
 You're not from around here, are you?
 Good.  All the people in my town are too dense to appreciate me.

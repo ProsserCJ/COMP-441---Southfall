@@ -16,8 +16,8 @@ Global Settings
     Header File = Southfall.h;
     Exclude Category Names = 0;
     Exclude Variable Names = 0;
-    Last Modified Low = 3542565832;
-    Last Modified High = 30339369;
+    Last Modified Low = 2142890800;
+    Last Modified High = 30339957;
 
     Category
     {
@@ -229,6 +229,8 @@ Wave Bank
     Xbox Bank Last Modified High = 0;
     PC Bank Last Modified Low = 2112255171;
     PC Bank Last Modified High = 30339370;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
     Bank Last Revised Low = 2112255171;
     Bank Last Revised High = 30339370;
 
@@ -562,8 +564,8 @@ Sound Bank
     Windows File = Win\Sound Bank.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
-    Bank Last Modified Low = 2113815181;
-    Bank Last Modified High = 30339370;
+    Bank Last Modified Low = 2142950806;
+    Bank Last Modified High = 30339957;
     Header Last Modified High = 0;
     Header Last Modified Low = 0;
 
@@ -996,7 +998,7 @@ Sound Bank
     Sound
     {
         Name = Intro_alert;
-        Volume = -1200;
+        Volume = -2140;
         Pitch = 0;
         Priority = 0;
 

@@ -55,7 +55,6 @@ public:
 private:
     Menu* mainMenu;
 	GameMenu* actionMenu;
-	World* mainWorld;
 	bool pause;
 	bool firstTimeBattle; //bool used to play battle intro only once
 

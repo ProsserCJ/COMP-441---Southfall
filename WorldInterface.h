@@ -25,11 +25,14 @@ public:
 		: imageLibrary(imageLibrary) {};
 	void initialize(Graphics* graphics, Audio* audio);
 	World* getCurrent() {return Current;}
+	World* getMain() {return main; }
 
 	World* loadWorld(const string& fileName, Audio* audio);
 
 private:
 	World* Current;	// What world is currently in focus	
+	World* main; // The main game world
+	World* bar1; //bar1 structure, to ease starting there
 	void initializeWorld(); // Initialize a main world
 
 	inline void assignTile(World* & W, char c, int x, int y, int type);

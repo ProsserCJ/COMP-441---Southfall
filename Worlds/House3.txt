@@ -7,10 +7,10 @@
 -ttttttt-
 ----0----
 2
-1 2 4 4
+1 2 4 4 d
 Why looky here, a stranger!
 You're not welcome, so leave.
-1 6 5 2
+1 6 5 2 d
 Ever wonder how we survive with no walls?
 Well, let me tell you a story.
 There once was an intruder. 

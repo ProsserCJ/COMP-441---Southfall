@@ -4,7 +4,16 @@
 void WorldInterface::initialize(Graphics* graphics, Audio* audio)
 {
 	StructInt = new StructureInterface(imageLibrary);
-	Current = loadWorld(SOUTHFALLMAP, audio);
+	main = loadWorld(SOUTHFALLMAP, audio);
+	
+	//add dead guys
+	main->addObject(new Object(VECTOR2(109.5,61.5),0,0, &imageLibrary->DeadGuyIM, entityNS::POINTCOLLISION, HUMAN_CRECT));
+	main->addObject(new Object(VECTOR2(110.5,61.5),0,0, &imageLibrary->DeadGuyIM, entityNS::POINTCOLLISION, HUMAN_CRECT));
+	main->addObject(new Object(VECTOR2(111.5,61.5),0,0, &imageLibrary->DeadGuyIM, entityNS::POINTCOLLISION, HUMAN_CRECT));
+
+	//move into bar 1 to start game
+	Current = bar1;
+
 }
 
 World* WorldInterface::loadWorld(const string& fileName, Audio* audio)
@@ -209,7 +218,11 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y, int typ
 				else if(l == "class House4") // Create the inside of the house that the door leads to
 					T->giveStructure(StructInt->createHouse4(&W, VECTOR2(x+0.5,y+1.5))); 
 				else if(l == "class Bar1") // Create the inside of the bar that the door leads to
-					T->giveStructure(StructInt->createBar1(&W, VECTOR2(x+0.5,y+1.5))); 
+				{ 
+					Structure* temp = StructInt->createBar1(&W, VECTOR2(x+0.5,y+1.5)); 
+					T->giveStructure(temp);
+					bar1 = temp->getWorld();
+				}
 				else if(l == "class Bar2") // Create the inside of the bar that the door leads to
 					T->giveStructure(StructInt->createBar2(&W, VECTOR2(x+0.5,y+1.5)));
 				

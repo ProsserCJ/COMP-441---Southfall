@@ -67,10 +67,16 @@ void Southfall::initialize(HWND hwnd)
 	player = new Hero(ZERO, heroNS::HERO_RADIUS, &imageLibrary->Character1IM, input, 
 		audio, textbox, new Drawable(&imageLibrary->SwingingSwordIM));
 	
-	//Real player position -- switched to simplify testing AI
+	
+	//places player right by first goblin
+	//player->setPosition(VECTOR2(112.5,60.5));
+	
+	//places player by house in Southfall
 	//player->setPosition(VECTOR2(102.5,96.5));
 
-	player->setPosition(VECTOR2(112.5,60.5));
+	//places player on chair in Bar
+	player->setPosition(VECTOR2(11.5,7));
+
 	player->setWorld(Interface->getCurrent());
 	player->getWorld()->addEntity(player);
 	player->setSpellType(NULLTYPE);
@@ -88,14 +94,7 @@ void Southfall::initialize(HWND hwnd)
 	actionMenu->addButton(new Button("Shadowball", &imageLibrary->ShadowballIconIM, 5));
 
 	actionMenu->addButton(new Button("Magic Sight On", &imageLibrary->MagicSightOnIM, 8));
-	actionMenu->addButton(new Button("Magic Sight Off", &imageLibrary->MagicSightOffIM, 9));
-
-	mainWorld = player->getWorld();
-	// Place the dead guys
-	player->getWorld()->addObject(new Object(VECTOR2(109.5,61.5),0,0, &imageLibrary->DeadGuyIM, entityNS::POINTCOLLISION, HUMAN_CRECT));
-	player->getWorld()->addObject(new Object(VECTOR2(110.5,61.5),0,0, &imageLibrary->DeadGuyIM, entityNS::POINTCOLLISION, HUMAN_CRECT));
-	player->getWorld()->addObject(new Object(VECTOR2(111.5,61.5),0,0, &imageLibrary->DeadGuyIM, entityNS::POINTCOLLISION, HUMAN_CRECT));
-	
+	actionMenu->addButton(new Button("Magic Sight Off", &imageLibrary->MagicSightOffIM, 9));	
 }
 
 //=============================================================================
@@ -111,19 +110,20 @@ void Southfall::update()
 				currentState = INTRO;
 				loadIntro();
 				textbox->setText(*introText);
-				textbox->setActive(true);
-				audio->playCue(SOUTHFALL_THEME);
+				textbox->setActive(true);				
 			}
 			break;
 		case INTRO:
 			if (!textbox->isActive())
 			{				
+				audio->playCue(SOUTHFALL_THEME);
 				currentState = GAME;				
 				delete introText;
-				Entity* temp = player->getWorld()->getNPCFacing(player->getPosition(), entityNS::RIGHT);
+				Entity* temp = player->getWorld()->getNPCFacing(player->getPosition(), entityNS::UP);
 				if (temp)
 				{
-					temp->setDir(entityNS::LEFT);
+					temp->setDir(entityNS::DOWN);
+					player->setDir(entityNS::UP);
 					textbox->setText((NPC*)temp);
 					textbox->setActive(true);
 					audio->playCue(ALERT);
@@ -157,7 +157,7 @@ void Southfall::update()
 				actionMenu->addButton(new Button("Fireball", &imageLibrary->FireballIconIM, 4));
 				player->hasAddedFireball = true;
 			}
-			if (mainWorld->winCondition())
+			if (Interface->getMain()->winCondition())
 			{
 					currentState = GAME_OVER;
 					audio->stopCue(SOUTHFALL_THEME);
@@ -203,7 +203,7 @@ void Southfall::update()
 
 inline void Southfall::handleFX()
 {
-	if(player->getWorld() == mainWorld)
+	if(player->getWorld() == Interface->getMain())
 		{
 			if (player->getPosition().x < 133 && player->getPosition().x > 86 && player->getPosition().y > 80 && fontLoc != 0)
 			{

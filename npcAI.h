@@ -64,6 +64,19 @@ protected:
 	virtual void _track(float frameTime, World* W, VECTOR2 track) {};
 };
 
+class StationaryAI : public npcAI
+{
+public:
+	StationaryAI(Entity* E) : npcAI(E, PASSIVE_SIGHT) {};
+	void update(float frameTime, World* W); 
+protected:
+	virtual void _assessPriority(World* W) {};
+	virtual void _idle(float frameTime, World* W){npc->standing();}
+	virtual void _attack(float frameTime, World* W) {};
+	virtual void _search(float frameTime, World* W) {};
+	virtual void _track(float frameTime, World* W, VECTOR2 track) {};
+};
+
 class GoblinAI : public npcAI
 {
 public:

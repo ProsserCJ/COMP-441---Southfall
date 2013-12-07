@@ -4,31 +4,27 @@
 -]]]]]]]]]]]]]]]-
 -ccccccccccccccc-
 -ttttttttttttttt-
--trTlttttttttttt-
--ttttttttrTltttt-
--ttrTltttttttttt-
+-ttttttttttttttt-
+-ttrTltttttrTltt-
+-ttttttttttttttt-
 -ttttttttttttttt-
 --------0--------
-4
-1 15 6 7
-Hi there sir.
-You look like a fine young lad who needs something to do.
-I have just the task
-There is a large goblin force mustering in the north.
-Some say black riders from the east are leading them.
-We need young recruits like you.
-Have this blade, it's an old hag, but it'll serve well enough
+6
+1 7 8 5 d
+They've ransacked our homes, destroyed our crops...
+It's time we put an end to the goblin menance!
+...
+You there! Take this.
 (sword acquired)
-Go around the country finding out what you can about how to fight them,
-and then when you think you're ready, come back to me.
-I hear rumors of a pyromancer to the east.  
-He keeps to himself mostly but is friendly to visitors.
-You and all the other recruits will go kill them all for me.
-I'd join you, but I took a knee on my arrows and they all broke
-Thanks, and best of luck.
-1 1 9 6
-*SLURPPPPP*
-1 1 9 4
-*BURPPPPP*
-1 1 10 5
-Please excuse my friends, they are as rude as you are.
+We're mustering a force to face the goblins in the north.
+Will you help us?
+1 1 7 6.5 u
+Ooh rah!
+1 1 7 6.5 u
+How many goblins have you killed?
+1 1 8 6.5 u
+This guy is so inspiring.
+1 1 9 6.5 u
+Don't tell anyone, but I'm actually a woman.
+1 1 10 6.5 u
+For Southfall!

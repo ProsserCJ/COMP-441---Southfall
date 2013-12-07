@@ -33,11 +33,12 @@ World* StructureInterface::loadStructure(string fileName, World** external, VECT
 	for (int i=0; i<npcCount; i++)
 	{
 		int ID, textLines;
+		char dir;
 		float x, y;
 		fin >> ID;
 		if(ID == 1)
 		{
-			fin >> textLines >> x >> y;
+			fin >> textLines >> x >> y >> dir;
 			x += .5;y += .5;
 			NPC* temp = new NPC(ID, VECTOR2(x,y), &imageLibrary->Character1IM, 0);
 			string* text = new string[textLines];
@@ -51,8 +52,14 @@ World* StructureInterface::loadStructure(string fileName, World** external, VECT
 				else if(text[i] == "(learned fireball attack)")
 					temp->item = "fireball";
 			}
-			temp->setText(text, textLines);
-			W->addEntity(temp, new PassiveAI(temp));
+			temp->setText(text, textLines);			
+			switch(dir){
+				case 'u': temp->setDir(UP); break;
+				case 'd': temp->setDir(DOWN); break;
+				case 'l': temp->setDir(LEFT); break;
+				case 'r': temp->setDir(RIGHT); break;					
+				}			
+			W->addEntity(temp, new StationaryAI(temp));
 		}
 		else if(ID == 2)
 		{
@@ -163,7 +170,7 @@ Portal* StructureInterface::createBar1(World** external, VECTOR2 vOut)
 }
 Portal* StructureInterface::createBar2(World** external, VECTOR2 vOut)
 {
-	World* W = loadStructure(BAR2STRUCTURE, external, vOut);
+	World* W = loadStructure(BAR2STRUCTURE, external, vOut);	
 	return new Portal(vOut,1,1,0,W,entrance);
 }
 

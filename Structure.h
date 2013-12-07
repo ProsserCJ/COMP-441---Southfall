@@ -27,6 +27,8 @@ public:
 	virtual void interact(Entity* E)=0;
 	virtual bool isPassable()=0;
 
+	World* getWorld()  {return out;}
+
 protected:
 	// Structures are rectangular
 	VECTOR2 TL;	// Top left x,y
