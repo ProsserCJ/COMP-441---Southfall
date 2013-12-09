@@ -59,7 +59,7 @@ private:
 	
 	Image* image;		// Base image of the tile
 	int frame;			// Frame to draw
-
+	
 	// Testing
 	list<Object*> objects;
 };
@@ -74,7 +74,7 @@ public:
 	~World() {};
 
 	void draw(VECTOR2& Center, bool magicSight);
-	void update(VECTOR2& Center, float frameTime);
+	bool update(VECTOR2& Center, float frameTime);
 	void collisions();
 	void act() {}
 	bool winCondition();
@@ -109,7 +109,7 @@ public:
 private:
 	int width, height;				// Dimensions of this world		
 	bool _initialized;				// Has the world been initialized
-
+	
 	ImageLibrary* imageLibrary;		// A pointer to the image library
 
 	Tile*** tiles;					// The tiles that make up the world

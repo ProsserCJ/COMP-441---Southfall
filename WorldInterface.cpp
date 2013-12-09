@@ -13,7 +13,6 @@ void WorldInterface::initialize(Graphics* graphics, Audio* audio)
 
 	//move into bar 1 to start game
 	Current = bar1;
-
 }
 
 World* WorldInterface::loadWorld(const string& fileName, Audio* audio)

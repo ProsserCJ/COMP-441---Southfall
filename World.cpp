@@ -1,5 +1,7 @@
 #include "World.h"
 
+bool heroDeath;					// Flag to signal that the hero has died
+
 bool Tile::isTraversable()
 {
 	if(S == 0) return _traversable;
@@ -73,12 +75,14 @@ void Tile::updateObjects(float frameTime, World* W)
 			if(Obj->getType() != HEROTYPE) safeDelete<Object*>(Obj);
 			else 
 			{
-				Hero* hero = reinterpret_cast<Hero*>(Obj);
-				hero->reset();
+				//Hero* hero = reinterpret_cast<Hero*>(Obj);
+				//hero->reset();
+				heroDeath = true;
 			}
 		}
 		else (*p)->update(frameTime, W);
 		p = q;
+		
 	}
 }
 
@@ -257,7 +261,7 @@ bool World::isTraversible(VECTOR2 T)
 	return getTile((int)(T.x), (int)(T.y))->isTraversable();
 }
 
-void World::update(VECTOR2& Center, float frameTime)
+bool World::update(VECTOR2& Center, float frameTime)
 {
 	// Update Structures
 	for(auto s = structures.begin(); s != structures.end(); s++)
@@ -268,6 +272,11 @@ void World::update(VECTOR2& Center, float frameTime)
 	for(int x = x0; x < x1; x++)
 		for(int y = y0; y < y1; y++)
 			tiles[x][y]->updateObjects(frameTime, this);
+	if (heroDeath)
+	{
+		heroDeath = false;
+		return false;
+	}
 
 	// Update Effects
 	auto ef = effects.begin();
@@ -282,6 +291,7 @@ void World::update(VECTOR2& Center, float frameTime)
 		}
 		ef=q;
 	}
+	return true;
 }
 
 Entity* World::getNPCFacing(VECTOR2 pos, DIR dir)

@@ -24,8 +24,10 @@ public:
 	WorldInterface(ImageLibrary* imageLibrary) 
 		: imageLibrary(imageLibrary) {};
 	void initialize(Graphics* graphics, Audio* audio);
-	World* getCurrent() {return Current;}
-	World* getMain() {return main; }
+	
+	World* getCurrent()	{return Current;}
+	World* getMain()	{return main;}
+	World* getStart()	{return bar1;}
 
 	World* loadWorld(const string& fileName, Audio* audio);
 

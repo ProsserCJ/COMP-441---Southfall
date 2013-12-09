@@ -118,7 +118,6 @@ void Southfall::update()
 			{				
 				audio->playCue(SOUTHFALL_THEME);
 				currentState = GAME;				
-				delete introText;
 				Entity* temp = player->getWorld()->getNPCFacing(player->getPosition(), entityNS::UP);
 				if (temp)
 				{
@@ -127,6 +126,7 @@ void Southfall::update()
 					textbox->setText((NPC*)temp);
 					textbox->setActive(true);
 					audio->playCue(ALERT);
+					delete introText;
 				}
 			}
 		case OPENTEXTBOX:					//fallthrough is intentional
@@ -174,7 +174,18 @@ void Southfall::update()
 			else
 			{
 				playerClickActions();
-				player->getWorld()->update(Center(), frameTime);				
+
+				//returns false if player has died
+				if(!player->getWorld()->update(Center(), frameTime))
+				{
+					player->setWorld(Interface->getStart());
+					player->reset();
+					currentState = INTRO;
+					textbox->setText(*introText);
+					textbox->setActive(true);
+					loadIntro();
+					break;
+				}
 			}
 			if (textbox->isActive())
 			{

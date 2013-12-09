@@ -10,11 +10,10 @@
 -ttttttttttttttt-
 --------0--------
 3
-1 6 11 6 d
+1 5 11 6 d
 You're awake!
-I was worried there for a minute.
-Those goblins got you pretty good.
-They've been giving us all kinds of trouble lately.
+Boy, did you have me worried.
+Those goblins have been giving us all kinds of trouble lately. It looks like they got you pretty good.
 Why don't you let your dad know that you're okay?
 I'm sure he'll be glad to see you...if he's sober.
 1 12 2 5.5 r

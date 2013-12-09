@@ -104,8 +104,9 @@ void Hero::draw(VECTOR2& Center)
 void Hero::reset()
 {
 	setHP(maxHP);
-	setPosition(VECTOR2(102.5,96.5));
+	//setPosition(VECTOR2(102.5,96.5));
+	setPosition(VECTOR2(11.5,7));
 	setActive(true);
-	setDir(DOWN);
+	setDir(UP);
 	getWorld()->addEntity(this);
 }
