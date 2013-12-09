@@ -136,11 +136,8 @@ r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r 
 r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r
 r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r r
 31
-1 4 103 96
-You there!
-Go due north past this here house to that tavern yonder.
-Your dad is waiting.
-He looks just like you.
+1 1 103 96
+I love Southfall!
 1 3 100 125
 I used to be a fisherman.  I'd sail the seas looking for the biggest catch I could find.
 A giant serpent swallowed my reels.
@@ -149,8 +146,8 @@ I swear he was the size of my house!
 I thought I'd find some treasure out here.
 Now I just hope I can find my way back!
 1 2 100 100
-I love Southfall!
-Go up to the tavern, I heard your dad's looking for you.
+My name is Dr. Birmingham.
+We're at the end of time.
 1 1 20 83
 I wonder what's past those rocks.
 1 4 134 5
@@ -166,7 +163,7 @@ Swimming and stuff!
 :)
 Hi.
 2 81 59
-2 113 59
+2 110 59
 2 82 60
 2 80 58
 2 81 7

@@ -14,21 +14,21 @@
 You're awake!
 Boy, did you have me worried.
 Those goblins have been giving us all kinds of trouble lately. It looks like they got you pretty good.
-Why don't you let your dad know that you're okay?
-I'm sure he'll be glad to see you...if he's sober.
+%Why don't you let your dad know that you're okay?
+%I'm sure he'll be glad to see you...if he's sober.
 1 12 2 5.5 r
 You! *hic*
 Well I'll be *hic* damned.  It's my little boy.
 Got scraped up, eh? Thas good.  
 ...
-*hic*
-Whas tha?  You wannna figh? Hah!
-You cu'int figh a wet cabbage.
-...
-Goblins? Eh, now yer talkin'.
-Don' beat around a dead horse.
-There's some revolutionary down at Sullivan's.
-He'll get you fixed up.
+%*hic*
+%Whas tha?  You wannna figh? Hah!
+%You cu'int figh a wet cabbage.
+%...
+%Goblins? Eh, now yer talkin'.
+%Don' beat around a dead horse.
+%There's some revolutionary down at Sullivan's.
+%He'll get you fixed up.
 1 3 4 5.5 l
 Howdy brother. *hic*
 I hain't got no money, but I got my beer!

@@ -38,3 +38,11 @@ Image* NPC::getImage(int ID)
 	}
 	return 0;
 }
+
+void NPC::updateText()
+{
+	for (auto it = conditionalLines.begin(); it != conditionalLines.end(); ++it)
+		text.erase(text.begin() + (*it));
+
+	conditionalLines.clear();
+}

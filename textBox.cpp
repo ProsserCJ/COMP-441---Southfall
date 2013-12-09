@@ -35,6 +35,9 @@ void TextBox::next(){
 	if (++it == text.end()){
 		setActive(false);
 		text.clear();		
-		if (speaker) speaker->setPaused(false);
+		if (speaker){
+			speaker->setPaused(false);		
+			speaker->updateText();
+		}
 	}
 }

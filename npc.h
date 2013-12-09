@@ -10,8 +10,10 @@ Last Modified 11/2/2013
 #include "entity.h"
 #include <vector>
 #include "random.h"
+#include <list>
 using std::string;
 using std::vector;
+using std::list;
 
 namespace npcNS
 {
@@ -40,14 +42,18 @@ public:
 	Image* getImage(int ID);
 	void setPaused(bool b)					{paused = b;}
 
-	
 	vector<string> getText()				{return text;}
 	void setText(string t[], int count)		{text = vector<string>(t, t + count);}
+	//void setText(vector<string>& t)			{text = t;}
+	void addConditionalLine(int i)			{conditionalLines.push_front(i);}
+
+	void updateText();
 
 private:
 	double distanceTraveled;
 	double timeSinceLastMove;
 	vector<string> text;		//text to be returned for dialogue
+	list<int> conditionalLines;	//list of text lines to be excluded after displayed once
 	bool paused;
 	Random rGen;
 

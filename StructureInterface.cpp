@@ -47,6 +47,12 @@ World* StructureInterface::loadStructure(string fileName, World** external, VECT
 			for (int i=0; i<textLines; i++){ 
 				fin.getline(buffer,500);
 				text[i] = buffer;
+				if (buffer[0] == '%')
+				{
+					temp->addConditionalLine(i);
+					text[i] = text[i].substr(1);
+				}
+				
 				if(text[i] == "(sword acquired)")
 					temp->item = "sword";
 				else if(text[i] == "(learned fireball attack)")

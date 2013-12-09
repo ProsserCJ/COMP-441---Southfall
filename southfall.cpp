@@ -181,9 +181,9 @@ void Southfall::update()
 					player->setWorld(Interface->getStart());
 					player->reset();
 					currentState = INTRO;
-					textbox->setText(*introText);
-					textbox->setActive(true);
 					loadIntro();
+					textbox->setText(*introText);
+					textbox->setActive(true);					
 					break;
 				}
 			}
