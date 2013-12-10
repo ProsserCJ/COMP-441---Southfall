@@ -1,5 +1,6 @@
 #include "Structure.h"
 #include "World.h"
+#include "WorldInterface.h"
 
 void Structure::draw(VECTOR2 Center)
 {
@@ -24,6 +25,17 @@ void Portal::interact(Entity* E)
 	E->setWorld(out);
 	E->setPosition(vOut);
 	out->addEntity(E);
+	if (out == WI->getBar2())
+	{
+		WI->getAudio()->stopCue(SOUTHFALL_THEME);
+		WI->getAudio()->playCue(BAR_BACKGROUND);
+	}
+	else if (out == WI->getMain())
+	{
+		WI->getAudio()->stopCue(SOUTHFALL_THEME);
+		WI->getAudio()->stopCue(BAR_BACKGROUND);
+		WI->getAudio()->playCue(SOUTHFALL_THEME);		
+	}
 }
 
 void Door::draw(VECTOR2 Center)

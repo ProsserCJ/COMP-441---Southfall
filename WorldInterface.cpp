@@ -1,9 +1,10 @@
 #include "WorldInterface.h"
 #include <typeinfo>
 
-void WorldInterface::initialize(Graphics* graphics, Audio* audio)
+void WorldInterface::initialize(Graphics* graphics, Audio* a)
 {
-	StructInt = new StructureInterface(imageLibrary);
+	audio = a;
+	StructInt = new StructureInterface(imageLibrary, this);
 	main = loadWorld(SOUTHFALLMAP, audio);
 	
 	//add dead guys
@@ -223,8 +224,11 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y, int typ
 					bar1 = temp->getWorld();
 				}
 				else if(l == "class Bar2") // Create the inside of the bar that the door leads to
-					T->giveStructure(StructInt->createBar2(&W, VECTOR2(x+0.5,y+1.5)));
-				
+				{
+					Structure* temp = StructInt->createBar2(&W, VECTOR2(x+0.5,y+1.5)); 
+					T->giveStructure(temp);
+					bar2 = temp->getWorld();
+				}				
 			}
 			W->getTile(x,y) = T;
 			break;
@@ -287,7 +291,7 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y, int typ
 		{
 			T = new Tile(VECTOR2(x,y), &imageLibrary->GrassIM, false); // For now
 			W->getTile(x,y) = T;
-			Portal* P = new Portal(VECTOR2(x,y),1,1,&imageLibrary->MagicPortalIM,W,VECTOR2(12,10));
+			Portal* P = new Portal(VECTOR2(x,y),1,1,&imageLibrary->MagicPortalIM,W,VECTOR2(12,10), this);
 			W->addStructure(P);
 			T->giveStructure(P);
 			break;

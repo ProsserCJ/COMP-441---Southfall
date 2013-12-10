@@ -12,6 +12,7 @@ Last Modified: 11/8/2013
 #include "Entity.h"
 
 class World;	// Forward reference to World
+class WorldInterface;
 
 class Structure : public Drawable
 {
@@ -34,14 +35,15 @@ protected:
 	VECTOR2 TL;	// Top left x,y
 	VECTOR2 BR;	// Bottow right x,y
 	World* out;
+	
 };
 
 class Portal : public Structure
 {
 public:
 	Portal() {};
-	Portal(VECTOR2 TL, int width, int height, Image* image, World* out, VECTOR2 vout) 
-		: Structure(TL,width,height,image,out), open(true), vOut(vout) 
+	Portal(VECTOR2 TL, int width, int height, Image* image, World* out, VECTOR2 vout, WorldInterface* w) 
+		: Structure(TL,width,height,image,out), open(true), vOut(vout), WI(w) 
 		{Drawable::setFrames(0,3);}
 
 	virtual void interact(Entity* E);
@@ -52,6 +54,7 @@ public:
 private:
 	bool open;
 	VECTOR2 vOut;
+	WorldInterface* WI;
 };
 
 // An open and closeable door for use in buildings

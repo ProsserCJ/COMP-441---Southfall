@@ -181,6 +181,7 @@ const char SOUTHFALL_THEME[] = "Background";
 const char BATTLE[] = "Battle";
 const char BATTLE_INTRO[] = "Battle Intro";
 const char MAIN_THEME[] = "Background2";
+const char BAR_BACKGROUND[] = "Bar2_Background";
 const char HOOH[] = "Hooh";
 const char DAMAGE[] = "Damage";
 const char ALERT[] = "Intro_alert";

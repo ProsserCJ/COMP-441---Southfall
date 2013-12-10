@@ -66,8 +66,7 @@ void Southfall::initialize(HWND hwnd)
 	
 	// Initialized Player here, have center point at player's position
 	player = new Hero(ZERO, heroNS::HERO_RADIUS, &imageLibrary->Character1IM, input, 
-		audio, textbox, new Drawable(&imageLibrary->SwingingSwordIM));
-	
+		audio, textbox, new Drawable(&imageLibrary->SwingingSwordIM));	
 	
 	//places player right by first goblin
 	//player->setPosition(VECTOR2(112.5,60.5));
@@ -176,7 +175,7 @@ void Southfall::update()
 			{
 				playerClickActions();
 
-				//returns false if player has died
+				//if player has died, then...
 				if(!player->getWorld()->update(Center(), frameTime))
 				{
 					player->setWorld(Interface->getStart());

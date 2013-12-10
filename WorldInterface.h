@@ -28,13 +28,17 @@ public:
 	World* getCurrent()	{return Current;}
 	World* getMain()	{return main;}
 	World* getStart()	{return bar1;}
+	World* getBar2()	{return bar2;}
 
 	World* loadWorld(const string& fileName, Audio* audio);
+
+	Audio* getAudio()	{return audio;}
 
 private:
 	World* Current;	// What world is currently in focus	
 	World* main; // The main game world
-	World* bar1; //bar1 structure, to ease starting there
+	World* bar1; //bar1 world, for later reference
+	World* bar2; //bar2 world, for later reference
 	void initializeWorld(); // Initialize a main world
 
 	inline void assignTile(World* & W, char c, int x, int y, int type);
@@ -43,6 +47,7 @@ private:
 
 	ImageLibrary* imageLibrary;
 	StructureInterface* StructInt;
+	Audio* audio;
 };
 
 #endif

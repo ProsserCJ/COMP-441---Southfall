@@ -98,7 +98,7 @@ inline void StructureInterface::assignTile(World* & W, char c, int x, int y, Wor
 		VECTOR2 V(x,y);
 		int N = (int)c - (int)'0';
 		T = new Tile(V, &imageLibrary->HouseDoorIM, false);
-		T->giveStructure(new Portal(V,1,1,&imageLibrary->HouseDoorIM,external[N],Vout));
+		T->giveStructure(new Portal(V,1,1,&imageLibrary->HouseDoorIM,external[N],Vout, WI));
 		W->getTile(x,y) = T;
 		entrance = VECTOR2(x,y-1);
 		return;
@@ -172,31 +172,30 @@ inline void StructureInterface::assignTile(World* & W, char c, int x, int y, Wor
 Portal* StructureInterface::createBar1(World** external, VECTOR2 vOut)
 {
 	World* W = loadStructure(BAR1STRUCTURE, external, vOut);
-	return new Portal(vOut,1,1,0,W,entrance);
+	return new Portal(vOut,1,1,0,W,entrance, WI);
 }
 Portal* StructureInterface::createBar2(World** external, VECTOR2 vOut)
 {
 	World* W = loadStructure(BAR2STRUCTURE, external, vOut);	
-	return new Portal(vOut,1,1,0,W,entrance);
+	return new Portal(vOut,1,1,0,W,entrance, WI);	
 }
-
 Portal* StructureInterface::createHouse1(World** external, VECTOR2 vOut)
 {
 	World* W = loadStructure(HOUSE1STRUCTURE, external, vOut);
-	return new Portal(vOut,1,1,0,W,entrance);
+	return new Portal(vOut,1,1,0,W,entrance, WI);
 }
 Portal* StructureInterface::createHouse2(World** external, VECTOR2 vOut)
 {
 	World* W = loadStructure(HOUSE2STRUCTURE, external, vOut);
-	return new Portal(vOut,1,1,0,W,entrance);
+	return new Portal(vOut,1,1,0,W,entrance, WI);
 }
 Portal* StructureInterface::createHouse3(World** external, VECTOR2 vOut)
 {
 	World* W = loadStructure(HOUSE3STRUCTURE, external, vOut);
-	return new Portal(vOut,1,1,0,W,entrance);
+	return new Portal(vOut,1,1,0,W,entrance, WI);
 }
 Portal* StructureInterface::createHouse4(World** external, VECTOR2 vOut)
 {
 	World* W = loadStructure(HOUSE4STRUCTURE, external, vOut);
-	return new Portal(vOut,1,1,0,W,entrance);
+	return new Portal(vOut,1,1,0,W,entrance, WI);
 }
