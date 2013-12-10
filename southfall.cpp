@@ -36,6 +36,7 @@ void Southfall::initialize(HWND hwnd)
 	currentState = MAIN_MENU;
 	pause = false;
 	firstTimeBattle = true;
+	Entity::killCount = 0;
 	
 	// Graphics
 	graphics = new Graphics();
@@ -183,7 +184,11 @@ void Southfall::update()
 					currentState = INTRO;
 					loadIntro();
 					textbox->setText(*introText);
-					textbox->setActive(true);					
+					textbox->setActive(true);
+					audio->stopCue(SOUTHFALL_THEME);
+					audio->stopCue(MAIN_THEME);
+					audio->stopCue(BATTLE);
+					fontLoc = 0;
 					break;
 				}
 			}
@@ -357,8 +362,11 @@ void Southfall::render()
 		break;
 	case GAME:
 		player->getWorld()->draw(Center(), player->usingMagicSight());		
+		char out[100];
+		sprintf(out, "Goblins killed: %i", Entity::killCount);
+		gameFont->print(out, 0, 0);
 		if(fontTimer >= 0)
-		{
+		{			
 			if(fontTimer >= 4)
 				imageLibrary->SouthfallFontIM[fontLoc].draw(SETCOLOR_ARGB(int((6-fontTimer)*80),255,255,255));
 			else if(fontTimer < 2)

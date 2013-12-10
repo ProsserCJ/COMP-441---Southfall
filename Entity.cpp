@@ -1,4 +1,5 @@
 #include "Entity.h"
+int Entity::killCount;
 
 // References to other headers
 #include "World.h"
@@ -405,7 +406,11 @@ void Entity::receiveDamage(Projectile* P)
 	if (audio) audio->playCue(DAMAGE);
 	// Freeze Effect will go here
 	HP -= P->getDamage();
-	if (HP <= 0 && audio) audio->playCue(GOBLIN_DEATH);
+	if (HP <= 0 && audio && getTeam() != 0)
+	{
+		audio->playCue(deathSoundCue.c_str());		
+		killCount++;
+	}
 }
 
 bool HandleCollision(Collidable* A, Collidable* B)

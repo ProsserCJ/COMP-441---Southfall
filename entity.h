@@ -35,6 +35,8 @@ const float ATTACK_FRAME_RATE = 0.08f;
 const int GOBLIN_HEALTH = 500;
 const int WRAITH_HEALTH = 1500;
 
+
+
 enum OBJECTTYPE {PROJECTILE, OBJECT, ENTITY, NPCTYPE, HEROTYPE};
 
 struct ColRect
@@ -55,7 +57,7 @@ const ColRect BOULDER_CRECT(0.45f, 0.9f);
 namespace entityNS
 {
 	enum DIR {UP, DOWN, LEFT, RIGHT, UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT, NONE};
-	enum COLLISIONTYPE{CIRCLE, POINTCOLLISION};	
+	enum COLLISIONTYPE{CIRCLE, POINTCOLLISION};		
 
 	// Generic Frame Definitions
 	const int WALKING_DOWN_START = 8;
@@ -296,6 +298,8 @@ public:
 	void skip(float time)					{skipTime = time; _skip = true;}
 	void switchMagicSight()					{_magicSight = !_magicSight;}
 	
+	//Class scope variable used to store how many goblins have been killed.
+	static int killCount;
 
 protected:
 	VECTOR2 knockback;	// For knock back effects
