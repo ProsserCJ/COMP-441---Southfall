@@ -1,5 +1,15 @@
 #include "StructureInterface.h"
 
+string getTalkSound(int ID)
+{
+	switch(ID)
+	{
+	case 0: return "";
+	case 1: return LIFE_RESTORE;
+	default: return "";
+	}
+}
+
 World* StructureInterface::loadStructure(string fileName, World** external, VECTOR2 Vout)
 {
 	ifstream fin(fileName);
@@ -32,13 +42,14 @@ World* StructureInterface::loadStructure(string fileName, World** external, VECT
 	fin >> npcCount;
 	for (int i=0; i<npcCount; i++)
 	{
-		int ID, textLines;
+		int ID, textLines, talkSoundID;
+		string sound;
 		char dir;
 		float x, y;
 		fin >> ID;
 		if(ID == 1)
 		{
-			fin >> textLines >> x >> y >> dir;
+			fin >> textLines >> x >> y >> dir >> talkSoundID;			
 			x += .5;y += .5;
 			NPC* temp = new NPC(ID, VECTOR2(x,y), &imageLibrary->Character1IM, 0);
 			string* text = new string[textLines];
@@ -64,7 +75,8 @@ World* StructureInterface::loadStructure(string fileName, World** external, VECT
 				case 'd': temp->setDir(DOWN); break;
 				case 'l': temp->setDir(LEFT); break;
 				case 'r': temp->setDir(RIGHT); break;					
-				}			
+				}
+			temp->setTalkSound(getTalkSound(talkSoundID));			
 			W->addEntity(temp, new StationaryAI(temp));
 		}
 		else if(ID == 2)
@@ -171,7 +183,7 @@ inline void StructureInterface::assignTile(World* & W, char c, int x, int y, Wor
 
 Portal* StructureInterface::createBar1(World** external, VECTOR2 vOut)
 {
-	World* W = loadStructure(BAR1STRUCTURE, external, vOut);
+	World* W = loadStructure(BAR1STRUCTURE, external, vOut);	
 	return new Portal(vOut,1,1,0,W,entrance, WI);
 }
 Portal* StructureInterface::createBar2(World** external, VECTOR2 vOut)

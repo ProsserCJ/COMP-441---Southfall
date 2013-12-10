@@ -10,7 +10,7 @@
 -ttttttttttttttt-
 --------0--------
 6
-1 7 8 5 d
+1 7 8 5 d 0
 They've ransacked our homes, destroyed our crops...
 It's time we put an end to the goblin menance!
 %...
@@ -18,13 +18,13 @@ It's time we put an end to the goblin menance!
 %(sword acquired)
 %We're mustering a force to face the goblins in the north.
 %Will you help us?
-1 1 6 6.5 u
+1 1 6 6.5 u 0
 Ooh rah!
-1 1 7 6.5 u
+1 1 7 6.5 u 0
 How many goblins have you killed?
-1 1 8 6.5 u
+1 1 8 6.5 u 0
 This guy is so inspiring.
-1 1 9 6.5 u
+1 1 9 6.5 u 0
 Don't tell anyone, but I'm actually a woman.
-1 1 10 6.5 u
+1 1 10 6.5 u 0
 For Southfall!

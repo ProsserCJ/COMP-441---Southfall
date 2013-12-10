@@ -10,26 +10,23 @@
 -ttttttttttttttt-
 --------0--------
 3
-1 5 11 6 d
-You're awake!
-Boy, did you have me worried.
-Those goblins have been giving us all kinds of trouble lately. It looks like they got you pretty good.
+1 5 11 6 d 1
+Easy there.
+Those goblins got you pretty good.
+Rest up a bit, and I'll restore your health.
 %Why don't you let your dad know that you're okay?
 %I'm sure he'll be glad to see you...if he's sober.
-1 12 2 5.5 r
+1 9 2 5.5 r 0
 You! *hic*
 Well I'll be *hic* damned.  It's my little boy.
-Got scraped up, eh? Thas good.  
+Got a bit scraped up, eh? Thas good.  
 ...
-%*hic*
-%Whas tha?  You wannna figh? Hah!
+*hic*
+%Goblins? Eh, now yer talkin'.
 %You cu'int figh a wet cabbage.
 %...
-%Goblins? Eh, now yer talkin'.
-%Don' beat around a dead horse.
-%There's some revolutionary down at Sullivan's.
-%He'll get you fixed up.
-1 3 4 5.5 l
+%You're worse than that ruckus down at Sullivan's.
+1 3 4 5.5 l 0
 Howdy brother. *hic*
 I hain't got no money, but I got my beer!
 *SLURP*

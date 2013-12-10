@@ -55,6 +55,12 @@ void Hero::update(float frameTime, World* W)
 				hasFireball = true;
 			textbox->setText(reinterpret_cast<NPC*>(NPCFacing));
 			textbox->setActive(true);
+			if (NPCFacing->getTalkSound() == LIFE_RESTORE)
+			{
+				audio->playCue(NPCFacing->getTalkSound().c_str());
+				setHP(HERO_HP);
+			}
+			
 		}
 		else interact(W);
 	}

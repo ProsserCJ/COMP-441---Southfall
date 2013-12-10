@@ -184,12 +184,13 @@ const char MAIN_THEME[] = "Background2";
 const char BAR_BACKGROUND[] = "Bar2_Background";
 const char HOOH[] = "Hooh";
 const char DAMAGE[] = "Damage";
-const char ALERT[] = "Intro_alert";
+const char ALERT[] = "Life_restore";
 const char FIREBALL_SOUND[] = "Fireball";
 const char LIGHTNING[] = "Lightning";
 const char BIRMINGHAM_SOUND[] = "Birmingham";
 const char WIN[] = "Win";
 const char GOBLIN_DEATH[] = "goblin death";
+const char LIFE_RESTORE[] = "Life_restore";
 
 // Audio
 const char WAVE_BANK[]  = "..\\source\\Audio\\Win\\Wave Bank.xwb";

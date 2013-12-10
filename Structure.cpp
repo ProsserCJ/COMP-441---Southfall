@@ -25,14 +25,14 @@ void Portal::interact(Entity* E)
 	E->setWorld(out);
 	E->setPosition(vOut);
 	out->addEntity(E);
+
 	if (out == WI->getBar2())
 	{
 		WI->getAudio()->stopCue(SOUTHFALL_THEME);
 		WI->getAudio()->playCue(BAR_BACKGROUND);
 	}
-	else if (out == WI->getMain())
-	{
-		WI->getAudio()->stopCue(SOUTHFALL_THEME);
+	else if (out == WI->getMain() && E->getWorld() == WI->getBar2())
+	{		
 		WI->getAudio()->stopCue(BAR_BACKGROUND);
 		WI->getAudio()->playCue(SOUTHFALL_THEME);		
 	}

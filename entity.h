@@ -248,7 +248,7 @@ public:
 		: Object(), knockback(ZERO), maxHP(0), HP(0), team(0), attackImage(0) 
 	{initialize();}
 	Entity(VECTOR2 pos, float radius, int HP, Image* image, Audio* a, int team, ColRect CR, Drawable* attackImage = 0, OBJECTTYPE type=ENTITY) 
-		: Object(pos, 1.0f, radius, image, CIRCLE, CR, type), HP(HP), maxHP(HP), knockback(ZERO), team(team), attackImage(attackImage), audio(a) 
+		: Object(pos, 1.0f, radius, image, CIRCLE, CR, type), HP(HP), maxHP(HP), knockback(ZERO), team(team), attackImage(attackImage), audio(a), talkSoundCue("") 
 	{initialize();}
 	~Entity() {};
 
@@ -271,7 +271,8 @@ public:
 	DIR getDirectionFacing()	{return facing;}
 	VECTOR2 getTarget()			{return target;}
 	SPELLTYPE getSpellType()	{return SpellType;}
-	bool canAction()			{return timeSinceAction > ACTIONDELAY;}	
+	bool canAction()			{return timeSinceAction > ACTIONDELAY;}
+	string getTalkSound()		{return talkSoundCue;}
 
 	// Mutators
 	void setKnockback(const VECTOR2& kb)	{knockback = kb;}
@@ -283,6 +284,7 @@ public:
 	void setMagicSight(bool s)				{_magicSight = s;}
 	void setDir(DIR face)					{facing=face;}
 	void setDeathSound(string cue)			{deathSoundCue = cue;}
+	void setTalkSound(string cue)			{talkSoundCue = cue;}
 	void setController(npcAI* control);
 
 	//Other Functions
@@ -331,6 +333,7 @@ protected:
 	float magicRecharge;
 
 	string deathSoundCue;
+	string talkSoundCue;
 };
 
 #endif
