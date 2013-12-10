@@ -216,7 +216,12 @@ void Entity::update(float frameTime, World* W)
 		freezeTime -= frameTime;
 		if(freezeTime <= 0) _frozen = false;
 	}
-	if(HP < 0) deactivate();
+	if(HP < 0)
+	{			
+		audio->playCue(deathSoundCue.c_str());		
+		killCount++;
+		deactivate();
+	}
 }
 
 void Entity::draw(VECTOR2& Center, DWORD color)
@@ -405,12 +410,7 @@ void Entity::receiveDamage(Projectile* P)
 	setKnockback(.65*temp);
 	if (audio) audio->playCue(DAMAGE);
 	// Freeze Effect will go here
-	HP -= P->getDamage();
-	if (HP <= 0 && audio && getTeam() != 0)
-	{
-		audio->playCue(deathSoundCue.c_str());		
-		killCount++;
-	}
+	HP -= P->getDamage();	
 }
 
 bool HandleCollision(Collidable* A, Collidable* B)
