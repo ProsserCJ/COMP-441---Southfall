@@ -17,6 +17,11 @@ void ImageLibrary::initialize(Graphics* graphics)
 
 void ImageLibrary::_initializeEntities(Graphics* graphics)
 {
+	// BirmSprite
+	if(!BirmSpriteTX.initialize(graphics, BIRM_SPRITE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Birm texture"));
+	if(!BirmSpriteIM.initialize(graphics, 32, 64, 8, &BirmSpriteTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Birm image"));
 	// Character 1
 	if(!Character1TX.initialize(graphics, CHARACTER2_SHEET))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character 1 texture"));

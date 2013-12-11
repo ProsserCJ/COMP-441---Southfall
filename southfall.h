@@ -80,6 +80,8 @@ private:
 	
 	void renderBirmingham();
 	float birminghamRot;
+
+	Birmingham* birm;
 };
 
 #endif

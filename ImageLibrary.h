@@ -13,6 +13,7 @@ public:
 	void initialize(Graphics* graphics);
 
 	// Images
+	Image BirmSpriteIM;
 	Image Character1IM;
 	Image NPC1IM;
 	Image TextBoxIM;
@@ -66,6 +67,7 @@ private:
 	bool _initialized;
 
 	// Textures
+	TextureManager BirmSpriteTX;
 	TextureManager Character1TX;
 	TextureManager NPC1TX;
 	TextureManager Goblin1TX;

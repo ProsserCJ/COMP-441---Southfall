@@ -81,6 +81,11 @@ void Southfall::initialize(HWND hwnd)
 	player->getWorld()->addEntity(player);
 	player->setSpellType(NULLTYPE);
 
+	birm = new Birmingham(audio, &imageLibrary->BirmSpriteIM);	
+	birm->setPosition(VECTOR2(113,101.5));
+	birm->setController(new StationaryAI(birm));	
+	Interface->getMain()->addEntity(birm);
+
 	fontLoc = 0;
 	fontTimer = 6;
 
