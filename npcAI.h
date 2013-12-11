@@ -5,8 +5,9 @@
 #include "npc.h"
 #include "entity.h"
 #include "ImageLibrary.h"
+#include "Waypoint.h"
 
-enum PRIORITY {IDLE, SEARCH, TRACK, ATTACK};
+enum PRIORITY {IDLE, SEARCH, TRACK, ATTACK, WAYPOINT};
 
 const float SEARCHDELAY = 0.2;
 const float EVALUATEDELAY = 0.5;
@@ -28,6 +29,7 @@ public:
 	void update(float frameTime, World* W);
 	void initialize();
 	
+	// Accessors
 	VECTOR2 getPosition()		{return npc->getPosition();}
 	Entity* & getNPC()			{return npc;}
 	bool isActive()				{return npc->isActive();}
@@ -36,6 +38,7 @@ protected:
 	Entity* npc;	// The npc the ai controls
 	Entity* target;
 	PRIORITY priority;
+	Waypoint* nextWaypoint;
 
 	float sight;
 
@@ -46,6 +49,7 @@ protected:
 	virtual void _attack(float frameTime, World* W) = 0;
 	virtual void _search(float frameTime, World* W) = 0;
 	virtual void _track(float frameTime, World* W, VECTOR2 track) = 0;
+	virtual void _waypoint(float frameTime, World* W);
 
 	float searchDelay;
 	float evaluateDelay;

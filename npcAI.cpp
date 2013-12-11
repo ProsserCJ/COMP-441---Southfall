@@ -36,6 +36,16 @@ void npcAI::act(float frameTime, World* W)
 			priority = IDLE;
 		}
 	}
+	if(priority == WAYPOINT)
+	{
+		if(nextWaypoint)
+		{// If at the waypoint, go to the next waypoint
+			VECTOR2 track = nextWaypoint->position - npc->getPosition();
+			if(D3DXVec2Length(&track) < nextWaypoint->radius)
+				nextWaypoint = nextWaypoint->next;
+		}
+		else priority = IDLE;
+	}
 	npc->act(W);
 	if(evaluateDelay > EVALUATEDELAY)
 	{
@@ -54,6 +64,9 @@ void npcAI::act(float frameTime, World* W)
 		_attack(frameTime, W);
 	case TRACK:
 		_track(frameTime, W, track);	
+		break;
+	case WAYPOINT:
+		_waypoint(frameTime, W);
 		break;
 	}
 }
@@ -75,9 +88,38 @@ void npcAI::_idle(float frameTime, World* W)
 	}
 }
 
+void npcAI::_waypoint(float frameTime, World* W)
+{
+	if(!nextWaypoint) return;
+	VECTOR2 disp = nextWaypoint->position - npc->getPosition();
+	if(abs(disp.x) < abs(disp.y))
+	{
+		if(disp.y > 0) npc->go(DOWN);
+		else npc->go(UP);
+	}
+	else
+	{
+		if(disp.x > 0) npc->go(RIGHT);
+		else npc->go(LEFT);
+	}
+}
+
 void GoblinAI::_assessPriority(World* W)
 {
-	priority = SEARCH;
+	switch(priority)
+	{
+	case SEARCH:
+		break;
+	case ATTACK:
+		break;
+	case WAYPOINT:
+		break;
+	case IDLE:
+		priority = SEARCH;
+		break;
+	default: break;
+
+	}
 }
 
 void GoblinAI::_track(float frameTime, World* W, VECTOR2 track)
@@ -131,7 +173,18 @@ void GoblinAI::_search(float frameTime, World* W)
 
 void WraithAI::_assessPriority(World* W)
 {
-	if(priority != ATTACK) priority = SEARCH;
+	switch(priority)
+	{
+	case SEARCH:
+		break;
+	case ATTACK:
+		break;
+	case WAYPOINT:
+		break;
+	case IDLE:
+		priority = SEARCH;
+	default: break;
+	}
 }
 
 void WraithAI::_attack(float frameTime, World* W)

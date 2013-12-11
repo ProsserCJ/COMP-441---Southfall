@@ -12,6 +12,16 @@ Last Modified 11/12/2013
 #include "image.h"
 #include "Entity.h"
 
+inline float radianDiff(float R1, float R2)
+{
+	if(R1 < 0) R1 += TPI;
+	if(R2 < 0) R2 += TPI;
+	float m = min(R1,R2), M = max(R1,R2);
+	float diff = abs(R1 - R2);
+	if(diff > PI) diff = m - M + TPI;
+	return diff;
+}
+
 class World;
 
 class Effect : public Drawable, public Collidable
@@ -85,6 +95,19 @@ public:
 	virtual void effect(Object* E, World* W);
 private:
 	float damage;
+	int team;
+};
+
+class SwordSwing : public Effect
+{
+public:
+	SwordSwing(VECTOR2 pos, int damage, float radius, float orient, float deltaTheta, int team, Image* image=0, bool timed=false, float time=0)
+		:Effect(pos, radius, SWING, image, timed, time), team(team), damage(damage), orient(orient), deltaTheta(deltaTheta) {};
+	virtual void effect(Object* E, World* W);
+private:
+	float damage;
+	float orient;
+	float deltaTheta;
 	int team;
 };
 

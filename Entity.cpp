@@ -380,10 +380,7 @@ void Entity::attack(float orient)
 	}
 
 	if(orient<0) orient += TPI;
-	orient = HPI-orient;
-	VECTOR2 newPos = position - VECTOR2(0,0.5f) + 0.8*VECTOR2(sin(orient), cos(orient));
-	Effect* damage = new DamageEffect(newPos, 1, 1.f, team, 0, true, 0.2);
-	damage->setHidden(false);
+	Effect* damage = new SwordSwing(position, 8, 1.8f, orient, PI/4, team, 0, true, 0.2);
 	getWorld()->addEffect(damage);
 
 }
@@ -441,6 +438,7 @@ bool HandleCollision(Collidable* A, Collidable* B)
 				break;
 			}
 			break;
+		default: return true;
 	}
 	D = D3DXVec2Length(&diff);
 	if(D < R*R) return true;

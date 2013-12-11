@@ -60,3 +60,20 @@ void DamageEffect::effect(Object* E, World* W)
 		if(Ent->getTeam() != team) Ent->damage(damage);
 	}
 }
+
+void SwordSwing::effect(Object* E, World* W)
+{
+	if(E->getType() != OBJECT)
+	{
+		Entity* Ent = reinterpret_cast<Entity*>(E);
+		if(Ent->getTeam() != team)
+		{// Check for collision
+			VECTOR2 disp = Ent->getPosition() - getPosition();
+			float theta = atan2(disp.y, disp.x);
+			float D = D3DXVec2Length(&disp);
+			float diff = radianDiff(theta, orient);
+
+			if(D < radius && diff < deltaTheta) Ent->damage(damage);
+		}
+	}
+}
