@@ -57,10 +57,9 @@ void Hero::update(float frameTime, World* W)
 			textbox->setActive(true);
 			if (NPCFacing->getTalkSound() == LIFE_RESTORE)
 			{
-				audio->playCue(NPCFacing->getTalkSound().c_str());
+				audio->playCue(LIFE_RESTORE);
 				setHP(HERO_HP);
-			}
-			
+			}			
 		}
 		else interact(W);
 	}
