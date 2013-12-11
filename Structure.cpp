@@ -21,21 +21,21 @@ void Structure::update(float frameTime)
 
 void Portal::interact(Entity* E)
 {
-	E->getWorld()->removeEntity(E);
-	E->setWorld(out);
-	E->setPosition(vOut);
-	out->addEntity(E);
-
 	if (out == WI->getBar2())
 	{
 		WI->getAudio()->stopCue(SOUTHFALL_THEME);
 		WI->getAudio()->playCue(BAR_BACKGROUND);
 	}
-	else if (out == WI->getMain() && E->getWorld() == WI->getBar2())
-	{		
+	if (out == WI->getMain() && E->getWorld() == WI->getBar2())
+	{	
 		WI->getAudio()->stopCue(BAR_BACKGROUND);
 		WI->getAudio()->playCue(SOUTHFALL_THEME);		
 	}
+	
+	E->getWorld()->removeEntity(E);
+	E->setWorld(out);
+	E->setPosition(vOut);
+	out->addEntity(E);	
 }
 
 void Door::draw(VECTOR2 Center)
