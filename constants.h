@@ -109,6 +109,7 @@ const char CHARACTER2_SHEET[] = "..\\source\\Images\\Entities\\Character2Sheet.p
 const char GOBLIN1_SHEET[] = "..\\source\\Images\\Entities\\Goblin1Sheet.png";
 const char WRAITH1_SHEET[] = "..\\source\\Images\\Entities\\Wraith1Sheet.png";
 const char DEADGUY[] = "..\\source\\Images\\Entities\\DEADGUY.png";
+const char BIRM_SPRITE[] = "..\\source\\Images\\Entities\\BirmSprite.png";
  // Terrain
 const char GRASS1[] = "..\\source\\Images\\Terrain\\Grass1.png";
 const char SAND1[] = "..\\source\\Images\\Terrain\\Sand1.png";
@@ -162,6 +163,7 @@ const char SOUTHFALLFONT[] = "..\\source\\Images\\Other\\SouthfallFont.png";
 const char ESBURGFONT[] = "..\\source\\Images\\Other\\EsburgFont.png";
 const char WESELLYNFONT[] = "..\\source\\Images\\Other\\WesellynFont.png";
 const char NORSTAFFFONT[] = "..\\source\\Images\\Other\\NorstaffFont.png";
+const char SIGN[] = "..\\source\\Images\\Other\\Sign.png";
 
 // Worlds
 const string BAR1STRUCTURE = "..\\source\\Worlds\\Bar1.txt";
@@ -171,8 +173,10 @@ const string HOUSE2STRUCTURE = "..\\source\\Worlds\\House2.txt";
 const string HOUSE3STRUCTURE = "..\\source\\Worlds\\House3.txt";
 const string HOUSE4STRUCTURE = "..\\source\\Worlds\\House4.txt";
 const string SOUTHFALLMAP = "..\\source\\Worlds\\TTotalMap.txt";
+
 // Texts
 const char INTRO_TEXT[] = "..\\source\\Worlds\\intro.txt";
+const char BIRM_TEXT[] = "..\\source\\Worlds\\birminghamText.txt";
 
 // Sound Files
 const char COLLIDE[] = "Collision";

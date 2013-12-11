@@ -38,16 +38,14 @@ public:
 	virtual void update(float frameTime, World* W);
 
 	void initialize();
-	static void initGraphics(Graphics* graphics);
-	Image* getImage(int ID);
+	static void initGraphics(Graphics* graphics);	
 	void setPaused(bool b)					{paused = b;}
 
-	vector<string> getText()				{return text;}
+	virtual vector<string> getText()		{return text;}
 	void setText(string t[], int count)		{text = vector<string>(t, t + count);}
-	//void setText(vector<string>& t)			{text = t;}
 	void addConditionalLine(int i)			{conditionalLines.push_front(i);}
-
 	void updateText();
+	
 
 private:
 	double distanceTraveled;
@@ -59,6 +57,22 @@ private:
 
 	static TextureManager* NPC_TX1;
 	static Image* NPC_IM1;
+};
+
+
+class Birmingham: public NPC
+{
+public:
+	Birmingham(Audio* audio, Image* img):
+	  NPC(0, ZERO, img, audio) {initialize();}
+
+	  virtual vector<string> getText();
+	  virtual void update(float frameTime, World* W) {NPC::update(frameTime,W); knockback = ZERO;}
+	  void initialize();
+
+private:
+	list<vector<string>> texts;
+	list<vector<string>>::iterator it;
 };
 
 #endif

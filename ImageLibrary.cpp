@@ -17,6 +17,11 @@ void ImageLibrary::initialize(Graphics* graphics)
 
 void ImageLibrary::_initializeEntities(Graphics* graphics)
 {
+	// BirmSprite
+	if(!BirmSpriteTX.initialize(graphics, BIRM_SPRITE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Birm texture"));
+	if(!BirmSpriteIM.initialize(graphics, 32, 64, 8, &BirmSpriteTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Birm image"));
 	// Character 1
 	if(!Character1TX.initialize(graphics, CHARACTER2_SHEET))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character 1 texture"));
@@ -150,6 +155,12 @@ void ImageLibrary::_initializeOther(Graphics* graphics)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing End Screen texture"));
 	if(!EndIM.initialize(graphics, SCREEN_WIDTH, SCREEN_HEIGHT, 0, &EndTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing End Screen image"));	
+	
+	// Sal sign
+	if(!SalsTX.initialize(graphics, SIGN))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Sal's texture"));
+	if(!SalsIM.initialize(graphics, 0, 0, 0, &SalsTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Sal's image"));	
 }
 
 void ImageLibrary::_initializeStructures(Graphics* graphics)

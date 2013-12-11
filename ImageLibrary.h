@@ -13,6 +13,7 @@ public:
 	void initialize(Graphics* graphics);
 
 	// Images
+	Image BirmSpriteIM;
 	Image Character1IM;
 	Image NPC1IM;
 	Image TextBoxIM;
@@ -52,6 +53,7 @@ public:
 	Image BarCounterIM;
 	Image BarBack1IM;
 	Image BarBack2IM;
+	Image SalsIM;
 	Image TableIM;
 	Image RChairIM;
 	Image LChairIM;
@@ -65,6 +67,7 @@ private:
 	bool _initialized;
 
 	// Textures
+	TextureManager BirmSpriteTX;
 	TextureManager Character1TX;
 	TextureManager NPC1TX;
 	TextureManager Goblin1TX;
@@ -107,6 +110,7 @@ private:
 	TextureManager BarBack2TX;
 	TextureManager BarBack1TX;
 	TextureManager BarCounterTX;
+	TextureManager SalsTX;
 	TextureManager BedTX;
 	TextureManager HouseDoorTX;
 	TextureManager HouseWallTX;

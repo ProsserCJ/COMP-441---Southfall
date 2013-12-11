@@ -1,4 +1,6 @@
 #include "npc.h"
+#include <fstream>
+using std::ifstream;
 using namespace npcNS;
 
 //initialize static NPC images and textures;
@@ -30,14 +32,6 @@ void NPC::update(float frameTime, World* W)
 	Entity::update(frameTime, W);
 }
 
-Image* NPC::getImage(int ID)
-{
-	switch(ID)
-	{
-	case 1: return NPC_IM1; break;
-	}
-	return 0;
-}
 
 void NPC::updateText()
 {
@@ -45,4 +39,27 @@ void NPC::updateText()
 		text.erase(text.begin() + (*it));
 
 	conditionalLines.clear();
+}
+
+void Birmingham::initialize()
+{
+	ifstream fin(BIRM_TEXT);
+	while (!fin.eof())
+	{
+		vector<string> line(1);
+		char temp[500];
+		fin.getline(temp,500);
+		line[0] = temp;
+		texts.push_back(line);
+	}
+	it = texts.begin();
+	setHP(5000);
+	radius = .6;
+}
+
+vector<string> Birmingham::getText()
+{
+	auto ret = *(it); it++;	
+	if (it == texts.end()) it = texts.begin();
+	return ret;
 }

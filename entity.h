@@ -145,8 +145,7 @@ public:
 	void setFrameDelay(float delay);
 	void startImage();
 	string item;
-private:
-	private:
+protected:
 	// Image and animation control
 	int _frame;			// What frame to display
 	bool _singleLoop;
