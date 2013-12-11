@@ -150,6 +150,12 @@ void ImageLibrary::_initializeOther(Graphics* graphics)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing End Screen texture"));
 	if(!EndIM.initialize(graphics, SCREEN_WIDTH, SCREEN_HEIGHT, 0, &EndTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing End Screen image"));	
+	
+	// Sal sign
+	if(!SalsTX.initialize(graphics, SIGN))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Sal's texture"));
+	if(!SalsIM.initialize(graphics, 0, 0, 0, &SalsTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Sal's image"));	
 }
 
 void ImageLibrary::_initializeStructures(Graphics* graphics)

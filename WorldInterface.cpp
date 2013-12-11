@@ -11,7 +11,8 @@ void WorldInterface::initialize(Graphics* graphics, Audio* a)
 	main->addObject(new Object(VECTOR2(109.5,61.5),0,0, &imageLibrary->DeadGuyIM, entityNS::POINTCOLLISION, HUMAN_CRECT));
 	main->addObject(new Object(VECTOR2(110.5,61.5),0,0, &imageLibrary->DeadGuyIM, entityNS::POINTCOLLISION, HUMAN_CRECT));
 	main->addObject(new Object(VECTOR2(111.5,61.5),0,0, &imageLibrary->DeadGuyIM, entityNS::POINTCOLLISION, HUMAN_CRECT));
-
+	main->addObject(new Object(VECTOR2(124,120),0,0, &imageLibrary->SalsIM, entityNS::POINTCOLLISION, HUMAN_CRECT);
+	
 	//move into bar 1 to start game
 	Current = bar1;
 }

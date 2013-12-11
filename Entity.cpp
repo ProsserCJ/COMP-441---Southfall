@@ -219,7 +219,7 @@ void Entity::update(float frameTime, World* W)
 	if(HP < 0)
 	{			
 		audio->playCue(deathSoundCue.c_str());		
-		killCount++;
+		if (deathSoundCue == GOBLIN_DEATH) killCount++;
 		deactivate();
 	}
 }

@@ -52,6 +52,7 @@ public:
 	Image BarCounterIM;
 	Image BarBack1IM;
 	Image BarBack2IM;
+	Image SalsIM;
 	Image TableIM;
 	Image RChairIM;
 	Image LChairIM;
@@ -107,6 +108,7 @@ private:
 	TextureManager BarBack2TX;
 	TextureManager BarBack1TX;
 	TextureManager BarCounterTX;
+	TextureManager SalsTX;
 	TextureManager BedTX;
 	TextureManager HouseDoorTX;
 	TextureManager HouseWallTX;
