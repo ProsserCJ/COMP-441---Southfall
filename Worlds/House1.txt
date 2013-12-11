@@ -7,6 +7,17 @@
 -ttttttt-
 ----0----
 1
-1 2 4 4 d 0
-Hi son, come and give your mother a hug!
-Now get out, you're tracking dirt all over my floor!
+1 13 4 4 d 0
+%Hello friend; come hither.
+%Dost thou see the goblin affliction plaguing our community?
+%Of course thou dost.
+%Get thee hence, far to the north; I hear talk of strange powers.
+%Lo, a black wraith has been seen haunting Norstaff.
+%Few who dare to enter that dark forest return to tell the tale.
+%A bitter wind sweeps through the woods at night,
+%do not get caught among the trees following sundown.
+%Yet thou must brave this forest, 
+%and end the reign of the fell wraith.
+%With its passing will go the goblins.
+Alas, the wraith's not likely to slay itself my boy,
+Have courage, get up and hump thyself!

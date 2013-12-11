@@ -85,8 +85,18 @@ World* WorldInterface::loadWorld(const string& fileName, Audio* audio)
 			
 			wraith->setSpeed(5);
 			W->addEntity(wraith, new WraithAI(wraith));
-			W->addEnemy(wraith);
 		}	
+		else if(ID == 4)
+		{
+			fin >> x >> y;
+			x += .5;y += .5;
+			Entity* guard = new Entity(VECTOR2(x,y), 0.5, GOBLIN_HEALTH/2, &imageLibrary->Character1IM, audio, 0, HUMAN_CRECT);
+			
+			guard->setSpeed(2);
+			W->addEntity(guard, new GoblinAI(guard));
+			
+			//W->addEntity(guard);
+		}
 	}
 
 	W->setInitialized(true);
