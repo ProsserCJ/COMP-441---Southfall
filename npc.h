@@ -67,8 +67,7 @@ public:
 	  NPC(0, ZERO, img, audio) {initialize();}
 
 	  virtual vector<string> getText();
-	  void draw()		{setScale(.25); image->draw();}
-
+	  virtual void update(float frameTime, World* W) {NPC::update(frameTime,W); knockback = ZERO;}
 	  void initialize();
 
 private:

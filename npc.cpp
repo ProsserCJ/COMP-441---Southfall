@@ -53,6 +53,8 @@ void Birmingham::initialize()
 		texts.push_back(line);
 	}
 	it = texts.begin();
+	setHP(5000);
+	radius = .6;
 }
 
 vector<string> Birmingham::getText()
