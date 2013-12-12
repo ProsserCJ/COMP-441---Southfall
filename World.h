@@ -108,9 +108,13 @@ public:
 	void removeEntity(Entity* E);
 	void addEnemy(Entity* E)				{enemies.push_back(E);}
 
+	friend class WorldInterface;
+
 private:
 	int width, height;				// Dimensions of this world		
 	bool _initialized;				// Has the world been initialized
+	bool winCond;
+	Entity* Wraith;					// For refernce later;
 	
 	ImageLibrary* imageLibrary;		// A pointer to the image library
 

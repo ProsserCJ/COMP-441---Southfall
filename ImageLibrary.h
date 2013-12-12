@@ -15,6 +15,7 @@ public:
 	// Images
 	Image BirmSpriteIM;
 	Image Character1IM;
+	Image Character2IM;
 	Image NPC1IM;
 	Image TextBoxIM;
 	Image Goblin1IM, WraithIM;
@@ -69,6 +70,7 @@ private:
 	// Textures
 	TextureManager BirmSpriteTX;
 	TextureManager Character1TX;
+	TextureManager Character2TX;
 	TextureManager NPC1TX;
 	TextureManager Goblin1TX;
 	TextureManager WraithTX;

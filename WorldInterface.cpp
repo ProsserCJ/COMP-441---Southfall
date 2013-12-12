@@ -6,6 +6,8 @@ void WorldInterface::initialize(Graphics* graphics, Audio* a)
 	audio = a;
 	StructInt = new StructureInterface(imageLibrary, this);
 	main = loadWorld(SOUTHFALLMAP, audio);
+	main->Wraith = main->enemies.back();
+	main->winCond = false;
 	
 	//add dead guys
 	main->addObject(new Object(VECTOR2(109.5,61.5),0,0, &imageLibrary->DeadGuyIM, entityNS::POINTCOLLISION, HUMAN_CRECT));
@@ -86,6 +88,7 @@ World* WorldInterface::loadWorld(const string& fileName, Audio* audio)
 			
 			wraith->setSpeed(5);
 			W->addEntity(wraith, new WraithAI(wraith));
+			W->addEnemy(wraith);
 		}	
 		else if(ID == 4)
 		{
@@ -94,9 +97,7 @@ World* WorldInterface::loadWorld(const string& fileName, Audio* audio)
 			Entity* guard = new Entity(VECTOR2(x,y), 0.5, GOBLIN_HEALTH/2, &imageLibrary->Character1IM, audio, 0, HUMAN_CRECT);
 			
 			guard->setSpeed(2);
-			W->addEntity(guard, new GoblinAI(guard));
-			
-			//W->addEntity(guard);
+			W->addEntity(guard, new GoblinAI(guard));		
 		}
 	}
 
