@@ -310,7 +310,10 @@ inline void WorldInterface::assignTile(World* & W, char c, int x, int y, int typ
 		// Walls
 		case '_': // Horizontal Wall
 		{
-			W->getTile(x,y) = new Tile(VECTOR2(x,y), &imageLibrary->HWallIM, false);
+			W->getTile(x,y) = new Tile(VECTOR2(x,y), 0, false);
+
+			HWall* Wall = new HWall(VECTOR2(x,y), &imageLibrary->HWallIM);
+			W->addStructure(Wall);
 			break;
 		}
 		case '|': // Vertical Wall

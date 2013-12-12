@@ -117,17 +117,29 @@ class Bar1 : public Structure
 public:
 	Bar1(VECTOR2 TL, int width, int height, Image* image) 
 		: Structure(TL,width,height,image,0){};
-	~Bar1();
+	~Bar1() {};
 	virtual void interact(Entity*) {};
 	virtual bool isPassable() {return false;}
 private:
 };
+
 class Bar2 : public Structure
 {
 public:
 	Bar2(VECTOR2 TL, int width, int height, Image* image) 
 		: Structure(TL,width,height,image,0){};
-	~Bar2();
+	~Bar2() {};
+	virtual void interact(Entity*) {};
+	virtual bool isPassable() {return false;}
+private:
+};
+
+class HWall : public Structure
+{
+public:
+	HWall(VECTOR2 TL, Image* image) 
+		: Structure(TL,1,3,image,0){};
+	~HWall() {};
 	virtual void interact(Entity*) {};
 	virtual bool isPassable() {return false;}
 private:

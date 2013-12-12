@@ -22,13 +22,13 @@ void Tile::draw(VECTOR2& Center)
 
 void Tile::handleCollisions(Entity* E)
 {// Collisions b/w projectiles and objects
-	for(auto obj = objects.begin(); obj != objects.end(); obj++)
+	/*for(auto obj = objects.begin(); obj != objects.end(); obj++)
 		if((*obj)->getType() == PROJECTILE && (*obj)->isActive())
 		{
 			Projectile* P = reinterpret_cast<Projectile*>(*obj);
 			if(E->getTeam() != P->getTeam() && ProjectileCollision(P, E))
 				P->interact(E);
-		}
+		}*/
 }
 
 void Tile::remove(Object* Obj)
@@ -39,10 +39,6 @@ void Tile::remove(Object* Obj)
 void Tile::drawObjects(VECTOR2& Center)
 {
 	if(objects.empty()) return;
-
-	if(position.y == 103)
-		int x = 4;
-
 	list<Object*> temp = objects;
 	while(!temp.empty())
 	{
@@ -67,11 +63,16 @@ void Tile::updateObjects(float frameTime, World* W)
 	{
 		list<Object*>::iterator q = p;
 		q++;
-		if(!(*p)->isActive())
+		if(!(*p)->isActive()) // The object is inactive
 		{
 			Object* Obj = *p;
 			Obj->remove();
-			if(Obj->getType() == ENTITY) W->removeEntity(dynamic_cast<Entity*>(Obj)); 
+			// Remove from list in World
+			if(Obj->getType() == PROJECTILE)
+				W->removeProjectile(reinterpret_cast<Projectile*>(Obj));
+			else if(Obj->getType() == ENTITY) W->removeEntity(reinterpret_cast<Entity*>(Obj)); 
+			else if(Obj->getType() == OBJECT) W->removeObject(reinterpret_cast<Object*>(Obj));
+			// Delete object (unless it is the hero)
 			if(Obj->getType() != HEROTYPE) safeDelete<Object*>(Obj);
 			else 
 			{
@@ -127,22 +128,18 @@ void World::collisions()
 	{
 		int x0 = max(0, (int)(*e)->getPosition().x - 1), y0 = max(0, (int)(*e)->getPosition().y - 1);
 		int x1 = min(width, (int)(*e)->getPosition().x + 1), y1 = min(height, (int)(*e)->getPosition().y + 1);
-
-
 		if(projectiles.empty()) return;
+		// Projectile Collisions
 		auto p = projectiles.begin();
 		list<Projectile*>::iterator q;
-		while(p != projectiles.end())
+		for(auto p = projectiles.begin(); p != projectiles.end(); p++)
 		{
-			q = p;
-			q++;
 			if((*e)->isActive() && (*p)->isActive() && (*p)->getTeam() != (*e)->getTeam() 
 				&& ProjectileCollision(*p, *e))
 			{
 				(*e)->receiveDamage(*p);
 				(*p)->deactivate();
 			}
-			p = q;
 		}
 	}
 }
@@ -173,13 +170,17 @@ void World::addEffect(Effect* E)
 
 void World::addProjectile(Projectile* P) 
 {
-	tiles[(int)P->getPosition().x][(int)P->getPosition().y]->add(P);
-	projectiles.push_back(P);
+	Tile *T = tiles[(int)P->getPosition().x][(int)P->getPosition().y];
+	T->add(P);
+	P->setTile(T);
+ 	projectiles.push_back(P);
 }
-
+ 
 void World::addObject(Object* Obj)
 {
-	tiles[(int)Obj->getPosition().x][(int)Obj->getPosition().y]->add(Obj);
+	Tile *T = tiles[(int)Obj->getPosition().x][(int)Obj->getPosition().y];
+	T->add(Obj);
+	Obj->setTile(T);
 	objects.push_back(Obj);	
 }
 

@@ -102,9 +102,11 @@ public:
 	void addEntity(Entity* E, npcAI* AI);
 	void addEffect(Effect* E);
 	void addProjectile(Projectile* P);
+	void removeProjectile(Projectile* P)	{projectiles.remove(P);}
 	void addObject(Object* Obj);
+	void removeObject(Object* Obj)			{objects.remove(Obj);}
 	void removeEntity(Entity* E);
-	void addEnemy(Entity* E)		{enemies.push_back(E);}
+	void addEnemy(Entity* E)				{enemies.push_back(E);}
 
 private:
 	int width, height;				// Dimensions of this world		
