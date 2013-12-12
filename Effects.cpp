@@ -77,3 +77,12 @@ void SwordSwing::effect(Object* E, World* W)
 		}
 	}
 }
+
+void Explosion::effect(Object* E, World* W)
+{
+	if(E->getType() != OBJECT)
+	{
+		Entity* Ent = reinterpret_cast<Entity*>(E);
+		if(Ent->getTeam() != team) Ent->damage(damage);
+	}
+}

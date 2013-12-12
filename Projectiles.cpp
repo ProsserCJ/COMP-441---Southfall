@@ -16,7 +16,9 @@ void Projectile::update(float frameTime, World* W)
 	if(range < traveled) active = false;
 }
 
-void Projectile::interact(World* W)
+void Projectile::end(World* W)
 {
-
+	Explosion* Exp = new Explosion(position, FIREEXPLOSIONDAMAGE, 0.4f, team, &W->getImageLibrary()->ExplosionIM, FIREEXPLOSIONTIME);
+	Exp->setSingleLoop(0, 3, FIREEXPLOSIONTIME/4.0f);
+	if(type == PROJ_FIREBALL) W->addEffect(Exp);
 }

@@ -1,6 +1,6 @@
 #include "World.h"
 
-bool heroDeath;					// Flag to signal that the hero has died
+bool heroDeath; // Flag to signal that the hero has died
 
 bool Tile::isTraversable()
 {
@@ -69,7 +69,11 @@ void Tile::updateObjects(float frameTime, World* W)
 			Obj->remove();
 			// Remove from list in World
 			if(Obj->getType() == PROJECTILE)
-				W->removeProjectile(reinterpret_cast<Projectile*>(Obj));
+			{
+				Projectile* P = reinterpret_cast<Projectile*>(Obj);
+				P->end(W);
+				W->removeProjectile(P);
+			}
 			else if(Obj->getType() == ENTITY) W->removeEntity(reinterpret_cast<Entity*>(Obj)); 
 			else if(Obj->getType() == OBJECT) W->removeObject(reinterpret_cast<Object*>(Obj));
 			// Delete object (unless it is the hero)
@@ -186,6 +190,7 @@ void World::addObject(Object* Obj)
 
 void World::removeEntity(Entity* E)	
 {
+	if (E == Wraith) winCond = true;
 	E->getTile()->remove(E);
 	entities.remove(E);
 	enemies.remove(E);
@@ -361,6 +366,5 @@ list<Entity*> World::search(VECTOR2 Center, float sight)
 
 bool World::winCondition()
 {
-	if (enemies.empty()) return true;
-	return false;
+	return winCond;
 }

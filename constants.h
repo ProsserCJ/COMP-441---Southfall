@@ -164,6 +164,7 @@ const char ESBURGFONT[] = "..\\source\\Images\\Other\\EsburgFont.png";
 const char WESELLYNFONT[] = "..\\source\\Images\\Other\\WesellynFont.png";
 const char NORSTAFFFONT[] = "..\\source\\Images\\Other\\NorstaffFont.png";
 const char SIGN[] = "..\\source\\Images\\Other\\Sign.png";
+const char EXPLOSION_SHEET[] = "..\\source\\Images\\Other\\ExplosionSheet.png";
 
 // Worlds
 const string BAR1STRUCTURE = "..\\source\\Worlds\\Bar1.txt";
