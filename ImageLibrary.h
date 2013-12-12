@@ -16,6 +16,7 @@ public:
 	Image BirmSpriteIM;
 	Image Character1IM;
 	Image Character2IM;
+	Image GuardIM;
 	Image NPC1IM;
 	Image TextBoxIM;
 	Image Goblin1IM, WraithIM;
@@ -65,6 +66,7 @@ public:
 	Image BirminghamIM;
 	Image EndIM;
 	Image ExplosionIM;
+
 private:
 	bool _initialized;
 
@@ -72,6 +74,7 @@ private:
 	TextureManager BirmSpriteTX;
 	TextureManager Character1TX;
 	TextureManager Character2TX;
+	TextureManager GuardTX;
 	TextureManager NPC1TX;
 	TextureManager Goblin1TX;
 	TextureManager WraithTX;

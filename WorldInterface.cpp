@@ -94,7 +94,7 @@ World* WorldInterface::loadWorld(const string& fileName, Audio* audio)
 		{
 			fin >> x >> y;
 			x += .5;y += .5;
-			Entity* guard = new Entity(VECTOR2(x,y), 0.5, GOBLIN_HEALTH/2, &imageLibrary->Character1IM, audio, 0, HUMAN_CRECT);
+			Entity* guard = new Entity(VECTOR2(x,y), 0.5, GOBLIN_HEALTH/2, &imageLibrary->GuardIM, audio, 0, HUMAN_CRECT);
 			
 			guard->setSpeed(2);
 			W->addEntity(guard, new GoblinAI(guard));		
