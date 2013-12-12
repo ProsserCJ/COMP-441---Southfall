@@ -29,13 +29,11 @@ const VECTOR2 HSCREEN(HSCREEN_WIDTH, HSCREEN_HEIGHT);
 const float DEFAULT_FRAME_DELAY = 0.2f;
 const float INTERACTIONDELAY = 0.5f;
 const float ACTIONDELAY = 0.5f;
-const float ATTACK_TIME_DELAY = 0.2f;
-const float ATTACK_FRAME_RATE = 0.08f;
+const float ATTACK_TIME_DELAY = 0.4f;
+const float ATTACK_FRAME_RATE = ATTACK_TIME_DELAY/4.0f;
 
 const int GOBLIN_HEALTH = 500;
 const int WRAITH_HEALTH = 1500;
-
-
 
 enum OBJECTTYPE {PROJECTILE, OBJECT, ENTITY, NPCTYPE, HEROTYPE};
 
@@ -87,13 +85,13 @@ namespace entityNS
 	const int FACING_DOWN_LEFT = 7;
 	// Attacking
 	const int ATTACK_DOWN_START = 48;
-	const int ATTACK_DOWN_END = 50;
+	const int ATTACK_DOWN_END = 51;
 	const int ATTACK_RIGHT_START = 44;
-	const int ATTACK_RIGHT_END = 46;
+	const int ATTACK_RIGHT_END = 47;
 	const int ATTACK_UP_START = 52;
-	const int ATTACK_UP_END = 54;
+	const int ATTACK_UP_END = 55;
 	const int ATTACK_LEFT_START = 40;
-	const int ATTACK_LEFT_END = 42;
+	const int ATTACK_LEFT_END = 43;
 	// Sword frames
 	const int LEFT_SWORD_START=0;
 	const int LEFT_SWORD_END=3;

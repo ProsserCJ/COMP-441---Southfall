@@ -355,7 +355,6 @@ void Southfall::collisions()
 //=============================================================================
 void Southfall::render()
 {// sprite begin and end in game now
-
 	switch(currentState)
 	{
 	case MAIN_MENU:

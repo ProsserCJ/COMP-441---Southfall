@@ -231,7 +231,7 @@ void Entity::draw(VECTOR2& Center, DWORD color)
 	if(!_frozen) Object::draw(Center, color);
 	else Object::draw(Center, graphicsNS::BLUE);
 	// Draw sword
-	if(attacking && attackImage != 0) 
+	if(attacking && attackImage != 0 && attackImage->looping()) 
 	{
 		VECTOR2 diff = (getPosition() - Center)*TILE_SIZE;
 		int X = diff.x + HSCREEN_WIDTH - 32*getImageScale();
