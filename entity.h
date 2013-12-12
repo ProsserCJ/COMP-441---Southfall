@@ -32,6 +32,11 @@ const float ACTIONDELAY = 0.5f;
 const float ATTACK_TIME_DELAY = 0.4f;
 const float ATTACK_FRAME_RATE = ATTACK_TIME_DELAY/4.0f;
 
+const int SWORD_DAMAGE = 15;
+const float SWORD_LENGTH = 1.4f;
+const float SWING_DELTA_THETA = PI/4.0f;
+const float SWORD_EFFECT_TIME = 0.2;
+
 const int GOBLIN_HEALTH = 500;
 const int WRAITH_HEALTH = 1500;
 

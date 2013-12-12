@@ -63,6 +63,7 @@ public:
 	Image DeadGuyIM;
 	Image BirminghamIM;
 	Image EndIM;
+	Image ExplosionIM;
 private:
 	bool _initialized;
 
@@ -118,6 +119,7 @@ private:
 	TextureManager DeadGuyTX;
 	TextureManager BirminghamTX;
 	TextureManager EndTX;
+	TextureManager ExplosionTX;
 
 	void _initializeEntities(Graphics* graphics);
 	void _initializeIcons(Graphics* graphics);

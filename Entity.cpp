@@ -380,9 +380,10 @@ void Entity::attack(float orient)
 	}
 
 	if(orient<0) orient += TPI;
-	Effect* damage = new SwordSwing(position, 8, 1.8f, orient, PI/4, team, 0, true, 0.2);
+	// Swing is around the center of the entity (assumes a human height entity)
+	Effect* damage = new SwordSwing(position - VECTOR2(0,0.5f), SWORD_DAMAGE, SWORD_LENGTH, orient, 
+		SWING_DELTA_THETA, team, 0, SWORD_EFFECT_TIME);
 	getWorld()->addEffect(damage);
-
 }
 
 void Entity::setStandingImage()

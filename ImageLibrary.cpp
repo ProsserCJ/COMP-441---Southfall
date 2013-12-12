@@ -155,6 +155,11 @@ void ImageLibrary::_initializeOther(Graphics* graphics)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing End Screen texture"));
 	if(!EndIM.initialize(graphics, SCREEN_WIDTH, SCREEN_HEIGHT, 0, &EndTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing End Screen image"));	
+	// Explosion Sprite
+	if(!ExplosionTX.initialize(graphics, EXPLOSION_SHEET))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Explosion texture"));
+	if(!ExplosionIM.initialize(graphics, 16, 16, 4, &ExplosionTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Explosion image"));	
 	
 	// Sal sign
 	if(!SalsTX.initialize(graphics, SIGN))

@@ -30,8 +30,8 @@ public:
 	Effect() 
 		: time(0), maxTime(0), _timed(false), _hidden(false), _invisible(false), 
 		_done(false), Collidable(ZERO, POINTCOLLISION, 0) {};
-	Effect(VECTOR2 position, float radius, COLLISIONTYPE CT, Image* image, bool timed=false, float time=0)
-		:  _timed(timed), _hidden(true), _invisible(false), _done(false), time(0), 
+	Effect(VECTOR2 position, float radius, COLLISIONTYPE CT, Image* image, bool timed=false, float time=0, bool hidden=true)
+		:  _timed(timed), _hidden(hidden), _invisible(false), _done(false), time(0), 
 		maxTime(time), Collidable(position, CT, radius), Drawable(image) {};
 
 	void update(float frameTime, World* W);
@@ -91,7 +91,7 @@ class DamageEffect : public Effect
 {
 public:
 	DamageEffect(VECTOR2 pos, int damage, float radius, int team, Image* image=0, bool timed=false, float time=0) 
-		: Effect(pos, radius, CIRCLE, image, timed, time), team(team), damage(damage) {};
+		: Effect(pos, radius, CIRCLE, image, timed, time, false), team(team), damage(damage) {};
 	virtual void effect(Object* E, World* W);
 private:
 	float damage;
@@ -101,13 +101,26 @@ private:
 class SwordSwing : public Effect
 {
 public:
-	SwordSwing(VECTOR2 pos, int damage, float radius, float orient, float deltaTheta, int team, Image* image=0, bool timed=false, float time=0)
-		:Effect(pos, radius, SWING, image, timed, time), team(team), damage(damage), orient(orient), deltaTheta(deltaTheta) {};
+	SwordSwing(VECTOR2 pos, int damage, float radius, float orient, float deltaTheta, int team, Image* image=0, float time=0)
+		:Effect(pos, radius, SWING, image, true, time), team(team), damage(damage), orient(orient), deltaTheta(deltaTheta) {};
 	virtual void effect(Object* E, World* W);
 private:
 	float damage;
 	float orient;
 	float deltaTheta;
+	int team;
+};
+
+class Explosion : public Effect
+{
+public:
+	Explosion(VECTOR2 pos, int damage, float radius, int team, Image* image, float delay=1.0f)
+		:Effect(pos, radius, CIRCLE, image, true, delay, false), team(team), damage(damage) 
+	{setFrameDelay(time);}
+
+	virtual void effect(Object* E, World* W);
+private:
+	float damage;
 	int team;
 };
 
