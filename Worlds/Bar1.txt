@@ -14,26 +14,20 @@
 Easy there.
 Those goblins got you pretty good.
 Rest up a bit.  I've restored your health.
-%Why don't you let your dad know that you're okay?
-%I'm sure he'll be glad to see you...if he's sober.
-1 15 2 5.5 r 0
-You! *hic*
-Well I'll be *hic* damned.  It's my little boy.
+%Why don't you go talk to your father over there?
+%I'm sure he'll want to know you're okay...if he's sober.
+0 10 2 5.5 r 0
+%You! *hic*
+%Well I'll be *hic* damned.  It's my little boy.
 Got a bit scraped up, eh? Thas good.  
-...
 *hic*
-%Goblins? Eh, now yer talkin'.
-%You cu'int figh a wet cabbage.
+%Goblins? You cu'int figh a wet cabbage.
+%You're wors'n tha ruckus down at Sal's.
+%They's goin' on about "the Goblin problem."
+%Pah.
 %...
-%You're worse than that ruckus down at Sal's.
-%They keep going on 'bout goin' after da goblins
-%and such rubbish.
-%...
-%I say have 'nother pint afore yer dead
-%Ain't no sense in fightin' it.
-%*hic*
+I say have another pint before yer dead.
 1 3 4 5.5 l 0
 Howdy brother. *hic*
 I hain't got no money, but I got my beer!
 *SLURP*
-

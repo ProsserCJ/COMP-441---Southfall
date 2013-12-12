@@ -47,11 +47,14 @@ World* StructureInterface::loadStructure(string fileName, World** external, VECT
 		char dir;
 		float x, y;
 		fin >> ID;
-		if(ID == 1)
+		if(ID <= 1)
 		{
+			Image* img;
+			if (ID == 0) img = &imageLibrary->Character2IM;
+			else img = &imageLibrary->Character1IM;
 			fin >> textLines >> x >> y >> dir >> talkSoundID;			
 			x += .5;y += .5;
-			NPC* temp = new NPC(ID, VECTOR2(x,y), &imageLibrary->Character1IM, 0);
+			NPC* temp = new NPC(ID, VECTOR2(x,y), img, 0);
 			string* text = new string[textLines];
 			char buffer[500];
 			fin.get();
@@ -64,7 +67,7 @@ World* StructureInterface::loadStructure(string fileName, World** external, VECT
 					text[i] = text[i].substr(1);
 				}
 				
-				if(text[i] == "(sword acquired)")
+				if(text[i].find("(sword acquired)") != -1)
 					temp->item = "sword";
 				else if(text[i] == "(learned fireball attack)")
 					temp->item = "fireball";

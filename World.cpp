@@ -190,6 +190,7 @@ void World::addObject(Object* Obj)
 
 void World::removeEntity(Entity* E)	
 {
+	if (E == Wraith) winCond = true;
 	E->getTile()->remove(E);
 	entities.remove(E);
 	enemies.remove(E);
@@ -365,6 +366,5 @@ list<Entity*> World::search(VECTOR2 Center, float sight)
 
 bool World::winCondition()
 {
-	if (enemies.empty()) return true;
-	return false;
+	return winCond;
 }
