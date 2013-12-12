@@ -154,6 +154,15 @@ void Southfall::update()
 			}
 			if(player->hasSword && !player->hasAddedSword)
 			{
+				int xs[] = {78,78,75,81, 108,108,105,111, 138,138,135,141};//size 12
+				int ys[] = {97,105,100,101, 69,77,72,73, 97,105,100,101};//size 12
+				for(int i = 0; i < 12; ++i)
+				{
+					Entity* goblin = new Entity(VECTOR2(xs[i]+.5,ys[i]+.5), 0.3, GOBLIN_HEALTH, &imageLibrary->Goblin1IM, audio, 1, HUMAN_CRECT);
+					goblin->setSpeed(3); goblin->setDeathSound(GOBLIN_DEATH);
+					Interface->getMain()->addEntity(goblin, new GoblinAI(goblin));
+					Interface->getMain()->addEnemy(goblin);
+				}
 				actionMenu->addButton(new Button("Sword", &imageLibrary->SwordIconIM, 0)); 
 				player->hasAddedSword = true;
 			}
