@@ -443,7 +443,7 @@ void Southfall::render()
 		temp->setX(SCREEN_WIDTH/2 - temp->getWidth()/2);
 		temp->setY(SCREEN_HEIGHT/2 - temp->getHeight()/2);
 		temp->draw();
-		if (temp = &imageLibrary->WinIM && input->anyKeyPressed()) currentState = MAIN_MENU;
+		if (temp == &imageLibrary->WinIM && input->anyKeyPressed()) currentState = MAIN_MENU;
 
 		break;
 	}
