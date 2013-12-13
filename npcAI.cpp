@@ -59,10 +59,10 @@ void npcAI::act(float frameTime, World* W)
 		_idle(frameTime, W);
 		break;		
 	case WAYPOINT:
-		_waypoint(frameTime, W);
-		break;
+		_waypoint(frameTime, W);		
 	case SEARCH:		
-		_search(frameTime, W);		
+		_search(frameTime, W);
+		break;
 	case ATTACK:
 		_attack(frameTime, W);
 	case TRACK:
