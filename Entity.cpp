@@ -428,7 +428,7 @@ void Entity::receiveDamage(Projectile* P)
 	skip(P->getSkipTime());
 	VECTOR2 temp = VECTOR2(cos(P->getOrient()), sin(P->getOrient()));
 	setKnockback(.65*temp);
-	if (audio) audio->playCue(DAMAGE);	
+	//if (audio) audio->playCue(DAMAGE);	
 	HP -= P->getDamage();	
 }
 

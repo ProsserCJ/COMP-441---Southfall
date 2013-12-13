@@ -445,7 +445,7 @@ void Southfall::render()
 		temp->setY(SCREEN_HEIGHT/2 - temp->getHeight()/2);
 		temp->draw();
 
-		if (temp == &imageLibrary->WinIM && input->anyKeyPressed()) done = true;
+		//if (input->anyKeyPressed()) done = true;
 
 		break;
 	}

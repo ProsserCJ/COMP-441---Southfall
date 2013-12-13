@@ -63,6 +63,7 @@ void Tile::updateObjects(float frameTime, World* W)
 	{
 		list<Object*>::iterator q = p;
 		q++;
+		if(*p == reinterpret_cast<Object*>(0xfeeefeee)) return;
 		if(!(*p)->isActive()) // The object is inactive
 		{
 			Object* Obj = *p;
