@@ -160,7 +160,6 @@ void ImageLibrary::_initializeOther(Graphics* graphics)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Birmingham texture"));
 	if(!BirminghamIM.initialize(graphics, 0, 0, 0, &BirminghamTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Birmingham image"));	
-	
 	// Win Screen
 	if(!WinTX.initialize(graphics, WIN_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing End Screen texture"));

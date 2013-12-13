@@ -84,7 +84,6 @@ void Southfall::initialize(HWND hwnd)
 	birm = new Birmingham(audio, &imageLibrary->BirmSpriteIM);	
 	birm->setPosition(VECTOR2(113,101.5));
 	birm->setController(new StationaryAI(birm));	
-	Interface->getMain()->addEntity(birm);
 
 	fontLoc = 0;
 	fontTimer = 6;
@@ -155,15 +154,33 @@ void Southfall::update()
 			}
 			if(player->hasSword && !player->hasAddedSword)
 			{
-				int xs[] = {78,78,75,81, 108,108,105,111, 138,138,135,141};//size 12
-				int ys[] = {97,105,100,101, 69,71,72,73, 97,105,100,101};//size 12
-				for(int i = 0; i < 12; ++i)
+				//int xs[] = {78,78,75,81, 108,108,105,111, 138,138,135,141};//size 12
+				//int ys[] = {97,105,100,101, 69,71,72,73, 97,105,100,101};//size 12
+
+				float birmX = birm->getPosition().x;
+				float birmY = birm->getPosition().y;
+				int xs[] = {76,78,74, birmX,birmX,birmX, 138,136,134};//size 12
+				int ys[] = {birmY,birmY,birmY, 69,71,73, birmY,birmY,birmY};//size 12
+				for(int j = 0; j < 2; ++j)
 				{
-					Entity* goblin = new Entity(VECTOR2(xs[i]+.5,ys[i]+.5), 0.3, GOBLIN_HEALTH, &imageLibrary->Goblin1IM, audio, 1, HUMAN_CRECT);
-					goblin->setSpeed(3); goblin->setDeathSound(GOBLIN_DEATH);
-					Interface->getMain()->addEntity(goblin, new GoblinAI(goblin));
-					Interface->getMain()->addEnemy(goblin);
+					for(int i = 0; i < 9; ++i)
+					{
+						Entity* goblin = new Entity(VECTOR2(xs[i]+j,ys[i]+j-.1), 0.3, GOBLIN_HEALTH, &imageLibrary->Goblin1IM, audio, 1, HUMAN_CRECT);
+						goblin->setSpeed(3); goblin->setDeathSound(GOBLIN_DEATH);
+						Interface->getMain()->addEntity(goblin, new WaveAI(goblin));
+						Interface->getMain()->addEnemy(goblin);
+					}			
 				}
+				for (int i=0; i<4; i++)
+				{
+					Entity* guard = new Entity(VECTOR2(120-i+.5,120), 0.5, GOBLIN_HEALTH, &imageLibrary->GuardIM, audio, 0, HUMAN_CRECT);
+					guard->setSpeed(2);
+					npcAI* ai = new WaveAI(guard);
+					ai->setSight(12);
+					Interface->getMain()->addEntity(guard, ai);	
+				}				
+
+				Interface->getMain()->addEntity(birm);			
 				actionMenu->addButton(new Button("Sword", &imageLibrary->SwordIconIM, 0)); 
 				player->hasAddedSword = true;
 			}

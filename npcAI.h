@@ -34,6 +34,7 @@ public:
 	VECTOR2 getPosition()		{return npc->getPosition();}
 	Entity* & getNPC()			{return npc;}
 	bool isActive()				{return npc->isActive();}
+	void setSight(float s)		{sight = s;}
 
 protected:
 	Entity* npc;	// The npc the ai controls
@@ -51,7 +52,7 @@ protected:
 	virtual void _attack(float frameTime, World* W) = 0;
 	virtual void _search(float frameTime, World* W) = 0;
 	virtual void _track(float frameTime, World* W, VECTOR2 track) = 0;
-	virtual void _waypoint(float frameTime, World* W);
+	virtual void _waypoint(float frameTime, World* W);	
 
 	float searchDelay;
 	float evaluateDelay;
@@ -86,8 +87,20 @@ protected:
 class GoblinAI : public npcAI
 {
 public:
-	GoblinAI(Entity* E) : npcAI(E, GOBLIN_SIGHT) {};
+	GoblinAI(Entity* E) : npcAI(E, GOBLIN_SIGHT){}
 protected:
+	virtual void _assessPriority(World* W);
+	virtual void _attack(float frameTime, World* W);
+	virtual void _search(float frameTime, World* W);
+	virtual void _track(float frameTime, World* W, VECTOR2 track);
+};
+
+class WaveAI : public npcAI
+{
+public:
+	WaveAI(Entity* E) : npcAI(E, GOBLIN_SIGHT) {nextWaypoint = new Waypoint(113,101.5);}
+protected:
+	virtual void _idle(float frameTime, World* W);
 	virtual void _assessPriority(World* W);
 	virtual void _attack(float frameTime, World* W);
 	virtual void _search(float frameTime, World* W);
@@ -104,7 +117,6 @@ protected:
 	virtual void _search(float frameTime, World* W);
 	virtual void _track(float frameTime, World* W, VECTOR2 track);
 };
-
 
 
 #endif
