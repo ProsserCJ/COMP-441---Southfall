@@ -15,8 +15,8 @@ void Button::update()
 
 void Button::draw()
 {
-	if(isDown) buttonIM->setCurrentFrame(1);
-	else buttonIM->setCurrentFrame(0);
+	if(isDown) buttonIM->setCurrentFrame(0);
+	else buttonIM->setCurrentFrame(1);
 	int X = (int)topLeft.x, Y = (int)topLeft.y;
 	buttonIM->setX(X); buttonIM->setY(Y);
 	buttonIM->draw();
