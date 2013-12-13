@@ -37,6 +37,7 @@ void Southfall::initialize(HWND hwnd)
 	pause = false;
 	firstTimeBattle = true;
 	Entity::killCount = 0;
+	done = false;
 	
 	// Graphics
 	graphics = new Graphics();
@@ -443,7 +444,8 @@ void Southfall::render()
 		temp->setX(SCREEN_WIDTH/2 - temp->getWidth()/2);
 		temp->setY(SCREEN_HEIGHT/2 - temp->getHeight()/2);
 		temp->draw();
-		if (temp == &imageLibrary->WinIM && input->anyKeyPressed()) currentState = MAIN_MENU;
+
+		if (temp == &imageLibrary->WinIM && input->anyKeyPressed()) done = true;
 
 		break;
 	}

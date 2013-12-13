@@ -52,6 +52,8 @@ public:
 	World* getWorld()		{return Interface->getCurrent();}
 	VECTOR2 Center()		{return player->getPosition();}
 
+	bool done;
+
 private:
     Menu* mainMenu;
 	GameMenu* actionMenu;

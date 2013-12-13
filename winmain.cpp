@@ -58,8 +58,16 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
                 DispatchMessage(&msg);
             } else
                 game->run(hwnd);    // run the game loop
-        }
-        SAFE_DELETE (game);     // free memory before exit
+
+			if (game->done)
+			{
+				SAFE_DELETE (game);     // free memory before exit
+				game = new Southfall;
+				game->initialize(hwnd);
+			}
+		}
+
+        SAFE_DELETE (game);
         return msg.wParam;
     }
     catch(const GameError &err)
