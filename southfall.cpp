@@ -144,6 +144,7 @@ void Southfall::update()
 			}			
 			break;	
 		case GAME:
+			if (!birm->isActive()){ currentState = GAME_OVER; break; }
 			if(input->isKeyDown(O_KEY) && input->isKeyDown(P_KEY))
 			{
 				birminghamRot = .001;
@@ -400,7 +401,14 @@ void Southfall::render()
 		textbox->draw();
 		break;	
 	case GAME_OVER:
-		imageLibrary->EndIM.draw();
+		Image* temp;
+		if (Interface->getMain()->winCondition()) temp = &imageLibrary->WinIM;
+		else temp = &imageLibrary->DeadIM;
+
+		temp->setX(SCREEN_WIDTH/2 - temp->getWidth()/2);
+		temp->setY(SCREEN_HEIGHT/2 - temp->getHeight()/2);
+		temp->draw();
+
 		break;
 	}
 }

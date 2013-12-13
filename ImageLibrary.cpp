@@ -32,6 +32,11 @@ void ImageLibrary::_initializeEntities(Graphics* graphics)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character 2 texture"));
 	if(!Character2IM.initialize(graphics, 32, 32, 8, &Character2TX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Character 2 image"));
+	// Guard
+	if(!GuardTX.initialize(graphics, GUARD_SHEET))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Guard texture"));
+	if(!GuardIM.initialize(graphics, 32, 32, 8, &GuardTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Guard image"));
 	// Dead guy
 	if(!DeadGuyTX.initialize(graphics, DEADGUY))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Dead Guy texture"));
@@ -155,22 +160,27 @@ void ImageLibrary::_initializeOther(Graphics* graphics)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Birmingham texture"));
 	if(!BirminghamIM.initialize(graphics, 0, 0, 0, &BirminghamTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Birmingham image"));	
-	// End Screen
-	if(!EndTX.initialize(graphics, END_IMAGE))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing End Screen texture"));
-	if(!EndIM.initialize(graphics, SCREEN_WIDTH, SCREEN_HEIGHT, 0, &EndTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing End Screen image"));	
-	// Explosion Sprite
-	if(!ExplosionTX.initialize(graphics, EXPLOSION_SHEET))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Explosion texture"));
-	if(!ExplosionIM.initialize(graphics, 16, 16, 4, &ExplosionTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Explosion image"));	
 	
+	// Win Screen
+	if(!WinTX.initialize(graphics, WIN_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing End Screen texture"));
+	if(!WinIM.initialize(graphics, 512, 608, 0, &WinTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing End Screen image"));	
+	// Dead Screen
+	if(!DeadTX.initialize(graphics, DEAD_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Dead Screen texture"));
+	if(!DeadIM.initialize(graphics, 512, 608, 0, &DeadTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Dead Screen image"));		
 	// Sal sign
 	if(!SalsTX.initialize(graphics, SIGN))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Sal's texture"));
 	if(!SalsIM.initialize(graphics, 0, 0, 0, &SalsTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Sal's image"));	
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Sal's image"));
+	// Explosion
+	if(!ExplosionTX.initialize(graphics, EXPLOSION))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Explosion texture"));
+	if(!ExplosionIM.initialize(graphics, 16, 16, 4, &ExplosionTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Explosion image"));	
 }
 
 void ImageLibrary::_initializeStructures(Graphics* graphics)

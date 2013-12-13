@@ -106,6 +106,7 @@ const UINT HSCREEN_HEIGHT = 0.5*SCREEN_HEIGHT;
 // Characters
 const char CHARACTER1_SHEET[] = "..\\source\\Images\\Entities\\Character1Sheet.png";
 const char CHARACTER2_SHEET[] = "..\\source\\Images\\Entities\\Character2Sheet.png";
+const char GUARD_SHEET[] = "..\\source\\Images\\Entities\\GuardSheet.png";
 const char GOBLIN1_SHEET[] = "..\\source\\Images\\Entities\\Goblin1Sheet.png";
 const char WRAITH1_SHEET[] = "..\\source\\Images\\Entities\\Wraith1Sheet.png";
 const char DEADGUY[] = "..\\source\\Images\\Entities\\DEADGUY.png";
@@ -156,7 +157,8 @@ const char SHADOWBALLICON[] = "..\\source\\Images\\Icons\\ShadowballIcon.png";
 // Other
 const char GAMEMENUBACK[] = "..\\source\\Images\\Other\\GameMenuBackground.png";
 const char BIRMINGHAM[] = "..\\source\\Images\\Other\\Birmingham.png";
-const char END_IMAGE[] = "..\\source\\Images\\Other\\EndScreen1.png";
+const char WIN_IMAGE[] = "..\\source\\Images\\Other\\EndScreen1.png";
+const char DEAD_IMAGE[] = "..\\source\\Images\\Other\\Dead.png";
 const char TEXTBOX[] = "..\\source\\Images\\Other\\textBox.png";
 const char TEXTBOX_ARROW[] = "..\\source\\Images\\Other\\textBoxArrow.png";
 const char SOUTHFALLFONT[] = "..\\source\\Images\\Other\\SouthfallFont.png";
@@ -164,7 +166,7 @@ const char ESBURGFONT[] = "..\\source\\Images\\Other\\EsburgFont.png";
 const char WESELLYNFONT[] = "..\\source\\Images\\Other\\WesellynFont.png";
 const char NORSTAFFFONT[] = "..\\source\\Images\\Other\\NorstaffFont.png";
 const char SIGN[] = "..\\source\\Images\\Other\\Sign.png";
-const char EXPLOSION_SHEET[] = "..\\source\\Images\\Other\\ExplosionSheet.png";
+const char EXPLOSION[] = "..\\source\\Images\\Other\\ExplosionSheet.png";
 
 // Worlds
 const string BAR1STRUCTURE = "..\\source\\Worlds\\Bar1.txt";
