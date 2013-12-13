@@ -10,8 +10,8 @@ DIR MazeSolver::solve(World* W, VECTOR2 target, VECTOR2 start)
 		{// Center SearchArray around target
 			if(0 < target.x+x && target.x+x < W->getWidth() && 0 < target.y+y && target.y+y < W->getHeight()
 				&& W->getTile((int)(target.x)+x,(int)(target.y)+y)->isTraversable())
-				SearchArray[x+SIGHTRANGE][y+SIGHTRANGE] = INT_MAX;
-			else SearchArray[x+SIGHTRANGE][y+SIGHTRANGE] = -1;
+				SearchArray[x+SIGHTRANGE+1][y+SIGHTRANGE+1] = INT_MAX;
+			else SearchArray[x+SIGHTRANGE+1][y+SIGHTRANGE+1] = -1;
 		}
 	// Set borders
 	for(int i=0; i<ARRAYWIDTH+2; i++)
@@ -42,8 +42,8 @@ DIR MazeSolver::solve(World* W, VECTOR2 target, VECTOR2 start)
 		counts++;
 	}
 	// Pick best square to go on
-	int CX = (int)start.x - (int)target.x + SIGHTRANGE;
-	int CY = (int)start.y - (int)target.y + SIGHTRANGE;
+	int CX = (int)start.x - (int)target.x + (SIGHTRANGE) + 1;
+	int CY = (int)start.y - (int)target.y + (SIGHTRANGE) + 1;
 	int n = SearchArray[CX][CY];
 
 	if(n == INT_MAX) return DIR::NONE;
