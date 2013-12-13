@@ -4,14 +4,16 @@
 
 DIR MazeSolver::solve(World* W, VECTOR2 target, VECTOR2 start)
 {
+	if(time < SOLVEDELAY) return last;
+	time = 0;
 	// Initialize search array
 	for(int x=-SIGHTRANGE; x<=SIGHTRANGE; x++)
 		for(int y=-SIGHTRANGE; y<=SIGHTRANGE; y++)
 		{// Center SearchArray around target
 			if(0 < target.x+x && target.x+x < W->getWidth() && 0 < target.y+y && target.y+y < W->getHeight()
 				&& W->getTile((int)(target.x)+x,(int)(target.y)+y)->isTraversable())
-				SearchArray[x+SIGHTRANGE][y+SIGHTRANGE] = INT_MAX;
-			else SearchArray[x+SIGHTRANGE][y+SIGHTRANGE] = -1;
+				SearchArray[x+SIGHTRANGE+1][y+SIGHTRANGE+1] = INT_MAX;
+			else SearchArray[x+SIGHTRANGE+1][y+SIGHTRANGE+1] = -1;
 		}
 	// Set borders
 	for(int i=0; i<ARRAYWIDTH+2; i++)
@@ -42,23 +44,29 @@ DIR MazeSolver::solve(World* W, VECTOR2 target, VECTOR2 start)
 		counts++;
 	}
 	// Pick best square to go on
-	int CX = (int)start.x - (int)target.x + SIGHTRANGE;
-	int CY = (int)start.y - (int)target.y + SIGHTRANGE;
+	int CX = (int)start.x - (int)target.x + (SIGHTRANGE) + 1;
+	int CY = (int)start.y - (int)target.y + (SIGHTRANGE) + 1;
 	int n = SearchArray[CX][CY];
 
-	if(n == INT_MAX) return DIR::NONE;
-	else if(0 <= SearchArray[CX-1][CY-1] && SearchArray[CX-1][CY-1] < n) return DIR::UP_LEFT;
-	else if(0 <= SearchArray[CX][CY-1] && SearchArray[CX][CY-1] < n) return DIR::UP;
-	else if(0 <= SearchArray[CX+1][CY-1] && SearchArray[CX+1][CY-1] < n) return DIR::UP_RIGHT;
-	else if(0 <= SearchArray[CX-1][CY] && SearchArray[CX-1][CY] < n) return DIR::LEFT;
-	else if(0 <= SearchArray[CX+1][CY] && SearchArray[CX+1][CY] < n) return DIR::RIGHT;
-	else if(0 <= SearchArray[CX-1][CY+1] && SearchArray[CX-1][CY+1] < n) return DIR::DOWN_LEFT;
-	else if(0 <= SearchArray[CX][CY+1] && SearchArray[CX][CY+1] < n) return DIR::DOWN;
-	else if(0 <= SearchArray[CX+1][CY+1] && SearchArray[CX+1][CY+1] < n) return DIR::DOWN_RIGHT;
-	else return DIR::NONE;
+	if(n == INT_MAX) last = DIR::NONE;
+	else if(0 <= SearchArray[CX-1][CY-1] && SearchArray[CX-1][CY-1] < n) last = DIR::UP_LEFT;
+	else if(0 <= SearchArray[CX][CY-1] && SearchArray[CX][CY-1] < n) last = DIR::UP;
+	else if(0 <= SearchArray[CX+1][CY-1] && SearchArray[CX+1][CY-1] < n) last = DIR::UP_RIGHT;
+	else if(0 <= SearchArray[CX-1][CY] && SearchArray[CX-1][CY] < n) last = DIR::LEFT;
+	else if(0 <= SearchArray[CX+1][CY] && SearchArray[CX+1][CY] < n) last = DIR::RIGHT;
+	else if(0 <= SearchArray[CX-1][CY+1] && SearchArray[CX-1][CY+1] < n) last = DIR::DOWN_LEFT;
+	else if(0 <= SearchArray[CX][CY+1] && SearchArray[CX][CY+1] < n) last = DIR::DOWN;
+	else if(0 <= SearchArray[CX+1][CY+1] && SearchArray[CX+1][CY+1] < n) last = DIR::DOWN_RIGHT;
+	else last = DIR::NONE;
+	return last;
 }
 
-int MazeSolver::number(int x, int y)
+void MazeSolver::update(float frameTime)
+{
+	time += frameTime;
+}
+
+inline int MazeSolver::number(int x, int y)
 {
 	int min = INT_MAX;
 	for(int i=0; i<3; i++)

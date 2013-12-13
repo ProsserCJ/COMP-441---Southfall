@@ -1,11 +1,29 @@
 #include "GameMenu.h"
 
-bool Button::clicked(int X, int Y)
+void Button::update()
 {
-	if(topLeft.x < X && X < topLeft.x + width 
-		&& topLeft.y < Y && Y < topLeft.y + height)
-		return true;
-	return false;
+	if(input->getMouseLButton())
+	{
+		int X = input->getMouseX();
+		int Y = input->getMouseY();
+		if(topLeft.x < X && X < topLeft.x + width 
+			&& topLeft.y < Y && Y < topLeft.y + height)
+			isDown = true;
+		else isDown = false;
+	}
+}
+
+void Button::draw()
+{
+	if(isDown) buttonIM->setCurrentFrame(1);
+	else buttonIM->setCurrentFrame(0);
+	int X = (int)topLeft.x, Y = (int)topLeft.y;
+	buttonIM->setX(X); buttonIM->setY(Y);
+	buttonIM->draw();
+	itemNameFont->print(words, X+wordShift, Y);
+	icon->setX(X+imageShift); icon->setY(Y+ICONYSHIFT);
+	icon->setScale(ICONSCALE);
+	icon->draw();
 }
 
 void GameMenu::initialize(Graphics* graphics, Input* input, string heading)
@@ -14,6 +32,7 @@ void GameMenu::initialize(Graphics* graphics, Input* input, string heading)
 	this->input = input;
 	Heading = heading;
 	selected = -1;
+	selectedButton = 0;
 	// Fonts
 	menuHeadingFont = new TextDX;
 	if(menuHeadingFont->initialize(graphics, 35, true, false, "Andalus") == false)
@@ -28,11 +47,15 @@ void GameMenu::initialize(Graphics* graphics, Input* input, string heading)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Background texture"));
 	if(!BackgroundIM.initialize(graphics, 0, 0, 0, &BackgroundTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Background image"));
+	// ButtonIM
+	if(!ButtonTX.initialize(graphics, BUTTON_SHEET))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Button texture"));
+	if(!ButtonIM.initialize(graphics, 100, 100, 2, &ButtonTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Button image"));
 	anchor.x = SCREEN_WIDTH - BackgroundIM.getWidth();
 	anchor.y = 0;
 	BackgroundIM.setX(anchor.x);
 	BackgroundIM.setY(anchor.y);
-
 	nextX = MENUXSHIFT;
 	nextY = MENUINITIALY;
 }
@@ -42,32 +65,23 @@ void GameMenu::draw()
 	BackgroundIM.draw();
 	menuHeadingFont->print(Heading, anchor.x + 30, anchor.y + 30);
 	for(int i = 0; i<buttons.size(); i++)
-	{
-		Button* B = buttons.at(i);
-		int X = B->topLeft.x;
-		int Y = B->topLeft.y;
-		
-		itemNameFont->print(B->words, X+B->wordShift, Y);
-		
-		B->icon->setX(X+B->imageShift); B->icon->setY(Y + ICONYSHIFT);
-		B->icon->setScale(ICONSCALE);
-		B->icon->draw();
-	}
+		buttons.at(i)->draw();
 }
 
 void GameMenu::update(float frameTime)
 {
 	selected = -1;
-	if(input->getMouseLButton())
+	for(int i=0; i<buttons.size(); i++)
 	{
-		int X = input->getMouseX();
-		int Y = input->getMouseY();
-		for(int i=0; i<buttons.size(); i++)
-			if(buttons.at(i)->clicked(X,Y)) 
-			{
-				selected = buttons.at(i)->type;
-				return;
-			}
+		buttons.at(i)->update();
+		if(buttons.at(i)->isDown) 
+		{
+			if(i != selectedButton) 
+				buttons.at(selectedButton)->isDown = false;
+			selectedButton = i;
+			selected = buttons.at(i)->type;
+			return;
+		}
 	}
 }
 
@@ -87,7 +101,10 @@ void GameMenu::addButton(Button* B)
 	B->height = BUTTONHEIGHT;
 	int length = B->words.length();
 	B->wordShift = max((BUTTONWIDTH - length*LETTERWIDTH)*0.5,0);
-	B->imageShift = max((BUTTONWIDTH - B->icon->getWidth())*0.5,0);
+	B->imageShift = ICONXSHIFT;
+	B->input = input;
+	B->buttonIM = &ButtonIM;
+	B->itemNameFont = itemNameFont;
 
 	buttons.push_back(B);
 }
