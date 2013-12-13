@@ -155,13 +155,10 @@ void Southfall::update()
 			}
 			if(player->hasSword && !player->hasAddedSword)
 			{
-				//int xs[] = {78,78,75,81, 108,108,105,111, 138,138,135,141};//size 12
-				//int ys[] = {97,105,100,101, 69,71,72,73, 97,105,100,101};//size 12
-
 				float birmX = birm->getPosition().x;
 				float birmY = birm->getPosition().y;
-				int xs[] = {76,78,74, birmX,birmX,birmX, 138,136,134};//size 12
-				int ys[] = {birmY,birmY,birmY, 69,71,73, birmY,birmY,birmY};//size 12
+				int xs[] = {76,78, birmX,birmX, 138,136};//size 12
+				int ys[] = {birmY,birmY, 69,71, birmY,birmY};//size 12
 				for(int j = 0; j < 2; ++j)
 				{
 					for(int i = 0; i < 9; ++i)
