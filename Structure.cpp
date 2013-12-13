@@ -24,12 +24,13 @@ void Portal::interact(Entity* E)
 	if (out == WI->getBar2())
 	{
 		WI->getAudio()->stopCue(SOUTHFALL_THEME);
+		WI->getAudio()->stopCue(BATTLE);
 		WI->getAudio()->playCue(BAR_BACKGROUND);
 	}
 	if (out == WI->getMain() && E->getWorld() == WI->getBar2())
 	{	
 		WI->getAudio()->stopCue(BAR_BACKGROUND);
-		WI->getAudio()->playCue(SOUTHFALL_THEME);		
+		WI->getAudio()->playCue(BATTLE);		
 	}
 	
 	E->getWorld()->removeEntity(E);

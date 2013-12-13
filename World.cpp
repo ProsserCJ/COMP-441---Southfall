@@ -273,8 +273,8 @@ bool World::update(VECTOR2& Center, float frameTime)
 	for(auto s = structures.begin(); s != structures.end(); s++)
 		(*s)->update(frameTime);
 	// Update Entities
-	int x0 = max(0, Center.x-HSCREEN_WIDTH/TILE_SIZE-20), y0 = max(0, Center.y-HSCREEN_HEIGHT/TILE_SIZE-20);
-	int x1 = min(width, Center.x + SCREEN_WIDTH/TILE_SIZE+20), y1 = min(height, Center.y + SCREEN_HEIGHT/TILE_SIZE+20);	
+	int x0 = max(0, Center.x-HSCREEN_WIDTH/TILE_SIZE-400), y0 = max(0, Center.y-HSCREEN_HEIGHT/TILE_SIZE-400);
+	int x1 = min(width, Center.x + SCREEN_WIDTH/TILE_SIZE+400), y1 = min(height, Center.y + SCREEN_HEIGHT/TILE_SIZE+400);	
 	for(int x = x0; x < x1; x++)
 		for(int y = y0; y < y1; y++)
 			tiles[x][y]->updateObjects(frameTime, this);

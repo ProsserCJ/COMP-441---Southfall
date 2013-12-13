@@ -1,5 +1,4 @@
 #include "npcAI.h"
-
 #include "World.h"
 
 void npcAI::initialize()
@@ -52,22 +51,24 @@ void npcAI::act(float frameTime, World* W)
 		evaluateDelay = 0;
 		_assessPriority(W);
 	}
+
+	_attack(frameTime, W);
 	switch(priority)
 	{
 	case IDLE:
 		_idle(frameTime, W);
+		break;		
+	case WAYPOINT:
+		_waypoint(frameTime, W);
 		break;
-	case SEARCH:
-		_search(frameTime, W);
-		break;
+	case SEARCH:		
+		_search(frameTime, W);		
 	case ATTACK:
 		_attack(frameTime, W);
 	case TRACK:
 		_track(frameTime, W, track);	
 		break;
-	case WAYPOINT:
-		_waypoint(frameTime, W);
-		break;
+	
 	}
 }
 
@@ -91,18 +92,24 @@ void npcAI::_idle(float frameTime, World* W)
 void npcAI::_waypoint(float frameTime, World* W)
 {
 	if(!nextWaypoint) return;
-	VECTOR2 disp = nextWaypoint->position - npc->getPosition();
-	if(abs(disp.x) < abs(disp.y))
-	{
-		if(disp.y > 0) npc->go(DOWN);
-		else npc->go(UP);
-	}
-	else
-	{
-		if(disp.x > 0) npc->go(RIGHT);
-		else npc->go(LEFT);
-	}
+	VECTOR2 track = nextWaypoint->position - npc->getPosition();	
+
+	DIR facing;
+	float orient = atan2(track.y, track.x), delta = .01;
+	if (orient > PI/2-delta && orient <= PI/2+delta) facing = DOWN;
+    else if (orient > PI/2+delta && orient <= PI-delta) facing = DOWN_LEFT;
+    else if (orient <= -PI+delta || orient > PI-delta) facing = LEFT;
+    else if (orient > -PI+delta && orient <= -PI/2-delta) facing = UP_LEFT;
+    else if (orient <= -PI/2+delta && orient > -PI/2-delta) facing = UP;
+    else if (orient > -PI/2+delta && orient <= 0-delta) facing = UP_RIGHT;
+    else if (orient > 0-delta && orient < 0+delta) facing = RIGHT;
+    else if (orient >= 0+delta && orient <= PI/2-delta) facing = DOWN_RIGHT;
+
+	if (target) npc->travel(Solver.solve(W, target->getPosition(), getPosition()));
+
+	npc->go(facing);
 }
+
 
 void GoblinAI::_assessPriority(World* W)
 {
@@ -125,15 +132,20 @@ void GoblinAI::_assessPriority(World* W)
 void GoblinAI::_track(float frameTime, World* W, VECTOR2 track)
 {
 	if (target == 0 || !target->isActive() || npc == 0 || !npc->isActive()) return;
+	
 	npc->travel(Solver.solve(W, target->getPosition(), getPosition()));
+	
+	/*DIR facing;
+	float orient = atan2(track.y, track.x), delta = .01;
+	if (orient > PI/2-delta && orient <= PI/2+delta) facing = DOWN;
+    else if (orient > PI/2+delta && orient <= PI-delta) facing = DOWN_LEFT;
+    else if (orient <= -PI+delta || orient > PI-delta) facing = LEFT;
+    else if (orient > -PI+delta && orient <= -PI/2-delta) facing = UP_LEFT;
+    else if (orient <= -PI/2+delta && orient > -PI/2-delta) facing = UP;
+    else if (orient > -PI/2+delta && orient <= 0-delta) facing = UP_RIGHT;
+    else if (orient > 0-delta && orient < 0+delta) facing = RIGHT;
+    else if (orient >= 0+delta && orient <= PI/2-delta) facing = DOWN_RIGHT;
 
-/*
-	DIR facing;
-	float orient = atan2(track.y, track.x);
-	if (orient > PI/4 && orient <= 3*PI/4) facing = DOWN;
-	else if (orient <= -3*PI/4 || orient > 3*PI/4) facing = LEFT;
-	else if (orient <= -PI/4 && orient > -3*PI/4) facing = UP;
-	else if (orient > -PI/4 && orient <= PI/4) facing = RIGHT;
 	npc->go(facing);*/
 	
 }
@@ -172,6 +184,88 @@ void GoblinAI::_search(float frameTime, World* W)
 		}
 	_idle(frameTime, W);
 }
+
+
+void WaveAI::_idle(float frameTime, World* W)
+{
+	if (!nextWaypoint) nextWaypoint = new Waypoint(113,101.5);
+	nextWaypoint->radius = 5;
+	npcAI::_idle(frameTime, W);
+}
+
+void WaveAI::_assessPriority(World* W)
+{
+	switch(priority)
+	{
+	case SEARCH:
+		break;
+	case ATTACK:
+		break;
+	case WAYPOINT:
+		break;
+	case IDLE:
+		priority = SEARCH;
+		break;
+	default: break;
+
+	}
+}
+
+void WaveAI::_track(float frameTime, World* W, VECTOR2 track)
+{
+	if (target == 0 || !target->isActive() || npc == 0 || !npc->isActive()) return;
+	
+	npc->travel(Solver.solve(W, target->getPosition(), getPosition()));
+	
+	/*DIR facing;
+	float orient = atan2(track.y, track.x), delta = .01;
+	if (orient > PI/2-delta && orient <= PI/2+delta) facing = DOWN;
+    else if (orient > PI/2+delta && orient <= PI-delta) facing = DOWN_LEFT;
+    else if (orient <= -PI+delta || orient > PI-delta) facing = LEFT;
+    else if (orient > -PI+delta && orient <= -PI/2-delta) facing = UP_LEFT;
+    else if (orient <= -PI/2+delta && orient > -PI/2-delta) facing = UP;
+    else if (orient > -PI/2+delta && orient <= 0-delta) facing = UP_RIGHT;
+    else if (orient > 0-delta && orient < 0+delta) facing = RIGHT;
+    else if (orient >= 0+delta && orient <= PI/2-delta) facing = DOWN_RIGHT;
+	npc->go(facing);*/
+	
+}
+
+void WaveAI::_attack(float frameTime, World* W)
+{
+	if(target == 0) 
+	{
+		priority = WAYPOINT;
+		return;
+	}
+	if(npc->canAction())
+	{// Launch fireballs
+		VECTOR2 launchPos = npc->getPosition() - VECTOR2(0.f,0.5f);
+		float sY = static_cast<float>(target->getPosition().y - launchPos.y);
+		float sX = static_cast<float>(target->getPosition().x - launchPos.x);
+		float orient = atan2(sY, sX);
+		if(orient < 0) orient += TPI;
+		Projectile* P = new Projectile(launchPos, FIREBALLSPEED, FIREBALLRADIUS, 
+			FIREBALLRANGE, orient, &W->getImageLibrary()->FireballSheetIM, FIREBALLDAMAGE, PROJ_FIREBALL, 0.f, 0.f, npc->getTeam());
+		P->setFrames(FIREBALLSTART, FIREBALLEND);
+		P->setFrameDelay(0.1);
+		W->addProjectile(P);
+		npc->resetAction();		
+	}
+}
+
+void WaveAI::_search(float frameTime, World* W)
+{
+	list<Entity*> Targets = W->search(npc->getPosition(), WRAITH_SIGHT);
+	for(auto p = Targets.begin(); p != Targets.end(); p++)
+		if((*p)->getType() != PROJECTILE && (*p)->getTeam() != npc->getTeam())
+		{
+			target = *p;
+			priority = ATTACK;
+		}
+	_idle(frameTime, W);
+}
+
 
 void WraithAI::_assessPriority(World* W)
 {
