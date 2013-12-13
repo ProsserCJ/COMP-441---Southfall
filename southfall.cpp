@@ -126,6 +126,7 @@ void Southfall::update()
 				if (temp)
 				{
 					temp->setDir(entityNS::DOWN);
+					player->reset();
 					player->setDir(entityNS::UP);
 					textbox->setText((NPC*)temp);
 					textbox->setActive(true);
@@ -442,6 +443,7 @@ void Southfall::render()
 		temp->setX(SCREEN_WIDTH/2 - temp->getWidth()/2);
 		temp->setY(SCREEN_HEIGHT/2 - temp->getHeight()/2);
 		temp->draw();
+		if (temp = &imageLibrary->WinIM && input->anyKeyPressed()) currentState = MAIN_MENU;
 
 		break;
 	}
