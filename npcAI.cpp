@@ -18,6 +18,7 @@ void npcAI::update(float frameTime, World* W)
 	delay += frameTime;
 	// Act and update
 	act(frameTime, W);
+
 }
 
 void npcAI::act(float frameTime, World* W)
@@ -154,7 +155,7 @@ void GoblinAI::_attack(float frameTime, World* W)
 {
 	if(target == 0) 
 	{
-		priority = IDLE;
+		priority = SEARCH;
 		return;
 	}
 	if(npc->canAction())
@@ -287,7 +288,7 @@ void WraithAI::_attack(float frameTime, World* W)
 {
 	if(target == 0) 
 	{
-		priority = IDLE;
+		priority = SEARCH;
 		return;
 	}
 	if(npc->canAction())

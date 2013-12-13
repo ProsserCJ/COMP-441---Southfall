@@ -21,7 +21,7 @@ namespace heroNS
 	const float WIDTH = TILE_SIZE;
 	const float HEROACTIONDELAY = 0.3;
 	const int COLS = 4;	
-	const int HERO_HP = 1000;
+	const int HERO_HP = 1250;
 	const float HERO_RADIUS = 0.15;
 };
 using namespace heroNS;

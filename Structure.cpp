@@ -1,6 +1,7 @@
 #include "Structure.h"
 #include "World.h"
 #include "WorldInterface.h"
+#include "hero.h"
 
 void Structure::draw(VECTOR2 Center)
 {
@@ -16,8 +17,8 @@ void Structure::draw(VECTOR2 Center)
 
 void Structure::update(float frameTime)
 {
-	updateImage(frameTime);
-}
+	updateImage(frameTime);}
+
 
 void Portal::interact(Entity* E)
 {
@@ -30,7 +31,17 @@ void Portal::interact(Entity* E)
 	if (out == WI->getMain() && E->getWorld() == WI->getBar2())
 	{	
 		WI->getAudio()->stopCue(BAR_BACKGROUND);
-		WI->getAudio()->playCue(BATTLE);		
+		WI->getAudio()->playCue(BATTLE);
+
+		vector<string> text; text.push_back("Help! Our leader is being attacked!");
+		WI->getTextBox()->setText(text);
+		WI->getTextBox()->setActive(true);		
+	}
+	Hero* idiot = dynamic_cast<Hero*>(E);
+	if (out == WI->getMain() && (Entity::killCount < 18) && idiot->hasAddedSword)
+	{
+		WI->getAudio()->playCue(BATTLE);
+		WI->getAudio()->stopCue(SOUTHFALL_THEME);
 	}
 	
 	E->getWorld()->removeEntity(E);

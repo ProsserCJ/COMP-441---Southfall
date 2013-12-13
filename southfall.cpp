@@ -41,7 +41,7 @@ void Southfall::initialize(HWND hwnd)
 	// Graphics
 	graphics = new Graphics();
     graphics->initialize(hwnd, SCREEN_WIDTH, SCREEN_HEIGHT, FULLSCREEN);
-	NPC::initGraphics(graphics);
+	//NPC::initGraphics(graphics);
 	imageLibrary = new ImageLibrary(graphics);
 
 	// Menu
@@ -56,13 +56,13 @@ void Southfall::initialize(HWND hwnd)
 	gameFont->initialize(graphics, 40, false, false, "Andalus");
 	gameFont->setFontColor(SETCOLOR_ARGB(255,255,255,255));	
 
-	// WorldInterface
-	Interface = new WorldInterface(imageLibrary);
-	Interface->initialize(graphics, audio);
-
 	//Initialize global TextBox
 	textbox = new TextBox(gameFont, audio, input, &imageLibrary->TextBoxIM, &imageLibrary->TextBoxArrowIM);
 	textbox->setActive(false);
+	
+	// WorldInterface
+	Interface = new WorldInterface(imageLibrary);
+	Interface->initialize(graphics, audio, textbox);	
 	
 	// Initialized Player here, have center point at player's position
 	player = new Hero(ZERO, heroNS::HERO_RADIUS, &imageLibrary->Character1IM, input, 
@@ -90,7 +90,7 @@ void Southfall::initialize(HWND hwnd)
 
 	// For testing: set up action Menu:
 
-	actionMenu->addButton(new Button("Sword", &imageLibrary->SwordIconIM, 0)); 
+	/*actionMenu->addButton(new Button("Sword", &imageLibrary->SwordIconIM, 0)); 
 	actionMenu->addButton(new Button("Impede Spell", &imageLibrary->ImpedeEffectIM, 1)); 
 	actionMenu->addButton(new Button("Quick Portal", &imageLibrary->PortalOpenIM, 2));
 	actionMenu->addButton(new Button("Blink", &imageLibrary->BlinkIconIM, 3));
@@ -98,7 +98,7 @@ void Southfall::initialize(HWND hwnd)
 	actionMenu->addButton(new Button("Shadowball", &imageLibrary->ShadowballIconIM, 5));
 
 	actionMenu->addButton(new Button("Magic Sight On", &imageLibrary->MagicSightOnIM, 8));
-	actionMenu->addButton(new Button("Magic Sight Off", &imageLibrary->MagicSightOffIM, 9));	
+	actionMenu->addButton(new Button("Magic Sight Off", &imageLibrary->MagicSightOffIM, 9));	*/
 }
 
 //=============================================================================
@@ -143,11 +143,12 @@ void Southfall::update()
 			}			
 			break;	
 		case GAME:
-			if (!birm->isActive()){ currentState = GAME_OVER; break; }
+			if (!birm->isActive()){ currentState = GAME_OVER; break; }			
 			if(input->isKeyDown(O_KEY) && input->isKeyDown(P_KEY))
 			{
 				birminghamRot = .001;
 				player->setHP(INT_MAX);
+				birm->setHP(INT_MAX);
 				currentState = BIRMINGHAMSTATE;
 				imageLibrary->BirminghamIM.setScale(10);
 				audio->playCue(BIRMINGHAM_SOUND);
@@ -171,13 +172,36 @@ void Southfall::update()
 						Interface->getMain()->addEnemy(goblin);
 					}			
 				}
-				for (int i=0; i<4; i++)
+				for (int i=0; i<3; i++)
 				{
 					Entity* guard = new Entity(VECTOR2(120-i+.5,120), 0.5, GOBLIN_HEALTH, &imageLibrary->GuardIM, audio, 0, HUMAN_CRECT);
 					guard->setSpeed(2);
 					npcAI* ai = new WaveAI(guard);
 					ai->setSight(12);
 					Interface->getMain()->addEntity(guard, ai);	
+				}
+				for (int i=-1; i<1; i++)
+				{
+					Entity* guard1 = new Entity(VECTOR2(birmX-1, birmY+i), 0.5, GOBLIN_HEALTH, &imageLibrary->GuardIM, audio, 0, HUMAN_CRECT);
+					guard1->setSpeed(2);
+					npcAI* ai1 = new WaveAI(guard1);
+					ai1->setSight(12);
+					Interface->getMain()->addEntity(guard1, ai1);
+
+					if (i!= 0)
+					{
+						Entity* guard2 = new Entity(VECTOR2(birmX, birmY+i), 0.5, GOBLIN_HEALTH, &imageLibrary->GuardIM, audio, 0, HUMAN_CRECT);
+						guard2->setSpeed(2);
+						npcAI* ai2 = new WaveAI(guard2);
+						ai2->setSight(12);
+						Interface->getMain()->addEntity(guard2, ai2);	
+					}
+					
+					Entity* guard3 = new Entity(VECTOR2(birmX+1, birmY+i), 0.5, GOBLIN_HEALTH, &imageLibrary->GuardIM, audio, 0, HUMAN_CRECT);
+					guard3->setSpeed(2);
+					npcAI* ai3 = new WaveAI(guard3);
+					ai3->setSight(12);
+					Interface->getMain()->addEntity(guard3, ai3);	
 				}				
 
 				Interface->getMain()->addEntity(birm);			

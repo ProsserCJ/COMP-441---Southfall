@@ -10,7 +10,7 @@
 -ttttttttttttttt-
 --------0--------
 6
-0 10 8 5 d 0
+0 11 8 5 d 0
 %They've ransacked our homes, destroyed our crops...
 %It's time we put an end to the goblin menance!
 %...
@@ -18,6 +18,7 @@
 %There is talk of strange powers to the north.
 %A black wraith haunting Norstaff has brought hoards of goblins to Southfall.
 %Take this (sword acquired)
+%Press 'T' to open your action menu.
 %You must brave the forest, and end his reign.
 Our fate is tied to yours.
 Let us defend our homes with valor and honor!

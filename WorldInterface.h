@@ -12,6 +12,7 @@ Last Modified: 11/17/2013
 #include "World.h"
 #include <string>
 #include <fstream>
+#include "ImageLibrary.h"
 using std::string;
 using std::ifstream;
 
@@ -23,12 +24,14 @@ class WorldInterface
 public:
 	WorldInterface(ImageLibrary* imageLibrary) 
 		: imageLibrary(imageLibrary) {};
-	void initialize(Graphics* graphics, Audio* audio);
+	void initialize(Graphics* graphics, Audio* audio, TextBox* tb);
 	
-	World* getCurrent()	{return Current;}
-	World* getMain()	{return main;}
-	World* getStart()	{return bar1;}
-	World* getBar2()	{return bar2;}
+	World* getCurrent()				{return Current;}
+	World* getMain()				{return main;}
+	World* getStart()				{return bar1;}
+	World* getBar2()				{return bar2;}
+	TextBox* getTextBox()			{return textbox;}
+	ImageLibrary* getImageLibrary() {return imageLibrary;}
 
 	World* loadWorld(const string& fileName, Audio* audio);
 
@@ -48,6 +51,7 @@ private:
 	ImageLibrary* imageLibrary;
 	StructureInterface* StructInt;
 	Audio* audio;
+	TextBox* textbox;	
 };
 
 #endif

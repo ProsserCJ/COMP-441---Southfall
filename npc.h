@@ -38,7 +38,7 @@ public:
 	virtual void update(float frameTime, World* W);
 
 	void initialize();
-	static void initGraphics(Graphics* graphics);	
+	/*static void initGraphics(Graphics* graphics);	*/
 	void setPaused(bool b)					{paused = b;}
 
 	virtual vector<string> getText()		{return text;}
@@ -46,6 +46,8 @@ public:
 	void addConditionalLine(int i)			{conditionalLines.push_front(i);}
 	void updateText();
 	
+	/*static TextureManager* NPC_TX1;
+	static Image* NPC_IM1;*/
 
 private:
 	double distanceTraveled;
@@ -55,8 +57,7 @@ private:
 	bool paused;
 	Random rGen;
 
-	static TextureManager* NPC_TX1;
-	static Image* NPC_IM1;
+	
 };
 
 

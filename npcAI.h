@@ -87,7 +87,7 @@ protected:
 class GoblinAI : public npcAI
 {
 public:
-	GoblinAI(Entity* E) : npcAI(E, GOBLIN_SIGHT){}
+	GoblinAI(Entity* E) : npcAI(E, GOBLIN_SIGHT){nextWaypoint = 0;}
 protected:
 	virtual void _assessPriority(World* W);
 	virtual void _attack(float frameTime, World* W);
@@ -110,7 +110,7 @@ protected:
 class WraithAI : public npcAI
 {
 public:
-	WraithAI(Entity* E) : npcAI(E, WRAITH_SIGHT) {};
+	WraithAI(Entity* E) : npcAI(E, WRAITH_SIGHT) {nextWaypoint = 0;};
 protected:
 	virtual void _assessPriority(World* W);
 	virtual void _attack(float frameTime, World* W);

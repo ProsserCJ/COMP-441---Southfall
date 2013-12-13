@@ -1,9 +1,10 @@
 #include "WorldInterface.h"
 #include <typeinfo>
 
-void WorldInterface::initialize(Graphics* graphics, Audio* a)
+void WorldInterface::initialize(Graphics* graphics, Audio* a, TextBox* tb)
 {
 	audio = a;
+	textbox = tb;
 	StructInt = new StructureInterface(imageLibrary, this);
 	main = loadWorld(SOUTHFALLMAP, audio);
 	main->Wraith = main->enemies.back();
