@@ -18,6 +18,7 @@ void npcAI::update(float frameTime, World* W)
 	delay += frameTime;
 	// Act and update
 	act(frameTime, W);
+	Solver.update(frameTime);
 }
 
 void npcAI::act(float frameTime, World* W)
