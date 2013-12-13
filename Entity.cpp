@@ -226,7 +226,7 @@ void Entity::update(float frameTime, World* W)
 	{			
 		audio->playCue(deathSoundCue.c_str());		
 		if (deathSoundCue == GOBLIN_DEATH) killCount++;
-		if (killCount == 18)
+		if (killCount == GOBLIN_WAVE_COUNT)
 		{
 			audio->playCue(SOUTHFALL_THEME);
 			audio->stopCue(BATTLE);

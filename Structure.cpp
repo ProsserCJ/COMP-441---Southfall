@@ -38,7 +38,7 @@ void Portal::interact(Entity* E)
 		WI->getTextBox()->setActive(true);		
 	}
 	Hero* idiot = dynamic_cast<Hero*>(E);
-	if (out == WI->getMain() && (Entity::killCount < 18) && idiot->hasAddedSword)
+	if (out == WI->getMain() && (Entity::killCount < GOBLIN_WAVE_COUNT) && idiot->hasAddedSword)
 	{
 		WI->getAudio()->playCue(BATTLE);
 		WI->getAudio()->stopCue(SOUTHFALL_THEME);

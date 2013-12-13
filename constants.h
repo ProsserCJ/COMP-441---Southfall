@@ -100,6 +100,7 @@ const float DEFAULT_SCALE = TILE_SIZE/32;	// Default scale of Images
 const UINT HTILE_SIZE = 0.5*TILE_SIZE;
 const UINT HSCREEN_WIDTH = 0.5*SCREEN_WIDTH;
 const UINT HSCREEN_HEIGHT = 0.5*SCREEN_HEIGHT;
+const int GOBLIN_WAVE_COUNT = 12;
 
 // Image Files
 

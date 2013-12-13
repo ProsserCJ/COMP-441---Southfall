@@ -161,7 +161,7 @@ void Southfall::update()
 				int ys[] = {birmY,birmY, 69,71, birmY,birmY};
 				for(int j = 0; j < 2; ++j)
 				{
-					for(int i = 0; i < 6; ++i)
+					for(int i = 0; i < GOBLIN_WAVE_COUNT/2; ++i)
 					{
 						Entity* goblin = new Entity(VECTOR2(xs[i]+j,ys[i]+j-.1), 0.3, GOBLIN_HEALTH, &imageLibrary->Goblin1IM, audio, 1, HUMAN_CRECT);
 						goblin->setSpeed(3); goblin->setDeathSound(GOBLIN_DEATH);
@@ -177,29 +177,25 @@ void Southfall::update()
 					ai->setSight(12);
 					Interface->getMain()->addEntity(guard, ai);	
 				}
-				for (int i=-1; i<1; i++)
-				{
-					Entity* guard1 = new Entity(VECTOR2(birmX-1, birmY+i), 0.5, GOBLIN_HEALTH, &imageLibrary->GuardIM, audio, 0, HUMAN_CRECT);
-					guard1->setSpeed(2);
-					npcAI* ai1 = new WaveAI(guard1);
-					ai1->setSight(12);
-					Interface->getMain()->addEntity(guard1, ai1);
-
-					if (i!= 0)
-					{
-						Entity* guard2 = new Entity(VECTOR2(birmX, birmY+i), 0.5, GOBLIN_HEALTH, &imageLibrary->GuardIM, audio, 0, HUMAN_CRECT);
-						guard2->setSpeed(2);
-						npcAI* ai2 = new WaveAI(guard2);
-						ai2->setSight(12);
-						Interface->getMain()->addEntity(guard2, ai2);	
-					}
+			
+				
+				Entity* guard1 = new Entity(VECTOR2(birmX-1, birmY-1), 0.5, GOBLIN_HEALTH, &imageLibrary->GuardIM, audio, 0, HUMAN_CRECT);
+				guard1->setSpeed(2);
+				npcAI* ai1 = new WaveAI(guard1);
+				ai1->setSight(12);
+				Interface->getMain()->addEntity(guard1, ai1);
+				
+				Entity* guard2 = new Entity(VECTOR2(birmX, birmY-1), 0.5, GOBLIN_HEALTH, &imageLibrary->GuardIM, audio, 0, HUMAN_CRECT);
+				guard2->setSpeed(2);
+				npcAI* ai2 = new WaveAI(guard2);
+				ai2->setSight(12);
+				Interface->getMain()->addEntity(guard2, ai2);					
 					
-					Entity* guard3 = new Entity(VECTOR2(birmX+1, birmY+i), 0.5, GOBLIN_HEALTH, &imageLibrary->GuardIM, audio, 0, HUMAN_CRECT);
-					guard3->setSpeed(2);
-					npcAI* ai3 = new WaveAI(guard3);
-					ai3->setSight(12);
-					Interface->getMain()->addEntity(guard3, ai3);	
-				}				
+				Entity* guard3 = new Entity(VECTOR2(birmX+1, birmY-1), 0.5, GOBLIN_HEALTH, &imageLibrary->GuardIM, audio, 0, HUMAN_CRECT);
+				guard3->setSpeed(2);
+				npcAI* ai3 = new WaveAI(guard3);
+				ai3->setSight(12);
+				Interface->getMain()->addEntity(guard3, ai3);								
 
 				Interface->getMain()->addEntity(birm);			
 				actionMenu->addButton(new Button("Sword", &imageLibrary->SwordIconIM, 0)); 
