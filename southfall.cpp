@@ -157,11 +157,11 @@ void Southfall::update()
 			{
 				float birmX = birm->getPosition().x;
 				float birmY = birm->getPosition().y;
-				int xs[] = {76,78, birmX,birmX, 138,136};//size 12
-				int ys[] = {birmY,birmY, 69,71, birmY,birmY};//size 12
+				int xs[] = {76,78, birmX,birmX, 138,136};
+				int ys[] = {birmY,birmY, 69,71, birmY,birmY};
 				for(int j = 0; j < 2; ++j)
 				{
-					for(int i = 0; i < 9; ++i)
+					for(int i = 0; i < 6; ++i)
 					{
 						Entity* goblin = new Entity(VECTOR2(xs[i]+j,ys[i]+j-.1), 0.3, GOBLIN_HEALTH, &imageLibrary->Goblin1IM, audio, 1, HUMAN_CRECT);
 						goblin->setSpeed(3); goblin->setDeathSound(GOBLIN_DEATH);
