@@ -125,14 +125,16 @@ void GoblinAI::_assessPriority(World* W)
 void GoblinAI::_track(float frameTime, World* W, VECTOR2 track)
 {
 	if (target == 0 || !target->isActive() || npc == 0 || !npc->isActive()) return;
-	
+	npc->travel(Solver.solve(W, target->getPosition(), getPosition()));
+
+/*
 	DIR facing;
 	float orient = atan2(track.y, track.x);
 	if (orient > PI/4 && orient <= 3*PI/4) facing = DOWN;
 	else if (orient <= -3*PI/4 || orient > 3*PI/4) facing = LEFT;
 	else if (orient <= -PI/4 && orient > -3*PI/4) facing = UP;
 	else if (orient > -PI/4 && orient <= PI/4) facing = RIGHT;
-	npc->go(facing);
+	npc->go(facing);*/
 	
 }
 

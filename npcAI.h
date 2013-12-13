@@ -6,6 +6,7 @@
 #include "entity.h"
 #include "ImageLibrary.h"
 #include "Waypoint.h"
+#include "MazeSolver.h"
 
 enum PRIORITY {IDLE, SEARCH, TRACK, ATTACK, WAYPOINT};
 
@@ -40,6 +41,7 @@ protected:
 	PRIORITY priority;
 	Waypoint* nextWaypoint;
 
+	MazeSolver Solver;
 	float sight;
 
 	void act(float frameTime, World* W);

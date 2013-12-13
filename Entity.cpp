@@ -141,6 +141,7 @@ void Entity::initialize()
 	freezeTime = 0;
 	_magicSight = false;
 	attacking = false;
+	traveling = false;
 }
 
 inline void Object::handleSectors(World* W)
@@ -199,9 +200,14 @@ void Entity::update(float frameTime, World* W)
 	if(magic > maxMagic) magic = maxMagic;	
 	if(!_frozen)
 	{
+		if(traveling)
+		{
+			startMoving=true;
+			go(chooseDir());
+			move(frameTime, W);
+		}
 		VECTOR2 newPos = getPosition() + speed*velocity*frameTime + knockback;
 		knockback = ZERO;
-		
 		if(attackImage) attackImage->updateImage(frameTime);
 		if(startMoving && W->canMoveHere(this, newPos))
 		{
@@ -222,6 +228,17 @@ void Entity::update(float frameTime, World* W)
 		if (deathSoundCue == GOBLIN_DEATH) killCount++;
 		deactivate();
 	}
+}
+
+DIR Entity::chooseDir()
+{
+	VECTOR2 delta = endTravel - getPosition();
+	if(delta.x > TRAVELCLOSENESS) return RIGHT;
+	else if(delta.x < -TRAVELCLOSENESS) return LEFT;
+	else if(delta.y < -TRAVELCLOSENESS) return UP;
+	else if(delta.y > TRAVELCLOSENESS) return DOWN;
+	traveling = false;
+	return NONE;
 }
 
 void Entity::draw(VECTOR2& Center, DWORD color)
@@ -408,6 +425,14 @@ void Entity::receiveDamage(Projectile* P)
 	setKnockback(.65*temp);
 	if (audio) audio->playCue(DAMAGE);	
 	HP -= P->getDamage();	
+}
+
+void Entity::travel(DIR face)
+{
+	endTravel.x = (int)position.x + 0.5; endTravel.y = (int)position.y + 0.5;
+	if((face == DOWN || face == UP) && abs(position.x - endTravel.x) > TRAVELCLOSENESS) traveling = true;
+	else if((face == RIGHT || face == LEFT) && abs(position.y - endTravel.y) > TRAVELCLOSENESS) traveling = true;
+	else go(face);
 }
 
 bool HandleCollision(Collidable* A, Collidable* B)

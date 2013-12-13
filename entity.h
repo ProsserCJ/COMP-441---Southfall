@@ -31,6 +31,7 @@ const float INTERACTIONDELAY = 0.5f;
 const float ACTIONDELAY = 0.5f;
 const float ATTACK_TIME_DELAY = 0.4f;
 const float ATTACK_FRAME_RATE = ATTACK_TIME_DELAY/4.0f;
+const float TRAVELCLOSENESS = 0.2f;
 
 const int SWORD_DAMAGE = 15;
 const float SWORD_LENGTH = 1.4f;
@@ -296,6 +297,7 @@ public:
 	void kill()								{HP = 0; active = false;}
 	void receiveDamage(Projectile* p);	
 	void go(DIR face);		
+	void travel(DIR face);
 	void standing();
 	virtual void setStandingImage();
 	void freeze(float time)					{_frozen=true;freezeTime=time;}
@@ -313,7 +315,7 @@ protected:
 	float timeSinceInteract;
 	float timeSinceAction;
 	float timeSinceAttack;
-	//Movement control
+	// Movement control
 	DIR facing;	
 	DIR lastDir;
 	bool startMoving;
@@ -322,6 +324,12 @@ protected:
 	VECTOR2 target;
 	bool _hasTarget;
 	npcAI* controller;
+
+	// Travel Control
+	DIR travelDir;
+	VECTOR2 endTravel;
+	bool traveling;
+	DIR chooseDir();
 
 	Drawable* attackImage;
 	Audio* audio;
