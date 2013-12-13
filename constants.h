@@ -157,7 +157,8 @@ const char SHADOWBALLICON[] = "..\\source\\Images\\Icons\\ShadowballIcon.png";
 // Other
 const char GAMEMENUBACK[] = "..\\source\\Images\\Other\\GameMenuBackground.png";
 const char BIRMINGHAM[] = "..\\source\\Images\\Other\\Birmingham.png";
-const char END_IMAGE[] = "..\\source\\Images\\Other\\EndScreen1.png";
+const char WIN_IMAGE[] = "..\\source\\Images\\Other\\EndScreen1.png";
+const char DEAD_IMAGE[] = "..\\source\\Images\\Other\\Dead.png";
 const char TEXTBOX[] = "..\\source\\Images\\Other\\textBox.png";
 const char TEXTBOX_ARROW[] = "..\\source\\Images\\Other\\textBoxArrow.png";
 const char SOUTHFALLFONT[] = "..\\source\\Images\\Other\\SouthfallFont.png";

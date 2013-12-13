@@ -64,7 +64,8 @@ public:
 	Image SwingingSwordIM;
 	Image DeadGuyIM;
 	Image BirminghamIM;
-	Image EndIM;
+	Image WinIM;
+	Image DeadIM;
 	Image ExplosionIM;
 
 private:
@@ -123,7 +124,8 @@ private:
 	TextureManager SwingingSwordTX;
 	TextureManager DeadGuyTX;
 	TextureManager BirminghamTX;
-	TextureManager EndTX;
+	TextureManager WinTX;
+	TextureManager DeadTX;
 	TextureManager ExplosionTX;
 
 	void _initializeEntities(Graphics* graphics);

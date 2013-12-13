@@ -160,11 +160,17 @@ void ImageLibrary::_initializeOther(Graphics* graphics)
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Birmingham texture"));
 	if(!BirminghamIM.initialize(graphics, 0, 0, 0, &BirminghamTX))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Birmingham image"));	
-	// End Screen
-	if(!EndTX.initialize(graphics, END_IMAGE))
+	
+	// Win Screen
+	if(!WinTX.initialize(graphics, WIN_IMAGE))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing End Screen texture"));
-	if(!EndIM.initialize(graphics, SCREEN_WIDTH, SCREEN_HEIGHT, 0, &EndTX))
-		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing End Screen image"));		
+	if(!WinIM.initialize(graphics, 512, 608, 0, &WinTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing End Screen image"));	
+	// Dead Screen
+	if(!DeadTX.initialize(graphics, DEAD_IMAGE))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Dead Screen texture"));
+	if(!DeadIM.initialize(graphics, 512, 608, 0, &DeadTX))
+		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Dead Screen image"));		
 	// Sal sign
 	if(!SalsTX.initialize(graphics, SIGN))
 		throw(GameError(gameErrorNS::FATAL_ERROR, "Error initializing Sal's texture"));
